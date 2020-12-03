@@ -17,16 +17,22 @@ public class AuthorityModel extends BaseModel implements Serializable {
     private String guid;
     @Column(value = "targetUrl")
     private String targetUrl;
+    @Column(value = "method")
+    private String method;
+    @Column(value = "type")
+    private String type;
     @Column(value = "parentId")
     private String parentId;
+    @Column(value = "visible")
+    private Integer visible;
     @Column(value = "name")
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "icon")
-    private String icon;
+    @Column(value = "iconClass")
+    private String iconClass;
     @Column(value = "isDefault")
-    private String isDefault;
+    private Integer isDefault;
 
     private List<AuthorityModel> children;
 
@@ -49,6 +55,21 @@ public class AuthorityModel extends BaseModel implements Serializable {
         this.targetUrl = targetUrl;
     }
 
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getParentId() {
         return parentId;
@@ -58,6 +79,13 @@ public class AuthorityModel extends BaseModel implements Serializable {
         this.parentId = parentId;
     }
 
+    public Integer getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Integer visible) {
+        this.visible = visible;
+    }
 
     public List<AuthorityModel> getChildren() {
         return children;
@@ -83,19 +111,19 @@ public class AuthorityModel extends BaseModel implements Serializable {
         this.sortId = sortId;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getIconClass() {
+        return iconClass;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setIconClass(String iconClass) {
+        this.iconClass = iconClass;
     }
 
-    public String getIsDefault() {
+    public Integer getIsDefault() {
         return isDefault;
     }
 
-    public void setIsDefault(String isDefault) {
+    public void setIsDefault(Integer isDefault) {
         this.isDefault = isDefault;
     }
 
@@ -104,10 +132,13 @@ public class AuthorityModel extends BaseModel implements Serializable {
         return "AuthorityModel{" +
                 "guid='" + guid + '\'' +
                 ", targetUrl='" + targetUrl + '\'' +
+                ", method='" + method + '\'' +
+                ", type='" + type + '\'' +
                 ", parentId='" + parentId + '\'' +
+                ", visible=" + visible +
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
-                ", icon='" + icon + '\'' +
+                ", iconClass='" + iconClass + '\'' +
                 ", isDefault='" + isDefault + '\'' +
                 ", children=" + children +
                 '}';
