@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.tonzoc.controller.params.AuthorityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -14,6 +15,7 @@ import org.tonzoc.service.IAuthorityService;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -52,16 +54,18 @@ public class AuthorityController extends BaseController {
     }
 
     @PostMapping
+    @Transactional
     @CacheEvict(value = "list_default")
-    public void add(AuthorityModel authorityModel) {
+    public void add(@RequestBody @Valid AuthorityModel authorityModel) {
         this.authorityService.save(authorityModel);
 
         String cacheKey = "authority_list_default";
     }
 
     @PutMapping(value = "{guid}")
+    @Transactional
     @CacheEvict(value = "list_default")
-    public void update(AuthorityModel authorityModel) {
+    public void update(@RequestBody @Valid AuthorityModel authorityModel) {
         this.authorityService.update(authorityModel);
 
         String cacheKey = "authority_list_default";
