@@ -29,8 +29,7 @@ public class MyAuthorityService {
         List<AuthorityModel> defaultAuthorityModel = authorityService.listDefault();
 
         for (AuthorityModel authorityModel : defaultAuthorityModel) {
-            if (antPathMatcher.match(authorityModel.getTargetUrl(), request.getRequestURI())
-                    && authorityModel.getMethod().equalsIgnoreCase(request.getMethod())) {
+            if (antPathMatcher.match(authorityModel.getTargetUrl(), request.getRequestURI())) {
                 return true;
             }
         }
@@ -48,8 +47,7 @@ public class MyAuthorityService {
             // TODO 通配符匹配问题
             for (AuthorityModel authorityModel : authorityModels) {
                 // default 均为true
-                if (antPathMatcher.match(authorityModel.getTargetUrl(), request.getRequestURI())
-                        && authorityModel.getMethod().equalsIgnoreCase(request.getMethod())) {
+                if (antPathMatcher.match(authorityModel.getTargetUrl(), request.getRequestURI())) {
                     return true;
                 }
             }

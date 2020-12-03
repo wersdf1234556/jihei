@@ -24,7 +24,7 @@ public class CameraModel extends BaseModel {
     private String tenderGuid; //标段
     @Column(value = "typeGuid")
     private String typeGuid; //类型
-    @JoinColumn(value = "name", type = TendersModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
     @JoinColumn(value = "name", type = CameraTypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
     private String typeName; //类型
