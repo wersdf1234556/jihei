@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'org.tonzoc'
+version = '0.0.1-jianliA'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.microsoft.sqlserver:mssql-jdbc:6.1.0.jre8"
+    compile group: 'com.github.pagehelper', name: 'pagehelper-spring-boot-starter', version: '1.2.10'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'com.belerweb', name: 'pinyin4j', version: '2.5.0'
+    compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '2.2.5.RELEASE'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+    compile group: 'org.json', name: 'json', version: '20140107'
+    compile group: 'net.sf.jmimemagic', name: 'jmimemagic', version: '0.1.4'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.7'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}

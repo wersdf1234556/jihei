@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sf.jmimemagic:jmimemagic:0.1.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jmimemagic/jmimemagic/0.1.4/91fe587526ca526d0483363366f90b421dfa099e/jmimemagic-0.1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jmimemagic/jmimemagic/0.1.4/3d5677c18a1aa9f318720d3959efae77b2f036b4/jmimemagic-0.1.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
