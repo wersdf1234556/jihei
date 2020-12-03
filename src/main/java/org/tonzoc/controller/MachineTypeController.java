@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
-@RequestMapping("MachineType")
+@RequestMapping("machineType")
 public class MachineTypeController extends BaseController {
 
     @Autowired

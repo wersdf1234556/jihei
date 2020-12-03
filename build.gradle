@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'org.tonzoc'
-version = '0.0.1-jianliA'
+version = '0.0.1-jihei'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -35,7 +35,8 @@ dependencies {
     compile group: 'net.sf.jmimemagic', name: 'jmimemagic', version: '0.1.4'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.7'
 
-
+    compile group: 'org.apache.poi',name:'poi',version: '3.17'
+    compile group: 'org.apache.poi',name:'poi-ooxml',version: '3.17'
 }
 
 test {
