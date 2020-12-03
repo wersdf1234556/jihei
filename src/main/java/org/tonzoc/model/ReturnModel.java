@@ -6,7 +6,6 @@ public class ReturnModel {
     private String name; // 名称
     private Integer number; // 数量
     private String proportion; // 比例
-    private String tt;
 
     public ReturnModel() {
     }
