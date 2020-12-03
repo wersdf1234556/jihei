@@ -8,10 +8,10 @@ public class CameraQueryParams {
     private String name;
     @Operator(value = "eq", field = "deviceSerial")
     private String deviceSerial;
-    @Operator(value = "eq", field = "tenderName")
-    private String tenderName;
-    @Operator(value = "eq", field = "typeName")
-    private String typeName;
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+    @Operator(value = "eq", field = "typeGuid")
+    private String typeGuid;
 
     public String getName() {
         return name;
@@ -29,19 +29,19 @@ public class CameraQueryParams {
         this.deviceSerial = deviceSerial;
     }
 
-    public String getTenderName() {
-        return tenderName;
+    public String getTenderGuid() {
+        return tenderGuid;
     }
 
-    public void setTenderName(String tenderName) {
-        this.tenderName = tenderName;
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getTypeGuid() {
+        return typeGuid;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setTypeGuid(String typeGuid) {
+        this.typeGuid = typeGuid;
     }
 }

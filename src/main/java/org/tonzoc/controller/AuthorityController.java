@@ -54,7 +54,7 @@ public class AuthorityController extends BaseController {
     }
 
     @PostMapping
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "list_default")
     public void add(@RequestBody @Valid AuthorityModel authorityModel) {
         this.authorityService.save(authorityModel);
@@ -63,7 +63,7 @@ public class AuthorityController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "list_default")
     public void update(@RequestBody @Valid AuthorityModel authorityModel) {
         this.authorityService.update(authorityModel);

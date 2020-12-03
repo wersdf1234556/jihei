@@ -26,16 +26,27 @@ public class CameraController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, CameraQueryParams camerasQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (pageQueryParams.getOrder()==null||pageQueryParams.getOrder().isEmpty()){
-            pageQueryParams.setOrder("topFlag,serialNum,sortId");
+            if (camerasQueryParams.getTenderGuid()==null||camerasQueryParams.getTenderGuid().isEmpty()){
+                pageQueryParams.setOrder("topFlag,serialNum,sortId");
+            }else {
+                pageQueryParams.setOrder("topFlag,sortId");
+            }
+        }
+        if (pageQueryParams.getSort()==null||pageQueryParams.getSort().isEmpty()){
+            pageQueryParams.setSort("asc");
         }
         System.out.println(pageQueryParams.getOrder());
         Page<CameraModel> page = parsePage(pageQueryParams);
         CameraQueryParams sqlQueryParamList = new CameraQueryParams();
         if (camerasQueryParams.getName() != null && !camerasQueryParams.getName().equals("")) {
             sqlQueryParamList.setName(camerasQueryParams.getName());
-        }
-        if (camerasQueryParams.getDeviceSerial() != null && !camerasQueryParams.getDeviceSerial().equals("")) {
+        }if (camerasQueryParams.getDeviceSerial() != null && !camerasQueryParams.getDeviceSerial().equals("")) {
             sqlQueryParamList.setDeviceSerial(camerasQueryParams.getDeviceSerial());
+        }if (camerasQueryParams.getTypeGuid() != null && !camerasQueryParams.getTypeGuid().equals("")) {
+            sqlQueryParamList.setTypeGuid(camerasQueryParams.getTypeGuid());
+        }
+        if (camerasQueryParams.getTenderGuid() != null && !camerasQueryParams.getTenderGuid().equals("")) {
+            sqlQueryParamList.setTenderGuid(camerasQueryParams.getTenderGuid());
         }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
         List list = cameraService.list(sqlQueryParams);
