@@ -44,8 +44,7 @@ public class CameraController extends BaseController {
             sqlQueryParamList.setDeviceSerial(camerasQueryParams.getDeviceSerial());
         }if (camerasQueryParams.getTypeGuid() != null && !camerasQueryParams.getTypeGuid().equals("")) {
             sqlQueryParamList.setTypeGuid(camerasQueryParams.getTypeGuid());
-        }
-        if (camerasQueryParams.getTenderGuid() != null && !camerasQueryParams.getTenderGuid().equals("")) {
+        }if (camerasQueryParams.getTenderGuid() != null && !camerasQueryParams.getTenderGuid().equals("")) {
             sqlQueryParamList.setTenderGuid(camerasQueryParams.getTenderGuid());
         }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
