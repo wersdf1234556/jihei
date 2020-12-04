@@ -14,6 +14,8 @@ public class CameraModel extends BaseModel {
     private String chanelNo;  // 通道号
     @Column(value = "name")
     private String name; // 名称
+    @Column(value = "status")
+    private Integer status;
     @Column(value = "sortId")
     private Integer sortId; // 排序
     @Column(value = "serialNum")
@@ -116,5 +118,13 @@ public class CameraModel extends BaseModel {
 
     public void setTypeGuid(String typeGuid) {
         this.typeGuid = typeGuid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

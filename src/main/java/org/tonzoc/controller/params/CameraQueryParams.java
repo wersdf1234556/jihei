@@ -12,6 +12,8 @@ public class CameraQueryParams {
     private String tenderGuid;
     @Operator(value = "eq", field = "typeGuid")
     private String typeGuid;
+    @Operator(value = "eq", field = "status")
+    private Integer status;
 
     public String getName() {
         return name;
@@ -43,5 +45,13 @@ public class CameraQueryParams {
 
     public void setTypeGuid(String typeGuid) {
         this.typeGuid = typeGuid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

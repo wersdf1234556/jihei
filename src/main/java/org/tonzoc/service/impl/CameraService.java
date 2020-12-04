@@ -19,6 +19,9 @@ public class CameraService extends BaseService<CameraModel> implements ICameraSe
         if (cameraModel.getTopFlag()==null){
             cameraModel.setTopFlag(1);
         }
+        if (cameraModel.getStatus()==null){
+            cameraModel.setStatus(0);
+        }
         save(cameraModel);
     }
 
