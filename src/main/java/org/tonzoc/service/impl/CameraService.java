@@ -16,7 +16,9 @@ public class CameraService extends BaseService<CameraModel> implements ICameraSe
         Integer serial = cameraMapper.maxSerial()+1;
         cameraModel.setSerialNum(serial);
         //2.top(置顶)字段默认填写:1(不置顶)
-        cameraModel.setTopFlag(1);
+        if (cameraModel.getTopFlag()==null){
+            cameraModel.setTopFlag(1);
+        }
         save(cameraModel);
     }
 

@@ -31,6 +31,10 @@ public class CameraController extends BaseController {
             }else {
                 pageQueryParams.setOrder("topFlag,sortId");
             }
+        }else {
+            if (!pageQueryParams.getOrder().contains("topFlag")){
+                pageQueryParams.setOrder("topFlag,"+pageQueryParams.getOrder());
+            }
         }
         if (pageQueryParams.getSort()==null||pageQueryParams.getSort().isEmpty()){
             pageQueryParams.setSort("asc");
