@@ -16,7 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
-@RequestMapping("MechanicsGpsRecord")
+@RequestMapping("machineGpsRecord")
 public class MachineGpsRecordController extends BaseController{
 
     @Autowired
