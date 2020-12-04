@@ -20,4 +20,6 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
     // 重点机械分组查询
     @SelectProvider(type = MachineProvider.class, method = "selectMachineTypeNumber")
     List<ReturnModel> selectMachineTypeNumber(String tenderGuid);
+
+    // 查询机械的最新坐标
 }

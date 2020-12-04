@@ -1,5 +1,6 @@
 package org.tonzoc.service;
 
+import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 
@@ -12,4 +13,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
 
     // 重点机械
     List<ReturnModel> importantMachine(String tenderGuid);
+
+    // 机械GPS位置
+    List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid);
 }

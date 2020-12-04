@@ -3,6 +3,7 @@ package org.tonzoc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.MachineMapper;
+import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.service.IMachineService;
@@ -18,7 +19,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
     private MachineMapper machineMapper;
 
     // 机械公用方法
-    public List<ReturnModel> machinePublic (Integer allNumber, List<ReturnModel> list) {
+    public List<ReturnModel> machinePublic(Integer allNumber, List<ReturnModel> list) {
         List<ReturnModel> list1 = new ArrayList();
         double proportion = 0;
 
@@ -33,14 +34,14 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
                 returnModel.setNumber(list.get(i).getNumber());
 
                 if (i + 1 == list.size()) {
-
                     String result = numberFormat.format((1 - proportion) * 100);
                     returnModel.setProportion(result + "%");
-                } else {
 
+                } else {
                     proportion += (double) list.get(i).getNumber() / (double) allNumber;
                     String result = numberFormat.format(((double) list.get(i).getNumber() / (double) allNumber) * 100);
                     returnModel.setProportion(result + "%");
+
                 }
                 list1.add(returnModel);
             }
@@ -67,4 +68,12 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
         return this.machinePublic(allNumber, list);
     }
+
+    @Override
+    public List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid) {
+
+        return null;
+    }
+
+
 }

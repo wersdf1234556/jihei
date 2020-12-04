@@ -18,8 +18,8 @@ public class MachineGpsRecordModel extends BaseModel{
     private Integer sortId;
     @Column(value = "machineGuid")
     private String machineGuid;
-    @Column(value = "current")
-    private Integer current; // 当前
+    @Column(value = "latest")
+    private Integer latest; // 最新的
 
     @JoinColumn(value = "name", type = MachineModel.class, leftColumn = "machineGuid", rightColumn = "guid")
     private String machineName;
@@ -75,12 +75,12 @@ public class MachineGpsRecordModel extends BaseModel{
         this.machineName = machineName;
     }
 
-    public Integer getCurrent() {
-        return current;
+    public Integer getLatest() {
+        return latest;
     }
 
-    public void setCurrent(Integer current) {
-        this.current = current;
+    public void setLatest(Integer latest) {
+        this.latest = latest;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class MachineGpsRecordModel extends BaseModel{
                 ", lnt='" + lnt + '\'' +
                 ", sortId=" + sortId +
                 ", machineGuid='" + machineGuid + '\'' +
-                ", current=" + current +
+                ", latest=" + latest +
                 ", machineName='" + machineName + '\'' +
                 '}';
     }
