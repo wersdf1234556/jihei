@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.tonzoc.model.AuthorityModel;
 import org.tonzoc.model.RoleAuthorityModel;
-import org.tonzoc.model.UserRoleModel;
+import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IAuthorityService;
 import org.tonzoc.service.IRoleAuthorityService;
-import org.tonzoc.service.IUserRoleService;
+import org.tonzoc.service.IUserService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.util.*;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class AuthorityService extends BaseService<AuthorityModel> implements IAuthorityService {
 
     @Autowired
-    private IUserRoleService userRoleService;
+    private IUserService userService;
 
     @Autowired
     private IRoleAuthorityService roleAuthorityService;
@@ -31,14 +31,14 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
 
         // TODO 完成该功能
         // 获取用户角色
-        List<UserRoleModel> userRoleModels = userRoleService.listByUser(userGuid);
+        List<UserModel> userModels = userService.listByUser(userGuid);
 
         // 获取用户所有的权限
         List<AuthorityModel> authorityModels = new ArrayList<>();
 
-        for (UserRoleModel userRoleModel : userRoleModels) {
+        for (UserModel userModel : userModels) {
             // 获取当前role对应的权限
-            List<RoleAuthorityModel> roleAuthorityModels = roleAuthorityService.listByRole(userRoleModel.getRoleGuid());
+            List<RoleAuthorityModel> roleAuthorityModels = roleAuthorityService.listByRole(userModel.getRoleGuid());
 
             for (RoleAuthorityModel roleAuthorityModel : roleAuthorityModels) {
                 authorityModels.add(get(roleAuthorityModel.getAuthorityGuid()));

@@ -39,7 +39,6 @@ public class CameraController extends BaseController {
         if (pageQueryParams.getSort()==null||pageQueryParams.getSort().isEmpty()){
             pageQueryParams.setSort("asc");
         }
-        System.out.println(pageQueryParams.getOrder());
         Page<CameraModel> page = parsePage(pageQueryParams);
         CameraQueryParams sqlQueryParamList = new CameraQueryParams();
         if (camerasQueryParams.getName() != null && !camerasQueryParams.getName().equals("")) {

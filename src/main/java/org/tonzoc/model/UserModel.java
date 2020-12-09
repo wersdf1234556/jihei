@@ -1,6 +1,7 @@
 package org.tonzoc.model;
 
 import org.tonzoc.annotation.Column;
+import org.tonzoc.annotation.JoinColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
@@ -23,7 +24,10 @@ public class UserModel extends BaseModel {
     @Column(value = "mobile")
     private String mobile;
 
-    private List<RoleModel> roleModels;
+    @Column(value = "roleGuid")
+    private String roleGuid;
+    @JoinColumn(value = "name", type = RoleModel.class, leftColumn = "roleGuid", rightColumn = "guid")
+    private String roleName;
 
     public UserModel() {
     }
@@ -60,13 +64,6 @@ public class UserModel extends BaseModel {
         this.password = password;
     }
 
-    public List<RoleModel> getRoleModels() {
-        return roleModels;
-    }
-
-    public void setRoleModels(List<RoleModel> roleModels) {
-        this.roleModels = roleModels;
-    }
 
     public String getMobile() {
         return mobile;
@@ -74,5 +71,21 @@ public class UserModel extends BaseModel {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getRoleGuid() {
+        return roleGuid;
+    }
+
+    public void setRoleGuid(String roleGuid) {
+        this.roleGuid = roleGuid;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

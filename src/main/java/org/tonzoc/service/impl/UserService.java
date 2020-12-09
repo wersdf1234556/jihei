@@ -12,6 +12,13 @@ import java.util.List;
 @Service(value = "userService")
 public class UserService extends BaseService<UserModel> implements IUserService {
 
+    public List<UserModel> listByUser(String guid){
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("guid", guid, "eq"));
+        List<UserModel> userModels = this.list(sqlQueryParams);
+        return userModels;
+    }
+
     public UserModel getByName(String name) throws NotOneResultFoundException {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("name", name, "eq"));

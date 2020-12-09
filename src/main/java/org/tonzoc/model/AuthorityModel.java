@@ -26,7 +26,7 @@ public class AuthorityModel extends BaseModel implements Serializable {
     @Column(value = "icon")
     private String icon;
     @Column(value = "isDefault")
-    private String isDefault;
+    private Integer isDefault;
 
     private List<AuthorityModel> children;
 
@@ -91,11 +91,11 @@ public class AuthorityModel extends BaseModel implements Serializable {
         this.icon = icon;
     }
 
-    public String getIsDefault() {
+    public Integer getIsDefault() {
         return isDefault;
     }
 
-    public void setIsDefault(String isDefault) {
+    public void setIsDefault(Integer isDefault) {
         this.isDefault = isDefault;
     }
 

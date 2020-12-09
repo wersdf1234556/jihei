@@ -12,15 +12,12 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.RoleModel;
 import org.tonzoc.model.UserModel;
-import org.tonzoc.model.UserRoleModel;
 import org.tonzoc.service.IRedisAuthService;
-import org.tonzoc.service.IUserRoleService;
 import org.tonzoc.service.IUserService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +27,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
-
-    @Autowired
-    private IUserRoleService userRoleService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,20 +51,6 @@ public class UserController extends BaseController {
 
         List<UserModel> list = userService.list(sqlQueryParams);
 
-        for (UserModel userModel : list) {
-
-            List<UserRoleModel> userRoleModels = userRoleService.listByUser(userModel.getGuid());
-
-            userModel.setRoleModels(userRoleModels
-                    .stream()
-                    .map(userRoleModel -> {
-                        RoleModel roleModel = new RoleModel();
-                        roleModel.setGuid(userRoleModel.getRoleGuid());
-
-                        return roleModel;
-                    })
-                    .collect(Collectors.toList()));
-        }
 
         return new PageResponse(page.getTotal(), list);
     }
@@ -84,7 +64,6 @@ public class UserController extends BaseController {
 
         this.userService.save(userModel);
 
-        saveRoleModels(userModel);
     }
 
     @PutMapping(value = "{guid}")
@@ -96,9 +75,6 @@ public class UserController extends BaseController {
 
         this.userService.update(userModel);
 
-        // 首先删除所有权限分配
-        userRoleService.deleteByUser(userModel.getGuid());
-        saveRoleModels(userModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -110,18 +86,6 @@ public class UserController extends BaseController {
     @GetMapping(value = "current")
     public UserModel getCurrentUser() throws Exception {
         return redisAuthService.getCurrentUser();
-    }
-
-    private void saveRoleModels(UserModel userModel) {
-        if (userModel.getRoleModels() != null && userModel.getRoleModels().size() > 0) {
-            for (RoleModel roleModel : userModel.getRoleModels()) {
-                UserRoleModel userRoleModel = new UserRoleModel();
-                userRoleModel.setUserGuid(userModel.getGuid());
-                userRoleModel.setRoleGuid(roleModel.getGuid());
-
-                userRoleService.save(userRoleModel);
-            }
-        }
     }
 
     @PatchMapping(value = "password")
