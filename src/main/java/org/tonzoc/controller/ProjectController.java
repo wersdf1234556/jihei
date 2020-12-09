@@ -27,12 +27,8 @@ public class ProjectController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<ProjectModel> page = parsePage(pageQueryParams);
-        ProjectQueryParams sqlQueryParamList = new ProjectQueryParams();
-        if (projectQueryParams.getGuid() != null && !projectQueryParams.getGuid().equals("")) {
-            sqlQueryParamList.setGuid(projectQueryParams.getGuid());
-        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(projectQueryParams);
 
         List list = projectService.list(sqlQueryParams);
 
