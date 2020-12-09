@@ -28,7 +28,15 @@ public class TenderController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<ProjectModel> page = parsePage(pageQueryParams);
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(tenderQueryParams);
+        TenderQueryParams sqlQueryParamList = new TenderQueryParams();
+        if (tenderQueryParams.getGuid() != null && !tenderQueryParams.getGuid().equals("")) {
+            sqlQueryParamList.setGuid(tenderQueryParams.getGuid());
+        }
+        if (tenderQueryParams.getName() != null && !tenderQueryParams.getName().equals("")) {
+            sqlQueryParamList.setName(tenderQueryParams.getName());
+        }
+
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
 
         List list = tenderService.list(sqlQueryParams);
 

@@ -6,6 +6,12 @@ public class PersonQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+    @Operator(value = "like", field = "guid")
+    private String name;
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+    @Operator(value = "eq", field = "personTypeGuid")
+    private String personTypeGuid;
 
 
     public String getGuid() {
@@ -16,4 +22,27 @@ public class PersonQueryParams {
         this.guid = guid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getPersonTypeGuid() {
+        return personTypeGuid;
+    }
+
+    public void setPersonTypeGuid(String personTypeGuid) {
+        this.personTypeGuid = personTypeGuid;
+    }
 }

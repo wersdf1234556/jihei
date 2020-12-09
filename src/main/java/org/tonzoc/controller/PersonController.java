@@ -31,8 +31,18 @@ public class PersonController extends BaseController {
 
         Page<PersonModel> page = parsePage(pageQueryParams);
         PersonQueryParams sqlQueryParamList = new PersonQueryParams();
+        if (personQueryParams.getGuid() != null && !personQueryParams.getGuid().equals("")) {
+            sqlQueryParamList.setGuid(personQueryParams.getGuid());
+        }if (personQueryParams.getName() != null && !personQueryParams.getName().equals("")) {
+            sqlQueryParamList.setName(personQueryParams.getName());
+        }if (personQueryParams.getTenderGuid() != null && !personQueryParams.getTenderGuid().equals("")) {
+            sqlQueryParamList.setTenderGuid(personQueryParams.getTenderGuid());
+        }
+        if (personQueryParams.getPersonTypeGuid() != null && !personQueryParams.getPersonTypeGuid().equals("")) {
+            sqlQueryParamList.setPersonTypeGuid(personQueryParams.getPersonTypeGuid());
+        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(personQueryParams);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
 
         List list = personService.list(sqlQueryParams);
 

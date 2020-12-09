@@ -6,6 +6,8 @@ public class PersonTypeQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+    @Operator(value = "like", field = "guid")
+    private String name;
 
 
     public String getGuid() {
@@ -16,4 +18,11 @@ public class PersonTypeQueryParams {
         this.guid = guid;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

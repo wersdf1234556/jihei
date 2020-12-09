@@ -6,6 +6,16 @@ public class TenderQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+    @Operator(value = "like", field = "name")
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getGuid() {
         return guid;

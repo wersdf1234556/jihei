@@ -28,6 +28,9 @@ public class CameraTypeController extends BaseController {
         System.out.println(pageQueryParams.getOrder());
         Page<CameraTypeModel> page = parsePage(pageQueryParams);
         CameraTypeQueryParams sqlQueryParamList = new CameraTypeQueryParams();
+        if (cameraTypeQueryParams.getGuid() != null && !cameraTypeQueryParams.getGuid().equals("")) {
+            sqlQueryParamList.setGuid(cameraTypeQueryParams.getGuid());
+        }
         if (cameraTypeQueryParams.getName() != null && !cameraTypeQueryParams.getName().equals("")) {
             sqlQueryParamList.setName(cameraTypeQueryParams.getName());
         }

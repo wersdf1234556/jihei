@@ -48,13 +48,16 @@ public class UserController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<UserModel> page = parsePage(pageQueryParams);
+        UserQueryParams sqlQueryParamList = new UserQueryParams();
+        if (userQueryParams.getName() != null && !userQueryParams.getName().equals("")) {
+            sqlQueryParamList.setName(userQueryParams.getName());
+        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(userQueryParams);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
 
         List<UserModel> list = userService.list(sqlQueryParams);
 
         for (UserModel userModel : list) {
-            List<RoleModel> roleModels = new ArrayList<>();
 
             List<UserRoleModel> userRoleModels = userRoleService.listByUser(userModel.getGuid());
 
@@ -67,7 +70,6 @@ public class UserController extends BaseController {
                         return roleModel;
                     })
                     .collect(Collectors.toList()));
-
         }
 
         return new PageResponse(page.getTotal(), list);
