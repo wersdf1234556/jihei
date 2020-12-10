@@ -12,6 +12,7 @@ import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IMachineCategoryService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -35,17 +36,22 @@ public class MachineCategoryController extends BaseController {
     }
 
     @PostMapping
-    public void add( MachineCategoryModel mechanicsCategoryModel) {
+    public void add(@RequestBody @Valid MachineCategoryModel mechanicsCategoryModel) {
         this.machineCategoryService.save(mechanicsCategoryModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(MachineCategoryModel mechanicsCategoryModel) {
+    public void update(@RequestBody @Valid MachineCategoryModel mechanicsCategoryModel) {
         this.machineCategoryService.update(mechanicsCategoryModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.machineCategoryService.remove(guid);
+    }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        machineCategoryService.removeMany(guids);
     }
 }

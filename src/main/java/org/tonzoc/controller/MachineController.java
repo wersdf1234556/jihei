@@ -13,6 +13,7 @@ import org.tonzoc.model.ReturnModel;
 import org.tonzoc.service.IMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -36,18 +37,23 @@ public class MachineController extends BaseController {
     }
 
     @PostMapping
-    public void add( MachineModel mechanicsModel) {
+    public void add(@RequestBody @Valid MachineModel mechanicsModel) {
         this.machineService.save(mechanicsModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(MachineModel mechanicsModel) {
+    public void update(@RequestBody @Valid MachineModel mechanicsModel) {
         this.machineService.update(mechanicsModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.machineService.remove(guid);
+    }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        machineService.removeMany(guids);
     }
 
     // 机械概况

@@ -12,6 +12,7 @@ import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -40,12 +41,17 @@ public class MachineTypeController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    public void update( MachineTypeModel mechanicsTypeModel) {
+    public void update(@RequestBody @Valid MachineTypeModel mechanicsTypeModel) {
         this.machineTypeService.update(mechanicsTypeModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.machineTypeService.remove(guid);
+    }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        machineTypeService.removeMany(guids);
     }
 }
