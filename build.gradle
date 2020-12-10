@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'org.tonzoc'
-version = '0.0.1-jianliA'
+version = '0.0.1-jihei'
 sourceCompatibility = '1.8'
 
 repositories {

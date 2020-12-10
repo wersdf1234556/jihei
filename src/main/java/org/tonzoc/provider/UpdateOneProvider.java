@@ -29,7 +29,8 @@ public class UpdateOneProvider extends BaseProvider {
                         }
                         String getter = "get" + StringUtils.capitalize(item.getName());
                         Method method = entity.getClass().getMethod(getter);
-                        return !StringUtils.isEmpty(method.invoke(entity));
+//                        return !StringUtils.isEmpty(method.invoke(entity));
+                        return method.invoke(entity)!=null;
                     } catch (Exception e) {
                         return false;
                     }
@@ -37,6 +38,7 @@ public class UpdateOneProvider extends BaseProvider {
                 .map(item -> {
                     try {
                         String getter = "get" + StringUtils.capitalize(item.getName());
+//                        System.out.println("getter"+getter);
                         Method method = entity.getClass().getMethod(getter);
                         return item.getAnnotation(Column.class).value() + " = '" + method.invoke(entity) + "'";
                     } catch (Exception e) {
