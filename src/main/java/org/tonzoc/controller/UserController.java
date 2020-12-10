@@ -113,4 +113,9 @@ public class UserController extends BaseController {
 
         userService.update(userModel);
     }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        userService.removeMany(guids);
+    }
 }

@@ -38,4 +38,11 @@ public abstract class BaseService<Entity> implements IBaseService<Entity> {
         entityMapper.delete(primaryKey);
     }
 
+    public void removeMany(List<String> primaryKeys) {
+        for (String primaryKey:primaryKeys){
+            entityMapper.delete(primaryKey);
+        }
+    }
+
+
 }

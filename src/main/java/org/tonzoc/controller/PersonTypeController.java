@@ -58,4 +58,8 @@ public class PersonTypeController extends BaseController {
         this.personTypeService.remove(guid);
     }
 
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        personTypeService.removeMany(guids);
+    }
 }

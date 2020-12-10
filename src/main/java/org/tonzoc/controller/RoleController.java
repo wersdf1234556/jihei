@@ -88,6 +88,11 @@ public class RoleController extends BaseController {
         roleAuthorityService.deleteByRole(guid);
     }
 
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        roleService.removeMany(guids);
+    }
+
     private void saveAuthorityModels(RoleModel roleModel) {
         if (roleModel.getAuthorityModels() != null && roleModel.getAuthorityModels().size() > 0) {
             for (AuthorityModel authorityModel : roleModel.getAuthorityModels()) {

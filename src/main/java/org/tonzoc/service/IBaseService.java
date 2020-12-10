@@ -16,4 +16,6 @@ public interface IBaseService<Entity> {
     Entity update(Entity entity);
 
     void remove(String primaryKey);
+
+    void removeMany(List<String> primaryKeys);
 }

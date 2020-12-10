@@ -57,4 +57,9 @@ public class TenderController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) {
         this.tenderService.remove(guid);
     }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(@RequestBody(required = false) List<String> guids){
+        tenderService.removeMany(guids);
+    }
 }
