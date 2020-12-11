@@ -9,6 +9,7 @@ import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.UserQueryParams;
 import org.tonzoc.controller.response.PageResponse;
+import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.RoleModel;
 import org.tonzoc.model.UserModel;
@@ -120,8 +121,11 @@ public class UserController extends BaseController {
     }
 
     @PutMapping(value = "resetPassword")
-    public void resetPassword(String guid){
+    public void resetPassword(String guid) throws Exception {
         UserModel userModel = userService.get(guid);
+        if (userModel==null){
+            throw new NotFoundException("不存在此用户，无法重置密码");
+        }
         userModel.setPassword(passwordEncoder.encode(intelliSiteProperties.getDefaultUserPassword()));
         userService.update(userModel);
 

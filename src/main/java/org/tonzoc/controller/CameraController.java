@@ -27,13 +27,13 @@ public class CameraController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (pageQueryParams.getOrder()==null||pageQueryParams.getOrder().isEmpty()){
             if (camerasQueryParams.getTenderGuid()==null||camerasQueryParams.getTenderGuid().isEmpty()){
-                pageQueryParams.setOrder("topFlag,serialNum,sortId");
+                pageQueryParams.setOrder("topFlag,mainTable.serialNum,mainTable.sortId");
             }else {
-                pageQueryParams.setOrder("topFlag,sortId");
+                pageQueryParams.setOrder("topFlag,mainTable.sortId");
             }
         }else {
             if (!pageQueryParams.getOrder().contains("topFlag")){
-                pageQueryParams.setOrder("topFlag,"+pageQueryParams.getOrder());
+                pageQueryParams.setOrder("topFlag,mainTable."+pageQueryParams.getOrder());
             }
         }
         if (pageQueryParams.getSort()==null||pageQueryParams.getSort().isEmpty()){
