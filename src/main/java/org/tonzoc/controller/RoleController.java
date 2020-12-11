@@ -88,7 +88,7 @@ public class RoleController extends BaseController {
         roleAuthorityService.deleteByRole(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         roleService.removeMany(guids);
     }

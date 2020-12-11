@@ -95,7 +95,7 @@ public class AuthorityController extends BaseController {
         return false;
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         authorityService.removeMany(guids);
     }

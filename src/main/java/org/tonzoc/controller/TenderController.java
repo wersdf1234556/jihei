@@ -58,7 +58,7 @@ public class TenderController extends BaseController {
         this.tenderService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         tenderService.removeMany(guids);
     }

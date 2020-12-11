@@ -65,7 +65,7 @@ public class PersonController extends BaseController {
     }
 
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String  guids) throws Exception {
         personService.removeMany(guids);
     }
