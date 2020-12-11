@@ -1,6 +1,7 @@
 package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.mapper.BaseMapper;
 import org.tonzoc.service.IBaseService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -38,8 +39,12 @@ public abstract class BaseService<Entity> implements IBaseService<Entity> {
         entityMapper.delete(primaryKey);
     }
 
-    public void removeMany(List<String> primaryKeys) {
-        for (String primaryKey:primaryKeys){
+    public void removeMany(String primaryKeys) throws Exception {
+        if (primaryKeys==null){
+            throw new NotFoundException("未删除");
+        }
+        String[] split = primaryKeys.split(",");//以逗号分割
+        for (String primaryKey:split){
             entityMapper.delete(primaryKey);
         }
     }

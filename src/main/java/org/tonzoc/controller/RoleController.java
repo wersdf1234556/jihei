@@ -89,7 +89,7 @@ public class RoleController extends BaseController {
     }
 
     @DeleteMapping(value = "removeMany")
-    public void removeMany(@RequestBody(required = false) List<String> guids){
+    public void removeMany(String guids) throws Exception {
         roleService.removeMany(guids);
     }
 

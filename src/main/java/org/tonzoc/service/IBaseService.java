@@ -1,5 +1,6 @@
 package org.tonzoc.service;
 
+import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface IBaseService<Entity> {
 
     void remove(String primaryKey);
 
-    void removeMany(List<String> primaryKeys);
+    void removeMany(String primaryKeys) throws Exception;
 }

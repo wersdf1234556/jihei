@@ -74,7 +74,7 @@ public class CameraController extends BaseController {
     }
 
     @DeleteMapping(value = "removeMany")
-    public void removeMany(@RequestBody(required = false) List<String> guids){
+    public void removeMany(String guids) throws Exception {
         cameraService.removeMany(guids);
     }
 

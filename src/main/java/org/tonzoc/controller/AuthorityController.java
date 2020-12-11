@@ -96,7 +96,7 @@ public class AuthorityController extends BaseController {
     }
 
     @DeleteMapping(value = "removeMany")
-    public void removeMany(@RequestBody(required = false) List<String> guids){
+    public void removeMany(String guids) throws Exception {
         authorityService.removeMany(guids);
     }
 }

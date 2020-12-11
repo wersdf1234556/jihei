@@ -114,8 +114,16 @@ public class UserController extends BaseController {
         userService.update(userModel);
     }
 
-    @DeleteMapping(value = "removeMany")
-    public void removeMany(@RequestBody(required = false) List<String> guids){
+    @PostMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
         userService.removeMany(guids);
+    }
+
+    @PutMapping(value = "resetPassword")
+    public void resetPassword(String guid){
+        UserModel userModel = userService.get(guid);
+        userModel.setPassword(passwordEncoder.encode(intelliSiteProperties.getDefaultUserPassword()));
+        userService.update(userModel);
+
     }
 }
