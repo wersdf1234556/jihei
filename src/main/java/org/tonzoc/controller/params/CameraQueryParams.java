@@ -4,9 +4,9 @@ import org.tonzoc.annotation.Operator;
 
 public class CameraQueryParams {
 
-    @Operator(value = "eq", field = "name")
+    @Operator(value = "like", field = "name")
     private String name;
-    @Operator(value = "eq", field = "deviceSerial")
+    @Operator(value = "like", field = "deviceSerial")
     private String deviceSerial;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
