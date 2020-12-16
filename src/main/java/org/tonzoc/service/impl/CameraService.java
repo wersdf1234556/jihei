@@ -11,15 +11,15 @@ public class CameraService extends BaseService<CameraModel> implements ICameraSe
     @Autowired
     private CameraMapper cameraMapper;
 
-    public void insertStack(CameraModel cameraModel){
+    public void insertStack(CameraModel cameraModel) {
         //1.查询camera表中最大的序号serial，然后加1
-        Integer serial = cameraMapper.maxSerial()+1;
+        Integer serial = cameraMapper.maxSerial() + 1;
         cameraModel.setSerialNum(serial);
         //2.top(置顶)字段默认填写:1(不置顶)
-        if (cameraModel.getTopFlag()==null){
+        if (cameraModel.getTopFlag() == null) {
             cameraModel.setTopFlag(1);
         }
-        if (cameraModel.getStatus()==null){
+        if (cameraModel.getStatus() == null) {
             cameraModel.setStatus(0);
         }
         save(cameraModel);
