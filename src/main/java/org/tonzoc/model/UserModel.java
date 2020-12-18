@@ -28,6 +28,10 @@ public class UserModel extends BaseModel {
     private String roleGuid;
     @JoinColumn(value = "name", type = RoleModel.class, leftColumn = "roleGuid", rightColumn = "guid")
     private String roleName;
+    @Column(value = "projectGuid")
+    private String projectGuid;
+    @JoinColumn(value = "name", type = ProjectModel.class, leftColumn = "projectGuid", rightColumn = "guid")
+    private String projectName;
 
     public UserModel() {
     }
@@ -87,5 +91,21 @@ public class UserModel extends BaseModel {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getProjectGuid() {
+        return projectGuid;
+    }
+
+    public void setProjectGuid(String projectGuid) {
+        this.projectGuid = projectGuid;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }

@@ -8,7 +8,7 @@ import org.tonzoc.annotation.Table;
 import java.util.List;
 
 // 项目表
-@Table(value = "project")
+@Table(value = "projects")
 public class ProjectModel extends BaseModel {
 
     @PrimaryKey
@@ -23,6 +23,10 @@ public class ProjectModel extends BaseModel {
     private String lng;
     @Column(value = "lat")
     private String lat;
+    @Column(value = "alias")
+    private String alias;
+    @Column(value = "value")
+    private Integer value;
 
     public ProjectModel() {
     }
@@ -67,4 +71,19 @@ public class ProjectModel extends BaseModel {
         this.lat = lat;
     }
 
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
 }
