@@ -90,7 +90,8 @@ public abstract class BaseProvider {
                 .map(item -> {
                     JoinColumn joinColumn = item.getAnnotation(JoinColumn.class);
                     String tableAlias = joinColumn.type().getAnnotation(Table.class).value()
-                            + StringUtils.capitalize(joinColumn.value()) + "Table";
+                            + StringUtils.capitalize(joinColumn.value()) + item.getName() + "Table";
+                          //  + StringUtils.capitalize(joinColumn.value()) + "Table";
                     return tableAlias + "." + joinColumn.value() + " as " + item.getName();
                 })
                 .toArray(String[]::new);
@@ -102,12 +103,12 @@ public abstract class BaseProvider {
         for (Field item : tableInfo.getJoinColumns()) {
             JoinColumn joinColumn = item.getAnnotation(JoinColumn.class);
             String tableName = joinColumn.type().getAnnotation(Table.class).value();
-            String tableAlias = tableName + StringUtils.capitalize(joinColumn.value()) + "Table";
+            String tableAlias = tableName + StringUtils.capitalize(joinColumn.value()) + item.getName() + "Table";
+            // String tableAlias = tableName + StringUtils.capitalize(joinColumn.value()) + "Table";
 
             sql.LEFT_OUTER_JOIN(tableName + " " + tableAlias + " ON " + "mainTable" + "."
                     + joinColumn.leftColumn() + " = " + tableAlias + "." + joinColumn.rightColumn());
         }
-
         return sql;
     }
 

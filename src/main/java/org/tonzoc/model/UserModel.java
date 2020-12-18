@@ -68,7 +68,6 @@ public class UserModel extends BaseModel {
         this.password = password;
     }
 
-
     public String getMobile() {
         return mobile;
     }
