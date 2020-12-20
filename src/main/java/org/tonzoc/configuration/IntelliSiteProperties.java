@@ -19,6 +19,8 @@ public class IntelliSiteProperties {
 
     private String defaultUserPassword = "123456";
 
+    private String filePath = "D:/tool/file/jihei";
+
     public IntelliSiteProperties() {
     }
 
@@ -60,5 +62,13 @@ public class IntelliSiteProperties {
 
     public void setDefaultUserPassword(String defaultUserPassword) {
         this.defaultUserPassword = defaultUserPassword;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

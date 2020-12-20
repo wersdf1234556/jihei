@@ -46,6 +46,8 @@ public class UserController extends BaseController {
         UserQueryParams sqlQueryParamList = new UserQueryParams();
         if (userQueryParams.getName() != null && !userQueryParams.getName().equals("")) {
             sqlQueryParamList.setName(userQueryParams.getName());
+        }if (userQueryParams.getProjectGuid() != null && !userQueryParams.getProjectGuid().equals("")) {
+            sqlQueryParamList.setProjectGuid(userQueryParams.getProjectGuid());
         }
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);

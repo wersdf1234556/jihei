@@ -1,10 +1,12 @@
 package org.tonzoc.provider;
 
 
+import org.apache.ibatis.annotations.Param;
+
 public class MachineProvider {
 
     // 查询机械概况
-    public String selectMachineCategoryNumber(String tenderGuid) {
+    public String selectMachineCategoryNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
         StringBuilder stringBuilder = new StringBuilder("select machineCategories.name, count(machines.guid) number from machineCategories ");
         if ("".equals(tenderGuid) || tenderGuid == null) {
@@ -20,7 +22,7 @@ public class MachineProvider {
     }
 
     // 机械的数量
-    public String allNumber(String tenderGuid) {
+    public String allNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
         StringBuilder stringBuilder = new StringBuilder("select count(machines.guid) from machines");
         if ("".equals(tenderGuid) || tenderGuid == null) {
@@ -33,7 +35,7 @@ public class MachineProvider {
     }
 
     // 查询重点机械
-    public String selectMachineTypeNumber(String tenderGuid) {
+    public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
         StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from machineTypes");
         if ("".equals(tenderGuid) || tenderGuid == null) {

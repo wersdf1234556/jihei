@@ -7,6 +7,9 @@ public class UserQueryParams {
     @Operator(value = "like", field = "name")
     private String name;
 
+    @Operator(value = "eq", field = "projectGuid")
+    private String projectGuid;
+
 
     public UserQueryParams() {
 
@@ -20,5 +23,11 @@ public class UserQueryParams {
         this.name = name;
     }
 
+    public String getProjectGuid() {
+        return projectGuid;
+    }
 
+    public void setProjectGuid(String projectGuid) {
+        this.projectGuid = projectGuid;
+    }
 }
