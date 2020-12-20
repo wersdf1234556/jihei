@@ -2,8 +2,11 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-@Table("laboratorys")
-public class LaboratoryModel extends BaseModel {
+import java.sql.Date;
+
+// 质量追溯
+@Table("qualityTraceabilitys")
+public class QualityTraceabilityModel extends BaseModel {
 
     @NotInsertColumn
     @PrimaryKey
@@ -11,14 +14,14 @@ public class LaboratoryModel extends BaseModel {
     private String guid;
     @Column(value = "name")
     private String name;
-    @Column(value = "qualifiedRate")
-    private Integer qualifiedRate;  // 合格率
-    @Column(value = "companyName")
-    private String companyName; // 单位名称
+    @Column(value = "currentDate")
+    private Date currentDate;  // 时间
+    @Column(value = "operator")
+    private String operator; // 操作人
+    @Column(value = "qualityType")
+    private String qualityType;  // 质量类型，原材料、半成品、实体工程
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "tenderType")
-    private String tenderType;  // 标段类型，A标、B标、S标
     @Column(value = "tenderGuid")
     private String tenderGuid;
     @Column(value = "subTypeGuid")
@@ -29,7 +32,7 @@ public class LaboratoryModel extends BaseModel {
     @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
     private String subTypeName;  // 文件类型
 
-    public LaboratoryModel() {
+    public QualityTraceabilityModel() {
     }
 
     public String getGuid() {
@@ -48,28 +51,20 @@ public class LaboratoryModel extends BaseModel {
         this.name = name;
     }
 
-    public Integer getQualifiedRate() {
-        return qualifiedRate;
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
-    public void setQualifiedRate(Integer qualifiedRate) {
-        this.qualifiedRate = qualifiedRate;
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getTenderType() {
-        return tenderType;
-    }
-
-    public void setTenderType(String tenderType) {
-        this.tenderType = tenderType;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public Integer getSortId() {
@@ -80,6 +75,14 @@ public class LaboratoryModel extends BaseModel {
         this.sortId = sortId;
     }
 
+    public String getQualityType() {
+        return qualityType;
+    }
+
+    public void setQualityType(String qualityType) {
+        this.qualityType = qualityType;
+    }
+
     public String getTenderGuid() {
         return tenderGuid;
     }
@@ -88,20 +91,20 @@ public class LaboratoryModel extends BaseModel {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getTenderName() {
-        return tenderName;
-    }
-
-    public void setTenderName(String tenderName) {
-        this.tenderName = tenderName;
-    }
-
     public String getSubTypeGuid() {
         return subTypeGuid;
     }
 
     public void setSubTypeGuid(String subTypeGuid) {
         this.subTypeGuid = subTypeGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 
     public String getSubTypeName() {

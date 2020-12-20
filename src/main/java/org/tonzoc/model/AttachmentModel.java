@@ -31,7 +31,7 @@ public class AttachmentModel extends BaseModel {
     private String typeName;
     @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
     private String subName;
-    @JoinColumn(value = "name", type = LaboratoryModel.class, leftColumn = "laboratoryGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = QualityTraceabilityModel.class, leftColumn = "laboratoryGuid", rightColumn = "guid")
     private String laboratoryName;
 
     public AttachmentModel() {

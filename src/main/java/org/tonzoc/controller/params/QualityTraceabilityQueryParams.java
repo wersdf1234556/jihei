@@ -2,16 +2,21 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
-public class LaboratoryQueryParams {
+import java.sql.Date;
+
+public class QualityTraceabilityQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
 
+    @Operator(value = "eq", field = "currentDate")
+    private Date currentDate;
+
+    @Operator(value = "eq", field = "qualityType")
+    private String qualityType;
+
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
-
-    @Operator(value = "eq", field = "tenderType")
-    private String tenderType;
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
@@ -51,11 +56,19 @@ public class LaboratoryQueryParams {
         this.subTypeGuid = subTypeGuid;
     }
 
-    public String getTenderType() {
-        return tenderType;
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
-    public void setTenderType(String tenderType) {
-        this.tenderType = tenderType;
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public String getQualityType() {
+        return qualityType;
+    }
+
+    public void setQualityType(String qualityType) {
+        this.qualityType = qualityType;
     }
 }

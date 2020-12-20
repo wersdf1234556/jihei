@@ -1,5 +1,10 @@
 package org.tonzoc.common;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +15,8 @@ import org.tonzoc.service.IAttachmentService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 @Configuration
 public class FileHelper {
@@ -45,7 +52,9 @@ public class FileHelper {
             dest.delete();
             // 删除这个表中关联的这条记录 没做
             String guid = attachmentMapper.getGuid(fileName, typeGuid, subTypeGuid);
-            attachmentService.remove(guid);
+            if (!"".equals(guid) && guid != null) {
+                attachmentService.remove(guid);
+            }
         }
         if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
             dest.getParentFile().mkdir();
@@ -77,7 +86,20 @@ public class FileHelper {
         return null;
     }
 
-    // 下载文件
+    // 生成二维码
+    public void generateQRCodeImage(String text, int width, int height, String fileName) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height); // 生成二维码
+
+        String filePath = new IntelliSiteProperties().getFilePath() + "/qrcodeImg/" + fileName;
+        Path path = FileSystems.getDefault().getPath(filePath);
+
+        System.out.println("path" + path);
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path); // 将二维码存进去
+
+    }
+
+        // 下载文件
     public String downLoad(HttpServletResponse response, String name, String url) throws UnsupportedEncodingException {
 
         File file = new File(url);
