@@ -37,6 +37,9 @@ dependencies {
     compile group: 'net.sf.jmimemagic', name: 'jmimemagic', version: '0.1.4'
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.7'
 
+    compile group: 'com.google.zxing', name: 'core', version: '3.3.3' // 谷歌二维码
+    compile group: 'com.google.zxing', name: 'javase', version: '3.3.0' // 谷歌二维码
+
     compile group: 'org.apache.poi',name:'poi',version: '3.17'
     compile group: 'org.apache.poi',name:'poi-ooxml',version: '3.17'
 }

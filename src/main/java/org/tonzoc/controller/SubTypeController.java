@@ -36,7 +36,7 @@ public class SubTypeController extends BaseController {
     }
 
     @PostMapping
-    public void add( SubTypeModel subTypeModel) {
+    public void add(@RequestBody @Valid SubTypeModel subTypeModel) {
         this.subTypeService.save(subTypeModel);
     }
 

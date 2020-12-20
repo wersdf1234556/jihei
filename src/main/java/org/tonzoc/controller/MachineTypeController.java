@@ -36,7 +36,7 @@ public class MachineTypeController extends BaseController {
     }
 
     @PostMapping
-    public void add(MachineTypeModel mechanicsTypeModel) {
+    public void add(@RequestBody @Valid MachineTypeModel mechanicsTypeModel) {
         this.machineTypeService.save(mechanicsTypeModel);
     }
 

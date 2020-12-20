@@ -4,6 +4,7 @@ import org.tonzoc.annotation.*;
 
 import java.sql.Date;
 
+// 大事记
 @Table("memorabilias")
 public class MemorabiliaModel extends BaseModel {
 
@@ -14,7 +15,7 @@ public class MemorabiliaModel extends BaseModel {
     @Column(value = "name")
     private String name;
     @Column(value = "currentTime")
-    private Date currentTime;
+    private Date currentTime; // 当前时间
     @Column(value = "sortId")
     private Integer sortId;
     @Column(value = "imgAttachmentGuid")

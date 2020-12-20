@@ -21,6 +21,8 @@ public class IntelliSiteProperties {
 
     private String filePath = "D:/tool/file/jihei";
 
+    private String ip = "localhost:";
+
     public IntelliSiteProperties() {
     }
 
@@ -70,5 +72,13 @@ public class IntelliSiteProperties {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }
