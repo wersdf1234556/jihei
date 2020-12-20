@@ -36,8 +36,9 @@ public class LabStressMachineController extends BaseController {
     }
 
     @PostMapping
-    public LabStressMachineModel add(LabStressMachineModel labStressMachineModel) {
+    public LabStressMachineModel add(@RequestBody LabStressMachineModel labStressMachineModel) {
         System.out.println(labStressMachineModel);
+        labStressMachineService.save(labStressMachineModel);
         return labStressMachineModel;
 //        this.labStressMachineService.save(labStressMachineModel);
     }

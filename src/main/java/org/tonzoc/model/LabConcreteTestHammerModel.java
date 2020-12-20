@@ -5,10 +5,8 @@ import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-import javax.validation.constraints.NotEmpty;
-
-@Table(value = "labStressMachines")
-public class LabStressMachineModel extends BaseModel {
+@Table(value = "labConcreteTestHammers")
+public class LabConcreteTestHammerModel extends BaseModel {
 
     @PrimaryKey
     @Column(value = "guid")
@@ -16,10 +14,10 @@ public class LabStressMachineModel extends BaseModel {
     @Column(value = "organizationId")
     private String organizationId;
 
-    public LabStressMachineModel() {
+    public LabConcreteTestHammerModel() {
     }
 
-    public LabStressMachineModel(String guid, String organizationId) {
+    public LabConcreteTestHammerModel(String guid, String organizationId) {
         this.guid = guid;
         this.organizationId = organizationId;
     }
@@ -44,7 +42,7 @@ public class LabStressMachineModel extends BaseModel {
 
     @Override
     public String toString() {
-        return "LabStressMachineModel{" +
+        return "LabConcreteTestHammerModel{" +
                 "guid='" + guid + '\'' +
                 ", organizationId='" + organizationId + '\'' +
                 '}';
