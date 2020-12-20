@@ -12,6 +12,8 @@ public class PersonQueryParams {
     private String tenderGuid;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
+    @Operator(value = "eq", field = "idCard")
+    private String idCard;
 
 
     public String getGuid() {
@@ -44,5 +46,13 @@ public class PersonQueryParams {
 
     public void setPersonTypeGuid(String personTypeGuid) {
         this.personTypeGuid = personTypeGuid;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 }

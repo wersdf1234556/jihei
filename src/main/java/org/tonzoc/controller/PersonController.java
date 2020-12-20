@@ -5,13 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.PersonQueryParams;
-import org.tonzoc.controller.params.ProjectQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.PersonModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IPersonService;
-import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -40,6 +37,8 @@ public class PersonController extends BaseController {
         }
         if (personQueryParams.getPersonTypeGuid() != null && !personQueryParams.getPersonTypeGuid().equals("")) {
             sqlQueryParamList.setPersonTypeGuid(personQueryParams.getPersonTypeGuid());
+        }if (personQueryParams.getIdCard() != null && !personQueryParams.getIdCard().equals("")) {
+            sqlQueryParamList.setIdCard(personQueryParams.getIdCard());
         }
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);

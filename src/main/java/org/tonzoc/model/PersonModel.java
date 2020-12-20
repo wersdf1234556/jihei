@@ -18,6 +18,8 @@ public class PersonModel extends BaseModel{
     private String tenderName; //标段
     @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
     private String typeName; //类型
+    @Column(value = "idCard")
+    private String idCard;
 
     public String getGuid() {
         return guid;
@@ -65,5 +67,13 @@ public class PersonModel extends BaseModel{
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 }
