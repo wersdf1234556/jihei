@@ -12,6 +12,7 @@ import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IMemorabiliaService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class MemorabiliaController extends BaseController {
     }
 
     @PostMapping
-    public void add(MemorabiliaModel memorabiliaModel) {
+    public void add(@RequestBody @Valid MemorabiliaModel memorabiliaModel) {
         this.memorabiliaService.save(memorabiliaModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(MemorabiliaModel memorabiliaModel) {
+    public void update(@RequestBody @Valid MemorabiliaModel memorabiliaModel) {
         this.memorabiliaService.update(memorabiliaModel);
     }
 

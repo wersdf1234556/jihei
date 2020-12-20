@@ -13,6 +13,7 @@ import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.util.List;
@@ -37,12 +38,12 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(QualityTraceabilityModel laboratoryModel) {
+    public void add(@RequestBody @Valid QualityTraceabilityModel laboratoryModel) {
         this.qualityTraceabilityService.save(laboratoryModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(QualityTraceabilityModel laboratoryModel) {
+    public void update(@RequestBody @Valid QualityTraceabilityModel laboratoryModel) {
         this.qualityTraceabilityService.update(laboratoryModel);
     }
 

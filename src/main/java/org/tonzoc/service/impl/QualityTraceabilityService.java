@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.Date;
 
 @Service
+@Transactional
 public class QualityTraceabilityService extends BaseService<QualityTraceabilityModel> implements IQualityTraceabilityService {
 
     @Autowired
@@ -54,7 +55,6 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     @Override
-    @Transactional
     public String qrcode(String guid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
