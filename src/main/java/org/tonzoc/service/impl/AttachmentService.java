@@ -36,7 +36,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     private ISubTypeService subTypeService;
 
     // 单文件上传
-    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid, String laboratoryGuid) {
+    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid) {
 
         SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
         String[] str = fileHelper.fileUpload(file, subTypeModel.getName(),typeGuid, subTypeGuid);
@@ -46,13 +46,12 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         attachmentModel.setName(str[1]);
         attachmentModel.setSubTypeGuid(subTypeGuid);
         attachmentModel.setTypeGuid(typeGuid);
-        attachmentModel.setLaboratoryGuid(laboratoryGuid);
 
         this.save(attachmentModel);
     }
 
     // 多文件上传
-    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid, String laboratoryGuid) {
+    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid) {
 
         if (file.length > 0) {
             SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
@@ -66,7 +65,6 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
                 attachmentModel.setName(str[1]);
                 attachmentModel.setTypeGuid(typeGuid);
                 attachmentModel.setSubTypeGuid(subTypeGuid);
-                attachmentModel.setLaboratoryGuid(laboratoryGuid);
                 attachmentModel.setSortId(0);
 
                 list.add(attachmentModel);

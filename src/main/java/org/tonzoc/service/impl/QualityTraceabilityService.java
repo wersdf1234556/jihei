@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
@@ -17,7 +16,8 @@ import org.tonzoc.service.IQualityTraceabilityService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -35,27 +35,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private FileHelper fileHelper;
 
-    @Override
-    public String upFile(MultipartFile file, Date currentTime) {
-
-        String urlName = "大事记/" + currentTime;
-        System.out.println(urlName);
-        String[] str = fileHelper.fileUpload(file, urlName, "", "");
-
-        AttachmentModel attachmentModel = new AttachmentModel();
-        attachmentModel.setUrl(str[0]);
-        attachmentModel.setName(str[1]);
-        attachmentModel.setSortId(0);
-        attachmentModel.setSubTypeGuid("");
-        attachmentModel.setTypeGuid("");
-
-        attachmentService.save(attachmentModel);
-        System.out.println(attachmentMapper.getGuid(str[1], "", "") + 222);
-        return attachmentMapper.getGuid(str[1], "", "");
-    }
 
     @Override
-    public String qrcode(String guid) {
+    public Map<String, String> qrcode(String guid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
@@ -83,6 +65,8 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         attachmentModel.setSubTypeGuid("");
         attachmentService.save(attachmentModel);
 
-        return attachmentMapper.getGuid(guid + ".png", "", "");
+        Map<String, String> map = new HashMap<>();
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", "", ""));
+        return map;
     }
 }

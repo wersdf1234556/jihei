@@ -14,8 +14,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String guid;
     @Column(value = "name")
     private String name;
-    @Column(value = "currentDate")
-    private Date currentDate;  // 时间
+    @Column(value = "currentTime")
+    private Date currentTime;  // 时间
     @Column(value = "operator")
     private String operator; // 操作人
     @Column(value = "qualityType")
@@ -51,12 +51,12 @@ public class QualityTraceabilityModel extends BaseModel {
         this.name = name;
     }
 
-    public Date getCurrentDate() {
-        return currentDate;
+    public Date getCurrentTime() {
+        return currentTime;
     }
 
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 
     public String getOperator() {

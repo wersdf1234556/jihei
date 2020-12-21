@@ -3,7 +3,6 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -15,8 +14,8 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("qualityTraceability")
@@ -53,14 +52,8 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @GetMapping(value = "qrcode")
-    public String qrcode(String guid){
+    public Map<String, String> qrcode(String guid){
 
         return qualityTraceabilityService.qrcode(guid);
-    }
-
-    @GetMapping(value = "upFile")
-    public String upFile(MultipartFile file, Date currentTime) {
-
-        return qualityTraceabilityService.upFile(file, currentTime);
     }
 }

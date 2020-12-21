@@ -9,8 +9,8 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "eq", field = "currentDate")
-    private Date currentDate;
+    @Operator(value = "eq", field = "currentTime")
+    private Date currentTime;
 
     @Operator(value = "eq", field = "qualityType")
     private String qualityType;
@@ -56,12 +56,12 @@ public class QualityTraceabilityQueryParams {
         this.subTypeGuid = subTypeGuid;
     }
 
-    public Date getCurrentDate() {
-        return currentDate;
+    public Date getCurrentTime() {
+        return currentTime;
     }
 
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 
     public String getQualityType() {

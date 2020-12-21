@@ -18,9 +18,6 @@ public class AttachmentQueryParams {
     @Operator(value = "eq", field = "subTypeGuid")
     private String subTypeGuid;
 
-    @Operator(value = "eq", field = "laboratoryGuid")
-    private String laboratoryGuid;
-
     @Operator(value = "gte", field = "createdAt")
     private Date startTime;
 
@@ -57,14 +54,6 @@ public class AttachmentQueryParams {
 
     public void setSubTypeGuid(String subTypeGuid) {
         this.subTypeGuid = subTypeGuid;
-    }
-
-    public String getLaboratoryGuid() {
-        return laboratoryGuid;
-    }
-
-    public void setLaboratoryGuid(String laboratoryGuid) {
-        this.laboratoryGuid = laboratoryGuid;
     }
 
     public Date getStartTime() {

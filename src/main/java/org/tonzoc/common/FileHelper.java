@@ -51,7 +51,7 @@ public class FileHelper {
         if (dest.exists()) { // 如果原先有相同文件，则删除
             dest.delete();
             // 删除这个表中关联的这条记录 没做
-            String guid = attachmentMapper.getGuid(fileName, typeGuid, subTypeGuid);
+            String guid = attachmentMapper.getGuid(path + "/" + subTypeName + "/" + fileName, typeGuid, subTypeGuid);
             if (!"".equals(guid) && guid != null) {
                 attachmentService.remove(guid);
             }

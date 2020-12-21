@@ -21,8 +21,6 @@ public class AttachmentModel extends BaseModel {
     private String typeGuid;
     @Column(value = "subTypeGuid")
     private String subTypeGuid;
-    @Column(value = "laboratoryGuid")
-    private String laboratoryGuid;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -31,8 +29,6 @@ public class AttachmentModel extends BaseModel {
     private String typeName;
     @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
     private String subName;
-    @JoinColumn(value = "name", type = QualityTraceabilityModel.class, leftColumn = "laboratoryGuid", rightColumn = "guid")
-    private String laboratoryName;
 
     public AttachmentModel() {
     }
@@ -109,19 +105,4 @@ public class AttachmentModel extends BaseModel {
         this.createdAt = createdAt;
     }
 
-    public String getLaboratoryGuid() {
-        return laboratoryGuid;
-    }
-
-    public void setLaboratoryGuid(String laboratoryGuid) {
-        this.laboratoryGuid = laboratoryGuid;
-    }
-
-    public String getLaboratoryName() {
-        return laboratoryName;
-    }
-
-    public void setLaboratoryName(String laboratoryName) {
-        this.laboratoryName = laboratoryName;
-    }
 }

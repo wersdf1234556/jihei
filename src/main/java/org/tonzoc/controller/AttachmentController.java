@@ -29,15 +29,15 @@ public class AttachmentController extends BaseController {
     IAttachmentService attachmentService;
 
     @PostMapping("/upFile")
-    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid, String laboratoryGuid) {
+    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid) {
 
-        attachmentService.upFile(file, typeGuid, subTypeGuid, laboratoryGuid);
+        attachmentService.upFile(file, typeGuid, subTypeGuid);
     }
 
     @PostMapping("/upFiles")
-    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid, String laboratoryGuid) {
+    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid) {
 
-        attachmentService.upFiles(file, typeGuid, subTypeGuid, laboratoryGuid);
+        attachmentService.upFiles(file, typeGuid, subTypeGuid);
     }
 
     @GetMapping("/downLoadFile")

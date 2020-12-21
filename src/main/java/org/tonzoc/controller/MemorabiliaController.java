@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.MemorabiliaQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -14,7 +15,9 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("memorabilia")
@@ -49,5 +52,11 @@ public class MemorabiliaController extends BaseController {
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.memorabiliaService.remove(guid);
+    }
+
+    @PostMapping(value = "upFile")
+    public Map<String, String> upFile(MultipartFile file, Date currentTime) {
+
+        return memorabiliaService.upFile(file, currentTime);
     }
 }
