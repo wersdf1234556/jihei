@@ -9,6 +9,7 @@ import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SubTypeModel;
+import org.tonzoc.model.TypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.service.ITypeService;

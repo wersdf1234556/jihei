@@ -10,10 +10,7 @@ import org.tonzoc.model.MemorabiliaModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IMemorabiliaService;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -29,7 +26,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
     private FileHelper fileHelper;
 
     @Override
-    public Map<String, String> upFile(MultipartFile file, Date currentTime) {
+    public Map<String, String> upFile(MultipartFile file, String currentTime) {
 
         String urlName = "大事记/" + currentTime;
         String[] str = fileHelper.fileUpload(file, urlName, "", "");

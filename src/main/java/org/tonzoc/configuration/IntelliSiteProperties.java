@@ -19,7 +19,7 @@ public class IntelliSiteProperties {
 
     private String defaultUserPassword = "123456";
 
-    private String filePath = "D:/tool/file/jihei";
+    private String filePath = "D:/intellisite/jihei/upload";
 
     private String ip = "localhost:";
 

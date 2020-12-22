@@ -15,7 +15,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +54,7 @@ public class MemorabiliaController extends BaseController {
     }
 
     @PostMapping(value = "upFile")
-    public Map<String, String> upFile(MultipartFile file, Date currentTime) {
+    public Map<String, String> upFile(MultipartFile file, String currentTime) {
 
         return memorabiliaService.upFile(file, currentTime);
     }

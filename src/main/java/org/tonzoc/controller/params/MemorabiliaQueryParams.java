@@ -2,10 +2,15 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
+import java.sql.Date;
+
 public class MemorabiliaQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+
+    @Operator(value = "eq", field = "currentTime")
+    private Date currentTime;
 
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
@@ -46,5 +51,13 @@ public class MemorabiliaQueryParams {
 
     public void setPdfAttachmentGuid(String pdfAttachmentGuid) {
         this.pdfAttachmentGuid = pdfAttachmentGuid;
+    }
+
+    public Date getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 }
