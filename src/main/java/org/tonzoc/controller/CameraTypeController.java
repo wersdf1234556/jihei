@@ -27,15 +27,8 @@ public class CameraTypeController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         System.out.println(pageQueryParams.getOrder());
         Page<CameraTypeModel> page = parsePage(pageQueryParams);
-        CameraTypeQueryParams sqlQueryParamList = new CameraTypeQueryParams();
-        if (cameraTypeQueryParams.getGuid() != null && !cameraTypeQueryParams.getGuid().equals("")) {
-            sqlQueryParamList.setGuid(cameraTypeQueryParams.getGuid());
-        }
-        if (cameraTypeQueryParams.getName() != null && !cameraTypeQueryParams.getName().equals("")) {
-            sqlQueryParamList.setName(cameraTypeQueryParams.getName());
-        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(cameraTypeQueryParams);
         List list = cameraTypeService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);

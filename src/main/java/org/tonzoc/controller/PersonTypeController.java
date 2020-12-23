@@ -29,14 +29,9 @@ public class PersonTypeController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<PersonModel> page = parsePage(pageQueryParams);
-        PersonTypeQueryParams sqlQueryParamList = new PersonTypeQueryParams();
-        if (personTypeQueryParams.getGuid() != null && !personTypeQueryParams.getGuid().equals("")) {
-            sqlQueryParamList.setGuid(personTypeQueryParams.getGuid());
-        }if (personTypeQueryParams.getName() != null && !personTypeQueryParams.getName().equals("")) {
-            sqlQueryParamList.setName(personTypeQueryParams.getName());
-        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(personTypeQueryParams);
 
         List list = personTypeService.list(sqlQueryParams);
 

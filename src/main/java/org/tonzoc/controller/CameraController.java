@@ -40,19 +40,10 @@ public class CameraController extends BaseController {
             pageQueryParams.setSort("asc");
         }
         Page<CameraModel> page = parsePage(pageQueryParams);
-        CameraQueryParams sqlQueryParamList = new CameraQueryParams();
-        if (camerasQueryParams.getName() != null && !camerasQueryParams.getName().equals("")) {
-            sqlQueryParamList.setName(camerasQueryParams.getName());
-        }if (camerasQueryParams.getDeviceSerial() != null && !camerasQueryParams.getDeviceSerial().equals("")) {
-            sqlQueryParamList.setDeviceSerial(camerasQueryParams.getDeviceSerial());
-        }if (camerasQueryParams.getTypeGuid() != null && !camerasQueryParams.getTypeGuid().equals("")) {
-            sqlQueryParamList.setTypeGuid(camerasQueryParams.getTypeGuid());
-        }if (camerasQueryParams.getTenderGuid() != null && !camerasQueryParams.getTenderGuid().equals("")) {
-            sqlQueryParamList.setTenderGuid(camerasQueryParams.getTenderGuid());
-        }if (camerasQueryParams.getStatus()==null){
-            sqlQueryParamList.setStatus(0);
+        if (camerasQueryParams.getStatus()==null){
+            camerasQueryParams.setStatus(0);
         }
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(camerasQueryParams);
         List list = cameraService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);

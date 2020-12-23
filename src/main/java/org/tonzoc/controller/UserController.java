@@ -43,14 +43,8 @@ public class UserController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<UserModel> page = parsePage(pageQueryParams);
-        UserQueryParams sqlQueryParamList = new UserQueryParams();
-        if (userQueryParams.getName() != null && !userQueryParams.getName().equals("")) {
-            sqlQueryParamList.setName(userQueryParams.getName());
-        }if (userQueryParams.getProjectGuid() != null && !userQueryParams.getProjectGuid().equals("")) {
-            sqlQueryParamList.setProjectGuid(userQueryParams.getProjectGuid());
-        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(userQueryParams);
 
         List<UserModel> list = userService.list(sqlQueryParams);
 

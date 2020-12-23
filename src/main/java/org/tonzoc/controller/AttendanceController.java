@@ -30,16 +30,7 @@ public class AttendanceController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         System.out.println(pageQueryParams.getOrder());
         Page<AttendanceModel> page = parsePage(pageQueryParams);
-        AttendanceQueryParams sqlQueryParamList = new AttendanceQueryParams();
-        if (attendanceQueryParams.getGuid() != null && !attendanceQueryParams.getGuid().equals("")) {
-            sqlQueryParamList.setGuid(attendanceQueryParams.getGuid());
-        }if (attendanceQueryParams.getIdCard() != null && !attendanceQueryParams.getIdCard().equals("")) {
-            sqlQueryParamList.setIdCard(attendanceQueryParams.getIdCard());
-        }if (attendanceQueryParams.getAttDate() != null && !attendanceQueryParams.getAttDate().equals("")) {
-            sqlQueryParamList.setAttDate(attendanceQueryParams.getAttDate());
-        }
-
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(attendanceQueryParams);
         List list = attendanceService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);

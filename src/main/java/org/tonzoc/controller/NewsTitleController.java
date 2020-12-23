@@ -30,14 +30,8 @@ public class NewsTitleController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<NewsTitleModel> page = parsePage(pageQueryParams);
-        NewsTitleQueryParams sqlQueryParamList = new NewsTitleQueryParams();
-        if (newsQueryParams.getGuid() != null && !newsQueryParams.getGuid().equals("")) {
-            sqlQueryParamList.setGuid(newsQueryParams.getGuid());
-        }if (newsQueryParams.getTitle() != null && !newsQueryParams.getTitle().equals("")) {
-            sqlQueryParamList.setTitle(newsQueryParams.getTitle());
-        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(sqlQueryParamList);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(newsQueryParams);
 
         List list = newsTitleService.list(sqlQueryParams);
 
