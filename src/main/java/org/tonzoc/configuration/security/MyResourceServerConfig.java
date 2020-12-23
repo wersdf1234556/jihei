@@ -50,6 +50,8 @@ public class MyResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http.csrf().disable();
 
+        http.headers().frameOptions().disable();
+
         authorizeConfigManager.config(http.authorizeRequests());
 
         http.formLogin()

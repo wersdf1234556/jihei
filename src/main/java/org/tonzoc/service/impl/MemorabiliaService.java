@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
+import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.MemorabiliaModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IMemorabiliaService;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,11 +28,25 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
     @Autowired
     private FileHelper fileHelper;
 
-    @Override
-    public Map<String, String> upFile(MultipartFile file, String currentTime) {
+    @Autowired
+    private IntelliSiteProperties intelliSiteProperties;
 
-        String urlName = "大事记/" + currentTime;
-        String[] str = fileHelper.fileUpload(file, urlName, "", "");
+    @Override
+    public List<MemorabiliaModel> selected (List<MemorabiliaModel> list) {
+        if (list.size() > 0) {
+            for (MemorabiliaModel m : list) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+                m.setCurrentDate(simpleDateFormat.format(m.getCurrentTime()));
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public Map<String, String> upFile(MultipartFile file, String currentDate) {
+
+        intelliSiteProperties.setFileUrl("/大事记/");
+        String[] str = fileHelper.fileUpload(file, currentDate, "", "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);
@@ -39,6 +56,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
         attachmentModel.setTypeGuid("");
 
         attachmentService.save(attachmentModel);
+        intelliSiteProperties.setFileUrl("/");
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0], "", ""));
         return map;

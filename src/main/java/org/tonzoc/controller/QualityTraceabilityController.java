@@ -3,12 +3,12 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -28,7 +28,7 @@ public class QualityTraceabilityController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams laboratoryQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<SubTypeModel> page = parsePage(pageQueryParams);
+        Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(laboratoryQueryParams);
         List<QualityTraceabilityModel> list = qualityTraceabilityService.list(sqlQueryParams);
@@ -55,5 +55,11 @@ public class QualityTraceabilityController extends BaseController {
     public Map<String, String> qrcode(String guid){
 
         return qualityTraceabilityService.qrcode(guid);
+    }
+
+    @PostMapping(value = "upFile")
+    public void upFile(MultipartFile[] file, String typeGuid, String subTypeGuid){
+
+        qualityTraceabilityService.upFile(file, typeGuid, subTypeGuid);
     }
 }

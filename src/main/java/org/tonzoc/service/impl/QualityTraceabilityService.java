@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
@@ -37,23 +38,31 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
 
     @Override
+    public void upFile(MultipartFile[] file, String typeGuid, String subTypeGuid) {
+
+        intelliSiteProperties.setFileUrl("/质量追溯/");
+        attachmentService.upFiles(file, typeGuid, subTypeGuid);
+        intelliSiteProperties.setFileUrl("/");
+    }
+
+    @Override
     public Map<String, String> qrcode(String guid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        String address = request.getLocalPort() + "";  // 获取端口号
+        String address = request.getLocalPort() + ""; // 获取端口号
 
         String payUrl = intelliSiteProperties.getIp() + address + "/attachment/downLoadFile?guid =" + guid; // 二维码存的内容
 
         try {
-            fileHelper.generateQRCodeImage(payUrl, 350, 350,  guid + ".png");
+            fileHelper.generateQRCodeImage(payUrl, 350, 350, guid + ".png");
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String oldGuid =  attachmentMapper.getGuid(guid + ".png", "", "");
+        String oldGuid = attachmentMapper.getGuid(guid + ".png", "", "");
         if (oldGuid != null) {
             attachmentService.remove(oldGuid);
         }

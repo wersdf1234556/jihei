@@ -28,10 +28,10 @@ public class MachineController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, MachineQueryParams machineQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<ProjectModel> page = parsePage(pageQueryParams);
+        Page<MachineModel> page = parsePage(pageQueryParams);
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(machineQueryParams);
 
-        List list = machineService.list(sqlQueryParams);
+        List<MachineModel> list  = machineService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);
     }

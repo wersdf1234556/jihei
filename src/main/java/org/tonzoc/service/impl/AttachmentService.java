@@ -5,14 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
+import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SubTypeModel;
-import org.tonzoc.model.TypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.ISubTypeService;
-import org.tonzoc.service.ITypeService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,16 +30,13 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     private AttachmentMapper attachmentMapper;
 
     @Autowired
-    private ITypeService typeService;
-
-    @Autowired
     private ISubTypeService subTypeService;
 
     // 单文件上传
     public void upFile(MultipartFile file, String typeGuid, String subTypeGuid) {
 
         SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
-        String[] str = fileHelper.fileUpload(file, subTypeModel.getName(),typeGuid, subTypeGuid);
+        String[] str = fileHelper.fileUpload(file, subTypeModel.getName(), typeGuid, subTypeGuid);
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);

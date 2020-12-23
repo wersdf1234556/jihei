@@ -20,8 +20,11 @@ public class IntelliSiteProperties {
     private String defaultUserPassword = "123456";
 
     private String filePath = "D:/intellisite/jihei/upload";
+    // private String filePath = "D:/tool/file/jihei";
 
-    private String ip = "localhost:";
+    private String ip = "123.57.220.90:";
+
+    private String fileUrl = "/";
 
     public IntelliSiteProperties() {
     }
@@ -80,5 +83,13 @@ public class IntelliSiteProperties {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

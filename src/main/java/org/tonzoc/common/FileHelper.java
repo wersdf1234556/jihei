@@ -38,20 +38,24 @@ public class FileHelper {
         if (file.isEmpty()) {
             return str;
         }
-        String fileName = file.getOriginalFilename();
         String path = intelliSiteProperties.getFilePath(); // 路径
+        String fileType = intelliSiteProperties.getFileUrl(); // 文件类型
+        String fileName = file.getOriginalFilename(); // 文件名称
 
         File dest = null;
+        String url = "";
         if ("".equals(subTypeName) || subTypeName == null) {
-            dest = new File(path + "/" + fileName);
-        }else{
-            dest = new File(path + "/" + subTypeName + "/" + fileName);
+            url = path + fileType + fileName;
+            dest = new File(url);
+        } else {
+            url = path + fileType + subTypeName + "/" + fileName;
+            dest = new File(url);
         }
 
         if (dest.exists()) { // 如果原先有相同文件，则删除
             dest.delete();
-            // 删除这个表中关联的这条记录 没做
-            String guid = attachmentMapper.getGuid(path + "/" + subTypeName + "/" + fileName, typeGuid, subTypeGuid);
+            // 删除这个表中关联的这条记录
+            String guid = attachmentMapper.getGuid(url, typeGuid, subTypeGuid);
             if (!"".equals(guid) && guid != null) {
                 attachmentService.remove(guid);
             }
@@ -62,10 +66,9 @@ public class FileHelper {
 
         try {
             file.transferTo(dest); // 保存文件
-            str[0] = path + "/" + subTypeName + "/" + fileName;
+            str[0] = url;
             str[1] = fileName;
             return str;
-
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return str;
@@ -73,7 +76,6 @@ public class FileHelper {
             e.printStackTrace();
             return str;
         }
-
     }
 
     // 上传多个文件
@@ -99,7 +101,7 @@ public class FileHelper {
 
     }
 
-        // 下载文件
+    // 下载文件
     public String downLoad(HttpServletResponse response, String name, String url) throws UnsupportedEncodingException {
 
         File file = new File(url);

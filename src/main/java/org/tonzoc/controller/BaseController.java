@@ -54,7 +54,7 @@ public class BaseController {
                 String getterName = "get" + StringUtils.capitalize(field.getName());
                 Method getter = queryParams.getClass().getMethod(getterName);
 
-                if (getter.invoke(queryParams) != null) {
+                if (getter.invoke(queryParams) != null && !getter.invoke(queryParams).toString().equals("")) {
                     SqlQueryParam sqlQueryParam = new SqlQueryParam(operator.field(), getter.invoke(queryParams).toString(), operator.value());
 
                     sqlQueryParams.add(sqlQueryParam);

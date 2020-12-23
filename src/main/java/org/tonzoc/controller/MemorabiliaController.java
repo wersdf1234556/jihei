@@ -9,12 +9,15 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MemorabiliaModel;
-import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IMemorabiliaService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,22 +32,35 @@ public class MemorabiliaController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, MemorabiliaQueryParams memorabiliaQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<SubTypeModel> page = parsePage(pageQueryParams);
+        Page<MemorabiliaModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(memorabiliaQueryParams);
         List<MemorabiliaModel> list = memorabiliaService.list(sqlQueryParams);
+
+        list = memorabiliaService.selected(list);
 
         return new PageResponse(page.getTotal(), list);
 
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid MemorabiliaModel memorabiliaModel) {
+    public void add(@RequestBody @Valid MemorabiliaModel memorabiliaModel) throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentTime = simpleDateFormat.parse(memorabiliaModel.getCurrentDate());
+        System.out.println(currentTime);
+        memorabiliaModel.setCurrentTime(currentTime);
+
         this.memorabiliaService.save(memorabiliaModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid MemorabiliaModel memorabiliaModel) {
+    public void update(@RequestBody @Valid MemorabiliaModel memorabiliaModel) throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentTime = simpleDateFormat.parse(memorabiliaModel.getCurrentDate());
+        memorabiliaModel.setCurrentTime(currentTime);
+
         this.memorabiliaService.update(memorabiliaModel);
     }
 

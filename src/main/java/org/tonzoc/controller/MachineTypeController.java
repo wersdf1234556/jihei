@@ -8,7 +8,6 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MachineTypeModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -27,10 +26,10 @@ public class MachineTypeController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, MachineTypeQueryParams machineTypeQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<ProjectModel> page = parsePage(pageQueryParams);
+        Page<MachineTypeModel> page = parsePage(pageQueryParams);
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(machineTypeQueryParams);
 
-        List list = machineTypeService.list(sqlQueryParams);
+        List<MachineTypeModel> list = machineTypeService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);
     }

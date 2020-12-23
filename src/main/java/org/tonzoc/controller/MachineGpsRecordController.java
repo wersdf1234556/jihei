@@ -8,7 +8,6 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MachineGpsRecordModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IMachineGpsRecordService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -27,10 +26,10 @@ public class MachineGpsRecordController extends BaseController{
     public PageResponse list(PageQueryParams pageQueryParams, MachineGpsRecordQueryParams machineGpsRecordQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<ProjectModel> page = parsePage(pageQueryParams);
+        Page<MachineGpsRecordModel> page = parsePage(pageQueryParams);
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(machineGpsRecordQueryParams);
 
-        List list = machineGpsRecordService.list(sqlQueryParams);
+        List<MachineGpsRecordModel> list = machineGpsRecordService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);
     }

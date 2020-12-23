@@ -2,7 +2,8 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 // 大事记
 @Table("memorabilias")
@@ -16,6 +17,7 @@ public class MemorabiliaModel extends BaseModel {
     private String name;
     @Column(value = "currentTime")
     private Date currentTime; // 当前时间
+    private String currentDate;
     @Column(value = "sortId")
     private Integer sortId;
     @Column(value = "imgAttachmentGuid")
@@ -86,6 +88,14 @@ public class MemorabiliaModel extends BaseModel {
 
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
     public String getPdfName() {
