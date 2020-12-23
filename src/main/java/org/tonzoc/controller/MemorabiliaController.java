@@ -46,10 +46,7 @@ public class MemorabiliaController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid MemorabiliaModel memorabiliaModel) throws ParseException {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentTime = simpleDateFormat.parse(memorabiliaModel.getCurrentDate());
-        System.out.println(currentTime);
-        memorabiliaModel.setCurrentTime(currentTime);
+        memorabiliaModel.setCurrentTime(memorabiliaService.updated(memorabiliaModel.getCurrentDate()));
 
         this.memorabiliaService.save(memorabiliaModel);
     }
@@ -57,9 +54,7 @@ public class MemorabiliaController extends BaseController {
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid MemorabiliaModel memorabiliaModel) throws ParseException {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentTime = simpleDateFormat.parse(memorabiliaModel.getCurrentDate());
-        memorabiliaModel.setCurrentTime(currentTime);
+        memorabiliaModel.setCurrentTime(memorabiliaService.updated(memorabiliaModel.getCurrentDate()));
 
         this.memorabiliaService.update(memorabiliaModel);
     }

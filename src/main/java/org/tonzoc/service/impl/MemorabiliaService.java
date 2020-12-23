@@ -11,7 +11,9 @@ import org.tonzoc.model.MemorabiliaModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IMemorabiliaService;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,15 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
             }
         }
         return list;
+    }
+
+    @Override
+    public Date updated(String currentDate) throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentTime = simpleDateFormat.parse(currentDate);
+
+        return currentTime;
     }
 
     @Override

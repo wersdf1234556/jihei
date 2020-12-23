@@ -6,6 +6,8 @@ public class MachineQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+    @Operator(value = "eq", field = "machineKey")
+    private String machineKey; // 机械编号
     @Operator(value = "eq", field = "machineTypeGuid")
     private String machineTypeGuid;
     @Operator(value = "eq", field = "machineCategoryGuid")
@@ -19,6 +21,14 @@ public class MachineQueryParams {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public String getMachineKey() {
+        return machineKey;
+    }
+
+    public void setMachineKey(String machineKey) {
+        this.machineKey = machineKey;
     }
 
     public String getMachineTypeGuid() {
