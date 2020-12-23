@@ -13,7 +13,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -37,13 +36,13 @@ public class MapInformationController extends BaseController {
     }
 
     @PostMapping
-    public void add(MapInformationModel mapInformationModel) {
+    public void add(@RequestBody @Valid MapInformationModel mapInformationModel) {
 
         this.mapInformationService.save(mapInformationModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(MapInformationModel mapInformationModel) {
+    public void update(@RequestBody @Valid MapInformationModel mapInformationModel) {
 
         this.mapInformationService.update(mapInformationModel);
     }
