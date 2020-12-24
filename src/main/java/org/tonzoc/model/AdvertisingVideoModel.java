@@ -23,7 +23,7 @@ public class AdvertisingVideoModel extends BaseModel{
     private String videoAttachmentGuid;
 
     @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "imgAttachmentGuid", rightColumn = "guid")
-    private String imgUrl; //图片url
+    private String imgUrl; //图片的url
     @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "videoAttachmentGuid", rightColumn = "guid")
     private String videoUrl; //视频url，自维护
 
