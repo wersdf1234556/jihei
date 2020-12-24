@@ -73,7 +73,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
 
         if (!memorabiliaModel.getCurrentDate().equals("") && memorabiliaModel.getCurrentDate() != null) {
 
-            memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()));
+            memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()), memorabiliaModel.getGuid());
         }
         memorabiliaModel.setSortId(0);
         memorabiliaModel.setCurrentDate("");

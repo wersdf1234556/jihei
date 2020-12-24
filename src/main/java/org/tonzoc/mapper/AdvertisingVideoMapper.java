@@ -7,6 +7,6 @@ import java.util.Date;
 
 public interface AdvertisingVideoMapper extends BaseMapper<AdvertisingVideoModel> {
 
-    @Update("update advertisingVideos set currentTime = #{currentTime}")
-    void updateTime(Date currentTime);
+    @Update("update advertisingVideos set currentTime = #{currentTime} where guid = #{guid}")
+    void updateTime(Date currentTime, String guid);
 }

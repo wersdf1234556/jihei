@@ -7,6 +7,6 @@ import java.util.Date;
 
 public interface MemorabiliaMapper extends BaseMapper<MemorabiliaModel> {
 
-    @Update("update memorabilias set currentTime = #{currentTime}")
-    void updateTime(Date currentTime);
+    @Update("update memorabilias set currentTime = #{currentTime} where guid = #{guid}")
+    void updateTime(Date currentTime, String guid);
 }

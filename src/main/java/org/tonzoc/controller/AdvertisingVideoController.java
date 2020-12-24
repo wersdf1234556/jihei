@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.AdvertisingVideoQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("advertisingVideo")
@@ -59,5 +61,11 @@ public class AdvertisingVideoController extends BaseController{
     @DeleteMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         advertisingVideoService.removeMany(guids);
+    }
+
+    @PostMapping(value = "upFile")
+    public Map<String, String> upFile(MultipartFile file, String currentTime) {
+
+        return advertisingVideoService.upFile(file, currentTime);
     }
 }

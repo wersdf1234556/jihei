@@ -38,7 +38,7 @@ public class MapInformationService extends BaseService<MapInformationModel> impl
 
         if (!mapInformationModel.getCurrentDate().equals("") && mapInformationModel.getCurrentDate() != null) {
 
-            mapInformationMapper.updateTime(TimeHelper.stringToDate(mapInformationModel.getCurrentDate()));
+            mapInformationMapper.updateTime(TimeHelper.stringToDate(mapInformationModel.getCurrentDate()), mapInformationModel.getGuid());
         }
         mapInformationModel.setSortId(0);
         mapInformationModel.setCurrentDate("");
