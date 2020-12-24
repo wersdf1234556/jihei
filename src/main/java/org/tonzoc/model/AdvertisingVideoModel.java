@@ -2,24 +2,33 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
+import java.util.Date;
+
 @Table(value = "advertisingVideos")
 public class AdvertisingVideoModel extends BaseModel{
     @PrimaryKey
     @NotInsertColumn
     @Column(value = "guid")
     private String guid;
-    @Column(value = "title")
-    private String title;
-    @Column(value = "ImageGuid")
-    private String ImageGuid;
-    @Column(value = "date")
-    private String date;
-    @Column(value = "videoGuid")
-    private String videoGuid;
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "ImageGuid", rightColumn = "guid")
-    private String ImageUrl; //图片url
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "videoGuid", rightColumn = "guid")
+    @Column(value = "name")
+    private String name;
+    @Column(value = "currentTime")
+    private Date currentTime;
+    private String currentDate;
+    @Column(value = "sortId")
+    private Integer sortId;
+    @Column(value = "imgAttachmentGuid")
+    private String imgAttachmentGuid;
+    @Column(value = "videoAttachmentGuid")
+    private String videoAttachmentGuid;
+
+    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "imgAttachmentGuid", rightColumn = "guid")
+    private String imgUrl; //图片url
+    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "videoAttachmentGuid", rightColumn = "guid")
     private String videoUrl; //视频url，自维护
+
+    public AdvertisingVideoModel() {
+    }
 
     public String getGuid() {
         return guid;
@@ -29,44 +38,52 @@ public class AdvertisingVideoModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getImageGuid() {
-        return ImageGuid;
+    public String getImgAttachmentGuid() {
+        return imgAttachmentGuid;
     }
 
-    public void setImageGuid(String imageGuid) {
-        ImageGuid = imageGuid;
+    public void setImgAttachmentGuid(String imgAttachmentGuid) {
+        this.imgAttachmentGuid = imgAttachmentGuid;
     }
 
-    public String getDate() {
-        return date;
+    public Date getCurrentTime() {
+        return currentTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 
-    public String getVideoGuid() {
-        return videoGuid;
+    public String getCurrentDate() {
+        return currentDate;
     }
 
-    public void setVideoGuid(String videoGuid) {
-        this.videoGuid = videoGuid;
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
-    public String getImageUrl() {
-        return ImageUrl;
+    public String getVideoAttachmentGuid() {
+        return videoAttachmentGuid;
     }
 
-    public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+    public void setVideoAttachmentGuid(String videoAttachmentGuid) {
+        this.videoAttachmentGuid = videoAttachmentGuid;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getVideoUrl() {
@@ -75,5 +92,13 @@ public class AdvertisingVideoModel extends BaseModel{
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 }

@@ -49,4 +49,9 @@ public class TypeController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) {
         this.typeService.remove(guid);
     }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+        typeService.removeMany(guids);
+    }
 }

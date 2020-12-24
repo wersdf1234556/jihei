@@ -35,8 +35,8 @@ public class MemorabiliaController extends BaseController {
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(memorabiliaQueryParams);
         List<MemorabiliaModel> list = memorabiliaService.list(sqlQueryParams);
-
         list = memorabiliaService.selected(list);
+
         return new PageResponse(page.getTotal(), list);
 
     }
@@ -51,13 +51,18 @@ public class MemorabiliaController extends BaseController {
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid MemorabiliaModel memorabiliaModel) throws ParseException {
 
-        memorabiliaModel.setCurrentTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()));
+        memorabiliaModel = memorabiliaService.updateTime(memorabiliaModel);
         this.memorabiliaService.update(memorabiliaModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.memorabiliaService.remove(guid);
+    }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+        memorabiliaService.removeMany(guids);
     }
 
     @PostMapping(value = "upFile")

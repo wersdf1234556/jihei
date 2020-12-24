@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
+import org.tonzoc.mapper.MemorabiliaMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.MemorabiliaModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IMemorabiliaService;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,9 @@ import java.util.Map;
 
 @Service
 public class MemorabiliaService extends BaseService<MemorabiliaModel> implements IMemorabiliaService {
+
+    @Autowired
+    private MemorabiliaMapper memorabiliaMapper;
 
     @Autowired
     private IAttachmentService attachmentService;
@@ -60,5 +66,17 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0], "", ""));
         return map;
+    }
+
+    @Override
+    public MemorabiliaModel updateTime(MemorabiliaModel memorabiliaModel) throws ParseException {
+
+        if (!memorabiliaModel.getCurrentDate().equals("") && memorabiliaModel.getCurrentDate() != null) {
+
+            memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()));
+        }
+        memorabiliaModel.setSortId(0);
+        memorabiliaModel.setCurrentDate("");
+        return memorabiliaModel;
     }
 }

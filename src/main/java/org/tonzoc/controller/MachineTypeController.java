@@ -49,7 +49,7 @@ public class MachineTypeController extends BaseController {
         this.machineTypeService.remove(guid);
     }
 
-    @PostMapping(value = "removeMany")
+    @DeleteMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         machineTypeService.removeMany(guids);
     }

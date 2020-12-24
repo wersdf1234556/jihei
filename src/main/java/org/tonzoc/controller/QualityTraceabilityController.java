@@ -51,6 +51,11 @@ public class QualityTraceabilityController extends BaseController {
         this.qualityTraceabilityService.remove(guid);
     }
 
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+        qualityTraceabilityService.removeMany(guids);
+    }
+
     @GetMapping(value = "qrcode")
     public Map<String, String> qrcode(String guid){
 

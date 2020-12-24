@@ -49,4 +49,9 @@ public class SubTypeController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) {
         this.subTypeService.remove(guid);
     }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+        subTypeService.removeMany(guids);
+    }
 }

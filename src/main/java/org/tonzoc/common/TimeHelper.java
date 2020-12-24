@@ -49,6 +49,7 @@ public class TimeHelper {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date currentTime = simpleDateFormat.parse(currentDate);
 
+        System.out.println("时间" + currentTime);
         return currentTime;
     }
 }

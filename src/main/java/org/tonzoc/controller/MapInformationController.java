@@ -3,7 +3,6 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.MapInformationQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -34,8 +33,8 @@ public class MapInformationController extends BaseController {
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(mapInformationQueryParams);
         List<MapInformationModel> list = mapInformationService.list(sqlQueryParams);
-
         list = mapInformationService.selected(list);
+
         return new PageResponse(page.getTotal(), list);
     }
 
@@ -49,13 +48,18 @@ public class MapInformationController extends BaseController {
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid MapInformationModel mapInformationModel) throws ParseException {
 
-        mapInformationModel.setCurrentTime(TimeHelper.stringToDate(mapInformationModel.getCurrentDate()));
+        mapInformationModel = mapInformationService.updateTime(mapInformationModel);
         this.mapInformationService.update(mapInformationModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
         this.mapInformationService.remove(guid);
+    }
+
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+        mapInformationService.removeMany(guids);
     }
 
     @GetMapping(value = "three")

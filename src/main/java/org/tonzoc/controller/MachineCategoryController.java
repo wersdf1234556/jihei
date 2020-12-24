@@ -48,8 +48,9 @@ public class MachineCategoryController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) {
         this.machineCategoryService.remove(guid);
     }
+
     //@RequestBody(required = false)
-    @PostMapping(value = "removeMany")
+    @DeleteMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         machineCategoryService.removeMany(guids);
     }
