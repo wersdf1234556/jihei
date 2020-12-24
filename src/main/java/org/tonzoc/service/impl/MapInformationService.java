@@ -30,7 +30,7 @@ public class MapInformationService extends BaseService<MapInformationModel> impl
     @Override
     public List<MapInformationModel> three() {
 
-        return mapInformationMapper.three();
+        return this.selected(mapInformationMapper.three());
     }
 
     @Override

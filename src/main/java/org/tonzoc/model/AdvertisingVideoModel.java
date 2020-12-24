@@ -22,10 +22,10 @@ public class AdvertisingVideoModel extends BaseModel{
     @Column(value = "videoAttachmentGuid")
     private String videoAttachmentGuid;
 
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "imgAttachmentGuid", rightColumn = "guid")
-    private String imgUrl; //图片的url
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "videoAttachmentGuid", rightColumn = "guid")
-    private String videoUrl; //视频url，自维护
+    @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "imgAttachmentGuid", rightColumn = "guid")
+    private String imgName; //图片的名称
+    @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "videoAttachmentGuid", rightColumn = "guid")
+    private String videoName; //视频名称，自维护
 
     public AdvertisingVideoModel() {
     }
@@ -78,27 +78,27 @@ public class AdvertisingVideoModel extends BaseModel{
         this.videoAttachmentGuid = videoAttachmentGuid;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-
     public Integer getSortId() {
         return sortId;
     }
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 }

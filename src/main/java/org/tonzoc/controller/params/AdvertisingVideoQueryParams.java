@@ -12,6 +12,12 @@ public class AdvertisingVideoQueryParams {
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
 
+    @Operator(value = "eq", field = "imgAttachmentGuid")
+    private String imgAttachmentGuid;
+
+    @Operator(value = "eq", field = "videoAttachmentGuid")
+    private String videoAttachmentGuid;
+
 
     public String getGuid() {
         return guid;
@@ -35,5 +41,23 @@ public class AdvertisingVideoQueryParams {
 
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public String getImgAttachmentGuid() {
+        return imgAttachmentGuid;
+    }
+
+    public String getVideoAttachmentGuid() {
+        return videoAttachmentGuid;
+    }
+
+    public void setVideoAttachmentGuid(String videoAttachmentGuid) {
+        this.videoAttachmentGuid = videoAttachmentGuid;
+    }
+
+    public void setImgAttachmentGuid(String imgAttachmentGuid) {
+        this.imgAttachmentGuid = imgAttachmentGuid;
+
+
     }
 }
