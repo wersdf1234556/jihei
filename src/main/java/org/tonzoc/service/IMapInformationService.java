@@ -8,4 +8,7 @@ public interface IMapInformationService extends IBaseService<MapInformationModel
 
     // 查询最新三条数据
     List<MapInformationModel> three();
+
+    // 查询字符串转时间
+    List<MapInformationModel> selected(List<MapInformationModel> list);
 }

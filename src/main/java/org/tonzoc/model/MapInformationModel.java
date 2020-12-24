@@ -5,7 +5,7 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Table("mapInformations")
 public class MapInformationModel extends BaseModel {
@@ -14,15 +14,13 @@ public class MapInformationModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "currentDate")
-    private String currentDate;  // 时间
+    @Column(value = "currentTime")
+    private Date currentTime; // 时间
+    private String currentDate;
     @Column(value = "information")
     private String information; // 文字信息
     @Column(value = "sortId")
     private Integer sortId;
-    @NotInsertColumn
-    @Column(value = "createdAt")
-    private Date createdAt;
 
     public MapInformationModel() {
     }
@@ -33,6 +31,14 @@ public class MapInformationModel extends BaseModel {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public Date getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 
     public String getCurrentDate() {
@@ -59,11 +65,4 @@ public class MapInformationModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
 }

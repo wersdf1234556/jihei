@@ -6,8 +6,10 @@ public class MapInformationQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "currentDate")
+
+    @Operator(value = "eq", field = "currentTime")
     private String currentDate;
+
     @Operator(value = "like", field = "information")
     private String information;
 
