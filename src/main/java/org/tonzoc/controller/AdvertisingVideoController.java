@@ -64,8 +64,8 @@ public class AdvertisingVideoController extends BaseController{
     }
 
     @PostMapping(value = "upFile")
-    public Map<String, String> upFile(MultipartFile file, String currentTime) {
+    public Map<String, String> upFile(MultipartFile file, String currentDate) {
 
-        return advertisingVideoService.upFile(file, currentTime);
+        return advertisingVideoService.upFile(file, currentDate);
     }
 }
