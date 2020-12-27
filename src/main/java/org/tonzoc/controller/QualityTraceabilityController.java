@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -14,6 +15,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,18 +34,23 @@ public class QualityTraceabilityController extends BaseController {
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(laboratoryQueryParams);
         List<QualityTraceabilityModel> list = qualityTraceabilityService.list(sqlQueryParams);
+        list = qualityTraceabilityService.selected(list);
 
         return new PageResponse(page.getTotal(), list);
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid QualityTraceabilityModel laboratoryModel) {
-        this.qualityTraceabilityService.save(laboratoryModel);
+    public void add(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+
+        qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
+        this.qualityTraceabilityService.save(qualityTraceabilityModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid QualityTraceabilityModel laboratoryModel) {
-        this.qualityTraceabilityService.update(laboratoryModel);
+    public void update(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+
+        qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);
+        this.qualityTraceabilityService.update(qualityTraceabilityModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -63,8 +70,8 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping(value = "upFile")
-    public void upFile(MultipartFile[] file, String typeGuid, String subTypeGuid){
+    public void upFile(MultipartFile[] file, Integer typeId, String subTypeGuid){
 
-        qualityTraceabilityService.upFile(file, typeGuid, subTypeGuid);
+        qualityTraceabilityService.upFile(file, typeId, subTypeGuid);
     }
 }

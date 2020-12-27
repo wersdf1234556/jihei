@@ -8,21 +8,30 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
+import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
+import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
+import org.tonzoc.service.ISubTypeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 @Transactional
 public class QualityTraceabilityService extends BaseService<QualityTraceabilityModel> implements IQualityTraceabilityService {
+
+    @Autowired
+    private QualityTraceabilityMapper qualityTraceabilityMapper;
 
     @Autowired
     private IntelliSiteProperties intelliSiteProperties;
@@ -36,12 +45,38 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private FileHelper fileHelper;
 
+    @Autowired
+    private ISubTypeService subTypeService;
 
     @Override
-    public void upFile(MultipartFile[] file, String typeGuid, String subTypeGuid) {
+    public List<QualityTraceabilityModel> selected (List<QualityTraceabilityModel> list) {
+        if (list.size() > 0) {
+            for (QualityTraceabilityModel m : list) {
+
+                m.setCurrentDate(TimeHelper.dateToString(m.getCurrentTime()));
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public QualityTraceabilityModel updateTime(QualityTraceabilityModel mapInformationModel) throws ParseException {
+
+        if (!mapInformationModel.getCurrentDate().equals("") && mapInformationModel.getCurrentDate() != null) {
+
+            qualityTraceabilityMapper.updateTime(TimeHelper.stringToDate(mapInformationModel.getCurrentDate()), mapInformationModel.getGuid());
+        }
+        mapInformationModel.setSortId(0);
+        mapInformationModel.setCurrentDate("");
+        return mapInformationModel;
+    }
+
+
+    @Override
+    public void upFile(MultipartFile[] file, Integer typeId, String subTypeGuid) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
-        attachmentService.upFiles(file, typeGuid, subTypeGuid);
+        attachmentService.upFiles(file, typeId, subTypeGuid);
         intelliSiteProperties.setFileUrl("/");
     }
 
@@ -62,7 +97,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             e.printStackTrace();
         }
 
-        String oldGuid = attachmentMapper.getGuid(guid + ".png", "", "");
+        String oldGuid = attachmentMapper.getGuid(guid + ".png", 0, "");
         if (oldGuid != null) {
             attachmentService.remove(oldGuid);
         }
@@ -70,12 +105,12 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png");
         attachmentModel.setName(guid + ".png");
         attachmentModel.setSortId(0);
-        attachmentModel.setTypeGuid("");
+        attachmentModel.setTypeId(0);
         attachmentModel.setSubTypeGuid("");
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", "", ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", 0, ""));
         return map;
     }
 }

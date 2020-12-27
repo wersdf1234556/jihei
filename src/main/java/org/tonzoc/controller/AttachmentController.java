@@ -28,15 +28,15 @@ public class AttachmentController extends BaseController {
     IAttachmentService attachmentService;
 
     @PostMapping("/upFile")
-    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid) {
+    public void upFile(MultipartFile file, Integer typeId, String subTypeGuid) {
 
-        attachmentService.upFile(file, typeGuid, subTypeGuid);
+        attachmentService.upFile(file, typeId, subTypeGuid);
     }
 
     @PostMapping("/upFiles")
-    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid) {
+    public void upFiles(MultipartFile[] file, Integer typeId, String subTypeGuid) {
 
-        attachmentService.upFiles(file, typeGuid, subTypeGuid);
+        attachmentService.upFiles(file, typeId, subTypeGuid);
     }
 
     @GetMapping("/downLoadFile")
@@ -50,7 +50,6 @@ public class AttachmentController extends BaseController {
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Page<AttachmentModel> page = parsePage(pageQueryParams);
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(attachmentQueryParams);
-        sqlQueryParams.add(new SqlQueryParam("typeGuid",null, "neq"));
 
         List list = attachmentService.list(sqlQueryParams);
 

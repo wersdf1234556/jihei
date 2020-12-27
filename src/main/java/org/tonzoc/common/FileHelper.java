@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.UUID;
 
 @Configuration
 public class FileHelper {
@@ -32,36 +33,38 @@ public class FileHelper {
 
     // 上传文件
     @Transactional
-    public String[] fileUpload(MultipartFile file, String subTypeName, String typeGuid, String subTypeGuid) {
+    public String[] fileUpload(MultipartFile file, String subTypeName, Integer typeId, String subTypeGuid) {
         String[] str = new String[2];
 
         if (file.isEmpty()) {
             return str;
         }
-        String path = intelliSiteProperties.getFilePath(); // 路径
+        String path = intelliSiteProperties.getFilePath(); // 上传路径
         String fileType = intelliSiteProperties.getFileUrl(); // 文件类型
         String fileName = file.getOriginalFilename(); // 文件名称
+        String suffix = fileName.substring(fileName.lastIndexOf(".")); // 后缀名
+        String newFileName = this.newGUID(); // 随机生成的文件名
 
         File dest = null;
         String url = "";
         if ("".equals(subTypeName) || subTypeName == null) {
-            url = path + fileType + fileName;
+            url = path + fileType + newFileName + suffix;
             dest = new File(url);
         } else {
-            url = path + fileType + subTypeName + "/" + fileName;
+            url = path + fileType + subTypeName + "/" + newFileName + suffix;
             dest = new File(url);
         }
 
         if (dest.exists()) { // 如果原先有相同文件，则删除
             dest.delete();
             // 删除这个表中关联的这条记录
-            String guid = attachmentMapper.getGuid(url, typeGuid, subTypeGuid);
+            String guid = attachmentMapper.getGuid(url, typeId, subTypeGuid);
             if (!"".equals(guid) && guid != null) {
                 attachmentService.remove(guid);
             }
         }
         if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
-            dest.getParentFile().mkdir();
+            dest.getParentFile().mkdirs();
         }
 
         try {
@@ -79,10 +82,10 @@ public class FileHelper {
     }
 
     // 上传多个文件
-    public String[] fileUploads(MultipartFile[] file, String subTypeName, String typeGuid, String subTypeGuid) {
+    public String[] fileUploads(MultipartFile[] file, String subTypeName, Integer typeId, String subTypeGuid) {
         if (file.length > 0) {
             for (MultipartFile f : file) {
-                this.fileUpload(f, subTypeName, typeGuid, subTypeGuid);
+                this.fileUpload(f, subTypeName, typeId, subTypeGuid);
             }
         }
         return null;
@@ -135,7 +138,7 @@ public class FileHelper {
                 e.printStackTrace();
             }
         }
-        return null;
+        return url;
     }
 
     public byte[] getImage(String url) throws IOException {
@@ -164,5 +167,11 @@ public class FileHelper {
         out.flush();
         in.close();
         out.close();
+    }
+
+    public String newGUID() {
+
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
 }

@@ -2,7 +2,6 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
-import java.sql.Date;
 
 public class QualityTraceabilityQueryParams {
 
@@ -10,10 +9,7 @@ public class QualityTraceabilityQueryParams {
     private String guid;
 
     @Operator(value = "eq", field = "currentTime")
-    private Date currentTime;
-
-    @Operator(value = "eq", field = "qualityType")
-    private String qualityType;
+    private String currentDate;
 
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
@@ -21,8 +17,11 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
 
+    @Operator(value = "eq", field = "typeId")
+    private String typeId;
+
     @Operator(value = "eq", field = "subTypeGuid")
-    private String subTypeGuid;
+    private Integer subTypeGuid;
 
     public String getGuid() {
         return guid;
@@ -48,27 +47,27 @@ public class QualityTraceabilityQueryParams {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getSubTypeGuid() {
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public Integer getSubTypeGuid() {
         return subTypeGuid;
     }
 
-    public void setSubTypeGuid(String subTypeGuid) {
+    public void setSubTypeGuid(Integer subTypeGuid) {
         this.subTypeGuid = subTypeGuid;
     }
 
-    public Date getCurrentTime() {
-        return currentTime;
+    public String getCurrentDate() {
+        return currentDate;
     }
 
-    public void setCurrentTime(Date currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public String getQualityType() {
-        return qualityType;
-    }
-
-    public void setQualityType(String qualityType) {
-        this.qualityType = qualityType;
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 }

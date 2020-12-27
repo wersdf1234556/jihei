@@ -17,15 +17,15 @@ public class AttachmentModel extends BaseModel {
     private String url;
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "typeGuid")
-    private String typeGuid;
+    @Column(value = "typeId")
+    private Integer typeId;
     @Column(value = "subTypeGuid")
     private String subTypeGuid;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
 
-    @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;
     @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
     private String subName;
@@ -65,12 +65,12 @@ public class AttachmentModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public String getTypeGuid() {
-        return typeGuid;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setTypeGuid(String typeGuid) {
-        this.typeGuid = typeGuid;
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public String getSubTypeGuid() {

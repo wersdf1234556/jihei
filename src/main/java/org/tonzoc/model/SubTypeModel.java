@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 @Table("subTypes")
 public class SubTypeModel extends BaseModel {
@@ -16,8 +13,11 @@ public class SubTypeModel extends BaseModel {
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "typeGuid")
-    private String typeGuid;
+    @Column(value = "typeId")
+    private Integer typeId;
+
+    @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
+    private String typeName;  // 文件类型名称
 
     public SubTypeModel() {
     }
@@ -46,11 +46,19 @@ public class SubTypeModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public String getTypeGuid() {
-        return typeGuid;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setTypeGuid(String typeGuid) {
-        this.typeGuid = typeGuid;
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

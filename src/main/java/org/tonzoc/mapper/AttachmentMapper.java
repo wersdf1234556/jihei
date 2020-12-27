@@ -13,7 +13,7 @@ public interface AttachmentMapper extends BaseMapper<AttachmentModel> {
             "where attachments.typesId = '520891F0-1FDE-43EB-A8B2-CB588E31FBBA' and attachments.projectId = #{projectId} GROUP BY subType.name ")
     List<ReturnModel> dataCount(String projectId);
 
-    @Select("select guid from attachments where url = #{url} and typeGuid = #{typeGuid} and subTypeGuid = #{subTypeGuid}")
-    String getGuid (String url, String typeGuid, String subTypeGuid);
+    @Select("select guid from attachments where url = #{url} and typeId = #{typeId} and subTypeGuid = #{subTypeGuid}")
+    String getGuid (String url, Integer typeId, String subTypeGuid);
 
 }

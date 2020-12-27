@@ -10,10 +10,10 @@ import java.io.UnsupportedEncodingException;
 public interface IAttachmentService extends IBaseService<AttachmentModel> {
 
     // 单文件上传
-    void upFile(MultipartFile file, String typeGuid, String subTypeGuid);
+    void upFile(MultipartFile file, Integer typeId, String subTypeGuid);
 
     // 多文件上传
-    void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid);
+    void upFiles(MultipartFile[] file, Integer typeId, String subTypeGuid);
 
     // 文件下载
     void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException;

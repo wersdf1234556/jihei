@@ -10,17 +10,17 @@ public class TenderModel extends BaseModel {
 
     @PrimaryKey
     @NotInsertColumn
-    @Column("guid")
+    @Column(value = "guid")
     private String guid;
-    @Column("name")
+    @Column(value = "name")
     private String name;
-    @Column("sortId")
+    @Column(value = "sortId")
     private Integer sortId;
-    @Column("lng")
+    @Column(value = "lng")
     private String lng;
-    @Column("lat")
+    @Column(value = "lat")
     private String lat;
-    @Column("scale")
+    @Column(value = "scale")
     private Integer scale;
 
     public TenderModel() {

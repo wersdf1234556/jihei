@@ -2,7 +2,7 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 // 质量追溯
 @Table("qualityTraceabilitys")
@@ -12,25 +12,27 @@ public class QualityTraceabilityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "name")
-    private String name;
     @Column(value = "currentTime")
     private Date currentTime;  // 时间
+    private String currentDate;
     @Column(value = "operator")
     private String operator; // 操作人
-    @Column(value = "qualityType")
-    private String qualityType;  // 质量类型，原材料、半成品、实体工程
     @Column(value = "sortId")
     private Integer sortId;
     @Column(value = "tenderGuid")
     private String tenderGuid;
     @Column(value = "subTypeGuid")
     private String subTypeGuid;
+    @Column(value = "typeId")
+    private Integer typeId;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName;  // 标段
+    private String tenderName;  // 标段名称
     @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
-    private String subTypeName;  // 文件类型
+    private String subTypeName;  // 附属文件名称
+    @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
+    private String typeName;  // 文件名称
+
 
     public QualityTraceabilityModel() {
     }
@@ -43,20 +45,20 @@ public class QualityTraceabilityModel extends BaseModel {
         this.guid = guid;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getCurrentTime() {
         return currentTime;
     }
 
     public void setCurrentTime(Date currentTime) {
         this.currentTime = currentTime;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
     public String getOperator() {
@@ -73,14 +75,6 @@ public class QualityTraceabilityModel extends BaseModel {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
-    }
-
-    public String getQualityType() {
-        return qualityType;
-    }
-
-    public void setQualityType(String qualityType) {
-        this.qualityType = qualityType;
     }
 
     public String getTenderGuid() {
@@ -113,5 +107,21 @@ public class QualityTraceabilityModel extends BaseModel {
 
     public void setSubTypeName(String subTypeName) {
         this.subTypeName = subTypeName;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

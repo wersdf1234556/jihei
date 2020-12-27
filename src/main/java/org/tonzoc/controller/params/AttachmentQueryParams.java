@@ -12,8 +12,8 @@ public class AttachmentQueryParams {
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
 
-    @Operator(value = "eq", field = "typeGuid")
-    private String typeGuid;
+    @Operator(value = "eq", field = "typeId")
+    private Integer typeId;
 
     @Operator(value = "eq", field = "subTypeGuid")
     private String subTypeGuid;
@@ -40,12 +40,12 @@ public class AttachmentQueryParams {
         this.sortId = sortId;
     }
 
-    public String getTypeGuid() {
-        return typeGuid;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setTypeGuid(String typeGuid) {
-        this.typeGuid = typeGuid;
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public String getSubTypeGuid() {

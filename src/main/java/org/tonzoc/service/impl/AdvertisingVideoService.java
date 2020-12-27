@@ -52,19 +52,19 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 
         intelliSiteProperties.setFileUrl("/宣传片/");
-        String[] str = fileHelper.fileUpload(file, currentDate, "", "");
+        String[] str = fileHelper.fileUpload(file, currentDate, 0, "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSortId(0);
         attachmentModel.setSubTypeGuid("");
-        attachmentModel.setTypeGuid("");
+        attachmentModel.setTypeId(0);
 
         attachmentService.save(attachmentModel);
         intelliSiteProperties.setFileUrl("/");
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(str[0], "", ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(str[0], 0, ""));
         return map;
     }
 

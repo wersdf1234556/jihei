@@ -14,6 +14,8 @@ public class TypeModel extends BaseModel {
     private String guid;
     @Column(value = "name")
     private String name;
+    @Column(value = "id")
+    private Integer id;  // 前台作为唯一标识
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -34,6 +36,14 @@ public class TypeModel extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getSortId() {

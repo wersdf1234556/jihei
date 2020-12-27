@@ -33,34 +33,34 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     private ISubTypeService subTypeService;
 
     // 单文件上传
-    public void upFile(MultipartFile file, String typeGuid, String subTypeGuid) {
+    public void upFile(MultipartFile file, Integer typeId, String subTypeGuid) {
 
         SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
-        String[] str = fileHelper.fileUpload(file, subTypeModel.getName(), typeGuid, subTypeGuid);
+        String[] str = fileHelper.fileUpload(file, subTypeModel.getName(), typeId, subTypeGuid);
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSubTypeGuid(subTypeGuid);
-        attachmentModel.setTypeGuid(typeGuid);
+        attachmentModel.setTypeId(typeId);
 
         this.save(attachmentModel);
     }
 
     // 多文件上传
-    public void upFiles(MultipartFile[] file, String typeGuid, String subTypeGuid) {
+    public void upFiles(MultipartFile[] file, Integer typeId, String subTypeGuid) {
 
         if (file.length > 0) {
             SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
             List<AttachmentModel> list = new ArrayList<>();
 
             for (MultipartFile f : file) {
-                String[] str = fileHelper.fileUpload(f, subTypeModel.getName(), typeGuid, subTypeGuid);
+                String[] str = fileHelper.fileUpload(f, subTypeModel.getName(), typeId, subTypeGuid);
 
                 AttachmentModel attachmentModel = new AttachmentModel();
                 attachmentModel.setUrl(str[0]);
                 attachmentModel.setName(str[1]);
-                attachmentModel.setTypeGuid(typeGuid);
+                attachmentModel.setTypeId(typeId);
                 attachmentModel.setSubTypeGuid(subTypeGuid);
                 attachmentModel.setSortId(0);
 
