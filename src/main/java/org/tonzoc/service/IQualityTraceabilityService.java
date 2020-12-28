@@ -21,5 +21,5 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     QualityTraceabilityModel updateTime (QualityTraceabilityModel QualityTraceabilityModel) throws ParseException;
 
     // 生成二维码
-    Map<String, String> qrcode(String orderNo);
+    Map<String, String> qrcode(String subTypeGuid);
 }
