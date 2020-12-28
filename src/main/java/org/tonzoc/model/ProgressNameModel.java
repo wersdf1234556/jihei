@@ -17,8 +17,6 @@ public class ProgressNameModel extends BaseModel{
     private String name;
     @Column(value = "unit")
     private String unit;
-    @Column(value = "totalNum")
-    private BigDecimal totalNum;
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -44,14 +42,6 @@ public class ProgressNameModel extends BaseModel{
 
     public void setUnit(String unit) {
         this.unit = unit;
-    }
-
-    public BigDecimal getTotalNum() {
-        return totalNum;
-    }
-
-    public void setTotalNum(BigDecimal totalNum) {
-        this.totalNum = totalNum;
     }
 
     public Integer getSortId() {

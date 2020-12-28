@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.ProgressDetailMapper;
 import org.tonzoc.model.ProgressDetailModel;
 import org.tonzoc.model.ProgressNameModel;
+import org.tonzoc.model.ProgressTotalDataModel;
 import org.tonzoc.model.support.ProgressStatModel;
 import org.tonzoc.service.IProgressDetailService;
 import org.tonzoc.service.IProgressNameService;
+import org.tonzoc.service.IProgressTotalDataService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.math.BigDecimal;
@@ -25,6 +27,8 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     private IProgressNameService progressNameService;
     @Autowired
     private ProgressDetailMapper progressDetailMapper;
+    @Autowired
+    private IProgressTotalDataService progressTotalDataService;
 
 
     public List<ProgressDetailModel> listByTender(String tenderGuid,String date,String progressNameGuid){
@@ -52,7 +56,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
          * description:分成A、B标分别统计本月累计完成量
          * create time: 13:38 2020-12-24
          * 
-          * @Param: 
+          * @Param: String tender,String date
          * @return List<ProgressStatModel>
          */
         List<ProgressStatModel> list = new ArrayList<>();
@@ -77,31 +81,43 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                     .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                     .map(ProgressDetailModel::getNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-            System.out.println(progressNameModel.getName());
-            System.out.println(date);
-            System.out.println(cumulantNum);
-            System.out.println(currentMonthNum);
-            System.out.println(progressNameModel.getTotalNum());
-            BigDecimal currentMonthPercent;
-            BigDecimal cumulantPercent;
+//            System.out.println(progressNameModel.getName());
+//            System.out.println(date);
+//            System.out.println(cumulantNum);
+//            System.out.println(currentMonthNum);
+//            System.out.println(progressNameModel.getTotalNum());
+//            System.out.println(progressNameModel.getName());
+            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
+            BigDecimal totalNum=progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).stream()
+                    .map(ProgressTotalDataModel::getTotalNum)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            System.out.println(totalNum);
+            BigDecimal currentMonthPercent=BigDecimal.ZERO;
+            BigDecimal cumulantPercent=BigDecimal.ZERO;
             if (currentMonthNum.compareTo(BigDecimal.ZERO)==0){
                 currentMonthPercent=BigDecimal.ZERO;
             }else {
-                currentMonthPercent = currentMonthNum.multiply(BigDecimal.valueOf(100)).divide(progressNameModel.getTotalNum(), 2, BigDecimal.ROUND_HALF_UP);
-
+                if (totalNum.compareTo(BigDecimal.ZERO)!=0){
+                    currentMonthPercent = currentMonthNum.multiply(BigDecimal.valueOf(100)).divide(totalNum, 2, BigDecimal.ROUND_HALF_UP);
+                }
             }
             if (cumulantNum.compareTo(BigDecimal.ZERO)==0){
                 cumulantPercent=BigDecimal.ZERO;
             }else {
-                cumulantPercent = cumulantNum.multiply(BigDecimal.valueOf(100)).divide(progressNameModel.getTotalNum(), 2, BigDecimal.ROUND_HALF_UP);
+                if (totalNum.compareTo(BigDecimal.ZERO)!=0){
+                    cumulantPercent = cumulantNum.multiply(BigDecimal.valueOf(100)).divide(totalNum, 2, BigDecimal.ROUND_HALF_UP);
+                }
             }
 
             ProgressStatModel progressStatModel = new ProgressStatModel();
             progressStatModel.setProgressNameGuid(progressNameModel.getGuid());
             progressStatModel.setProgressName(progressNameModel.getName());
-            progressStatModel.setCurrentMonth(currentMonthPercent.toString());
-            progressStatModel.setCumulant(cumulantPercent.toString());
-            progressStatModel.setTotal("100.00");
+            progressStatModel.setCurrentMonthNum(currentMonthNum.toString());
+            progressStatModel.setCurrentMonthPercent(currentMonthPercent.toString());
+            progressStatModel.setCumulantNum(cumulantNum.toString());
+            progressStatModel.setCumulantPercent(cumulantPercent.toString());
+            progressStatModel.setTotalNum(totalNum.toString());
+            progressStatModel.setTotalPercent("100.00");
             list.add(progressStatModel);
         }
         return list;
