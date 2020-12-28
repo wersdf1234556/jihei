@@ -1,11 +1,12 @@
 package org.tonzoc.mapper;
 
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.ReturnModel;
 
 import java.util.List;
-
+@Component
 public interface AttachmentMapper extends BaseMapper<AttachmentModel> {
 
     @Select("select count(attachments.guid) as count, subType.name from attachments " +

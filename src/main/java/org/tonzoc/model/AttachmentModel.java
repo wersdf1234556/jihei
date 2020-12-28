@@ -8,7 +8,7 @@ import java.sql.Date;
 public class AttachmentModel extends BaseModel {
 
     @PrimaryKey
-    @NotInsertColumn
+//    @NotInsertColumn
     @Column(value = "guid")
     private String guid;
     @Column(value = "name")

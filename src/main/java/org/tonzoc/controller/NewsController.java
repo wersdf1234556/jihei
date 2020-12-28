@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.NewsQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.PersonQueryParams;
@@ -39,13 +40,13 @@ public class NewsController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid NewsModel newsModel ) {
-        this.newsService.save(newsModel);
+    public void add(MultipartFile file,@Valid NewsModel newsModel){
+        this.newsService.insertStack(newsModel,file);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid NewsModel newsModel) {
-        this.newsService.update(newsModel);
+    public void update(MultipartFile file, @Valid NewsModel newsModel) {
+        this.newsService.updateStack(newsModel,file);
     }
 
     @DeleteMapping(value = "{guid}")

@@ -16,6 +16,9 @@ public class NewsTitleModel extends BaseModel{
     @Column(value = "sortId")
     private Integer sortId;
 
+    public NewsTitleModel() {
+    }
+
     public String getGuid() {
         return guid;
     }
