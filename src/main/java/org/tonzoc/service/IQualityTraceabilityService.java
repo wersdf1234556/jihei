@@ -12,7 +12,7 @@ import java.util.Map;
 public interface IQualityTraceabilityService extends IBaseService<QualityTraceabilityModel> {
 
     // 上传质量追溯文件
-    void upFile(MultipartFile[] file, Integer typeId, String subTypeGuid);
+    void upFile(MultipartFile[] file, String qualityTraceabilityGuid);
 
     // 查询字符串转时间
     List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list);

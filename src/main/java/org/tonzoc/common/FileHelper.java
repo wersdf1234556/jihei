@@ -33,7 +33,7 @@ public class FileHelper {
 
     // 上传文件
     @Transactional
-    public String[] fileUpload(MultipartFile file, String subTypeName, Integer typeId, String subTypeGuid) {
+    public String[] fileUpload(MultipartFile file, String subTypeName, String qualityTraceabilityGuid) {
         String[] str = new String[2];
 
         if (file.isEmpty()) {
@@ -58,7 +58,7 @@ public class FileHelper {
         if (dest.exists()) { // 如果原先有相同文件，则删除
             dest.delete();
             // 删除这个表中关联的这条记录
-            String guid = attachmentMapper.getGuid(url, typeId, subTypeGuid);
+            String guid = attachmentMapper.getGuid(url, qualityTraceabilityGuid);
             if (!"".equals(guid) && guid != null) {
                 attachmentService.remove(guid);
             }
@@ -82,10 +82,10 @@ public class FileHelper {
     }
 
     // 上传多个文件
-    public String[] fileUploads(MultipartFile[] file, String subTypeName, Integer typeId, String subTypeGuid) {
+    public String[] fileUploads(MultipartFile[] file, String subTypeName, String qualityTraceabilityGuid) {
         if (file.length > 0) {
             for (MultipartFile f : file) {
-                this.fileUpload(f, subTypeName, typeId, subTypeGuid);
+                this.fileUpload(f, subTypeName, qualityTraceabilityGuid);
             }
         }
         return null;

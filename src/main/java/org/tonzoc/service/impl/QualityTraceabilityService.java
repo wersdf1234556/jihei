@@ -73,10 +73,10 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
 
     @Override
-    public void upFile(MultipartFile[] file, Integer typeId, String subTypeGuid) {
+    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
-        attachmentService.upFiles(file, typeId, subTypeGuid);
+        attachmentService.upFiles(file, qualityTraceabilityGuid);
         intelliSiteProperties.setFileUrl("/");
     }
 
@@ -97,7 +97,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             e.printStackTrace();
         }
 
-        String oldGuid = attachmentMapper.getGuid(subTypeGuid + ".png", 0, "");
+        String oldGuid = attachmentMapper.getGuid(subTypeGuid + ".png", "");
         if (oldGuid != null) {
             attachmentService.remove(oldGuid);
         }
@@ -105,12 +105,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png");
         attachmentModel.setName(subTypeGuid + ".png");
         attachmentModel.setSortId(0);
-        attachmentModel.setTypeId(0);
-        attachmentModel.setSubTypeGuid("");
+        attachmentModel.setQualityTraceabilityGuid("");
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png", 0, ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png",  ""));
         return map;
     }
 }

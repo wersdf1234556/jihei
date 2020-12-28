@@ -18,10 +18,10 @@ public class QualityTraceabilityQueryParams {
     private String tenderGuid;
 
     @Operator(value = "eq", field = "typeId")
-    private Integer typeId;
+    private String typeId;
 
     @Operator(value = "eq", field = "subTypeGuid")
-    private String subTypeGuid;
+    private Integer subTypeGuid;
 
     public String getGuid() {
         return guid;
@@ -47,20 +47,19 @@ public class QualityTraceabilityQueryParams {
         this.tenderGuid = tenderGuid;
     }
 
-
-    public Integer getTypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(Integer typeId) {
+    public void setTypeId(String typeId) {
         this.typeId = typeId;
     }
 
-    public String getSubTypeGuid() {
+    public Integer getSubTypeGuid() {
         return subTypeGuid;
     }
 
-    public void setSubTypeGuid(String subTypeGuid) {
+    public void setSubTypeGuid(Integer subTypeGuid) {
         this.subTypeGuid = subTypeGuid;
     }
 

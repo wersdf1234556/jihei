@@ -8,7 +8,6 @@ import java.util.Date;
 @Table("qualityTraceabilitys")
 public class QualityTraceabilityModel extends BaseModel {
 
-    @NotInsertColumn
     @PrimaryKey
     @Column(value = "guid")
     private String guid;

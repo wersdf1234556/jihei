@@ -52,19 +52,18 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 
         intelliSiteProperties.setFileUrl("/大事记/");
-        String[] str = fileHelper.fileUpload(file, currentDate, 0, "");
+        String[] str = fileHelper.fileUpload(file, currentDate,  "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSortId(0);
-        attachmentModel.setSubTypeGuid("");
-        attachmentModel.setTypeId(0);
+        attachmentModel.setQualityTraceabilityGuid("");
 
         attachmentService.save(attachmentModel);
         intelliSiteProperties.setFileUrl("/");
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(str[0], 0, ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(str[0],  ""));
         return map;
     }
 
