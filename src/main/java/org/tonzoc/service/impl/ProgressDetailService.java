@@ -87,7 +87,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //            System.out.println(currentMonthNum);
 //            System.out.println(progressNameModel.getTotalNum());
 //            System.out.println(progressNameModel.getName());
-            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
+//            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
             BigDecimal totalNum=progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).stream()
                     .map(ProgressTotalDataModel::getTotalNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
