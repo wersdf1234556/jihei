@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.JoinColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
@@ -23,6 +20,9 @@ public class UserModel extends BaseModel {
     private String staffName;
     @Column(value = "mobile")
     private String mobile;
+    @Column(value = "flag")
+    @NotInsertColumn
+    private Integer flag;
 
     @Column(value = "roleGuid")
     private String roleGuid;
@@ -106,5 +106,13 @@ public class UserModel extends BaseModel {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

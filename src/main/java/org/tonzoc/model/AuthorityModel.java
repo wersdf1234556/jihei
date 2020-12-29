@@ -27,6 +27,9 @@ public class AuthorityModel extends BaseModel implements Serializable {
     private String icon;
     @Column(value = "isDefault")
     private Integer isDefault;
+    @Column(value = "flag")
+    @NotInsertColumn
+    private Integer flag;
 
     private List<AuthorityModel> children;
 
@@ -97,6 +100,14 @@ public class AuthorityModel extends BaseModel implements Serializable {
 
     public void setIsDefault(Integer isDefault) {
         this.isDefault = isDefault;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 
     @Override

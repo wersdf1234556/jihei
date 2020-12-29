@@ -1,6 +1,7 @@
 package org.tonzoc.model;
 
 import org.tonzoc.annotation.Column;
+import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
@@ -14,6 +15,9 @@ public class RoleModel extends BaseModel {
     private String guid;
     @Column(value = "name")
     private String name;
+    @Column(value = "flag")
+    @NotInsertColumn
+    private Integer flag;
 
     private List<AuthorityModel> authorityModels;
 
@@ -42,6 +46,14 @@ public class RoleModel extends BaseModel {
 
     public void setAuthorityModels(List<AuthorityModel> authorityModels) {
         this.authorityModels = authorityModels;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 
     @Override

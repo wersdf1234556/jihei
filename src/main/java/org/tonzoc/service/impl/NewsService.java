@@ -51,9 +51,6 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
         }else {
             newsModel.setAttachmentGuid("");
         }
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        Date date = new Date();//创建一个date对象保存当前时间
-        newsModel.setReleaseTime(df.format(date));
         if (newsModel.getTopflag()==null){
             newsModel.setTopflag(1);//不置顶
         }
