@@ -47,4 +47,11 @@ public class StakeService extends BaseService<StakeModel> implements IStakeServi
             throw new NotFoundException("未找到数据");
         }
     }
+
+    public void removeMany(String guids) {
+        String[] guidList = guids.split(",");
+        for (String guid : guidList) {
+            this.remove(guid);
+        }
+    }
 }
