@@ -81,36 +81,36 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     @Override
-    public Map<String, String> qrcode(String guid) {
+    public Map<String, String> qrcode(String subTypeGuid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String address = request.getLocalPort() + ""; // 获取端口号
 
-        String payUrl = intelliSiteProperties.getIp() + address + "/attachment/downLoadFile?guid =" + guid; // 二维码存的内容
+        String payUrl = intelliSiteProperties.getIp() + address + "/attachment?subTypeGuid =" + subTypeGuid; // 二维码存的内容
 
         try {
-            fileHelper.generateQRCodeImage(payUrl, 350, 350, guid + ".png");
+            fileHelper.generateQRCodeImage(payUrl, 350, 350, subTypeGuid + ".png");
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String oldGuid = attachmentMapper.getGuid(guid + ".png", 0, "");
+        String oldGuid = attachmentMapper.getGuid(subTypeGuid + ".png", 0, "");
         if (oldGuid != null) {
             attachmentService.remove(oldGuid);
         }
         AttachmentModel attachmentModel = new AttachmentModel();
-        attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png");
-        attachmentModel.setName(guid + ".png");
+        attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png");
+        attachmentModel.setName(subTypeGuid + ".png");
         attachmentModel.setSortId(0);
         attachmentModel.setTypeId(0);
         attachmentModel.setSubTypeGuid("");
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", 0, ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png", 0, ""));
         return map;
     }
 }

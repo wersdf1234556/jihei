@@ -5,7 +5,6 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-import java.math.BigDecimal;
 
 @Table(value = "progressNames")
 public class ProgressNameModel extends BaseModel{

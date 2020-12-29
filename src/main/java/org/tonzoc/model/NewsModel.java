@@ -1,11 +1,9 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Table(value = "news")
 public class NewsModel extends BaseModel{
@@ -14,15 +12,23 @@ public class NewsModel extends BaseModel{
     @Column(value = "guid")
     private String guid;
     @Column(value = "titleGuid")
-    private String titleGuid;
-    @Column(value = "orgImageUrl")
-    private String orgImageUrl;
+    private String titleGuid;     //标题guid
+    @JoinColumn(value = "title", type = NewsTitleModel.class, leftColumn = "titleGuid", rightColumn = "guid")
+    private String title; //标题
+    @Column(value = "attachmentGuid")
+    private String attachmentGuid;
+    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "attachmentGuid", rightColumn = "guid")
+    private String url; //附件路径
+//    @Column(value = "orgImageUrl")
+//    private String orgImageUrl;  //附件路径
     @Column(value = "content")
-    private String content;
+    private String content;      //发布内容
     @Column(value = "releaseTime")
-    private Date releaseTime;
+    private String releaseTime;  //发布时间
     @Column(value = "topflag")
-    private Integer topflag;
+    private Integer topflag;   //置顶时间
+    @Column(value = "creator")
+    private String creator;    //创建人员
 
     public String getGuid() {
         return guid;
@@ -40,12 +46,12 @@ public class NewsModel extends BaseModel{
         this.titleGuid = titleGuid;
     }
 
-    public String getOrgImageUrl() {
-        return orgImageUrl;
+    public String getAttachmentGuid() {
+        return attachmentGuid;
     }
 
-    public void setOrgImageUrl(String orgImageUrl) {
-        this.orgImageUrl = orgImageUrl;
+    public void setAttachmentGuid(String attachmentGuid) {
+        this.attachmentGuid = attachmentGuid;
     }
 
     public String getContent() {
@@ -56,11 +62,11 @@ public class NewsModel extends BaseModel{
         this.content = content;
     }
 
-    public Date getReleaseTime() {
+    public String getReleaseTime() {
         return releaseTime;
     }
 
-    public void setReleaseTime(Date releaseTime) {
+    public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
     }
 
@@ -70,5 +76,29 @@ public class NewsModel extends BaseModel{
 
     public void setTopflag(Integer topflag) {
         this.topflag = topflag;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
