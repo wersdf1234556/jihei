@@ -53,6 +53,9 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
         if (newsModel.getTopflag()==null){
             newsModel.setTopflag(1);//不置顶
         }
+        if (newsModel.getCreator()==null){
+            newsModel.setCreator("");
+        }
         this.save(newsModel);
 
     }
@@ -67,16 +70,16 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
             attachmentModel.setQualityTraceabilityGuid("");
             attachmentModel.setSortId(0);
             attachmentService.save(attachmentModel);
-            if (newsModel.getAttachmentGuid().isEmpty()){
-                AttachmentModel oldAttachment = attachmentService.get(newsModel.getAttachmentGuid());
-//                if (oldAttachment!=null){
-//                    String returnData = attachmentService.deleteFile(newsModel.getAttachmentGuid());
-//                    System.out.println(returnData);
-//                }
+            NewsModel oldNews = get(newsModel.getGuid());
+            if (!oldNews.getAttachmentGuid().isEmpty()){
+                AttachmentModel oldAttachment = attachmentService.get(oldNews.getAttachmentGuid());
+                if (oldAttachment!=null){
+                    String returnData = attachmentService.deleteFile(oldNews.getAttachmentGuid());
+                    System.out.println(returnData);
+                    attachmentService.remove(oldNews.getAttachmentGuid());
+                }
             }
             newsModel.setAttachmentGuid(attachmentModel.getGuid());
-        }else {
-            newsModel.setAttachmentGuid("");
         }
 
         this.update(newsModel);

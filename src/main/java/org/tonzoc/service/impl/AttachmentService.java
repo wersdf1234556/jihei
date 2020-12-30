@@ -16,6 +16,7 @@ import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -94,5 +95,27 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     public List<ReturnModel> dataCount (String projectId) {
 
         return attachmentMapper.dataCount(projectId);
+    }
+
+    public String deleteFile(String guid){
+        try {
+            AttachmentModel attachmentModel = get(guid);
+            if (attachmentModel!=null){
+                File file = new File(attachmentModel.getUrl());
+                if (file.exists()){
+                    file.delete();
+                    return "文件已删除";
+                }else {
+                    return "文件不存在";
+                }
+            }else {
+                return "该附件信息不存在";
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return "删除文件报错";
+        }
+
     }
 }
