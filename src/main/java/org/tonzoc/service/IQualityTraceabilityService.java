@@ -18,7 +18,7 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list);
 
     // 处理时间
-    QualityTraceabilityModel updateTime (QualityTraceabilityModel QualityTraceabilityModel) throws ParseException;
+    QualityTraceabilityModel updateTime(QualityTraceabilityModel QualityTraceabilityModel) throws ParseException;
 
     // 生成二维码
     Map<String, String> qrcode(String subTypeGuid);

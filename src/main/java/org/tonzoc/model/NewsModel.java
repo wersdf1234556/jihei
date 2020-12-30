@@ -23,8 +23,9 @@ public class NewsModel extends BaseModel{
 //    private String orgImageUrl;  //附件路径
     @Column(value = "content")
     private String content;      //发布内容
-    @Column(value = "releaseTime")
-    private String releaseTime;  //发布时间
+    @Column(value = "createdAt")
+    @NotInsertColumn
+    private Date createdAt;  //发布时间
     @Column(value = "topflag")
     private Integer topflag;   //置顶时间
     @Column(value = "creator")
@@ -62,12 +63,12 @@ public class NewsModel extends BaseModel{
         this.content = content;
     }
 
-    public String getReleaseTime() {
-        return releaseTime;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setReleaseTime(String releaseTime) {
-        this.releaseTime = releaseTime;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getTopflag() {

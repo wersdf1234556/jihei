@@ -57,4 +57,9 @@ public class AerialPhotographyLocationController extends BaseController {
     public void importExcel(MultipartFile file, String aerialPhotographyGuid) throws NotFoundException {
         this.aerialPhotographyLocationService.importExcel(file, aerialPhotographyGuid);
     }
+
+    @PostMapping(value = "removeMany")
+    public void removeMany(String guids) {
+        this.aerialPhotographyLocationService.removeMany(guids);
+    }
 }

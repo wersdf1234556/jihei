@@ -29,7 +29,14 @@ public class NewsController extends BaseController {
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, NewsQueryParams newsQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-
+        if (pageQueryParams.getOrder()==null||pageQueryParams.getOrder().isEmpty()){
+            pageQueryParams.setOrder("topFlag,mainTable.createdAt");
+        }else {
+            pageQueryParams.setOrder("topFlag,mainTable."+pageQueryParams.getOrder());
+        }
+        if (pageQueryParams.getSort()==null||pageQueryParams.getSort().isEmpty()){
+            pageQueryParams.setSort("desc");
+        }
         Page<NewsModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(newsQueryParams);

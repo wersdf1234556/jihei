@@ -58,4 +58,9 @@ public class StakeController extends BaseController {
         this.stakeService.importExcel(file, tenderGuid);
     }
 
+    @PostMapping(value = "removeMany")
+    public void removeMany(String guids) {
+        this.stakeService.removeMany(guids);
+    }
+
 }

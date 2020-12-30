@@ -46,4 +46,10 @@ public class AerialPhotographyLocationService extends BaseService<AerialPhotogra
         }
     }
 
+    public void removeMany(String guids) {
+        String[] guidList = guids.split(",");
+        for (String guid : guidList) {
+            this.remove(guid);
+        }
+    }
 }

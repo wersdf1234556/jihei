@@ -7,4 +7,5 @@ import org.tonzoc.model.AerialPhotographyLocationModel;
 public interface IAerialPhotographyLocationService extends IBaseService<AerialPhotographyLocationModel> {
 
     void importExcel(MultipartFile file, String aerialPhotographyGuid) throws NotFoundException;
+    void removeMany(String guids);
 }

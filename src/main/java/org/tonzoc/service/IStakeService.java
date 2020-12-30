@@ -6,4 +6,5 @@ import org.tonzoc.model.StakeModel;
 
 public interface IStakeService extends IBaseService<StakeModel> {
     void importExcel(MultipartFile file, String tenderGuid) throws NotFoundException;
+    void removeMany(String guids);
 }
