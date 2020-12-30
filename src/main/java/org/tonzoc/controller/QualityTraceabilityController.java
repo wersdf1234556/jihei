@@ -44,7 +44,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void add( QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
@@ -53,6 +53,8 @@ public class QualityTraceabilityController extends BaseController {
             qualityTraceabilityModel.setTypeId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getTypeId());
         }
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
+
+        this.qrcode(qualityTraceabilityModel.getGuid());
     }
 
     @PutMapping(value = "{guid}")
@@ -84,8 +86,8 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping(value = "upFile")
-    public void upFile(MultipartFile[] file, String subTypeGuid){
+    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid){
 
-        qualityTraceabilityService.upFile(file, subTypeService.get(subTypeGuid).getTypeId(), subTypeGuid);
+        qualityTraceabilityService.upFile(file, qualityTraceabilityGuid);
     }
 }

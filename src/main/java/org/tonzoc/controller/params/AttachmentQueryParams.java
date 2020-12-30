@@ -12,11 +12,8 @@ public class AttachmentQueryParams {
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
 
-    @Operator(value = "eq", field = "typeId")
-    private Integer typeId;
-
-    @Operator(value = "eq", field = "subTypeGuid")
-    private String subTypeGuid;
+    @Operator(value = "eq", field = "qualityTraceabilityGuid")
+    private String qualityTraceabilityGuid;
 
     @Operator(value = "gte", field = "createdAt")
     private Date startTime;
@@ -40,20 +37,12 @@ public class AttachmentQueryParams {
         this.sortId = sortId;
     }
 
-    public Integer getTypeId() {
-        return typeId;
+    public String getQualityTraceabilityGuid() {
+        return qualityTraceabilityGuid;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
-
-    public String getSubTypeGuid() {
-        return subTypeGuid;
-    }
-
-    public void setSubTypeGuid(String subTypeGuid) {
-        this.subTypeGuid = subTypeGuid;
+    public void setQualityTraceabilityGuid(String qualityTraceabilityGuid) {
+        this.qualityTraceabilityGuid = qualityTraceabilityGuid;
     }
 
     public Date getStartTime() {

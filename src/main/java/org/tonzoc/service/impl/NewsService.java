@@ -36,15 +36,14 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     @Transactional
     public void insertStack(NewsModel newsModel,MultipartFile file){
         if (file!=null){
-            String[] str = fileHelper.fileUpload(file,"党建",0,"");
+            String[] str = fileHelper.fileUpload(file,"党建","");
             // 获取新的guid命名附件
 //            String uuid = UUID.randomUUID().toString().toUpperCase();
             AttachmentModel attachmentModel = new AttachmentModel();
 //            attachmentModel.setGuid(uuid);
             attachmentModel.setUrl(str[0]);
             attachmentModel.setName(str[1]);
-            attachmentModel.setSubTypeGuid("");
-            attachmentModel.setTypeId(0);
+            attachmentModel.setQualityTraceabilityGuid("");
             attachmentModel.setSortId(0);
             attachmentService.save(attachmentModel);
             newsModel.setAttachmentGuid(attachmentModel.getGuid());
@@ -61,20 +60,19 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     @Transactional
     public void updateStack(NewsModel newsModel,MultipartFile file){
         if (file!=null){
-            String[] str = fileHelper.fileUpload(file,"党建",0,"");
+            String[] str = fileHelper.fileUpload(file,"党建","");
             AttachmentModel attachmentModel = new AttachmentModel();
             attachmentModel.setUrl(str[0]);
             attachmentModel.setName(str[1]);
-            attachmentModel.setSubTypeGuid("");
-            attachmentModel.setTypeId(0);
+            attachmentModel.setQualityTraceabilityGuid("");
             attachmentModel.setSortId(0);
             attachmentService.save(attachmentModel);
             if (newsModel.getAttachmentGuid().isEmpty()){
                 AttachmentModel oldAttachment = attachmentService.get(newsModel.getAttachmentGuid());
-                if (oldAttachment!=null){
-                    String returnData = attachmentService.deleteFile(newsModel.getAttachmentGuid());
-                    System.out.println(returnData);
-                }
+//                if (oldAttachment!=null){
+//                    String returnData = attachmentService.deleteFile(newsModel.getAttachmentGuid());
+//                    System.out.println(returnData);
+//                }
             }
             newsModel.setAttachmentGuid(attachmentModel.getGuid());
         }else {

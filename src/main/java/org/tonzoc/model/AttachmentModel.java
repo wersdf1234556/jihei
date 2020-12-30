@@ -17,18 +17,14 @@ public class AttachmentModel extends BaseModel {
     private String url;
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "typeId")
-    private Integer typeId;
-    @Column(value = "subTypeGuid")
-    private String subTypeGuid;
+    @Column(value = "qualityTraceabilityGuid")
+    private String qualityTraceabilityGuid;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
 
-    @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
-    private String typeName;
-    @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
-    private String subName;
+    @JoinColumn(value = "subTypeGuid", type = QualityTraceabilityModel.class, leftColumn = "qualityTraceabilityGuid", rightColumn = "guid")
+    private String subTypeGuid;
 
     public AttachmentModel() {
     }
@@ -65,12 +61,12 @@ public class AttachmentModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public Integer getTypeId() {
-        return typeId;
+    public String getQualityTraceabilityGuid() {
+        return qualityTraceabilityGuid;
     }
 
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setQualityTraceabilityGuid(String qualityTraceabilityGuid) {
+        this.qualityTraceabilityGuid = qualityTraceabilityGuid;
     }
 
     public String getSubTypeGuid() {
@@ -81,21 +77,6 @@ public class AttachmentModel extends BaseModel {
         this.subTypeGuid = subTypeGuid;
     }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public String getSubName() {
-        return subName;
-    }
-
-    public void setSubName(String subName) {
-        this.subName = subName;
-    }
 
     public Date getCreatedAt() {
         return createdAt;
