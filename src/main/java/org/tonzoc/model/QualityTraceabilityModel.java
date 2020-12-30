@@ -123,4 +123,21 @@ public class QualityTraceabilityModel extends BaseModel {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+
+    @Override
+    public String toString() {
+        return "QualityTraceabilityModel{" +
+                "guid='" + guid + '\'' +
+                ", currentTime=" + currentTime +
+                ", currentDate='" + currentDate + '\'' +
+                ", operator='" + operator + '\'' +
+                ", sortId=" + sortId +
+                ", tenderGuid='" + tenderGuid + '\'' +
+                ", subTypeGuid='" + subTypeGuid + '\'' +
+                ", typeId=" + typeId +
+                ", tenderName='" + tenderName + '\'' +
+                ", subTypeName='" + subTypeName + '\'' +
+                ", typeName='" + typeName + '\'' +
+                '}';
+    }
 }

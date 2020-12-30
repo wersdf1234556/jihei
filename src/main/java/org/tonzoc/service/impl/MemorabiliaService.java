@@ -70,7 +70,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
     @Override
     public MemorabiliaModel updateTime(MemorabiliaModel memorabiliaModel) throws ParseException {
 
-        if (!memorabiliaModel.getCurrentDate().equals("") && memorabiliaModel.getCurrentDate() != null) {
+        if (!"".equals(memorabiliaModel.getCurrentDate()) && memorabiliaModel.getCurrentDate() != null) {
 
             memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()), memorabiliaModel.getGuid());
         }

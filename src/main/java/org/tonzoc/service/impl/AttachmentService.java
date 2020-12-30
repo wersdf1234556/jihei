@@ -8,9 +8,11 @@ import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
+import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IAttachmentService;
+import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,38 +32,38 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     private AttachmentMapper attachmentMapper;
 
     @Autowired
-    private ISubTypeService subTypeService;
+    private IQualityTraceabilityService qualityTraceabilityService;
 
     // 单文件上传
-    public void upFile(MultipartFile file, Integer typeId, String subTypeGuid) {
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
 
-        SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
-        String[] str = fileHelper.fileUpload(file, subTypeModel.getName(), typeId, subTypeGuid);
+        QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
+        String[] str = fileHelper.fileUpload(file, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
-        attachmentModel.setSubTypeGuid(subTypeGuid);
-        attachmentModel.setTypeId(typeId);
+        attachmentModel.setQualityTraceabilityGuid(qualityTraceabilityGuid);
 
         this.save(attachmentModel);
     }
 
     // 多文件上传
-    public void upFiles(MultipartFile[] file, Integer typeId, String subTypeGuid) {
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
 
         if (file.length > 0) {
-            SubTypeModel subTypeModel = subTypeService.get(subTypeGuid);
+            QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
+            System.out.println("qualityTraceabilityModel" + qualityTraceabilityModel);
             List<AttachmentModel> list = new ArrayList<>();
 
             for (MultipartFile f : file) {
-                String[] str = fileHelper.fileUpload(f, subTypeModel.getName(), typeId, subTypeGuid);
+                String[] str = fileHelper.fileUpload(f, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
 
                 AttachmentModel attachmentModel = new AttachmentModel();
+                attachmentModel.setGuid(fileHelper.newGUID());
                 attachmentModel.setUrl(str[0]);
                 attachmentModel.setName(str[1]);
-                attachmentModel.setTypeId(typeId);
-                attachmentModel.setSubTypeGuid(subTypeGuid);
+                attachmentModel.setQualityTraceabilityGuid(qualityTraceabilityGuid);
                 attachmentModel.setSortId(0);
 
                 list.add(attachmentModel);

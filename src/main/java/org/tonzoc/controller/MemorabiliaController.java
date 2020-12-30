@@ -38,7 +38,6 @@ public class MemorabiliaController extends BaseController {
         list = memorabiliaService.selected(list);
 
         return new PageResponse(page.getTotal(), list);
-
     }
 
     @PostMapping

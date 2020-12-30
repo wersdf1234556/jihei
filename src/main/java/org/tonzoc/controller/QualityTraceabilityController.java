@@ -2,6 +2,7 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.TimeHelper;
@@ -44,7 +45,8 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add( QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    @Transactional
+    public Map<String, String> add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
@@ -54,7 +56,7 @@ public class QualityTraceabilityController extends BaseController {
         }
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
 
-        this.qrcode(qualityTraceabilityModel.getGuid());
+        return this.qrcode(qualityTraceabilityModel.getGuid());
     }
 
     @PutMapping(value = "{guid}")

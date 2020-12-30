@@ -12,7 +12,7 @@ import java.util.Map;
 public interface IQualityTraceabilityService extends IBaseService<QualityTraceabilityModel> {
 
     // 上传质量追溯文件
-    void upFile(MultipartFile[] file, String qualityTraceabilityGuid);
+    void upFile(MultipartFile[] file, String subTypeGuid);
 
     // 查询字符串转时间
     List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list);
@@ -21,5 +21,5 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     QualityTraceabilityModel updateTime(QualityTraceabilityModel QualityTraceabilityModel) throws ParseException;
 
     // 生成二维码
-    Map<String, String> qrcode(String subTypeGuid);
+    Map<String, String> qrcode(String qualityTraceabilityGuid);
 }
