@@ -18,11 +18,13 @@ public interface IAttachmentService extends IBaseService<AttachmentModel> {
     // 文件下载
     void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException;
 
+    // 图片预览
     byte[] getImage(String attachmentId) throws IOException;
 
     // PDF在线预览
     void PdfPreview(HttpServletResponse response, String guid) throws IOException;
 
+    // 删除物理文件
     String deleteFile(String guid);
 
 }

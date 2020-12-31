@@ -7,8 +7,8 @@ import java.sql.Date;
 @Table("attachments")
 public class AttachmentModel extends BaseModel {
 
+    // @NotInsertColumn
     @PrimaryKey
-//    @NotInsertColumn
     @Column(value = "guid")
     private String guid;
     @Column(value = "name")
@@ -69,15 +69,6 @@ public class AttachmentModel extends BaseModel {
         this.qualityTraceabilityGuid = qualityTraceabilityGuid;
     }
 
-    public String getSubTypeGuid() {
-        return subTypeGuid;
-    }
-
-    public void setSubTypeGuid(String subTypeGuid) {
-        this.subTypeGuid = subTypeGuid;
-    }
-
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -86,4 +77,24 @@ public class AttachmentModel extends BaseModel {
         this.createdAt = createdAt;
     }
 
+    public String getSubTypeGuid() {
+        return subTypeGuid;
+    }
+
+    public void setSubTypeGuid(String subTypeGuid) {
+        this.subTypeGuid = subTypeGuid;
+    }
+
+    @Override
+    public String toString() {
+        return "AttachmentModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", sortId=" + sortId +
+                ", qualityTraceabilityGuid='" + qualityTraceabilityGuid + '\'' +
+                ", createdAt=" + createdAt +
+                ", subTypeGuid='" + subTypeGuid + '\'' +
+                '}';
+    }
 }

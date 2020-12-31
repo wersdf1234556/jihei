@@ -27,24 +27,6 @@ public class AttachmentController extends BaseController {
     @Autowired
     IAttachmentService attachmentService;
 
-    @PostMapping("/upFile")
-    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
-
-        attachmentService.upFile(file, qualityTraceabilityGuid);
-    }
-
-    @PostMapping("/upFiles")
-    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
-
-        attachmentService.upFiles(file, qualityTraceabilityGuid);
-    }
-
-    @GetMapping("/downLoadFile")
-    public void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException {
-
-        attachmentService.downLoadFile(response, guid);
-    }
-
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, AttachmentQueryParams attachmentQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -73,6 +55,31 @@ public class AttachmentController extends BaseController {
         this.attachmentService.remove(guid);
     }
 
+    @DeleteMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+
+        attachmentService.deleteFile(guids);
+        attachmentService.removeMany(guids);
+    }
+
+    @PostMapping("/upFile")
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
+
+        attachmentService.upFile(file, qualityTraceabilityGuid);
+    }
+
+    @PostMapping("/upFiles")
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
+
+        attachmentService.upFiles(file, qualityTraceabilityGuid);
+    }
+
+    @GetMapping("/downLoadFile")
+    public void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException {
+
+        attachmentService.downLoadFile(response, guid);
+    }
+
     @GetMapping(value = "image/{guid}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
@@ -84,10 +91,4 @@ public class AttachmentController extends BaseController {
 
         attachmentService.PdfPreview(response, guid);
     }
-
-//    @GetMapping("/dataCount")
-//    public List<ReturnModel> dataCount(String projectId) {
-//
-//        return attachmentsService.dataCount(projectId);
-//    }
 }

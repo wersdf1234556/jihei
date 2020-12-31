@@ -92,19 +92,7 @@ public class FileHelper {
         return null;
     }
 
-    // 生成二维码
-    public void generateQRCodeImage(String text, int width, int height, String fileName) throws WriterException, IOException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height); // 生成二维码
-
-        String filePath = new IntelliSiteProperties().getFilePath() + "/qrcodeImg/" + fileName;
-        Path path = FileSystems.getDefault().getPath(filePath);
-
-        System.out.println("path" + path);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path); // 将二维码存进去
-
-    }
-
+    // 删除文件
     public String deleteFile(List<String> list) {
         for (String li : list) {
             try {
@@ -159,6 +147,7 @@ public class FileHelper {
         return url;
     }
 
+    // 预览图片
     public byte[] getImage(String url) throws IOException {
 
         File file = new File(url);
@@ -173,6 +162,7 @@ public class FileHelper {
         return bytes;
     }
 
+    // 预览PDF
     public void PdfPreview(HttpServletResponse response, String url) throws IOException {
 
         response.setContentType("application/pdf");
@@ -187,6 +177,20 @@ public class FileHelper {
         out.close();
     }
 
+    // 生成二维码
+    public void generateQRCodeImage(String text, int width, int height, String fileName) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height); // 生成二维码
+
+        String filePath = new IntelliSiteProperties().getFilePath() + "/qrcodeImg/" + fileName;
+        Path path = FileSystems.getDefault().getPath(filePath);
+
+        System.out.println("path" + path);
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path); // 将二维码存进去
+
+    }
+
+    // 随机生成guid;
     public String newGUID() {
 
         UUID uuid = UUID.randomUUID();

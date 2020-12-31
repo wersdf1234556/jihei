@@ -27,10 +27,10 @@ import java.util.List;
 public class AttachmentService extends BaseService<AttachmentModel> implements IAttachmentService {
 
     @Autowired
-    private FileHelper fileHelper;
+    private AttachmentMapper attachmentMapper;
 
     @Autowired
-    private AttachmentMapper attachmentMapper;
+    private FileHelper fileHelper;
 
     @Autowired
     private IQualityTraceabilityService qualityTraceabilityService;
@@ -74,6 +74,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         }
     }
 
+    // 下载文件
     public void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException {
 
         AttachmentModel attachmentsModel = this.get(guid);
@@ -81,22 +82,19 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         fileHelper.downLoad(response, attachmentsModel.getName(), attachmentsModel.getUrl());
     }
 
+    // 预览图片
     public byte[] getImage(String attachmentId) throws IOException {
         AttachmentModel attachmentsModel =get(attachmentId);
         String url =attachmentsModel.getUrl();
         return fileHelper.getImage(url);
     }
 
+    // 预览PDF
     public void PdfPreview (HttpServletResponse response, String guid) throws IOException {
 
         AttachmentModel attachmentsModel = this.get(guid);
 
         fileHelper.PdfPreview(response, attachmentsModel.getUrl());
-    }
-
-    public List<ReturnModel> dataCount (String projectId) {
-
-        return attachmentMapper.dataCount(projectId);
     }
 
     //删除物理文件

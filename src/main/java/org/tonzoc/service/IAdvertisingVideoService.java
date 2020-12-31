@@ -9,12 +9,12 @@ import java.util.Map;
 
 public interface IAdvertisingVideoService extends IBaseService<AdvertisingVideoModel> {
 
-    // 上传视频文件
-    Map<String, String> upFile(MultipartFile file, String currentTime);
-
     // 查询字符串转时间
     List<AdvertisingVideoModel> selected(List<AdvertisingVideoModel> list);
 
     // 处理时间
     AdvertisingVideoModel updateTime (AdvertisingVideoModel advertisingVideoModel) throws ParseException;
+
+    // 上传文件
+    Map<String, String> upFile(MultipartFile file, String currentTime);
 }

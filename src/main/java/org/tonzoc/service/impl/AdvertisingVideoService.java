@@ -2,6 +2,7 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service(value = "advertisingVideoService")
+@Transactional
 public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> implements IAdvertisingVideoService {
 
     @Autowired
@@ -47,6 +49,17 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
         return list;
     }
 
+    @Override
+    public AdvertisingVideoModel updateTime(AdvertisingVideoModel advertisingVideoModel) throws ParseException {
+
+        if (!advertisingVideoModel.getCurrentDate().equals("") && advertisingVideoModel.getCurrentDate() != null) {
+
+            advertisingVideoMapper.updateTime(TimeHelper.stringToDate(advertisingVideoModel.getCurrentDate()), advertisingVideoModel.getGuid());
+        }
+        advertisingVideoModel.setSortId(0);
+        advertisingVideoModel.setCurrentDate("");
+        return advertisingVideoModel;
+    }
 
     @Override
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
@@ -66,17 +79,5 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0],  ""));
         return map;
-    }
-
-    @Override
-    public AdvertisingVideoModel updateTime(AdvertisingVideoModel advertisingVideoModel) throws ParseException {
-
-        if (!advertisingVideoModel.getCurrentDate().equals("") && advertisingVideoModel.getCurrentDate() != null) {
-
-            advertisingVideoMapper.updateTime(TimeHelper.stringToDate(advertisingVideoModel.getCurrentDate()), advertisingVideoModel.getGuid());
-        }
-        advertisingVideoModel.setSortId(0);
-        advertisingVideoModel.setCurrentDate("");
-        return advertisingVideoModel;
     }
 }

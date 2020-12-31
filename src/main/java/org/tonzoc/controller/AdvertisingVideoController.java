@@ -55,11 +55,13 @@ public class AdvertisingVideoController extends BaseController{
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
+
         this.advertisingVideoService.remove(guid);
     }
 
     @DeleteMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
+
         advertisingVideoService.removeMany(guids);
     }
 

@@ -44,7 +44,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add( QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         Map<String, String> map = this.qrcode(qualityTraceabilityModel.getSubTypeGuid());
         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
@@ -83,7 +83,7 @@ public class QualityTraceabilityController extends BaseController {
         qualityTraceabilityService.removeMany(guids);
     }
 
-    @GetMapping(value = "qrcode")
+    @PostMapping(value = "qrcode")
     public Map<String, String> qrcode(String subTypeGuid){
 
         return qualityTraceabilityService.qrcode(subTypeGuid);

@@ -7,17 +7,20 @@ public class MemorabiliaQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
+    @Operator(value = "eq", field = "name")
+    private String name;
+
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
-
-    @Operator(value = "eq", field = "sortId")
-    private Integer sortId;
 
     @Operator(value = "eq", field = "imgAttachmentGuid")
     private String imgAttachmentGuid;
 
     @Operator(value = "eq", field = "pdfAttachmentGuid")
     private String pdfAttachmentGuid;
+
+    @Operator(value = "eq", field = "sortId")
+    private Integer sortId;
 
     public String getGuid() {
         return guid;
@@ -27,12 +30,20 @@ public class MemorabiliaQueryParams {
         this.guid = guid;
     }
 
-    public Integer getSortId() {
-        return sortId;
+    public String getName() {
+        return name;
     }
 
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
     public String getImgAttachmentGuid() {
@@ -51,11 +62,11 @@ public class MemorabiliaQueryParams {
         this.pdfAttachmentGuid = pdfAttachmentGuid;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public Integer getSortId() {
+        return sortId;
     }
 
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 }

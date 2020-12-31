@@ -16,7 +16,7 @@ public class MemorabiliaModel extends BaseModel {
     @Column(value = "name")
     private String name;
     @Column(value = "currentTime")
-    private Date currentTime; // 当前时间
+    private Date currentTime;
     private String currentDate;
     @Column(value = "sortId")
     private Integer sortId;
@@ -50,20 +50,28 @@ public class MemorabiliaModel extends BaseModel {
         this.name = name;
     }
 
-    public Integer getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
-    }
-
     public Date getCurrentTime() {
         return currentTime;
     }
 
     public void setCurrentTime(Date currentTime) {
         this.currentTime = currentTime;
+    }
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 
     public String getImgAttachmentGuid() {
@@ -90,19 +98,26 @@ public class MemorabiliaModel extends BaseModel {
         this.imgName = imgName;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
-    }
-
     public String getPdfName() {
         return pdfName;
     }
 
     public void setPdfName(String pdfName) {
         this.pdfName = pdfName;
+    }
+
+    @Override
+    public String toString() {
+        return "MemorabiliaModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", currentTime=" + currentTime +
+                ", currentDate='" + currentDate + '\'' +
+                ", sortId=" + sortId +
+                ", imgAttachmentGuid='" + imgAttachmentGuid + '\'' +
+                ", pdfAttachmentGuid='" + pdfAttachmentGuid + '\'' +
+                ", imgName='" + imgName + '\'' +
+                ", pdfName='" + pdfName + '\'' +
+                '}';
     }
 }

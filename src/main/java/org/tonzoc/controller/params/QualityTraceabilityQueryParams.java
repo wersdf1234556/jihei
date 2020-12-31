@@ -2,7 +2,6 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
-
 public class QualityTraceabilityQueryParams {
 
     @Operator(value = "eq", field = "guid")
@@ -10,9 +9,6 @@ public class QualityTraceabilityQueryParams {
 
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
-
-    @Operator(value = "eq", field = "sortId")
-    private Integer sortId;
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
@@ -26,6 +22,9 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "qrcodeGuid")
     private String qrcodeGuid;
 
+    @Operator(value = "eq", field = "sortId")
+    private Integer sortId;
+
     public String getGuid() {
         return guid;
     }
@@ -34,12 +33,12 @@ public class QualityTraceabilityQueryParams {
         this.guid = guid;
     }
 
-    public Integer getSortId() {
-        return sortId;
+    public String getCurrentDate() {
+        return currentDate;
     }
 
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
     public String getTenderGuid() {
@@ -66,19 +65,19 @@ public class QualityTraceabilityQueryParams {
         this.subTypeGuid = subTypeGuid;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
-    }
-
     public String getQrcodeGuid() {
         return qrcodeGuid;
     }
 
     public void setQrcodeGuid(String qrcodeGuid) {
         this.qrcodeGuid = qrcodeGuid;
+    }
+
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 }

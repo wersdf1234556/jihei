@@ -2,6 +2,7 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
@@ -20,16 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class MemorabiliaService extends BaseService<MemorabiliaModel> implements IMemorabiliaService {
 
     @Autowired
     private MemorabiliaMapper memorabiliaMapper;
 
     @Autowired
-    private IAttachmentService attachmentService;
+    private AttachmentMapper attachmentMapper;
 
     @Autowired
-    private AttachmentMapper attachmentMapper;
+    private IAttachmentService attachmentService;
 
     @Autowired
     private FileHelper fileHelper;
@@ -37,6 +39,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
     @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
+    // 查询字符串转时间
     @Override
     public List<MemorabiliaModel> selected (List<MemorabiliaModel> list) {
         if (list.size() > 0) {
@@ -48,6 +51,20 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
         return list;
     }
 
+    // 处理时间
+    @Override
+    public MemorabiliaModel updateTime(MemorabiliaModel memorabiliaModel) throws ParseException {
+
+        if (!"".equals(memorabiliaModel.getCurrentDate()) && memorabiliaModel.getCurrentDate() != null) {
+
+            memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()), memorabiliaModel.getGuid());
+        }
+        memorabiliaModel.setSortId(0);
+        memorabiliaModel.setCurrentDate("");
+        return memorabiliaModel;
+    }
+
+    // 上传大事记文件
     @Override
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 
@@ -66,17 +83,5 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0],  ""));
         return map;
-    }
-
-    @Override
-    public MemorabiliaModel updateTime(MemorabiliaModel memorabiliaModel) throws ParseException {
-
-        if (!"".equals(memorabiliaModel.getCurrentDate()) && memorabiliaModel.getCurrentDate() != null) {
-
-            memorabiliaMapper.updateTime(TimeHelper.stringToDate(memorabiliaModel.getCurrentDate()), memorabiliaModel.getGuid());
-        }
-        memorabiliaModel.setSortId(0);
-        memorabiliaModel.setCurrentDate("");
-        return memorabiliaModel;
     }
 }

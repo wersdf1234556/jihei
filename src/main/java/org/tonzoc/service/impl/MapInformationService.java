@@ -16,6 +16,7 @@ public class MapInformationService extends BaseService<MapInformationModel> impl
     @Autowired
     private MapInformationMapper mapInformationMapper;
 
+    // 查询字符串转时间
     @Override
     public List<MapInformationModel> selected (List<MapInformationModel> list) {
         if (list.size() > 0) {
@@ -27,12 +28,7 @@ public class MapInformationService extends BaseService<MapInformationModel> impl
         return list;
     }
 
-    @Override
-    public List<MapInformationModel> three() {
-
-        return this.selected(mapInformationMapper.three());
-    }
-
+    // 处理时间
     @Override
     public MapInformationModel updateTime(MapInformationModel mapInformationModel) throws ParseException {
 
@@ -45,4 +41,10 @@ public class MapInformationService extends BaseService<MapInformationModel> impl
         return mapInformationModel;
     }
 
+    // 查询最新三条数据
+    @Override
+    public List<MapInformationModel> three() {
+
+        return this.selected(mapInformationMapper.three());
+    }
 }

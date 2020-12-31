@@ -56,11 +56,13 @@ public class MemorabiliaController extends BaseController {
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
+
         this.memorabiliaService.remove(guid);
     }
 
     @DeleteMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
+
         memorabiliaService.removeMany(guids);
     }
 

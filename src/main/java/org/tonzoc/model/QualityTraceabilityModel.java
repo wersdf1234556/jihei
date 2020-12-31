@@ -95,6 +95,22 @@ public class QualityTraceabilityModel extends BaseModel {
         this.subTypeGuid = subTypeGuid;
     }
 
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getQrcodeGuid() {
+        return qrcodeGuid;
+    }
+
+    public void setQrcodeGuid(String qrcodeGuid) {
+        this.qrcodeGuid = qrcodeGuid;
+    }
+
     public String getTenderName() {
         return tenderName;
     }
@@ -111,28 +127,12 @@ public class QualityTraceabilityModel extends BaseModel {
         this.subTypeName = subTypeName;
     }
 
-    public Integer getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
-    }
-
     public String getTypeName() {
         return typeName;
     }
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public String getQrcodeGuid() {
-        return qrcodeGuid;
-    }
-
-    public void setQrcodeGuid(String qrcodeGuid) {
-        this.qrcodeGuid = qrcodeGuid;
     }
 
     @Override

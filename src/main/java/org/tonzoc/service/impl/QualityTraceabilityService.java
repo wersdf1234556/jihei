@@ -16,7 +16,6 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
-import org.tonzoc.service.ISubTypeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -33,32 +32,20 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     private QualityTraceabilityMapper qualityTraceabilityMapper;
 
     @Autowired
+    private AttachmentMapper attachmentMapper;
+
+    @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
     @Autowired
     private IAttachmentService attachmentService;
 
     @Autowired
-    private AttachmentMapper attachmentMapper;
-
-    @Autowired
     private FileHelper fileHelper;
-
-    @Autowired
-    private ISubTypeService subTypeService;
-
-    // 上传质量追溯文件
-    @Override
-    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
-
-        intelliSiteProperties.setFileUrl("/质量追溯/");
-        attachmentService.upFiles(file, qualityTraceabilityGuid);
-        intelliSiteProperties.setFileUrl("/");
-    }
 
     // 查询字符串转时间
     @Override
-    public List<QualityTraceabilityModel> selected (List<QualityTraceabilityModel> list) {
+    public List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list) {
         if (list.size() > 0) {
             for (QualityTraceabilityModel m : list) {
 
@@ -104,6 +91,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             attachmentService.remove(oldGuid);
         }
         AttachmentModel attachmentModel = new AttachmentModel();
+        attachmentModel.setGuid(fileHelper.newGUID());
         attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png");
         attachmentModel.setName(subTypeGuid + ".png");
         attachmentModel.setSortId(0);
@@ -111,7 +99,16 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png",  ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png", ""));
         return map;
+    }
+
+    // 上传质量追溯文件
+    @Override
+    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
+
+        intelliSiteProperties.setFileUrl("/质量追溯/");
+        attachmentService.upFiles(file, qualityTraceabilityGuid);
+        intelliSiteProperties.setFileUrl("/");
     }
 }
