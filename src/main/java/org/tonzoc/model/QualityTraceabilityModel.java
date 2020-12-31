@@ -8,6 +8,7 @@ import java.util.Date;
 @Table("qualityTraceabilitys")
 public class QualityTraceabilityModel extends BaseModel {
 
+    @NotInsertColumn
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
@@ -24,6 +25,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String subTypeGuid;
     @Column(value = "typeId")
     private Integer typeId;
+    @Column(value = "qrcodeGuid")
+    private String qrcodeGuid;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -124,6 +127,14 @@ public class QualityTraceabilityModel extends BaseModel {
         this.typeName = typeName;
     }
 
+    public String getQrcodeGuid() {
+        return qrcodeGuid;
+    }
+
+    public void setQrcodeGuid(String qrcodeGuid) {
+        this.qrcodeGuid = qrcodeGuid;
+    }
+
     @Override
     public String toString() {
         return "QualityTraceabilityModel{" +
@@ -135,6 +146,7 @@ public class QualityTraceabilityModel extends BaseModel {
                 ", tenderGuid='" + tenderGuid + '\'' +
                 ", subTypeGuid='" + subTypeGuid + '\'' +
                 ", typeId=" + typeId +
+                ", qrcodeGuid='" + qrcodeGuid + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 ", subTypeName='" + subTypeName + '\'' +
                 ", typeName='" + typeName + '\'' +

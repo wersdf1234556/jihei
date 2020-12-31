@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 @Configuration
@@ -102,6 +103,23 @@ public class FileHelper {
         System.out.println("path" + path);
         MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path); // 将二维码存进去
 
+    }
+
+    public String deleteFile(List<String> list) {
+        for (String li : list) {
+            try {
+                File file = new File(li);
+                System.out.println("文件地址：" + li);
+                if (file.exists()) {
+                    file.delete();
+                    return "文件已删除";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "删除文件报错";
+            }
+        }
+        return "文件不存在";
     }
 
     // 下载文件

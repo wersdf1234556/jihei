@@ -68,6 +68,8 @@ public class AttachmentController extends BaseController {
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
+
+        attachmentService.deleteFile(guid);
         this.attachmentService.remove(guid);
     }
 

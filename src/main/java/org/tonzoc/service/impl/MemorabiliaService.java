@@ -55,6 +55,7 @@ public class MemorabiliaService extends BaseService<MemorabiliaModel> implements
         String[] str = fileHelper.fileUpload(file, currentDate,  "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
+        attachmentModel.setGuid(fileHelper.newGUID());
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSortId(0);

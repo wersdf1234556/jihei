@@ -42,6 +42,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         String[] str = fileHelper.fileUpload(file, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
 
         AttachmentModel attachmentModel = new AttachmentModel();
+        attachmentModel.setGuid(fileHelper.newGUID());
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setQualityTraceabilityGuid(qualityTraceabilityGuid);
@@ -54,7 +55,6 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
 
         if (file.length > 0) {
             QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
-            System.out.println("qualityTraceabilityModel" + qualityTraceabilityModel);
             List<AttachmentModel> list = new ArrayList<>();
 
             for (MultipartFile f : file) {
@@ -99,25 +99,19 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         return attachmentMapper.dataCount(projectId);
     }
 
-    public String deleteFile(String guid){
-        try {
-            AttachmentModel attachmentModel = get(guid);
-            if (attachmentModel!=null){
-                File file = new File(attachmentModel.getUrl());
-                if (file.exists()){
-                    file.delete();
-                    return "文件已删除";
-                }else {
-                    return "文件不存在";
-                }
-            }else {
-                return "该附件信息不存在";
+    //删除物理文件
+    @Override
+    public String deleteFile(String guid) {
+        List<String> list = new ArrayList<>();
+        if (guid.contains(",")) {
+            String str[] = guid.split(",");
+            for (String s:str) {
+                list.add(this.get(guid).getUrl());
             }
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return "删除文件报错";
+        }else{
+            list.add(this.get(guid).getUrl());
         }
 
+      return fileHelper.deleteFile(list);
     }
 }

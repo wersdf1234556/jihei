@@ -55,6 +55,7 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
         String[] str = fileHelper.fileUpload(file, currentDate,  "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
+        attachmentModel.setGuid(fileHelper.newGUID());
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSortId(0);

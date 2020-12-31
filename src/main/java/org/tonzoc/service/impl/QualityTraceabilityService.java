@@ -14,7 +14,6 @@ import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
@@ -48,6 +47,16 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private ISubTypeService subTypeService;
 
+    // 上传质量追溯文件
+    @Override
+    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
+
+        intelliSiteProperties.setFileUrl("/质量追溯/");
+        attachmentService.upFiles(file, qualityTraceabilityGuid);
+        intelliSiteProperties.setFileUrl("/");
+    }
+
+    // 查询字符串转时间
     @Override
     public List<QualityTraceabilityModel> selected (List<QualityTraceabilityModel> list) {
         if (list.size() > 0) {
@@ -59,6 +68,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         return list;
     }
 
+    // 处理时间
     @Override
     public QualityTraceabilityModel updateTime(QualityTraceabilityModel mapInformationModel) throws ParseException {
 
@@ -71,15 +81,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         return mapInformationModel;
     }
 
-
-    @Override
-    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
-
-        intelliSiteProperties.setFileUrl("/质量追溯/");
-        attachmentService.upFiles(file, qualityTraceabilityGuid);
-        intelliSiteProperties.setFileUrl("/");
-    }
-
+    // 生成二维码
     @Override
     public Map<String, String> qrcode(String subTypeGuid) {
 
