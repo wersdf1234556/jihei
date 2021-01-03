@@ -59,7 +59,7 @@ public class AdvertisingVideoController extends BaseController{
         this.advertisingVideoService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
         advertisingVideoService.removeMany(guids);

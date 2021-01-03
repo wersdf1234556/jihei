@@ -57,7 +57,7 @@ public class MapInformationController extends BaseController {
         this.mapInformationService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         mapInformationService.removeMany(guids);
     }

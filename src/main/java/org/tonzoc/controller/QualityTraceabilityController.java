@@ -77,7 +77,7 @@ public class QualityTraceabilityController extends BaseController {
         this.qualityTraceabilityService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
         qualityTraceabilityService.removeMany(guids);

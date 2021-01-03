@@ -50,7 +50,7 @@ public class SubTypeController extends BaseController {
         this.subTypeService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         subTypeService.removeMany(guids);
     }

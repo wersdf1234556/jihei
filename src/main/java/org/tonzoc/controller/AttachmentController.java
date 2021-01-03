@@ -55,7 +55,7 @@ public class AttachmentController extends BaseController {
         this.attachmentService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
         attachmentService.deleteFile(guids);

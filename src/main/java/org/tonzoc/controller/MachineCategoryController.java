@@ -50,7 +50,7 @@ public class MachineCategoryController extends BaseController {
     }
 
     //@RequestBody(required = false)
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         machineCategoryService.removeMany(guids);
     }

@@ -60,7 +60,7 @@ public class MemorabiliaController extends BaseController {
         this.memorabiliaService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
         memorabiliaService.removeMany(guids);

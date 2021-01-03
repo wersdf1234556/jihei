@@ -50,7 +50,7 @@ public class TypeController extends BaseController {
         this.typeService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         typeService.removeMany(guids);
     }

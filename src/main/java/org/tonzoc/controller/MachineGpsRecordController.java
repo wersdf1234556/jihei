@@ -49,7 +49,7 @@ public class MachineGpsRecordController extends BaseController{
         this.machineGpsRecordService.remove(guid);
     }
 
-    @DeleteMapping(value = "removeMany")
+    @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         machineGpsRecordService.removeMany(guids);
     }
