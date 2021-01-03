@@ -7,7 +7,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
@@ -33,7 +32,6 @@ public class FileHelper {
     private IAttachmentService attachmentService;
 
     // 上传文件
-    @Transactional
     public String[] fileUpload(MultipartFile file, String subTypeName, String qualityTraceabilityGuid) {
         String[] str = new String[2];
 
