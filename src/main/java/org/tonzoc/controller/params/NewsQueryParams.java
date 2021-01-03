@@ -6,8 +6,8 @@ public class NewsQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "titleGuid")
-    private String titleGuid;
+    @Operator(value = "eq", field = "sign")
+    private String sign;
 
     public String getGuid() {
         return guid;
@@ -17,11 +17,11 @@ public class NewsQueryParams {
         this.guid = guid;
     }
 
-    public String getTitleGuid() {
-        return titleGuid;
+    public String getSign() {
+        return sign;
     }
 
-    public void setTitleGuid(String titleGuid) {
-        this.titleGuid = titleGuid;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

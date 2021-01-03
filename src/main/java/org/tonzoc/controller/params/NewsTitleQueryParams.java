@@ -8,6 +8,8 @@ public class NewsTitleQueryParams {
     private String guid;
     @Operator(value = "like", field = "title")
     private String title;
+    @Operator(value = "eq", field = "sign")
+    private String sign;
 
     public String getGuid() {
         return guid;
@@ -25,4 +27,11 @@ public class NewsTitleQueryParams {
         this.title = title;
     }
 
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 }

@@ -11,9 +11,9 @@ public class NewsModel extends BaseModel{
     @NotInsertColumn
     @Column(value = "guid")
     private String guid;
-    @Column(value = "titleGuid")
-    private String titleGuid;     //标题guid
-    @JoinColumn(value = "title", type = NewsTitleModel.class, leftColumn = "titleGuid", rightColumn = "guid")
+    @Column(value = "sign")
+    private String sign;     //标题的唯一标识
+    @JoinColumn(value = "title", type = NewsTitleModel.class, leftColumn = "sign", rightColumn = "sign")
     private String title; //标题
     @Column(value = "attachmentGuid")
     private String attachmentGuid;
@@ -39,12 +39,12 @@ public class NewsModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getTitleGuid() {
-        return titleGuid;
+    public String getSign() {
+        return sign;
     }
 
-    public void setTitleGuid(String titleGuid) {
-        this.titleGuid = titleGuid;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public String getAttachmentGuid() {

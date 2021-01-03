@@ -15,9 +15,8 @@ public class NewsTitleModel extends BaseModel{
     private String title; // 名称
     @Column(value = "sortId")
     private Integer sortId;
-
-    public NewsTitleModel() {
-    }
+    @Column(value = "sign")
+    private String sign;     //标题的唯一标识
 
     public String getGuid() {
         return guid;
@@ -43,18 +42,13 @@ public class NewsTitleModel extends BaseModel{
         this.sortId = sortId;
     }
 
-    @Override
-    public String toString() {
-        return "NewsTitleModel{" +
-                "guid='" + guid + '\'' +
-                ", title='" + title + '\'' +
-                ", sortId=" + sortId +
-                '}';
+    public String getSign() {
+        return sign;
     }
 
-    public NewsTitleModel(String guid, String title, Integer sortId) {
-        this.guid = guid;
-        this.title = title;
-        this.sortId = sortId;
+    public void setSign(String sign) {
+        this.sign = sign;
     }
+
+
 }
