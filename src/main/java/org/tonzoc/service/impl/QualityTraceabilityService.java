@@ -124,11 +124,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     // 按照名称模糊查询的功能
-    public List<AttachmentModel> selectLikeName(String name){
+    public List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid){
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("qualityTraceabilityGuid", "", "neq"));
-        sqlQueryParams.add(new SqlQueryParam("name", name, "like"));
+        sqlQueryParams.add(new SqlQueryParam("qualityTraceabilityGuid", qualityTraceabilityGuid, "eq"));
+        if (!"".equals(name) && name != null) {
+            sqlQueryParams.add(new SqlQueryParam("name", name, "like"));
+        }
 
         return attachmentService.list(sqlQueryParams);
     }

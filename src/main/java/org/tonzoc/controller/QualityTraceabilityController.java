@@ -107,8 +107,8 @@ public class QualityTraceabilityController extends BaseController {
 
     // 按照名称模糊查询的功能
     @GetMapping(value = "selectLikeName")
-    public List<AttachmentModel> selectLikeName(String name) {
+    public List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid) {
 
-       return qualityTraceabilityService.selectLikeName(name);
+       return qualityTraceabilityService.selectLikeName(name, qualityTraceabilityGuid);
     }
 }

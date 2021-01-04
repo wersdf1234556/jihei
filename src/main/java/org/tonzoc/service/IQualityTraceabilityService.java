@@ -26,5 +26,5 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     void upFile(MultipartFile file, String qualityTraceabilityGuid);
 
     // 按照名称模糊查询的功能
-    List<AttachmentModel> selectLikeName(String name);
+    List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid);
 }
