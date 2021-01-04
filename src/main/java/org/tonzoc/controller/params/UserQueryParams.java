@@ -10,6 +10,8 @@ public class UserQueryParams {
     @Operator(value = "eq", field = "projectGuid")
     private String projectGuid;
 
+    @Operator(value = "eq", field = "flag")
+    private String flag="0";
 
     public UserQueryParams() {
 
@@ -29,5 +31,13 @@ public class UserQueryParams {
 
     public void setProjectGuid(String projectGuid) {
         this.projectGuid = projectGuid;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

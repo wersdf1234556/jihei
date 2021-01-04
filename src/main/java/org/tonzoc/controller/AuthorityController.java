@@ -57,6 +57,9 @@ public class AuthorityController extends BaseController {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "list_default")
     public void add(@RequestBody @Valid AuthorityModel authorityModel) {
+        if (authorityModel.getFlag()==null){
+            authorityModel.setFlag(0);
+        }
         this.authorityService.save(authorityModel);
 
         String cacheKey = "authority_list_default";

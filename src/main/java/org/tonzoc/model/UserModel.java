@@ -21,7 +21,6 @@ public class UserModel extends BaseModel {
     @Column(value = "mobile")
     private String mobile;
     @Column(value = "flag")
-    @NotInsertColumn
     private Integer flag;
 
     @Column(value = "roleGuid")

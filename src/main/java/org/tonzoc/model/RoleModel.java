@@ -16,7 +16,6 @@ public class RoleModel extends BaseModel {
     @Column(value = "name")
     private String name;
     @Column(value = "flag")
-    @NotInsertColumn
     private Integer flag;
 
     private List<AuthorityModel> authorityModels;
