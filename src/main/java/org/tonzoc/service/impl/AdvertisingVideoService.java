@@ -38,6 +38,7 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
     @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
+    // 查询字符串转时间
     @Override
     public List<AdvertisingVideoModel> selected (List<AdvertisingVideoModel> list) {
         if (list.size() > 0) {
@@ -49,6 +50,7 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
         return list;
     }
 
+    // 处理时间
     @Override
     public AdvertisingVideoModel updateTime(AdvertisingVideoModel advertisingVideoModel) throws ParseException {
 
@@ -61,6 +63,7 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
         return advertisingVideoModel;
     }
 
+    // 上传文件
     @Override
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 

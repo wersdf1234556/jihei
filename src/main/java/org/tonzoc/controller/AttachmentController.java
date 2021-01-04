@@ -62,31 +62,36 @@ public class AttachmentController extends BaseController {
         attachmentService.removeMany(guids);
     }
 
-    @PostMapping("/upFile")
+    // 单文件上传
+    @PostMapping(value = "/upFile")
     public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
 
         attachmentService.upFile(file, qualityTraceabilityGuid);
     }
 
-    @PostMapping("/upFiles")
+    // 多文件上传
+    @PostMapping(value = "/upFiles")
     public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
 
         attachmentService.upFiles(file, qualityTraceabilityGuid);
     }
 
-    @GetMapping("/downLoadFile")
+    // 下载文件
+    @GetMapping(value = "/downLoadFile")
     public void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException {
 
         attachmentService.downLoadFile(response, guid);
     }
 
+    // 预览图片
     @GetMapping(value = "image/{guid}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
         return attachmentService.getImage(guid);
     }
 
-    @GetMapping("/pdfPreview")
+    // 预览PDF
+    @GetMapping(value = "/pdfPreview")
     public void PdfPreview (HttpServletResponse response,  String guid) throws IOException {
 
         attachmentService.PdfPreview(response, guid);

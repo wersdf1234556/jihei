@@ -16,6 +16,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("machine")
@@ -53,6 +54,7 @@ public class MachineController extends BaseController {
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
+
         machineService.removeMany(guids);
     }
 
@@ -61,6 +63,13 @@ public class MachineController extends BaseController {
     public List<ReturnModel> machineSurvey(String tenderGuid){
 
         return machineService.machineSurvey(tenderGuid);
+    }
+
+    // 全标段的重点机械
+    @GetMapping(value = "allImportantMachine")
+    public Map<String, List<ReturnModel>> allImportantMachine(){
+
+        return machineService.allImportantMachine();
     }
 
     // 重点机械

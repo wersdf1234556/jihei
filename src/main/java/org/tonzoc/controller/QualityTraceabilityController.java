@@ -9,6 +9,7 @@ import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
@@ -83,15 +84,31 @@ public class QualityTraceabilityController extends BaseController {
         qualityTraceabilityService.removeMany(guids);
     }
 
+    // 生成二维码
     @PostMapping(value = "qrcode")
     public Map<String, String> qrcode(String subTypeGuid){
 
         return qualityTraceabilityService.qrcode(subTypeGuid);
     }
 
+    // 上传多个质量追溯文件
+    @PostMapping(value = "upFiles")
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid){
+
+        qualityTraceabilityService.upFiles(file, qualityTraceabilityGuid);
+    }
+
+    // 上传质量追溯文件
     @PostMapping(value = "upFile")
-    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid){
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid){
 
         qualityTraceabilityService.upFile(file, qualityTraceabilityGuid);
+    }
+
+    // 按照名称模糊查询的功能
+    @GetMapping(value = "selectLikeName")
+    public List<AttachmentModel> selectLikeName(String name) {
+
+       return qualityTraceabilityService.selectLikeName(name);
     }
 }

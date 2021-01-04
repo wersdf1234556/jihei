@@ -65,6 +65,7 @@ public class AdvertisingVideoController extends BaseController{
         advertisingVideoService.removeMany(guids);
     }
 
+    // 上传文件
     @PostMapping(value = "upFile")
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 

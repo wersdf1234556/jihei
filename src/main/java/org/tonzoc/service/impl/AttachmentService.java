@@ -5,18 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
-import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.ReturnModel;
-import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
-import org.tonzoc.service.ISubTypeService;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -97,7 +92,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         fileHelper.PdfPreview(response, attachmentsModel.getUrl());
     }
 
-    //删除物理文件
+    // 删除物理文件
     @Override
     public String deleteFile(String guid) {
         List<String> list = new ArrayList<>();

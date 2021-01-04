@@ -16,10 +16,12 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
+import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +81,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         String payUrl = intelliSiteProperties.getIp() + address + "/attachment?subTypeGuid =" + subTypeGuid; // 二维码存的内容
 
         try {
-            fileHelper.generateQRCodeImage(payUrl, 350, 350, subTypeGuid + ".png");
+            fileHelper.generateQRCodeImage(payUrl, 380, 380, subTypeGuid + ".png");
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -103,12 +105,31 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         return map;
     }
 
-    // 上传质量追溯文件
+    // 上传多个质量追溯文件
     @Override
-    public void upFile(MultipartFile[] file, String qualityTraceabilityGuid) {
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
         attachmentService.upFiles(file, qualityTraceabilityGuid);
         intelliSiteProperties.setFileUrl("/");
+    }
+
+    // 上传质量追溯文件
+    @Override
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
+
+        intelliSiteProperties.setFileUrl("/质量追溯/");
+        attachmentService.upFile(file, qualityTraceabilityGuid);
+        intelliSiteProperties.setFileUrl("/");
+    }
+
+    // 按照名称模糊查询的功能
+    public List<AttachmentModel> selectLikeName(String name){
+
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("qualityTraceabilityGuid", "", "neq"));
+        sqlQueryParams.add(new SqlQueryParam("name", name, "like"));
+
+        return attachmentService.list(sqlQueryParams);
     }
 }

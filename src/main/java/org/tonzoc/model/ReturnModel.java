@@ -34,5 +34,13 @@ public class ReturnModel {
         this.proportion = proportion;
     }
 
+    @Override
+    public String toString() {
+        return "ReturnModel{" +
+                "name='" + name + '\'' +
+                ", number=" + number +
+                ", proportion='" + proportion + '\'' +
+                '}';
+    }
 }
 

@@ -1,6 +1,7 @@
 package org.tonzoc.service;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 
 import java.text.ParseException;
@@ -18,6 +19,12 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     // 生成二维码
     Map<String, String> qrcode(String qualityTraceabilityGuid);
 
+    // 上传多个质量追溯文件
+    void upFiles(MultipartFile[] file, String qualityTraceabilityGuid);
+
     // 上传质量追溯文件
-    void upFile(MultipartFile[] file, String qualityTraceabilityGuid);
+    void upFile(MultipartFile file, String qualityTraceabilityGuid);
+
+    // 按照名称模糊查询的功能
+    List<AttachmentModel> selectLikeName(String name);
 }

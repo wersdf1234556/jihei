@@ -24,7 +24,6 @@ public class MapInformationController extends BaseController {
     @Autowired
     private IMapInformationService mapInformationService;
 
-
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, MapInformationQueryParams mapInformationQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -62,6 +61,7 @@ public class MapInformationController extends BaseController {
         mapInformationService.removeMany(guids);
     }
 
+    // 查询最新三条数据
     @GetMapping(value = "three")
     public List<MapInformationModel> three() {
 

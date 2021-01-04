@@ -66,6 +66,7 @@ public class MemorabiliaController extends BaseController {
         memorabiliaService.removeMany(guids);
     }
 
+    // 上传大事记文件
     @PostMapping(value = "upFile")
     public Map<String, String> upFile(MultipartFile file, String currentDate) {
 

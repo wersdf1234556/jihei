@@ -3,20 +3,27 @@ package org.tonzoc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.MachineMapper;
+import org.tonzoc.mapper.TenderMapper;
 import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.TenderModel;
 import org.tonzoc.service.IMachineService;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MachineService extends BaseService<MachineModel> implements IMachineService {
 
     @Autowired
     private MachineMapper machineMapper;
+
+    @Autowired
+    private TenderMapper tenderMapper;
+
+    @Autowired
+    private TenderService tenderService;
 
     // 机械公用方法
     public List<ReturnModel> machinePublic(Integer allNumber, List<ReturnModel> list) {
@@ -51,6 +58,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         return list1;
     }
 
+    // 机械概况
     @Override
     public List<ReturnModel> machineSurvey(String tenderGuid) {
 
@@ -60,6 +68,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         return this.machinePublic(allNumber, list);
     }
 
+    // 重点机械
     @Override
     public List<ReturnModel> importantMachine(String tenderGuid) {
 
@@ -69,11 +78,25 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         return this.machinePublic(allNumber, list);
     }
 
+    // 全标段的重点机械
+    @Override
+    public Map<String, List<ReturnModel>> allImportantMachine(){
+        Map<String, List<ReturnModel>> map = new LinkedHashMap<>();
+
+        List<TenderModel> list1 = tenderMapper.list();
+
+        for (TenderModel li:list1) {
+            List<ReturnModel> list2 = this.importantMachine(li.getGuid());
+
+            map.put(li.getName(), list2);
+        }
+        return map;
+    }
+
+    // 机械GPS位置
     @Override
     public List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid) {
 
         return null;
     }
-
-
 }

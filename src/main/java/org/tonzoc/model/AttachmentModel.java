@@ -2,7 +2,7 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Table("attachments")
 public class AttachmentModel extends BaseModel {
@@ -22,9 +22,6 @@ public class AttachmentModel extends BaseModel {
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
-
-    @JoinColumn(value = "subTypeGuid", type = QualityTraceabilityModel.class, leftColumn = "qualityTraceabilityGuid", rightColumn = "guid")
-    private String subTypeGuid;
 
     public AttachmentModel() {
     }
@@ -77,14 +74,6 @@ public class AttachmentModel extends BaseModel {
         this.createdAt = createdAt;
     }
 
-    public String getSubTypeGuid() {
-        return subTypeGuid;
-    }
-
-    public void setSubTypeGuid(String subTypeGuid) {
-        this.subTypeGuid = subTypeGuid;
-    }
-
     @Override
     public String toString() {
         return "AttachmentModel{" +
@@ -94,7 +83,6 @@ public class AttachmentModel extends BaseModel {
                 ", sortId=" + sortId +
                 ", qualityTraceabilityGuid='" + qualityTraceabilityGuid + '\'' +
                 ", createdAt=" + createdAt +
-                ", subTypeGuid='" + subTypeGuid + '\'' +
                 '}';
     }
 }
