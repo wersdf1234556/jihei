@@ -99,7 +99,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         if (guid.contains(",")) {
             String str[] = guid.split(",");
             for (String s:str) {
-                list.add(this.get(guid).getUrl());
+                list.add(this.get(s).getUrl());
             }
         }else{
             list.add(this.get(guid).getUrl());
