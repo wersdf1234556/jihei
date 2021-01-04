@@ -28,7 +28,6 @@ public class AuthorityModel extends BaseModel implements Serializable {
     @Column(value = "isDefault")
     private Integer isDefault;
     @Column(value = "flag")
-    @NotInsertColumn
     private Integer flag;
 
     private List<AuthorityModel> children;

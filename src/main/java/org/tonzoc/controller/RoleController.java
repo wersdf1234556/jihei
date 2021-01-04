@@ -62,6 +62,9 @@ public class RoleController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid RoleModel roleModel) {
+        if (roleModel.getFlag()==null){
+            roleModel.setFlag(0);
+        }
         this.roleService.save(roleModel);
         System.out.println(roleModel);
 

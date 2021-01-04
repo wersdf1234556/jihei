@@ -54,6 +54,9 @@ public class UserController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid UserModel userModel) {
+        if (userModel.getFlag()==null){
+            userModel.setFlag(0);
+        }
 
         // TODO 添加事务支持
 
@@ -66,7 +69,6 @@ public class UserController extends BaseController {
     @PutMapping(value = "{guid}")
     @CacheEvict(value = "list_by_user", key = "#userModel.guid")
     public void update(@RequestBody @Valid UserModel userModel) {
-
         // 不修改密码
         userModel.setPassword(null);
 
