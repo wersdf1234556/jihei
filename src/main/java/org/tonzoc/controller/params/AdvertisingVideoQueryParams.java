@@ -18,6 +18,9 @@ public class AdvertisingVideoQueryParams {
     @Operator(value = "eq", field = "videoAttachmentGuid")
     private String videoAttachmentGuid;
 
+    @Operator(value = "eq", field = "profile")
+    private String profile;
+
     public String getGuid() {
         return guid;
     }
@@ -56,5 +59,13 @@ public class AdvertisingVideoQueryParams {
 
     public void setImgAttachmentGuid(String imgAttachmentGuid) {
         this.imgAttachmentGuid = imgAttachmentGuid;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 }
