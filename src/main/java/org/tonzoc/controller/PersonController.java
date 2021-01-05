@@ -36,13 +36,13 @@ public class PersonController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid PersonModel personModel ) {
-        this.personService.save(personModel);
+    public void add(@RequestBody @Valid PersonModel personModel ) throws Exception {
+        this.personService.insertStack(personModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid PersonModel personModel) {
-        this.personService.update(personModel);
+    public void update(@RequestBody @Valid PersonModel personModel) throws Exception {
+        this.personService.updateStack(personModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -54,5 +54,12 @@ public class PersonController extends BaseController {
     @PostMapping(value = "removeMany")
     public void removeMany(String  guids) throws Exception {
         personService.removeMany(guids);
+    }
+    /*
+    手机端登录验证
+    */
+    @PostMapping(value = "login")
+    public PersonModel login(String sign,String password) throws Exception {
+        return personService.login(sign,password);
     }
 }

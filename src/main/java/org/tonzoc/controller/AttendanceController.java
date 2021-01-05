@@ -37,8 +37,8 @@ public class AttendanceController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AttendanceModel attendanceModel) {
-        this.attendanceService.save(attendanceModel);
+    public void add(@RequestBody @Valid AttendanceModel attendanceModel) throws Exception {
+        this.attendanceService.insertStack(attendanceModel);
     }
 
     @PutMapping(value = "{guid}")
@@ -55,5 +55,6 @@ public class AttendanceController extends BaseController {
     public void removeMany(String guids) throws Exception {
         attendanceService.removeMany(guids);
     }
+
 
 }

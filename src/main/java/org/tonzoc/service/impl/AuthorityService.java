@@ -68,7 +68,7 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
             Page page = PageHelper.startPage(1, 0, "sortId asc");
             page.setOrderByOnly(true);
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-//            sqlQueryParams.add(new SqlQueryParam("visible", "1", "eq"));
+            sqlQueryParams.add(new SqlQueryParam("flag", "0", "eq"));
             allAuthorityModels = this.list(sqlQueryParams);
         } else {
             allAuthorityModels = this.listByUser(userGuid);

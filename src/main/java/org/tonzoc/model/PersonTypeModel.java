@@ -12,7 +12,7 @@ public class PersonTypeModel extends BaseModel{
     @Column(value = "guid")
     private String guid;
     @Column(value = "name")
-    private String name; // 名称
+    private String name; // 人员类型
     @Column(value = "sortId")
     private Integer sortId; // 排序
 

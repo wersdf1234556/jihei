@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 @Table(value = "newsTitles")
 public class NewsTitleModel extends BaseModel{
@@ -49,6 +46,5 @@ public class NewsTitleModel extends BaseModel{
     public void setSign(String sign) {
         this.sign = sign;
     }
-
 
 }

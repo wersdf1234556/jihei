@@ -5,6 +5,8 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.util.Date;
+
 @Table(value = "attendances")
 public class AttendanceModel extends BaseModel{
     @PrimaryKey
@@ -12,9 +14,12 @@ public class AttendanceModel extends BaseModel{
     @Column(value = "guid")
     private String guid;
     @Column(value = "idCard")
-    private String idCard;
-    @Column(value = "attDate")
-    private String attDate;
+    private String idCard;        //唯一识别字段
+    @Column(value = "createdAt")  //打卡时间
+    @NotInsertColumn
+    private Date createdAt;
+    @Column(value = "address")
+    private String address;  //登录地点
 
     public String getGuid() {
         return guid;
@@ -32,11 +37,29 @@ public class AttendanceModel extends BaseModel{
         this.idCard = idCard;
     }
 
-    public String getAttDate() {
-        return attDate;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setAttDate(String attDate) {
-        this.attDate = attDate;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "AttendanceModel{" +
+                "guid='" + guid + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", createdAt=" + createdAt +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

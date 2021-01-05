@@ -20,6 +20,8 @@ public class PersonModel extends BaseModel{
     private String typeName; //类型
     @Column(value = "idCard")
     private String idCard;
+    @Column(value = "password")
+    private String password; //手机端密码，明文
 
     public String getGuid() {
         return guid;
@@ -75,5 +77,13 @@ public class PersonModel extends BaseModel{
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

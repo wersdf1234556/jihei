@@ -8,8 +8,8 @@ public class AttendanceQueryParams {
 
     @Operator(value = "like", field = "idCard")
     private String idCard;
-    @Operator(value = "eq", field = "attDate")
-    private String attDate;
+    @Operator(value = "like", field = "createdAt")
+    private String createdAt;
 
     public String getGuid() {
         return guid;
@@ -27,11 +27,11 @@ public class AttendanceQueryParams {
         this.idCard = idCard;
     }
 
-    public String getAttDate() {
-        return attDate;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setAttDate(String attDate) {
-        this.attDate = attDate;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
