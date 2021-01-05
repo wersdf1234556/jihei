@@ -80,17 +80,15 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
     // 全标段的重点机械
     @Override
-    public Map<String, List<ReturnModel>> allImportantMachine(){
-        Map<String, List<ReturnModel>> map = new LinkedHashMap<>();
+    public List<TenderModel> allImportantMachine(){
 
         List<TenderModel> list1 = tenderMapper.list();
 
         for (TenderModel li:list1) {
-            List<ReturnModel> list2 = this.importantMachine(li.getGuid());
+            li.setList(this.importantMachine(li.getGuid()));
 
-            map.put(li.getName(), list2);
         }
-        return map;
+        return list1;
     }
 
     // 机械GPS位置

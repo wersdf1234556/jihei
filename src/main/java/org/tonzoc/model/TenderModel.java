@@ -5,6 +5,8 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.util.List;
+
 @Table("tenders")
 public class TenderModel extends BaseModel {
 
@@ -22,6 +24,8 @@ public class TenderModel extends BaseModel {
     private String lat;
     @Column(value = "scale")
     private Integer scale;
+
+    private List<ReturnModel> list; //返回值用
 
     public TenderModel() {
     }
@@ -74,6 +78,14 @@ public class TenderModel extends BaseModel {
         this.scale = scale;
     }
 
+    public List<ReturnModel> getList() {
+        return list;
+    }
+
+    public void setList(List<ReturnModel> list) {
+        this.list = list;
+    }
+
     @Override
     public String toString() {
         return "TenderModel{" +
@@ -83,6 +95,7 @@ public class TenderModel extends BaseModel {
                 ", lng='" + lng + '\'' +
                 ", lat='" + lat + '\'' +
                 ", scale=" + scale +
+                ", list=" + list +
                 '}';
     }
 }

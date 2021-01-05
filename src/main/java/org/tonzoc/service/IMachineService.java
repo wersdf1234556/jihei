@@ -3,6 +3,7 @@ package org.tonzoc.service;
 import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.TenderModel;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
     List<ReturnModel> importantMachine(String tenderGuid);
 
     // 全标段的重点机械
-    Map<String, List<ReturnModel>> allImportantMachine();
+    List<TenderModel> allImportantMachine();
 
     // 机械GPS位置
     List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid);

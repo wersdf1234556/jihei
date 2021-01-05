@@ -8,15 +8,14 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MachineModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.TenderModel;
 import org.tonzoc.service.IMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("machine")
@@ -67,7 +66,7 @@ public class MachineController extends BaseController {
 
     // 全标段的重点机械
     @GetMapping(value = "allImportantMachine")
-    public Map<String, List<ReturnModel>> allImportantMachine(){
+    public List<TenderModel> allImportantMachine(){
 
         return machineService.allImportantMachine();
     }
