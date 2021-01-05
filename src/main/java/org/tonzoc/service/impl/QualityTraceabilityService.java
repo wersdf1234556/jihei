@@ -79,29 +79,30 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         String address = request.getLocalPort() + ""; // 获取端口号
 
         String payUrl = intelliSiteProperties.getIp() + address + "/attachment?subTypeGuid =" + subTypeGuid; // 二维码存的内容
+        String guid = fileHelper.newGUID(); // 二维码名称
 
         try {
-            fileHelper.generateQRCodeImage(payUrl, 380, 380, subTypeGuid + ".png");
+            fileHelper.generateQRCodeImage(payUrl, 380, 380, guid + ".png");
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String oldGuid = attachmentMapper.getGuid(subTypeGuid + ".png", "");
+        String oldGuid = attachmentMapper.getGuid(guid + ".png", "");
         if (oldGuid != null) {
             attachmentService.remove(oldGuid);
         }
         AttachmentModel attachmentModel = new AttachmentModel();
-        attachmentModel.setGuid(fileHelper.newGUID());
-        attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png");
-        attachmentModel.setName(subTypeGuid + ".png");
+        attachmentModel.setGuid(guid);
+        attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png");
+        attachmentModel.setName(guid + ".png");
         attachmentModel.setSortId(0);
         attachmentModel.setQualityTraceabilityGuid("");
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + subTypeGuid + ".png", ""));
+        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", ""));
         return map;
     }
 
