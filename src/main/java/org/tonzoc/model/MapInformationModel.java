@@ -7,6 +7,7 @@ import org.tonzoc.annotation.Table;
 
 import java.util.Date;
 
+// 地图信息
 @Table("mapInformations")
 public class MapInformationModel extends BaseModel {
 
