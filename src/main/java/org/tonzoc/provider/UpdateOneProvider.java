@@ -57,6 +57,7 @@ public class UpdateOneProvider extends BaseProvider {
                 throw new PrimaryKeyEmptyException(tableInfo.getPrimaryKey());
             }
             sql.WHERE(tableInfo.getPrimaryKey() + " = '" + primaryKeyMethod.invoke(entity) + "'");
+
         } catch (Exception e) {
             throw new PrimaryKeyEmptyException(tableInfo.getPrimaryKey());
         }

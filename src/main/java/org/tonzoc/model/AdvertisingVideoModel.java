@@ -4,6 +4,7 @@ import org.tonzoc.annotation.*;
 
 import java.util.Date;
 
+// 宣传片列表
 @Table(value = "advertisingVideos")
 public class AdvertisingVideoModel extends BaseModel{
     @PrimaryKey
