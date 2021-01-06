@@ -8,10 +8,12 @@ public class NewsQueryParams {
     private String guid;
     @Operator(value = "eq", field = "sign")
     private String sign;  //栏目的唯一标识
-    @Operator(value = "eq", field = "subTitle")
-    private String subTitle; //小标题
-    @Operator(value = "neq", field = "attachmentGuid")
-    private String attachmentGuid="";  //图片不为空的
+    @Operator(value = "eq", field = "title")
+    private String title; //小标题
+    @Operator(value = "eq", field = "topFlag")
+    private String topFlag;
+    @Operator(value = "dateLike", field = "createdAt")
+    private String createdAt;
 
 
     public String getGuid() {
@@ -28,5 +30,29 @@ public class NewsQueryParams {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTopFlag() {
+        return topFlag;
+    }
+
+    public void setTopFlag(String topFlag) {
+        this.topFlag = topFlag;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

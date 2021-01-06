@@ -2,14 +2,14 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-@Table(value = "newsTitles")
-public class NewsTitleModel extends BaseModel{
+@Table(value = "newsTypes")
+public class NewsTypeModel extends BaseModel{
     @PrimaryKey
     @NotInsertColumn
     @Column(value = "guid")
     private String guid;
-    @Column(value = "title")
-    private String title; // 名称
+    @Column(value = "name")
+    private String name; // 类型名称
     @Column(value = "sortId")
     private Integer sortId;
     @Column(value = "sign")
@@ -23,12 +23,12 @@ public class NewsTitleModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getSortId() {

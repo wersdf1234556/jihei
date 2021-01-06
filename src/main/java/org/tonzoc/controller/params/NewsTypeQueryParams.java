@@ -2,12 +2,12 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
-public class NewsTitleQueryParams {
+public class NewsTypeQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "like", field = "title")
-    private String title;
+    @Operator(value = "like", field = "name")
+    private String name;
     @Operator(value = "eq", field = "sign")
     private String sign;
 
@@ -19,12 +19,12 @@ public class NewsTitleQueryParams {
         this.guid = guid;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSign() {

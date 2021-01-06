@@ -52,10 +52,11 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
         }
         if (newsModel.getTopflag()==null){
             newsModel.setTopflag(1);//不置顶
+        }if (newsModel.getPublisher()==null){
+            newsModel.setPublisher("");
+        }if (newsModel.getAbstractContent()==null){
+            newsModel.setAbstractContent("");
         }
-//        if (newsModel.getCreator()==null){
-////            newsModel.setCreator("");
-////        }
         this.save(newsModel);
 
     }

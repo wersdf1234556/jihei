@@ -13,8 +13,8 @@ public class NewsModel extends BaseModel{
     private String guid;
     @Column(value = "sign")
     private String sign;     //标题的唯一标识
-    @JoinColumn(value = "title", type = NewsTitleModel.class, leftColumn = "sign", rightColumn = "sign")
-    private String title; //栏目大标题
+    @JoinColumn(value = "name", type = NewsTypeModel.class, leftColumn = "sign", rightColumn = "sign")
+    private String typeName; //栏目大标题
     @Column(value = "attachmentGuid")
     private String attachmentGuid;
     @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "attachmentGuid", rightColumn = "guid")
@@ -25,15 +25,15 @@ public class NewsModel extends BaseModel{
     @NotInsertColumn
     private Date createdAt;  //发布时间
     @Column(value = "topflag")
-    private Integer topflag;   //置顶时间
+    private Integer topflag;   //置顶
     @Column(value = "creatorGuid")
     private String creatorGuid;    //创建人员
     @JoinColumn(value = "name", type = UserModel.class, leftColumn = "creatorGuid", rightColumn = "guid")
     private String creatorName; //创建人名称
     @Column(value = "publisher")
     private String publisher; //发布人
-    @Column(value = "subtitle")
-    private String subtitle; //小标题
+    @Column(value = "title")
+    private String title; //小标题
     @Column(value = "abstractContent")
     private String abstractContent; //摘要内容
 
@@ -126,12 +126,12 @@ public class NewsModel extends BaseModel{
         this.publisher = publisher;
     }
 
-    public String getSubtitle() {
-        return subtitle;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getAbstractContent() {
@@ -141,4 +141,5 @@ public class NewsModel extends BaseModel{
     public void setAbstractContent(String abstractContent) {
         this.abstractContent = abstractContent;
     }
+
 }

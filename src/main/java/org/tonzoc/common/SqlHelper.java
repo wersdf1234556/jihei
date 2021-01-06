@@ -33,6 +33,9 @@ public class SqlHelper {
                 case "like":
                     sql.WHERE("mainTable" + "." + sqlQueryParam.getQueryField() + " like " + "'%" + sqlQueryParam.getQueryValue() + "%'");
                     break;
+                case "dateLike":
+                    sql.WHERE("Convert(varchar,mainTable" + "." + sqlQueryParam.getQueryField()+",120)" + " like " + "'%" + sqlQueryParam.getQueryValue() + "%'");
+                    break;
                 default:
                     throw new QueryParamNotSupportedException(sqlQueryParam.getOperator() + "操作符不受支持！");
             }
