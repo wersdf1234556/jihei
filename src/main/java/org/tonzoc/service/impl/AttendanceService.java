@@ -22,7 +22,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     public List<AttendanceModel> listBySignAndDate(String sign,String createdAt){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("idCard", sign, "eq"));
-        sqlQueryParams.add(new SqlQueryParam("createdAt", createdAt, "like"));
+        sqlQueryParams.add(new SqlQueryParam("createdAt", createdAt, "dateLike"));
         List<AttendanceModel> list = this.list(sqlQueryParams);
 
         return list;
@@ -32,7 +32,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format( new Date());
         System.out.println(dateString);
-        List<AttendanceModel> list = attendanceMapper.listBySignAndDate(attendanceModel.getIdCard(),dateString);
+        List<AttendanceModel> list = listBySignAndDate(attendanceModel.getIdCard(),dateString);
         System.out.println(list.toString());
         if (list.size()!=0){
             throw new NotOneResultFoundException("今天已经有该人员（"+attendanceModel.getIdCard()+"）的打卡数据了，本次打卡未添加上");

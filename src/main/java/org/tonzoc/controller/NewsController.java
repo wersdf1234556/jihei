@@ -19,6 +19,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("news")
@@ -50,14 +51,15 @@ public class NewsController extends BaseController {
     }
 
     @PostMapping
-    public void add(MultipartFile file,@Valid NewsModel newsModel) throws Exception {
+    public void add(@RequestBody @Valid NewsModel newsModel) throws Exception {
         newsModel.setCreatorGuid(redisAuthService.getCurrentUser().getGuid());
-        this.newsService.insertStack(newsModel,file);
+//        newsModel.setCreatorGuid("");
+        this.newsService.insertStack(newsModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(MultipartFile file, @Valid NewsModel newsModel) {
-        this.newsService.updateStack(newsModel,file);
+    public void update(@RequestBody @Valid NewsModel newsModel) {
+        this.newsService.update(newsModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -70,4 +72,10 @@ public class NewsController extends BaseController {
     public void removeMany(String  guids) throws Exception {
         newsService.removeMany(guids);
     }
+    // 上传文件
+    @PostMapping(value = "upFile")
+    public void upFile(MultipartFile file, String guid) {
+        newsService.upFile(file,guid);
+    }
 }
+

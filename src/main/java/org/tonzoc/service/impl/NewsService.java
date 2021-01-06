@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.exception.FileTypeErrorException;
+import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.NewsModel;
 import org.tonzoc.service.IAttachmentService;
@@ -24,6 +25,8 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     private IAttachmentService attachmentService;
     @Autowired
     private FileHelper fileHelper;
+    @Autowired
+    private AttachmentMapper attachmentMapper;
 
     public List<NewsModel> listByAttachmentId(String attachmentGuid){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -34,22 +37,8 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     }
 
     @Transactional
-    public void insertStack(NewsModel newsModel,MultipartFile file){
-        if (file!=null){
-            String[] str = fileHelper.fileUpload(file,"党建","");
-            // 获取新的guid命名附件
-//            String uuid = UUID.randomUUID().toString().toUpperCase();
-            AttachmentModel attachmentModel = new AttachmentModel();
-//            attachmentModel.setGuid(uuid);
-            attachmentModel.setUrl(str[0]);
-            attachmentModel.setName(str[1]);
-            attachmentModel.setQualityTraceabilityGuid("");
-            attachmentModel.setSortId(0);
-            attachmentService.save(attachmentModel);
-            newsModel.setAttachmentGuid(attachmentModel.getGuid());
-        }else {
-            newsModel.setAttachmentGuid("");
-        }
+    public void insertStack(NewsModel newsModel){
+        newsModel.setAttachmentGuid("");
         if (newsModel.getTopflag()==null){
             newsModel.setTopflag(1);//不置顶
         }if (newsModel.getPublisher()==null){
@@ -62,29 +51,28 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     }
 
     @Transactional
-    public void updateStack(NewsModel newsModel,MultipartFile file){
-        if (file!=null){
-            String[] str = fileHelper.fileUpload(file,"党建","");
-            AttachmentModel attachmentModel = new AttachmentModel();
-            attachmentModel.setUrl(str[0]);
-            attachmentModel.setName(str[1]);
-            attachmentModel.setQualityTraceabilityGuid("");
-            attachmentModel.setSortId(0);
-            attachmentService.save(attachmentModel);
-            NewsModel oldNews = get(newsModel.getGuid());
-            if (!oldNews.getAttachmentGuid().isEmpty()){
-                AttachmentModel oldAttachment = attachmentService.get(oldNews.getAttachmentGuid());
-                if (oldAttachment!=null){
-                    String returnData = attachmentService.deleteFile(oldNews.getAttachmentGuid());
-                    System.out.println(returnData);
-                    attachmentService.remove(oldNews.getAttachmentGuid());
-                }
+    public void upFile(MultipartFile file,String guid) {
+        NewsModel newsModel = get(guid);
+        String[] str = fileHelper.fileUpload(file,"党建","");
+        // 获取新的guid命名附件
+//            String uuid = UUID.randomUUID().toString().toUpperCase();
+        AttachmentModel attachmentModel = new AttachmentModel();
+//            attachmentModel.setGuid(uuid);
+        attachmentModel.setUrl(str[0]);
+        attachmentModel.setName(str[1]);
+        attachmentModel.setQualityTraceabilityGuid("");
+        attachmentModel.setSortId(0);
+        attachmentService.save(attachmentModel);
+        if (!newsModel.getAttachmentGuid().isEmpty()){
+            AttachmentModel oldAttachment = attachmentService.get(newsModel.getAttachmentGuid());
+            if (oldAttachment!=null){
+                String returnData = attachmentService.deleteFile(newsModel.getAttachmentGuid());
+                System.out.println(returnData);
+                attachmentService.remove(newsModel.getAttachmentGuid());
             }
-            newsModel.setAttachmentGuid(attachmentModel.getGuid());
         }
-
-        this.update(newsModel);
-
+        newsModel.setAttachmentGuid(attachmentModel.getGuid());
+        update(newsModel);
     }
 
 }

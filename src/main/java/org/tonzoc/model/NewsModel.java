@@ -2,7 +2,7 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 
 @Table(value = "news")
@@ -23,7 +23,7 @@ public class NewsModel extends BaseModel{
     private String content;      //发布内容
     @Column(value = "createdAt")
     @NotInsertColumn
-    private Date createdAt;  //发布时间
+    private String createdAt;  //发布时间
     @Column(value = "topflag")
     private Integer topflag;   //置顶
     @Column(value = "creatorGuid")
@@ -70,11 +70,11 @@ public class NewsModel extends BaseModel{
         this.content = content;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
