@@ -13,6 +13,7 @@ import org.tonzoc.model.NewsModel;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.service.INewsService;
 import org.tonzoc.service.IPersonService;
+import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -25,6 +26,8 @@ public class NewsController extends BaseController {
 
     @Autowired
     private INewsService newsService;
+    @Autowired
+    private IRedisAuthService redisAuthService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, NewsQueryParams newsQueryParams)
@@ -47,7 +50,8 @@ public class NewsController extends BaseController {
     }
 
     @PostMapping
-    public void add(MultipartFile file,@Valid NewsModel newsModel){
+    public void add(MultipartFile file,@Valid NewsModel newsModel) throws Exception {
+        newsModel.setCreatorGuid(redisAuthService.getCurrentUser().getGuid());
         this.newsService.insertStack(newsModel,file);
     }
 
