@@ -59,7 +59,7 @@ public class NewsController extends BaseController {
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid NewsModel newsModel) {
-        this.newsService.update(newsModel);
+        this.newsService.updateStack(newsModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -74,8 +74,8 @@ public class NewsController extends BaseController {
     }
     // 上传文件
     @PostMapping(value = "upFile")
-    public void upFile(MultipartFile file, String guid) {
-        newsService.upFile(file,guid);
+    public Map<String, String> upFile(MultipartFile file) {
+        return newsService.upFile(file);
     }
 }
 
