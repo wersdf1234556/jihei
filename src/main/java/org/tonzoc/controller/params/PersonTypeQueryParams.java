@@ -6,6 +6,7 @@ public class PersonTypeQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+
     @Operator(value = "like", field = "guid")
     private String name;
 
