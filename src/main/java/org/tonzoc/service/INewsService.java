@@ -8,7 +8,8 @@ import java.util.Map;
 
 public interface INewsService extends IBaseService<NewsModel> {
     void insertStack(NewsModel newsModel);
-    void upFile(MultipartFile file, String guid);
+    Map<String, String> upFile(MultipartFile file);
+    void updateStack(NewsModel newsModel);
 
     
 }
