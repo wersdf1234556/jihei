@@ -62,5 +62,4 @@ public class StakeController extends BaseController {
     public void removeMany(String guids) {
         this.stakeService.removeMany(guids);
     }
-
 }
