@@ -3,7 +3,8 @@ package org.tonzoc.controller.params;
 import org.tonzoc.annotation.Operator;
 
 public class CameraQueryParams {
-
+    @Operator(value = "eq", field = "guid")
+    private String guid;
     @Operator(value = "like", field = "name")
     private String name;
     @Operator(value = "like", field = "deviceSerial")
@@ -53,5 +54,13 @@ public class CameraQueryParams {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 }

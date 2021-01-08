@@ -53,15 +53,17 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     @Transactional
     public void updateStack(NewsModel newsModel){
         NewsModel oldNews = get(newsModel.getGuid());
-        if (!oldNews.getAttachmentGuid().isEmpty()){
-            AttachmentModel oldAttachment = attachmentService.get(oldNews.getAttachmentGuid());
-            if (oldAttachment!=null){
-                String returnData = attachmentService.deleteFile(oldNews.getAttachmentGuid());
-                System.out.println(returnData);
-                attachmentService.remove(oldNews.getAttachmentGuid());
+        if (!newsModel.getAttachmentGuid().equals(oldNews.getAttachmentGuid())){
+            if (!oldNews.getAttachmentGuid().isEmpty()){
+                AttachmentModel oldAttachment = attachmentService.get(oldNews.getAttachmentGuid());
+                if (oldAttachment!=null){
+                    String returnData = attachmentService.deleteFile(oldNews.getAttachmentGuid());
+                    System.out.println(returnData);
+                    attachmentService.remove(oldNews.getAttachmentGuid());
+                }
             }
+            newsModel.setAttachmentGuid(newsModel.getAttachmentGuid());
         }
-        newsModel.setAttachmentGuid(newsModel.getAttachmentGuid());
         update(newsModel);
     }
 

@@ -49,6 +49,10 @@ public class CameraController extends BaseController {
         return new PageResponse(page.getTotal(), list);
     }
 
+    @GetMapping(value = "{guid}")
+    public CameraModel get(@PathVariable(value = "guid") String guid){
+        return cameraService.get(guid);
+    }
     @PostMapping
     public void add(@RequestBody @Valid CameraModel cameraModel) {
         this.cameraService.insertStack(cameraModel);
