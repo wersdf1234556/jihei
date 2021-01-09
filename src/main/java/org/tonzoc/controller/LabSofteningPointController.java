@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabSofteningPointQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabSofteningPointModel;
 import org.tonzoc.service.ILabSofteningPointService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,11 +36,11 @@ public class LabSofteningPointController extends BaseController {
     }
 
     @PostMapping
-    public LabSofteningPointModel add(@RequestBody LabSofteningPointModel labSofteningPointModel) {
+    public ExceptionResponse add(@RequestBody LabSofteningPointModel labSofteningPointModel) {
         System.out.println(labSofteningPointModel);
         labSofteningPointService.save(labSofteningPointModel);
-        return labSofteningPointModel;
-//        this.labSofteningPointService.save(labSofteningPointModel);
+        return new ExceptionResponse(200, "success", "成功！");
+        //        this.labSofteningPointService.save(labSofteningPointModel);
     }
 
 }

@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabMarshallStabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabMarshallStabilityModel;
 import org.tonzoc.service.ILabMarshallStabilityService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,11 +36,11 @@ public class LabMarshallStabilityController extends BaseController {
     }
 
     @PostMapping
-    public LabMarshallStabilityModel add(@RequestBody LabMarshallStabilityModel labMarshallStabilityModel) {
+    public ExceptionResponse add(@RequestBody LabMarshallStabilityModel labMarshallStabilityModel) {
         System.out.println(labMarshallStabilityModel);
         labMarshallStabilityService.save(labMarshallStabilityModel);
-        return labMarshallStabilityModel;
-//        this.labMarshallStabilityService.save(labMarshallStabilityModel);
+        return new ExceptionResponse(200, "success", "成功！");
+        //        this.labMarshallStabilityService.save(labMarshallStabilityModel);
     }
 
 }

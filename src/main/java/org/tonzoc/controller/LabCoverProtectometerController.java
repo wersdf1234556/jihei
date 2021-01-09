@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabCoverProtectometerQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabCoverProtectometerModel;
 import org.tonzoc.service.ILabCoverProtectometerService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,10 +36,10 @@ public class LabCoverProtectometerController extends BaseController {
     }
 
     @PostMapping
-    public LabCoverProtectometerModel add(@RequestBody LabCoverProtectometerModel labCoverProtectometerModel) {
+    public ExceptionResponse add(@RequestBody LabCoverProtectometerModel labCoverProtectometerModel) {
         System.out.println(labCoverProtectometerModel);
         labCoverProtectometerService.save(labCoverProtectometerModel);
-        return labCoverProtectometerModel;
+        return new ExceptionResponse(200, "success", "成功！");
 //        this.labCoverProtectometerService.save(labCoverProtectometerModel);
     }
 

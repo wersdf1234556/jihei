@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabPenetrationQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabPenetrationModel;
 import org.tonzoc.service.ILabPenetrationService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,11 +36,11 @@ public class LabPenetrationController extends BaseController {
     }
 
     @PostMapping
-    public LabPenetrationModel add(@RequestBody LabPenetrationModel labPenetrationModel) {
+    public ExceptionResponse add(@RequestBody LabPenetrationModel labPenetrationModel) {
         System.out.println(labPenetrationModel);
         labPenetrationService.save(labPenetrationModel);
-        return labPenetrationModel;
-//        this.labPenetrationService.save(labPenetrationModel);
+        return new ExceptionResponse(200, "success", "成功！");
+        //        this.labPenetrationService.save(labPenetrationModel);
     }
 
 }

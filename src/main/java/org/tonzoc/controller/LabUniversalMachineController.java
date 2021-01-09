@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabUniversalMachineQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabUniversalMachineModel;
 import org.tonzoc.service.ILabUniversalMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,11 +36,11 @@ public class LabUniversalMachineController extends BaseController {
     }
 
     @PostMapping
-    public LabUniversalMachineModel add(@RequestBody LabUniversalMachineModel labUniversalMachineModel) {
+    public ExceptionResponse add(@RequestBody LabUniversalMachineModel labUniversalMachineModel) {
         System.out.println(labUniversalMachineModel);
         labUniversalMachineService.save(labUniversalMachineModel);
-        return labUniversalMachineModel;
-//        this.labUniversalMachineService.save(labUniversalMachineModel);
+        return new ExceptionResponse(200, "success", "成功！");
+        //        this.labUniversalMachineService.save(labUniversalMachineModel);
     }
 
 }

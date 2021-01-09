@@ -1,5 +1,6 @@
 package org.tonzoc.model;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.PrimaryKey;
@@ -25,8 +26,8 @@ public class LabStressMachineModel extends BaseModel {
     private String equipmentName;
     @Column(value = "projectName")
     private String projectName;
-    @Column(value = "constructSpot")
-    private String constructSpot;
+    @Column(value = "constructionSpot")
+    private String constructionSpot;
     @Column(value = "testType")
     private String testType;
     @Column(value = "testId")
@@ -59,7 +60,7 @@ public class LabStressMachineModel extends BaseModel {
     public LabStressMachineModel() {
     }
 
-    public LabStressMachineModel(String guid, String organizationId, String sectionId, String sectionName, String equipmentNumber, String equipmentName, String projectName, String constructSpot, String testType, String testId, String testDate, String concreteAge, String cubeArea, String cubeCode, Integer cubeCount, String representativeStrength, String designStrength, Integer testEvaluation, String loadValue, String compressiveStrength, String graphId, String processStress) {
+    public LabStressMachineModel(String guid, String organizationId, String sectionId, String sectionName, String equipmentNumber, String equipmentName, String projectName, String constructionSpot, String testType, String testId, String testDate, String concreteAge, String cubeArea, String cubeCode, Integer cubeCount, String representativeStrength, String designStrength, Integer testEvaluation, String loadValue, String compressiveStrength, String graphId, String processStress) {
         this.guid = guid;
         this.organizationId = organizationId;
         this.sectionId = sectionId;
@@ -67,7 +68,7 @@ public class LabStressMachineModel extends BaseModel {
         this.equipmentNumber = equipmentNumber;
         this.equipmentName = equipmentName;
         this.projectName = projectName;
-        this.constructSpot = constructSpot;
+        this.constructionSpot = constructionSpot;
         this.testType = testType;
         this.testId = testId;
         this.testDate = testDate;
@@ -94,7 +95,7 @@ public class LabStressMachineModel extends BaseModel {
                 ", equipmentNumber='" + equipmentNumber + '\'' +
                 ", equipmentName='" + equipmentName + '\'' +
                 ", projectName='" + projectName + '\'' +
-                ", constructSpot='" + constructSpot + '\'' +
+                ", constructionSpot='" + constructionSpot + '\'' +
                 ", testType='" + testType + '\'' +
                 ", testId='" + testId + '\'' +
                 ", testDate='" + testDate + '\'' +
@@ -140,8 +141,8 @@ public class LabStressMachineModel extends BaseModel {
         return projectName;
     }
 
-    public String getConstructSpot() {
-        return constructSpot;
+    public String getConstructionSpot() {
+        return constructionSpot;
     }
 
     public String getTestType() {
@@ -235,9 +236,9 @@ public class LabStressMachineModel extends BaseModel {
         this.projectName = projectName;
     }
 
-    @JsonProperty(value = "construct_spot")
-    public void setConstructSpot(String constructSpot) {
-        this.constructSpot = constructSpot;
+    @JsonProperty(value = "construction_spot")
+    public void setConstructionSpot(String constructSpot) {
+        this.constructionSpot = constructionSpot;
     }
 
     @JsonProperty(value = "test_type")
@@ -305,8 +306,8 @@ public class LabStressMachineModel extends BaseModel {
         this.graphId = graphId;
     }
 
-    @JsonProperty(value = "precess_stress")
-    public void setProcessStress(String processStress) {
-        this.processStress = processStress;
+    @JsonProperty(value = "process_stress")
+    public void setProcessStress(String[] processStress) {
+        this.processStress = JSON.toJSONString(processStress);
     }
 }

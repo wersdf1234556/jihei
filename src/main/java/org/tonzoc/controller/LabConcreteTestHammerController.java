@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabConcreteTestHammerQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.service.ILabConcreteTestHammerService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,10 +36,10 @@ public class LabConcreteTestHammerController extends BaseController {
     }
 
     @PostMapping
-    public LabConcreteTestHammerModel add(@RequestBody LabConcreteTestHammerModel labConcretTestHammerModel) {
+    public ExceptionResponse add(@RequestBody LabConcreteTestHammerModel labConcretTestHammerModel) {
         System.out.println(labConcretTestHammerModel);
         labConcretTestHammerService.save(labConcretTestHammerModel);
-        return labConcretTestHammerModel;
+        return new ExceptionResponse(200, "success", "成功！");
 //        this.labConcretTestHammerService.save(labConcretTestHammerModel);
     }
 

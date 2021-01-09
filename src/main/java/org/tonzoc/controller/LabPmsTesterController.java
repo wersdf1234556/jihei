@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.LabPmsTesterQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabPmsTesterModel;
 import org.tonzoc.service.ILabPmsTesterService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -35,11 +36,11 @@ public class LabPmsTesterController extends BaseController {
     }
 
     @PostMapping
-    public LabPmsTesterModel add(@RequestBody LabPmsTesterModel labPmsTesterModel) {
+    public ExceptionResponse add(@RequestBody LabPmsTesterModel labPmsTesterModel) {
         System.out.println(labPmsTesterModel);
         labPmsTesterService.save(labPmsTesterModel);
-        return labPmsTesterModel;
-//        this.labPmsTesterService.save(labPmsTesterModel);
+        return new ExceptionResponse(200, "success", "成功！");
+        //        this.labPmsTesterService.save(labPmsTesterModel);
     }
 
 }
