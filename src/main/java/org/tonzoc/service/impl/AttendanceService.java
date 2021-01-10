@@ -40,4 +40,15 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         save(attendanceModel);
     }
 
+    public List<Object> statAttendanceData(String date){
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+//        List<>
+
+        return null;
+
+    }
+
 }

@@ -26,6 +26,8 @@ public class TenderModel extends BaseModel {
     private Integer scale;
     @Column(value = "prvorganization")
     private String prvorganization;
+    @Column(value = "organization")
+    private String organization; // 单位名称
 
     private List<ReturnModel> list; //返回值用
 
@@ -88,6 +90,14 @@ public class TenderModel extends BaseModel {
         this.prvorganization = prvorganization;
     }
 
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
     public List<ReturnModel> getList() {
         return list;
     }
@@ -106,6 +116,7 @@ public class TenderModel extends BaseModel {
                 ", lat='" + lat + '\'' +
                 ", scale=" + scale +
                 ", prvorganization='" + prvorganization + '\'' +
+                ", organization='" + organization + '\'' +
                 ", list=" + list +
                 '}';
     }

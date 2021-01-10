@@ -71,7 +71,8 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
             sqlQueryParams.add(new SqlQueryParam("flag", "0", "eq"));
             allAuthorityModels = this.list(sqlQueryParams);
         } else {
-            allAuthorityModels = this.listByUser(userGuid);
+
+            allAuthorityModels = this.listByUser(userGuid).stream().sorted(Comparator.comparing(AuthorityModel::getSortId)).collect(Collectors.toList());
         }
 
         HashMap<String, AuthorityModel> authorityModelMap = new HashMap<>();
