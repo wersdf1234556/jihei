@@ -13,6 +13,9 @@ public class TenderQueryParams {
     @Operator(value = "like", field = "prvorganization")
     private String prvorganization;
 
+    @Operator(value = "like", field = "organization")
+    private String organization;
+
     public String getName() {
         return name;
     }
@@ -35,5 +38,13 @@ public class TenderQueryParams {
 
     public void setPrvorganization(String prvorganization) {
         this.prvorganization = prvorganization;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
     }
 }
