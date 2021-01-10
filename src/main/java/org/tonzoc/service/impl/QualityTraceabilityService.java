@@ -135,4 +135,10 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
         return attachmentService.list(sqlQueryParams);
     }
+
+    // 按照时间和名称排序
+    public List<QualityTraceabilityModel> selectSortName(){
+
+        return qualityTraceabilityMapper.selectSortName();
+    }
 }

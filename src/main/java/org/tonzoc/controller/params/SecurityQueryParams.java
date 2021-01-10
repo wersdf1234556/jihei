@@ -10,6 +10,9 @@ public class SecurityQueryParams {
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
 
+    @Operator(value = "eq", field = "personGuid")
+    private String personGuid;
+
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
 
@@ -18,6 +21,9 @@ public class SecurityQueryParams {
 
     @Operator(value = "eq", field = "pdfAttachmentGuid")
     private String pdfAttachmentGuid;
+
+    @Operator(value = "eq", field = "state")
+    private String state;
 
     public String getGuid() {
         return guid;
@@ -33,6 +39,14 @@ public class SecurityQueryParams {
 
     public void setCurrentDate(String currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public String getPersonGuid() {
+        return personGuid;
+    }
+
+    public void setPersonGuid(String personGuid) {
+        this.personGuid = personGuid;
     }
 
     public String getTenderGuid() {
@@ -57,5 +71,13 @@ public class SecurityQueryParams {
 
     public void setPdfAttachmentGuid(String pdfAttachmentGuid) {
         this.pdfAttachmentGuid = pdfAttachmentGuid;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

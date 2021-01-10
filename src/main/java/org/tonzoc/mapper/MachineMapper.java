@@ -10,17 +10,21 @@ import java.util.List;
 
 public interface MachineMapper extends BaseMapper<MachineModel>{
 
-    // 机械概况分组查询
-    @SelectProvider(type = MachineProvider.class, method = "selectMachineCategoryNumber")
-    List<ReturnModel> selectMachineCategoryNumber(@Param(value = "tenderGuid") String tenderGuid);
-
     // 机械的数量
     @SelectProvider(type = MachineProvider.class, method = "allNumber")
     Integer allNumber (@Param(value = "tenderGuid") String tenderGuid);
 
+    // 机械概况分组查询
+    @SelectProvider(type = MachineProvider.class, method = "selectMachineCategoryNumber")
+    List<ReturnModel> selectMachineCategoryNumber(@Param(value = "tenderGuid") String tenderGuid);
+
     // 重点机械分组查询
     @SelectProvider(type = MachineProvider.class, method = "selectMachineTypeNumber")
     List<ReturnModel> selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid);
+
+    // 全标段的重点机械
+    @SelectProvider(type = MachineProvider.class, method = "allImportantMachine")
+    List<ReturnModel> allImportantMachine(@Param(value = "tenderGuid") String tenderGuid);
 
     // 查询机械的最新坐标
 }

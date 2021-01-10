@@ -64,16 +64,17 @@ public class MachineController extends BaseController {
         return machineService.machineSurvey(tenderGuid);
     }
 
+    // 重点机械
+    @GetMapping(value = "importantMachine")
+    public List<ReturnModel> importantMachine (String tenderGuid) {
+
+        return machineService.importantMachine(tenderGuid);
+    }
+
     // 全标段的重点机械
     @GetMapping(value = "allImportantMachine")
     public List<TenderModel> allImportantMachine(){
 
         return machineService.allImportantMachine();
-    }
-
-    // 重点机械
-    @GetMapping(value = "importantMachine")
-    public List<ReturnModel> importantMachine (String tenderGuid) {
-        return machineService.importantMachine(tenderGuid);
     }
 }

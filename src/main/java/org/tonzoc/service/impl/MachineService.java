@@ -85,8 +85,8 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         List<TenderModel> list1 = tenderMapper.list();
 
         for (TenderModel li:list1) {
-            li.setList(this.importantMachine(li.getGuid()));
 
+            li.setList(machineMapper.allImportantMachine(li.getGuid()));
         }
         return list1;
     }

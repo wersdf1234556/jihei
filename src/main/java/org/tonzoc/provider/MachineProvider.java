@@ -5,6 +5,19 @@ import org.apache.ibatis.annotations.Param;
 
 public class MachineProvider {
 
+    // 机械的数量
+    public String allNumber(@Param(value = "tenderGuid") String tenderGuid) {
+
+        StringBuilder stringBuilder = new StringBuilder("select count(machines.guid) from machines");
+        if ("".equals(tenderGuid) || tenderGuid == null) {
+
+        }else {
+            stringBuilder.append(" where machines.tenderGuid = '" + tenderGuid + "'");
+        }
+
+        return stringBuilder.toString();
+    }
+
     // 查询机械概况
     public String selectMachineCategoryNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
@@ -21,19 +34,6 @@ public class MachineProvider {
         return stringBuilder.toString();
     }
 
-    // 机械的数量
-    public String allNumber(@Param(value = "tenderGuid") String tenderGuid) {
-
-        StringBuilder stringBuilder = new StringBuilder("select count(machines.guid) from machines");
-        if ("".equals(tenderGuid) || tenderGuid == null) {
-
-        }else {
-            stringBuilder.append(" where machines.tenderGuid = '" + tenderGuid + "'");
-        }
-
-        return stringBuilder.toString();
-    }
-
     // 查询重点机械
     public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
@@ -45,7 +45,20 @@ public class MachineProvider {
                     " where machines.tenderGuid = '" + tenderGuid + "') machines on machineTypes.guid = machines.machineTypeGuid");
         }
 
-        stringBuilder.append(" GROUP BY machineTypes.name");
+        stringBuilder.append(" where machineTypes.highlight = 1 GROUP BY machineTypes.name");
+
+        return stringBuilder.toString();
+    }
+
+    // 查询重点机械
+    public String allImportantMachine(@Param(value = "tenderGuid") String tenderGuid) {
+
+        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from " +
+                "(select * from tenderMachineTypes where tenderGuid = '" + tenderGuid + "') tenderMachineTypes " +
+                "LEFT JOIN machineTypes on tenderMachineTypes.machineTypeGuid = machineTypes.guid " +
+                "LEFT JOIN (select machines.guid, machines.machineTypeGuid from machines " +
+                "where machines.tenderGuid = '" + tenderGuid + "') machines on machineTypes.guid = machines.machineTypeGuid " +
+                "GROUP BY machineTypes.name");
 
         return stringBuilder.toString();
     }

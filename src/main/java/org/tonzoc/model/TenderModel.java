@@ -24,6 +24,8 @@ public class TenderModel extends BaseModel {
     private String lat;
     @Column(value = "scale")
     private Integer scale;
+    @Column(value = "prvorganization")
+    private String prvorganization;
 
     private List<ReturnModel> list; //返回值用
 
@@ -78,6 +80,14 @@ public class TenderModel extends BaseModel {
         this.scale = scale;
     }
 
+    public String getPrvorganization() {
+        return prvorganization;
+    }
+
+    public void setPrvorganization(String prvorganization) {
+        this.prvorganization = prvorganization;
+    }
+
     public List<ReturnModel> getList() {
         return list;
     }
@@ -95,6 +105,7 @@ public class TenderModel extends BaseModel {
                 ", lng='" + lng + '\'' +
                 ", lat='" + lat + '\'' +
                 ", scale=" + scale +
+                ", prvorganization='" + prvorganization + '\'' +
                 ", list=" + list +
                 '}';
     }

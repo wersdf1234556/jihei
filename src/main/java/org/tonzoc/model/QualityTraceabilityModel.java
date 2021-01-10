@@ -27,6 +27,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private Integer typeId;
     @Column(value = "qrcodeGuid")
     private String qrcodeGuid;
+    @Column(value = "createdAt")
+    private Date createdAt;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -135,6 +137,14 @@ public class QualityTraceabilityModel extends BaseModel {
         this.typeName = typeName;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "QualityTraceabilityModel{" +
@@ -147,6 +157,7 @@ public class QualityTraceabilityModel extends BaseModel {
                 ", subTypeGuid='" + subTypeGuid + '\'' +
                 ", typeId=" + typeId +
                 ", qrcodeGuid='" + qrcodeGuid + '\'' +
+                ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", subTypeName='" + subTypeName + '\'' +
                 ", typeName='" + typeName + '\'' +

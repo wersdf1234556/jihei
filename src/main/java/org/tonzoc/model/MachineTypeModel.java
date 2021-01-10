@@ -16,6 +16,8 @@ public class MachineTypeModel extends BaseModel{
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "highlight")
+    private Integer highlight; // 是否重点展示
 
     public MachineTypeModel() {
     }
@@ -44,12 +46,21 @@ public class MachineTypeModel extends BaseModel{
         this.sortId = sortId;
     }
 
+    public Integer getHighlight() {
+        return highlight;
+    }
+
+    public void setHighlight(Integer highlight) {
+        this.highlight = highlight;
+    }
+
     @Override
     public String toString() {
         return "MachineTypeModel{" +
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
-                ", sortId='" + sortId + '\'' +
+                ", sortId=" + sortId +
+                ", highlight=" + highlight +
                 '}';
     }
 }

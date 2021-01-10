@@ -18,6 +18,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -110,5 +111,15 @@ public class QualityTraceabilityController extends BaseController {
     public List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid) {
 
        return qualityTraceabilityService.selectLikeName(name, qualityTraceabilityGuid);
+    }
+
+    // 按照时间和名称排序
+    @GetMapping(value = "selectSortName")
+    public PageResponse selectSortName(PageQueryParams pageQueryParams) throws PageException {
+
+        Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
+        List<QualityTraceabilityModel> list = qualityTraceabilityService.selectSortName();
+
+        return new PageResponse(page.getTotal(), list);
     }
 }
