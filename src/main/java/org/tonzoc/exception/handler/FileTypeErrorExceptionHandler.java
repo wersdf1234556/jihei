@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tonzoc.exception.FileTypeErrorException;
 import org.tonzoc.exception.response.ExceptionResponse;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class FileTypeErrorExceptionHandler implements IExceptionHandler{
     @ExceptionHandler(FileTypeErrorException.class)
     @ResponseBody

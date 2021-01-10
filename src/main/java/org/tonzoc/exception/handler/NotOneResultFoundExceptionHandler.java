@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.exception.response.ExceptionResponse;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class NotOneResultFoundExceptionHandler implements IExceptionHandler {
     @ExceptionHandler(NotOneResultFoundException.class)
     @ResponseBody

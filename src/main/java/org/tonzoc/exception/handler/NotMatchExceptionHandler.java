@@ -9,7 +9,7 @@ import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.exception.response.ExceptionResponse;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class NotMatchExceptionHandler implements IExceptionHandler {
     @ExceptionHandler(NotMatchException.class)
     @ResponseBody

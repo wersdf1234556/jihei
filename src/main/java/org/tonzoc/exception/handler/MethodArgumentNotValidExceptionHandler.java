@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.tonzoc.exception.response.ExceptionResponse;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class MethodArgumentNotValidExceptionHandler implements IExceptionHandler {
 
     @Override

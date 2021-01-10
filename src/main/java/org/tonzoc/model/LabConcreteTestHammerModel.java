@@ -16,7 +16,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
     @Column(value = "sensorNumber")
     private String sensorNumber;
     @Column(value = "entrustCompany")
-    private String entrustCompnay;
+    private String entrustCompany;
     @Column(value = "entrustName")
     private String entrustName;
     @Column(value = "projectName")
@@ -63,7 +63,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.sensorNumber = sensorNumber;
-        this.entrustCompnay = entrustCompnay;
+        this.entrustCompany = entrustCompnay;
         this.entrustName = entrustName;
         this.projectName = projectName;
         this.componentName = componentName;
@@ -101,8 +101,8 @@ public class LabConcreteTestHammerModel extends BaseModel {
     }
 
     @JsonProperty(value = "entrust_company")
-    public void setEntrustCompnay(String entrustCompnay) {
-        this.entrustCompnay = entrustCompnay;
+    public void setEntrustCompany(String entrustCompany) {
+        this.entrustCompany = entrustCompany;
     }
 
     @JsonProperty(value = "entrust_name")
@@ -213,8 +213,8 @@ public class LabConcreteTestHammerModel extends BaseModel {
         return sensorNumber;
     }
 
-    public String getEntrustCompnay() {
-        return entrustCompnay;
+    public String getEntrustCompany() {
+        return entrustCompany;
     }
 
     public String getEntrustName() {
@@ -299,7 +299,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
                 "guid='" + guid + '\'' +
                 ", equipmentNumber='" + equipmentNumber + '\'' +
                 ", sensorNumber='" + sensorNumber + '\'' +
-                ", entrustCompnay='" + entrustCompnay + '\'' +
+                ", entrustCompnay='" + entrustCompany + '\'' +
                 ", entrustName='" + entrustName + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", componentName='" + componentName + '\'' +

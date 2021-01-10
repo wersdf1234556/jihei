@@ -9,7 +9,7 @@ import org.tonzoc.exception.response.ExceptionResponse;
 
 import java.net.BindException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class BindExceptionHandler implements IExceptionHandler {
 
     @ExceptionHandler(BindException.class)
