@@ -1,14 +1,15 @@
 package org.tonzoc.service.impl;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.entity.ContentType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.tonzoc.common.ExcelUtil;
+import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.exception.ExistsErrorException;
 import org.tonzoc.exception.FileReadErrorException;
@@ -24,6 +25,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -40,6 +42,8 @@ public class GradeService extends BaseService<GradeModel> implements IGradeServi
     private IAttachmentService attachmentService;
     @Autowired
     private INewsService newsService;
+    @Autowired
+    private FileHelper fileHelper;
 
     public List<GradeModel> listByDate(String date){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -78,7 +82,13 @@ public class GradeService extends BaseService<GradeModel> implements IGradeServi
             String filePath = intelliSiteProperties.getFilePath()+"/党建/学习强国/";
             isExist(filePath);
             String fileName = "学习强国成绩模板"; // 新文件名
-
+//            File dest = new File(filePath+ fileName + ".xlsx");
+//            FileInputStream inputStream = new FileInputStream(dest);
+//            MultipartFile multipartFile = new MockMultipartFile(dest.getName(), dest.getName(),
+//                    ContentType.APPLICATION_OCTET_STREAM.toString(), inputStream);
+//            if (!dest.exists()){
+//                fileHelper.fileUpload(multipartFile,"党建/学习强国","");
+//            }
             File file = new File( filePath + fileName + ".xlsx");
             file.createNewFile();
             //将Excel内容存盘
