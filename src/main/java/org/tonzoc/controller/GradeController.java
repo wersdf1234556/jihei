@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.GradeQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.ProjectQueryParams;
@@ -14,6 +15,8 @@ import org.tonzoc.service.IGradeService;
 import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -62,4 +65,15 @@ public class GradeController extends BaseController {
     public void removeMany(String guids) throws Exception {
         gradeService.removeMany(guids);
     }
+    //下载模板
+    @GetMapping(value = "downloadTemplate")
+    public void downloadTemplate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        gradeService.downloadTemplate(request,response);
+    }
+    //excel导入成绩
+    @PostMapping(value = "uploadTemplate")
+    public void uploadTemplate(MultipartFile file, String date) throws Exception {
+        gradeService.uploadTemplate(file,date);
+    }
 }
+

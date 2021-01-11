@@ -30,8 +30,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
-    compile group: 'org.apache.poi',name:'poi',version: '3.17'
-    compile group: 'org.apache.poi',name:'poi-ooxml',version: '3.17'
+    compile group: 'org.apache.poi',name:'poi',version: '4.1.2'
+    compile group: 'org.apache.poi',name:'poi-ooxml',version: '4.1.2'
 
     compile group: 'org.json', name: 'json', version: '20140107'
     compile group: 'net.sf.jmimemagic', name: 'jmimemagic', version: '0.1.4'
@@ -40,9 +40,7 @@ dependencies {
     compile group: 'com.google.zxing', name: 'core', version: '3.3.3' // 谷歌二维码
     compile group: 'com.google.zxing', name: 'javase', version: '3.3.0' // 谷歌二维码
 
-    compile group: 'org.apache.poi',name:'poi',version: '3.17'
-    compile group: 'org.apache.poi',name:'poi-ooxml',version: '3.17'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.2'
 
 }
 

@@ -1,12 +1,16 @@
 package org.tonzoc.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.mapper.AttendanceMapper;
 import org.tonzoc.model.AttendanceModel;
+import org.tonzoc.model.PersonTypeModel;
 import org.tonzoc.service.IAttendanceService;
+import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.text.SimpleDateFormat;
@@ -18,6 +22,8 @@ import java.util.List;
 public class AttendanceService extends BaseService<AttendanceModel> implements IAttendanceService {
     @Autowired
     private AttendanceMapper attendanceMapper;
+    @Autowired
+    private IPersonTypeService personTypeService;
 
     public List<AttendanceModel> listBySignAndDate(String sign,String createdAt){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -45,8 +51,13 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             date= formatter.format( new Date());
         }
-//        List<>
+        Page page = PageHelper.startPage(1, 0, "sortId asc");
+        page.setOrderByOnly(true);
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<PersonTypeModel> personTypeModels = personTypeService.list(sqlQueryParams);
+        for (PersonTypeModel personType :personTypeModels){
 
+        }
         return null;
 
     }

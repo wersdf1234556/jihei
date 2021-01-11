@@ -68,9 +68,9 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
     }
 
     @Transactional
-    public Map<String, String> upFile(MultipartFile file) {
+    public Map<String, String> upFile(MultipartFile file,String subTypeName) {
 
-        String[] str = fileHelper.fileUpload(file,"党建","");
+        String[] str = fileHelper.fileUpload(file,subTypeName,"");
         // 获取新的guid命名附件
 //            String uuid = UUID.randomUUID().toString().toUpperCase();
         AttachmentModel attachmentModel = new AttachmentModel();

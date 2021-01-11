@@ -80,7 +80,7 @@ public class NewsController extends BaseController {
     // 上传文件
     @PostMapping(value = "upFile")
     public Map<String, String> upFile(MultipartFile file) {
-        return newsService.upFile(file);
+        return newsService.upFile(file,"党建");
     }
 
 }

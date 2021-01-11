@@ -6,7 +6,7 @@ public class GradeQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "name")
+    @Operator(value = "like", field = "name")
     private String name;
     @Operator(value = "like", field = "date")
     private String date;
