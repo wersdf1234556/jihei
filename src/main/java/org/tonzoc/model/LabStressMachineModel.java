@@ -56,6 +56,8 @@ public class LabStressMachineModel extends BaseModel {
     private String graphId;
     @Column(value = "processStress")
     private String processStress;
+    @Column(value = "originProcessStress")
+    private String originProcessStress;
 
     public LabStressMachineModel() {
     }
@@ -309,5 +311,14 @@ public class LabStressMachineModel extends BaseModel {
     @JsonProperty(value = "process_stress")
     public void setProcessStress(String[] processStress) {
         this.processStress = JSON.toJSONString(processStress);
+        this.originProcessStress = JSON.toJSONString(processStress);
+    }
+
+    public String getOriginProcessStress() {
+        return originProcessStress;
+    }
+
+    public void setOriginProcessStress(String originProcessStress) {
+        this.originProcessStress = originProcessStress;
     }
 }

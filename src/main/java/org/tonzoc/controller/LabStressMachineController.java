@@ -35,14 +35,13 @@ public class LabStressMachineController extends BaseController {
 
         List<LabStressMachineModel> list = labStressMachineService.list(sqlQueryParams);
 
-        System.out.println(list);
-
         return new PageResponse(page.getTotal(), list);
     }
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabStressMachineModel labStressMachineModel) {
-        System.out.println(labStressMachineModel);
+
+//        System.out.println(labStressMachineModel);
         labStressMachineService.save(labStressMachineModel);
 
         return new ExceptionResponse(200, "success", "成功！");
