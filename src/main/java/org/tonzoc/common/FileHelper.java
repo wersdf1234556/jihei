@@ -194,4 +194,52 @@ public class FileHelper {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
+
+    // 上传excel文件
+    public String[] excelTemplateUpload(MultipartFile file, String subTypeName,String qualityTraceabilityGuid) {
+        String[] str = new String[2];
+
+        if (file.isEmpty()) {
+            return str;
+        }
+        String path = intelliSiteProperties.getFilePath(); // 上传路径
+        String fileType = intelliSiteProperties.getFileUrl(); // 文件类型
+        String fileName = file.getOriginalFilename(); // 文件名称
+//        String suffix = fileName.substring(fileName.lastIndexOf(".")); // 后缀名
+
+        File dest = null;
+        String url = "";
+        if ("".equals(subTypeName) || subTypeName == null) {
+            url = path + fileType + fileName ;
+            dest = new File(url);
+        } else {
+            url = path + fileType + subTypeName + "/" + fileName ;
+            dest = new File(url);
+        }
+
+        if (dest.exists()) { // 如果原先有相同文件，则删除
+            dest.delete();
+            // 删除这个表中关联的这条记录
+            String guid = attachmentMapper.getGuid(url, qualityTraceabilityGuid);
+            if (!"".equals(guid) && guid != null) {
+                attachmentService.remove(guid);
+            }
+        }
+        if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
+            dest.getParentFile().mkdirs();
+        }
+
+        try {
+            file.transferTo(dest); // 保存文件
+            str[0] = url;
+            str[1] = fileName;
+            return str;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return str;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return str;
+        }
+    }
 }
