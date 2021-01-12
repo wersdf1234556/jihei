@@ -23,7 +23,7 @@ public class LabStressMachineQueryParams {
 
     public void setStartDate(String startDate) {
         System.out.println(startDate);
-        this.startDate = startDate + " 00:00:00";
+        this.startDate = (startDate.equals("") ? "1900-01-01" : startDate) + " 00:00:00";
     }
 
     public String getEndDate() {
@@ -31,7 +31,7 @@ public class LabStressMachineQueryParams {
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = endDate + " 23:59:59";
+        this.endDate = (endDate.equals("") ? "2090-12-31" : endDate) + " 23:59:59";
     }
 
     public String getTenderName() {

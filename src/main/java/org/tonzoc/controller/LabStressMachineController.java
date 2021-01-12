@@ -35,6 +35,8 @@ public class LabStressMachineController extends BaseController {
 
         List<LabStressMachineModel> list = labStressMachineService.list(sqlQueryParams);
 
+        System.out.println(list);
+
         return new PageResponse(page.getTotal(), list);
     }
 
