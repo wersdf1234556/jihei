@@ -1,6 +1,7 @@
 package org.tonzoc.common;
 
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.usermodel.HSSFDataValidation;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -8,12 +9,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.*;
+import org.tonzoc.exception.FileReadErrorException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 
 public class ExcelUtil {
     /**
@@ -231,4 +233,79 @@ public class ExcelUtil {
             sheet.addValidationData(validation);
         }
     }
+
+    //判断是否是空行
+    public static boolean isEmptyRow(Row row) {
+        if (row == null || row.toString().isEmpty()) {
+            return true;
+        } else {
+            Iterator<Cell> it = row.iterator();
+            boolean isEmpty = true;
+            while (it.hasNext()) {
+                Cell cell = it.next();
+                if (cell.getCellType() != Cell.CELL_TYPE_BLANK) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+            return isEmpty;
+        }
+    }
+
+    //判断一个字符串是否为数字型
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
+
+
+    //不带文件名的Path：如：D:\xml2\2018\04\
+    public static boolean isExist(String filePath) {
+//        System.out.println("进来了");
+        String paths[] = filePath.split("/");
+        String dir = paths[0];
+        for (int i = 0; i < paths.length - 1; i++) {//注意此处循环的长度
+            try {
+                dir = dir + "/" + paths[i + 1];
+                File dirFile = new File(dir);
+                if (!dirFile.exists()) {
+                    dirFile.mkdir();
+                    System.out.println("创建目录为：" + dir);
+                }
+            } catch (Exception err) {
+                System.err.println("文件夹创建发生异常");
+            }
+        }
+        File fp = new File(filePath);
+        if (!fp.exists()) {
+            return true; // 文件不存在，执行下载功能
+        } else {
+            return false; // 文件存在不做处理
+        }
+    }
+
+    public void dowland(String fileName, String url, HttpServletResponse response) throws FileReadErrorException {
+        try {
+            // excel文件流输出到浏览器，选择下载路径
+            File file = new File(url);
+//            String fileName = file.getName();
+            //模板导出
+            Workbook workbook = new XSSFWorkbook(FileUtils.openInputStream(file));
+            //准备将Excel的输出流通过response输出到页面下载
+            //八进制输出流
+            response.setContentType("application/octet-stream");
+            response.setCharacterEncoding("utf-8");
+            //这后面可以设置导出Excel的名称，此例中名为student.xls
+            response.setHeader("Content-disposition", "attachment;filename=" + new String(fileName.getBytes("gbk"), "iso8859-1") + ".xlsx");
+
+            //刷新缓冲
+            response.flushBuffer();
+            //workbook将Excel写入到response的输出流中，供页面下载
+            workbook.write(response.getOutputStream());
+        } catch (Exception e) {// 发生不可预知异常，在此截获异常信息，并返回客户操作不成功
+            e.printStackTrace();
+            throw new FileReadErrorException("导出失败！！！");
+        }
+    }
+
 }

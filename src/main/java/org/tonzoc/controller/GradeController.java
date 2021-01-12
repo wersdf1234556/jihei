@@ -65,13 +65,18 @@ public class GradeController extends BaseController {
     public void removeMany(String guids) throws Exception {
         gradeService.removeMany(guids);
     }
+    //上传空白模板
+    @PostMapping(value = "upExcelTemplate")
+    public String upExcelTemplate(MultipartFile file){
+        return gradeService.upExcelTemplate(file);
+    }
     //下载模板
     @GetMapping(value = "downloadTemplate")
     public void downloadTemplate(HttpServletRequest request, HttpServletResponse response) throws Exception {
         gradeService.downloadTemplate(request,response);
     }
     //excel导入成绩
-    @PostMapping(value = "uploadTemplate")
+    @PostMapping(value = "uploadData")
     public void uploadTemplate(MultipartFile file, String date) throws Exception {
         gradeService.uploadTemplate(file,date);
     }
