@@ -39,4 +39,13 @@ public class PersonTypeModel extends BaseModel{
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
     }
+
+    @Override
+    public String toString() {
+        return "PersonTypeModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", sortId=" + sortId +
+                '}';
+    }
 }

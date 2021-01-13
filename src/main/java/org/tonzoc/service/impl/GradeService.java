@@ -36,6 +36,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static org.tonzoc.common.ExcelUtil.isExist;
+
 @Service("gradeService")
 public class GradeService extends BaseService<GradeModel> implements IGradeService {
 
@@ -112,7 +114,7 @@ public class GradeService extends BaseService<GradeModel> implements IGradeServi
     }
 
     public String upExcelTemplate(MultipartFile file){
-        String[] str = fileHelper.excelTemplateUpload(file,"党建/学习强国","");
+        String[] str = fileHelper.excelTemplateUpload(file,"党建","");
         return str[0];
     }
 

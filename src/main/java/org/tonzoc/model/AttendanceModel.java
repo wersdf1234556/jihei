@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 import java.util.Date;
 
@@ -20,6 +17,8 @@ public class AttendanceModel extends BaseModel{
     private Date createdAt;
     @Column(value = "address")
     private String address;  //登录地点
+    @JoinColumn(value = "tenderGuid", type = PersonModel.class, leftColumn = "idCard", rightColumn = "idCard")
+    private String tenderGuid;
 
     public String getGuid() {
         return guid;
@@ -53,6 +52,14 @@ public class AttendanceModel extends BaseModel{
         this.address = address;
     }
 
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
     @Override
     public String toString() {
         return "AttendanceModel{" +
@@ -60,6 +67,7 @@ public class AttendanceModel extends BaseModel{
                 ", idCard='" + idCard + '\'' +
                 ", createdAt=" + createdAt +
                 ", address='" + address + '\'' +
+                ", tenderGuid='" + tenderGuid + '\'' +
                 '}';
     }
 }

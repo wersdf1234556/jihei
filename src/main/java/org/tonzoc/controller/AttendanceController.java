@@ -56,5 +56,10 @@ public class AttendanceController extends BaseController {
         attendanceService.removeMany(guids);
     }
 
+    @GetMapping(value = "statAttendanceData")
+    public List<Object> statAttendanceData(String date,Integer flag){
+        return attendanceService.statAttendanceData(date,flag);
+    }
+
 
 }

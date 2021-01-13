@@ -15,7 +15,8 @@ public class SQLServerExceptionHandler implements IExceptionHandler {
     @Override
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.ACCEPTED)
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionResponse handle(Exception exception) {
         return new ExceptionResponse("system_error", exception.getMessage());
     }
