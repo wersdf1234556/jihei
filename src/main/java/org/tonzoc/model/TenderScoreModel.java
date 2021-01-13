@@ -14,15 +14,13 @@ public class TenderScoreModel extends BaseModel {
     private Integer scores;
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "personGuid")
-    private String personGuid;
     @Column(value = "tenderGuid")
     private String tenderGuid;
 
-    @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
-    private String personName;  // 人员名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tednerName;  // 标段名称
+    private String tenderName;  // 标段单位名称
+    @JoinColumn(value = "organization", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderOrganization;  // 标段单位名称
 
     public TenderScoreModel() {
     }
@@ -51,14 +49,6 @@ public class TenderScoreModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public String getPersonGuid() {
-        return personGuid;
-    }
-
-    public void setPersonGuid(String personGuid) {
-        this.personGuid = personGuid;
-    }
-
     public String getTenderGuid() {
         return tenderGuid;
     }
@@ -67,20 +57,20 @@ public class TenderScoreModel extends BaseModel {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getPersonName() {
-        return personName;
+    public String getTenderName() {
+        return tenderName;
     }
 
-    public void setPersonName(String personName) {
-        this.personName = personName;
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 
-    public String getTednerName() {
-        return tednerName;
+    public String getTenderOrganization() {
+        return tenderOrganization;
     }
 
-    public void setTednerName(String tednerName) {
-        this.tednerName = tednerName;
+    public void setTenderOrganization(String tenderOrganization) {
+        this.tenderOrganization = tenderOrganization;
     }
 
     @Override
@@ -89,10 +79,9 @@ public class TenderScoreModel extends BaseModel {
                 "guid='" + guid + '\'' +
                 ", scores=" + scores +
                 ", sortId=" + sortId +
-                ", personGuid='" + personGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
-                ", personName='" + personName + '\'' +
-                ", tednerName='" + tednerName + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", tenderOrganization='" + tenderOrganization + '\'' +
                 '}';
     }
 }

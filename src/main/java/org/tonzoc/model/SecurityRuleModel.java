@@ -5,6 +5,7 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+// 分数规则表
 @Table(value = "securityRules")
 public class SecurityRuleModel extends BaseModel {
 
@@ -12,10 +13,12 @@ public class SecurityRuleModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "rule")
-    private String rule; // 规则
-    @Column(value = "score")
-    private Integer score; // 分数
+    @Column(value = "name")
+    private String name; // 检查项目
+    @Column(value = "rules")
+    private String rules; // 分值说明
+    @Column(value = "defauleScore")
+    private Integer defauleScore; // 默认分数
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -30,20 +33,28 @@ public class SecurityRuleModel extends BaseModel {
         this.guid = guid;
     }
 
-    public String getRule() {
-        return rule;
+    public String getRules() {
+        return rules;
     }
 
-    public void setRule(String rule) {
-        this.rule = rule;
+    public void setRules(String rules) {
+        this.rules = rules;
     }
 
-    public Integer getScore() {
-        return score;
+    public String getName() {
+        return name;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getDefauleScore() {
+        return defauleScore;
+    }
+
+    public void setDefauleScore(Integer defauleScore) {
+        this.defauleScore = defauleScore;
     }
 
     public Integer getSortId() {
@@ -52,5 +63,16 @@ public class SecurityRuleModel extends BaseModel {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    @Override
+    public String toString() {
+        return "SecurityRuleModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", rules='" + rules + '\'' +
+                ", defauleScore=" + defauleScore +
+                ", sortId=" + sortId +
+                '}';
     }
 }

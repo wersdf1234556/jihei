@@ -19,10 +19,11 @@ public class PersonScoreModel extends BaseModel{
     @Column(value = "tenderGuid")
     private String tenderGuid;
 
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;  // 人员名称
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName;  // 人员名称
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName;  // 标段名称
+
 
     public PersonScoreModel() {
     }
@@ -67,6 +68,22 @@ public class PersonScoreModel extends BaseModel{
         this.tenderGuid = tenderGuid;
     }
 
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
+    }
+
     @Override
     public String toString() {
         return "PersonScoreModel{" +
@@ -75,6 +92,8 @@ public class PersonScoreModel extends BaseModel{
                 ", sortId=" + sortId +
                 ", personGuid='" + personGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", personName='" + personName + '\'' +
                 '}';
     }
 }

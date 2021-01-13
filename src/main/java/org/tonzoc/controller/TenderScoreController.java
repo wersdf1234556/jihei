@@ -9,11 +9,11 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.service.ITenderScoreService;
+import org.tonzoc.service.ITenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -22,6 +22,9 @@ public class TenderScoreController extends BaseController {
 
     @Autowired
     private ITenderScoreService tenderScoreService;
+
+    @Autowired
+    private ITenderService tenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, TenderScoreQueryParams tenderScoreQueryParams)
@@ -36,13 +39,13 @@ public class TenderScoreController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid TenderScoreModel tenderScoreModel) throws ParseException {
+    public void add(@RequestBody @Valid TenderScoreModel tenderScoreModel) {
 
         this.tenderScoreService.save(tenderScoreModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid TenderScoreModel tenderScoreModel) throws ParseException {
+    public void update(@RequestBody @Valid TenderScoreModel tenderScoreModel) {
 
         this.tenderScoreService.update(tenderScoreModel);
     }
@@ -58,4 +61,10 @@ public class TenderScoreController extends BaseController {
         this.tenderScoreService.removeMany(guids);
     }
 
+    // 大屏展示标段
+    @GetMapping(value = "display")
+    public List<TenderScoreModel> display(){
+
+        return tenderScoreService.display();
+    }
 }

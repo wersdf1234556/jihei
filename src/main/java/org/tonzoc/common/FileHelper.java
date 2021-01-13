@@ -95,7 +95,6 @@ public class FileHelper {
         for (String li : list) {
             try {
                 File file = new File(li);
-                System.out.println("文件地址：" + li);
                 if (file.exists()) {
                     file.delete();
                     return "文件已删除";
@@ -185,7 +184,6 @@ public class FileHelper {
 
         System.out.println("path" + path);
         MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path); // 将二维码存进去
-
     }
 
     // 随机生成guid;

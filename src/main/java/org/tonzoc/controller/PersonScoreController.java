@@ -22,6 +22,7 @@ public class PersonScoreController extends BaseController {
     @Autowired
     private IPersonScoreService personScoreService;
 
+    @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, PersonScoreQueryParams personScoreQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
@@ -52,5 +53,12 @@ public class PersonScoreController extends BaseController {
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         personScoreService.removeMany(guids);
+    }
+
+    // 大屏展示人员分数
+    @GetMapping(value = "display")
+    public List<PersonScoreModel> display(){
+
+        return personScoreService.display();
     }
 }
