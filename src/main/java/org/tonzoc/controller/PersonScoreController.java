@@ -26,10 +26,11 @@ public class PersonScoreController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, PersonScoreQueryParams personScoreQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
+        pageQueryParams.setOrder("scores");
+        pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<PersonScoreModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(personScoreQueryParams);
-
         List<PersonScoreModel> list = personScoreService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);
@@ -53,12 +54,5 @@ public class PersonScoreController extends BaseController {
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         personScoreService.removeMany(guids);
-    }
-
-    // 大屏展示人员分数
-    @GetMapping(value = "display")
-    public List<PersonScoreModel> display(){
-
-        return personScoreService.display();
     }
 }

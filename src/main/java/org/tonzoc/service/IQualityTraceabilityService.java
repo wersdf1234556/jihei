@@ -28,6 +28,6 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     // 按照名称模糊查询的功能
     List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid);
 
-    // 按照时间和名称排序
-    List<QualityTraceabilityModel> selectSortName();
+    // 将质量表中的sortId同步
+    void updateSortId();
 }

@@ -7,7 +7,7 @@ public class TenderScoreQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "eq", field = "guid")
+    @Operator(value = "eq", field = "scores")
     private Integer scores;
 
     @Operator(value = "eq", field = "tenderGuid")

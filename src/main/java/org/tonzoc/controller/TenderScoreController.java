@@ -9,7 +9,6 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.service.ITenderScoreService;
-import org.tonzoc.service.ITenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -23,13 +22,12 @@ public class TenderScoreController extends BaseController {
     @Autowired
     private ITenderScoreService tenderScoreService;
 
-    @Autowired
-    private ITenderService tenderService;
-
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, TenderScoreQueryParams tenderScoreQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
+        pageQueryParams.setOrder("scores");
+        pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<TenderScoreModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(tenderScoreQueryParams);
@@ -59,12 +57,5 @@ public class TenderScoreController extends BaseController {
     public void removeMany(String guids) throws Exception {
 
         this.tenderScoreService.removeMany(guids);
-    }
-
-    // 大屏展示标段
-    @GetMapping(value = "display")
-    public List<TenderScoreModel> display(){
-
-        return tenderScoreService.display();
     }
 }

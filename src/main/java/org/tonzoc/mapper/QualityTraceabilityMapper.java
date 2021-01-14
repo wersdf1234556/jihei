@@ -14,10 +14,6 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
     @Update("update QualityTraceabilitys set currentTime = #{currentTime} where guid = #{guid}")
     void updateTime(Date currentTime, String guid);
 
-    @Select("select qualityTraceabilitys.*, subTypes.name subTypeName, tenders.name tenderName, types.name typeName from qualityTraceabilitys " +
-            "LEFT JOIN subTypes on qualityTraceabilitys.subTypeGuid = subTypes.guid " +
-            "LEFT JOIN tenders on qualityTraceabilitys.tenderGuid = tenders.guid " +
-            "LEFT JOIN types on qualityTraceabilitys.typeId = types.id " +
-            "ORDER BY qualityTraceabilitys.currentTime, subTypes.name asc")
-    List<QualityTraceabilityModel> selectSortName ();
+    @Update("update qualityTraceabilitys set sortId = (select sortId from subTypes where guid = #{subTypeGuid}) where subTypeGuid = #{subTypeGuid}")
+    void updateSortId(String subTypeGuid);
 }

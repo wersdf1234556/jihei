@@ -36,6 +36,8 @@ public class QualityTraceabilityController extends BaseController {
     public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams laboratoryQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
+        pageQueryParams.setOrder("currentTime");
+        pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(laboratoryQueryParams);
@@ -57,6 +59,10 @@ public class QualityTraceabilityController extends BaseController {
         if (!"".equals(qualityTraceabilityModel.getSubTypeGuid()) && qualityTraceabilityModel.getSubTypeGuid() != null) {
             qualityTraceabilityModel.setTypeId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getTypeId());
         }
+        if (qualityTraceabilityModel.getSubTypeGuid() == null) {
+
+            qualityTraceabilityModel.setSortId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getSortId());
+        }
 
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
     }
@@ -67,9 +73,7 @@ public class QualityTraceabilityController extends BaseController {
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);
         }
-        if (!"".equals(qualityTraceabilityModel.getSubTypeGuid()) && qualityTraceabilityModel.getSubTypeGuid() != null) {
-            qualityTraceabilityModel.setTypeId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getTypeId());
-        }
+
         this.qualityTraceabilityService.update(qualityTraceabilityModel);
     }
 
@@ -113,13 +117,10 @@ public class QualityTraceabilityController extends BaseController {
        return qualityTraceabilityService.selectLikeName(name, qualityTraceabilityGuid);
     }
 
-    // 按照时间和名称排序
-    @GetMapping(value = "selectSortName")
-    public PageResponse selectSortName(PageQueryParams pageQueryParams) throws PageException {
+    // 将质量表中的sortId同步
+    @PutMapping(value = "updateSortId")
+    public void updateSortId(){
 
-        Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
-        List<QualityTraceabilityModel> list = qualityTraceabilityService.selectSortName();
-
-        return new PageResponse(page.getTotal(), list);
+        qualityTraceabilityService.updateSortId();
     }
 }

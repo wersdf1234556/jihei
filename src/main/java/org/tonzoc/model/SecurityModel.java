@@ -2,8 +2,6 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-import java.util.Date;
-
 // 安全表
 @Table("securitys")
 public class SecurityModel extends BaseModel {
@@ -12,32 +10,33 @@ public class SecurityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "name")
-    private String name;
-    @Column(value = "currentTime")
-    private Date currentTime;
-    private String currentDate;
-    @Column(value = "sortId")
-    private Integer sortId;
-    @Column(value = "personGuid")
-    private String personGuid;
+    @Column(value = "documentGuid")
+    private String documentGuid; // 明细表guid
     @Column(value = "tenderGuid")
-    private String tenderGuid;
+    private String tenderGuid; // 标段表guid
+    @Column(value = "securityRuleGuid")
+    private String securityRuleGuid; // 分数规则表guid
+    @Column(value = "createPersonGuid")
+    private String createPersonGuid; // 创建人的guid
+    @Column(value = "score")
+    private Integer score; // 分数
     @Column(value = "imgAttachmentGuid")
     private String imgAttachmentGuid;
-    @Column(value = "pdfAttachmentGuid")
-    private String pdfAttachmentGuid;
-    @Column(value = "state")
-    private String state;
+    @Column(value = "sortId")
+    private Integer sortId;
 
+    @JoinColumn(value = "name", type = DocumentModel.class, leftColumn = "documentGuid", rightColumn = "guid")
+    private String documentName;  // 明细名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;  // 标段名称
+    @JoinColumn(value = "name", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
+    private String securityRuleName;  // 分数规则名称
+    @JoinColumn(value = "rules", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
+    private String securityRule;  // 分数规则说明
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName;  // 人员名称
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tednerName;  // 标段名称
     @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "imgAttachmentGuid", rightColumn = "guid")
-    private String imgName;  // 图片名称
-    @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "pdfAttachmentGuid", rightColumn = "guid")
-    private String pdfName;  // pdf名称
+    private String imgAttachmentName;  // 图片名称
 
     public SecurityModel() {
     }
@@ -50,52 +49,12 @@ public class SecurityModel extends BaseModel {
         this.guid = guid;
     }
 
-    public String getName() {
-        return name;
+    public String getDocumentGuid() {
+        return documentGuid;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCurrentTime() {
-        return currentTime;
-    }
-
-    public void setCurrentTime(Date currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public String getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
-    }
-
-    public Integer getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getPersonGuid() {
-        return personGuid;
-    }
-
-    public void setPersonGuid(String personGuid) {
-        this.personGuid = personGuid;
+    public void setDocumentGuid(String documentGuid) {
+        this.documentGuid = documentGuid;
     }
 
     public String getTenderGuid() {
@@ -106,6 +65,30 @@ public class SecurityModel extends BaseModel {
         this.tenderGuid = tenderGuid;
     }
 
+    public String getSecurityRuleGuid() {
+        return securityRuleGuid;
+    }
+
+    public void setSecurityRuleGuid(String securityRuleGuid) {
+        this.securityRuleGuid = securityRuleGuid;
+    }
+
+    public String getCreatePersonGuid() {
+        return createPersonGuid;
+    }
+
+    public void setCreatePersonGuid(String createPersonGuid) {
+        this.createPersonGuid = createPersonGuid;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     public String getImgAttachmentGuid() {
         return imgAttachmentGuid;
     }
@@ -114,12 +97,44 @@ public class SecurityModel extends BaseModel {
         this.imgAttachmentGuid = imgAttachmentGuid;
     }
 
-    public String getPdfAttachmentGuid() {
-        return pdfAttachmentGuid;
+    public Integer getSortId() {
+        return sortId;
     }
 
-    public void setPdfAttachmentGuid(String pdfAttachmentGuid) {
-        this.pdfAttachmentGuid = pdfAttachmentGuid;
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
+    }
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
+
+    public String getSecurityRuleName() {
+        return securityRuleName;
+    }
+
+    public void setSecurityRuleName(String securityRuleName) {
+        this.securityRuleName = securityRuleName;
+    }
+
+    public String getSecurityRule() {
+        return securityRule;
+    }
+
+    public void setSecurityRule(String securityRule) {
+        this.securityRule = securityRule;
     }
 
     public String getPersonName() {
@@ -130,47 +145,31 @@ public class SecurityModel extends BaseModel {
         this.personName = personName;
     }
 
-    public String getTednerName() {
-        return tednerName;
+    public String getImgAttachmentName() {
+        return imgAttachmentName;
     }
 
-    public void setTednerName(String tednerName) {
-        this.tednerName = tednerName;
-    }
-
-    public String getImgName() {
-        return imgName;
-    }
-
-    public void setImgName(String imgName) {
-        this.imgName = imgName;
-    }
-
-    public String getPdfName() {
-        return pdfName;
-    }
-
-    public void setPdfName(String pdfName) {
-        this.pdfName = pdfName;
+    public void setImgAttachmentName(String imgAttachmentName) {
+        this.imgAttachmentName = imgAttachmentName;
     }
 
     @Override
     public String toString() {
         return "SecurityModel{" +
                 "guid='" + guid + '\'' +
-                ", name='" + name + '\'' +
-                ", currentTime=" + currentTime +
-                ", currentDate='" + currentDate + '\'' +
-                ", sortId=" + sortId +
-                ", personGuid='" + personGuid + '\'' +
+                ", documentGuid='" + documentGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", securityRuleGuid='" + securityRuleGuid + '\'' +
+                ", createPersonGuid='" + createPersonGuid + '\'' +
+                ", score=" + score +
                 ", imgAttachmentGuid='" + imgAttachmentGuid + '\'' +
-                ", pdfAttachmentGuid='" + pdfAttachmentGuid + '\'' +
-                ", state='" + state + '\'' +
+                ", sortId=" + sortId +
+                ", documentName='" + documentName + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", securityRuleName='" + securityRuleName + '\'' +
+                ", securityRule='" + securityRule + '\'' +
                 ", personName='" + personName + '\'' +
-                ", tednerName='" + tednerName + '\'' +
-                ", imgName='" + imgName + '\'' +
-                ", pdfName='" + pdfName + '\'' +
+                ", imgAttachmentName='" + imgAttachmentName + '\'' +
                 '}';
     }
 }

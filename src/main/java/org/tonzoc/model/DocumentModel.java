@@ -12,23 +12,23 @@ public class DocumentModel extends BaseModel{
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "createDate")
-    private Date createDate; // 创建日期
-    @Column(value = "tenderGuid")
-    private String tenderGuid;
-    @Column(value = "currentStepGuid")
-    private String currentStepGuid; // 当前步骤
+    @Column(value = "title")
+    private String title; // 标题
+    @Column(value = "startTime")
+    private Date startTime; // 创建日期
+    @Column(value = "endTime")
+    private Date endTime; // 结束时间
+    private String startDate;
+    private String endDate;
     @Column(value = "createPersonGuid")
     private String createPersonGuid; // 创建人
     @Column(value = "status")
-    private String status;
+    private String status; // 状态
+    @Column(value = "sortId")
+    private Integer sortId;
 
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName;  // 标段名称
-    @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "currentStepGuid", rightColumn = "guid")
-    private String personName;  // 标段名称
-    @JoinColumn(value = "name", type = StepModel.class, leftColumn = "currentStepGuid", rightColumn = "guid")
-    private String stepName;  // 标段名称
+    @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "createPersonGuid", rightColumn = "guid")
+    private String personName;  // 人员名称
 
     public DocumentModel() {
     }
@@ -41,28 +41,28 @@ public class DocumentModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public String getCurrentStepGuid() {
-        return currentStepGuid;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setCurrentStepGuid(String currentStepGuid) {
-        this.currentStepGuid = currentStepGuid;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public String getCreatePersonGuid() {
@@ -81,14 +81,6 @@ public class DocumentModel extends BaseModel{
         this.status = status;
     }
 
-    public String getTenderName() {
-        return tenderName;
-    }
-
-    public void setTenderName(String tenderName) {
-        this.tenderName = tenderName;
-    }
-
     public String getPersonName() {
         return personName;
     }
@@ -97,11 +89,43 @@ public class DocumentModel extends BaseModel{
         this.personName = personName;
     }
 
-    public String getStepName() {
-        return stepName;
+    public Integer getSortId() {
+        return sortId;
     }
 
-    public void setStepName(String stepName) {
-        this.stepName = stepName;
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "DocumentModel{" +
+                "guid='" + guid + '\'' +
+                ", title='" + title + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", createPersonGuid='" + createPersonGuid + '\'' +
+                ", status='" + status + '\'' +
+                ", sortId=" + sortId +
+                ", personName='" + personName + '\'' +
+                '}';
     }
 }

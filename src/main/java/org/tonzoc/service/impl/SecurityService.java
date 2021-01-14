@@ -2,28 +2,39 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
-import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.SecurityMapper;
+import org.tonzoc.mapper.TenderScoreMapper;
 import org.tonzoc.model.AttachmentModel;
+import org.tonzoc.model.DocumentModel;
 import org.tonzoc.model.SecurityModel;
+import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.service.IAttachmentService;
+import org.tonzoc.service.IDocumentService;
 import org.tonzoc.service.ISecurityService;
+import org.tonzoc.service.ITenderScoreService;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DataFormatException;
+
 
 @Service
+@Transactional
 public class SecurityService extends BaseService<SecurityModel> implements ISecurityService {
 
     @Autowired
     private SecurityMapper securityMapper;
+
+    @Autowired
+    private TenderScoreMapper tenderScoreMapper;
 
     @Autowired
     private AttachmentMapper attachmentMapper;
@@ -32,42 +43,43 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     private IAttachmentService attachmentService;
 
     @Autowired
-    private FileHelper fileHelper;
+    private IDocumentService documentService;
+
+    @Autowired
+    private ITenderScoreService tenderScoreService;
 
     @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
-    // 查询字符串转时间
+    @Autowired
+    private FileHelper fileHelper;
+
+    // 判断当前时间是否在这个时间内
     @Override
-    public List<SecurityModel> selected (List<SecurityModel> list) {
-        if (list.size() > 0) {
-            for (SecurityModel m : list) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-                m.setCurrentDate(simpleDateFormat.format(m.getCurrentTime()));
-            }
+    public String isTimeInside(String documentGuid) {
+
+        Date date = new Date();
+        long currentTime = date.getTime();
+
+        DocumentModel documentModel = documentService.get(documentGuid);
+        long startTime = documentModel.getStartTime().getTime();
+        long endTime = documentModel.getEndTime().getTime();
+        if (currentTime >= startTime && currentTime < endTime) {
+
+            return "true";
         }
-        return list;
+       // SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        return "false";
     }
 
-    // 处理时间
+    // 上传安全文件
     @Override
-    public SecurityModel updateTime(SecurityModel securityModel) throws ParseException {
-
-        if (!"".equals(securityModel.getCurrentDate()) && securityModel.getCurrentDate() != null) {
-
-            securityMapper.updateTime(TimeHelper.stringToDate(securityModel.getCurrentDate()), securityModel.getGuid());
-        }
-        securityModel.setSortId(0);
-        securityModel.setCurrentDate("");
-        return securityModel;
-    }
-
-    // 上传安全的文件
-    @Override
-    public Map<String, String> upFile(MultipartFile file, String currentDate) {
+    public Map<String, String> upFile(MultipartFile file) {
 
         intelliSiteProperties.setFileUrl("/安全/");
-        String[] str = fileHelper.fileUpload(file, currentDate,  "");
+
+        // 获取的实际时间
+        String[] str = fileHelper.fileUpload(file, new SimpleDateFormat("yyyy-MM-dd").format(new Date()),  "");
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setGuid(fileHelper.newGUID());
@@ -81,5 +93,15 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0],  ""));
         return map;
+    }
+
+    // 添加多条并修改分数
+    public void adds(List<SecurityModel> list) {
+
+        Integer score = securityMapper.score(list.get(0).getDocumentGuid(), list.get(0).getTenderGuid());
+        TenderScoreModel tenderScoreModel = tenderScoreMapper.selectByTender(list.get(0).getTenderGuid());
+        tenderScoreService.updateScore(tenderScoreModel.getScores(), score);
+
+        this.saveMany(list);
     }
 }

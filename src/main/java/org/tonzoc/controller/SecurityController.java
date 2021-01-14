@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -15,7 +14,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -34,22 +32,19 @@ public class SecurityController extends BaseController {
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(securityQueryParams);
         List<SecurityModel> list = securityService.list(sqlQueryParams);
-        list = securityService.selected(list);
 
         return new PageResponse(page.getTotal(), list);
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SecurityModel securityModel) throws ParseException {
+    public void add(@RequestBody @Valid SecurityModel securityModel) {
 
-        securityModel.setCurrentTime(TimeHelper.stringToDate(securityModel.getCurrentDate()));
         this.securityService.save(securityModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid SecurityModel securityModel) throws ParseException {
+    public void update(@RequestBody @Valid SecurityModel securityModel) {
 
-        securityModel = securityService.updateTime(securityModel);
         this.securityService.update(securityModel);
     }
 
@@ -64,10 +59,24 @@ public class SecurityController extends BaseController {
         this.securityService.removeMany(guids);
     }
 
+    // 判断当前时间是否在这个时间内
+    @GetMapping(value = "isTimeInside")
+    public String isTimeInside(String documentGuid) {
+
+        return securityService.isTimeInside(documentGuid);
+    }
+
     // 上传安全文件
     @PostMapping(value = "upFile")
-    public Map<String, String> upFile(MultipartFile file, String currentDate) {
+    public Map<String, String> upFile(MultipartFile file) {
 
-        return securityService.upFile(file, currentDate);
+        return securityService.upFile(file);
+    }
+
+    // 添加多条并修改分数
+    @PostMapping(value = "adds")
+    public void adds(List<SecurityModel> list) {
+
+        securityService.adds(list);
     }
 }

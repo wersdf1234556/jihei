@@ -14,8 +14,10 @@ import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
+import org.tonzoc.model.SubTypeModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
+import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     @Autowired
     private IAttachmentService attachmentService;
+
+    @Autowired
+    private ISubTypeService subTypeService;
 
     @Autowired
     private FileHelper fileHelper;
@@ -136,9 +141,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         return attachmentService.list(sqlQueryParams);
     }
 
-    // 按照时间和名称排序
-    public List<QualityTraceabilityModel> selectSortName(){
+    // 将质量表中的sortId同步
+    public void updateSortId(){
 
-        return qualityTraceabilityMapper.selectSortName();
+        List<SubTypeModel> list = subTypeService.list(new ArrayList<>());
+        for (SubTypeModel li: list) {
+
+            qualityTraceabilityMapper.updateSortId(li.getGuid());
+        }
     }
 }
