@@ -1,20 +1,22 @@
 package org.tonzoc.model.support;
 
 public class LabStressMachineStatModel {
-    private String sectionName;
+    private String tenderGuid;
+    private String tenderName;
     private Integer num;
 
-    public LabStressMachineStatModel(String sectionName, Integer num) {
-        this.sectionName = sectionName;
+    public LabStressMachineStatModel(String tenderGuid, String tenderName, Integer num) {
+        this.tenderGuid = tenderGuid;
+        this.tenderName = tenderName;
         this.num = num;
     }
 
-    public String getSectionName() {
-        return sectionName;
+    public String getTenderName() {
+        return tenderName;
     }
 
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 
     public Integer getNum() {
@@ -23,5 +25,13 @@ public class LabStressMachineStatModel {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }
