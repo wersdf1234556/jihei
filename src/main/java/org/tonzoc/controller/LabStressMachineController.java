@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabStressMachineModel;
+import org.tonzoc.model.support.LabStressMachineStatModel;
 import org.tonzoc.service.ILabStressMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -46,6 +47,11 @@ public class LabStressMachineController extends BaseController {
 
         return new ExceptionResponse(200, "success", "成功！");
 //        this.labStressMachineService.save(labStressMachineModel);
+    }
+
+    @GetMapping(value = "statistics")
+    public List<LabStressMachineStatModel> listStatistics() {
+        return labStressMachineService.listStatistics();
     }
 
 }
