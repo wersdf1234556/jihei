@@ -7,7 +7,7 @@ public class MemorabiliaQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "eq", field = "name")
+    @Operator(value = "like", field = "name")
     private String name;
 
     @Operator(value = "eq", field = "currentTime")

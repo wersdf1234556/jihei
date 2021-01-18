@@ -7,6 +7,8 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.DocumentModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityRuleModel;
 import org.tonzoc.service.ISecurityRuleService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -52,5 +54,19 @@ public class SecurityRuleController extends BaseController {
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         securityRuleService.removeMany(guids);
+    }
+
+    // 考核项积分情况
+    @GetMapping(value = "selectByDocument")
+    public List<SecurityRuleModel> selectByDocument(){
+
+        return securityRuleService.selectByDocument();
+    }
+
+    // 积分变化情况
+    @GetMapping(value = "selectChang")
+    public List<ReturnModel> selectChang(){
+
+        return securityRuleService.selectChang();
     }
 }

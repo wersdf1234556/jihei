@@ -17,8 +17,8 @@ public class SecurityRuleModel extends BaseModel {
     private String name; // 检查项目
     @Column(value = "rules")
     private String rules; // 分值说明
-    @Column(value = "defauleScore")
-    private Integer defauleScore; // 默认分数
+    @Column(value = "defaultScore")
+    private Integer defaultScore; // 默认分数
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -49,12 +49,12 @@ public class SecurityRuleModel extends BaseModel {
         this.name = name;
     }
 
-    public Integer getDefauleScore() {
-        return defauleScore;
+    public Integer getDefaultScore() {
+        return defaultScore;
     }
 
-    public void setDefauleScore(Integer defauleScore) {
-        this.defauleScore = defauleScore;
+    public void setDefaultScore(Integer defaultScore) {
+        this.defaultScore = defaultScore;
     }
 
     public Integer getSortId() {
@@ -71,7 +71,7 @@ public class SecurityRuleModel extends BaseModel {
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
                 ", rules='" + rules + '\'' +
-                ", defauleScore=" + defauleScore +
+                ", defaultScore=" + defaultScore +
                 ", sortId=" + sortId +
                 '}';
     }

@@ -7,6 +7,9 @@ public class SubTypeQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
+    @Operator(value = "like", field = "name")
+    private String name;
+
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
 
@@ -23,6 +26,14 @@ public class SubTypeQueryParams {
 
     public Integer getSortId() {
         return sortId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSortId(Integer sortId) {

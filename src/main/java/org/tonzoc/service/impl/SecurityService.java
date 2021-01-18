@@ -7,12 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
+import org.tonzoc.mapper.DocumentMapper;
 import org.tonzoc.mapper.SecurityMapper;
 import org.tonzoc.mapper.TenderScoreMapper;
-import org.tonzoc.model.AttachmentModel;
-import org.tonzoc.model.DocumentModel;
-import org.tonzoc.model.SecurityModel;
-import org.tonzoc.model.TenderScoreModel;
+import org.tonzoc.model.*;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IDocumentService;
 import org.tonzoc.service.ISecurityService;
@@ -38,6 +36,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     @Autowired
     private AttachmentMapper attachmentMapper;
+
+    @Autowired
+    private DocumentMapper documentMapper;
 
     @Autowired
     private IAttachmentService attachmentService;
@@ -96,6 +97,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     }
 
     // 添加多条并修改分数
+    @Override
     public void adds(List<SecurityModel> list) {
 
         Integer score = securityMapper.score(list.get(0).getDocumentGuid(), list.get(0).getTenderGuid());
