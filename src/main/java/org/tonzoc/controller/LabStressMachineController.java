@@ -34,6 +34,8 @@ public class LabStressMachineController extends BaseController {
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(labStressMachineQueryParams);
 
+        sqlQueryParams.add(new SqlQueryParam("testEvaluation", "0", "eq"));
+
         List<LabStressMachineModel> list = labStressMachineService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);
