@@ -47,6 +47,7 @@ public class SecurityRuleService extends BaseService<SecurityRuleModel> implemen
              String str = Integer.valueOf(year) + "年" + Integer.valueOf(month) + "月"; //年+月
              if (map.containsKey(str)) { //如果map中有年+月
                  if (map.get(str) < Integer.valueOf(day)) { // 如果map的日小于现在日
+
                      map.remove(str); // 删除之前的年+月 和 日
                      map1.remove(str); // 删除之前的年+月 和 数据
                  }
