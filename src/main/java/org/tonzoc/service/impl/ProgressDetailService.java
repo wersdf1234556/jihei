@@ -66,6 +66,14 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 
         //1、查询所有名称
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        Integer flag=0;
+        if (tender.contains("A")||tender.contains("a")){
+            flag=0;
+        }if (tender.contains("B")||tender.contains("b")){
+            flag=1;
+        }
+        System.out.println(flag);
+        sqlQueryParams.add(new SqlQueryParam("flag", flag.toString(), "eq"));
         List<ProgressNameModel> progressNameModels = progressNameService.list(sqlQueryParams);
         progressNameModels=progressNameModels.stream().sorted(Comparator.comparing(ProgressNameModel::getSortId)).collect(Collectors.toList());
         for (ProgressNameModel progressNameModel:progressNameModels){

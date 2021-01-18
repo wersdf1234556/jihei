@@ -15,6 +15,8 @@ public class PersonTypeModel extends BaseModel{
     private String name; // 人员类型
     @Column(value = "sortId")
     private Integer sortId; // 排序
+    @Column(value = "flag")
+    private Integer flag; //0：技术工种 1：管理人员
 
     public String getGuid() {
         return guid;
@@ -40,12 +42,21 @@ public class PersonTypeModel extends BaseModel{
         this.sortId = sortId;
     }
 
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "PersonTypeModel{" +
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
+                ", flag=" + flag +
                 '}';
     }
 }
