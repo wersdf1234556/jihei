@@ -55,11 +55,13 @@ public class LabConcreteTestHammerModel extends BaseModel {
     private Integer age;
     @Column(value = "detectionParam")
     private String detectionParam;
+    @Column(value = "sectionId")
+    private String sectionId;
 
     public LabConcreteTestHammerModel() {
     }
 
-    public LabConcreteTestHammerModel(String guid, String equipmentNumber, String sensorNumber, String entrustCompnay, String entrustName, String projectName, String componentName, String componentNumber, String detectionTime, String pouringDate, String designGrade, String componentStrength, String areaTotal, String areaNo, String reboundData, String testAngle, Integer testSurface, Integer sideIsDry, Integer sideRough, String carbonationDepthOfComponents, String carbonationDepthData, Integer age, String detectionParam) {
+    public LabConcreteTestHammerModel(String guid, String equipmentNumber, String sensorNumber, String entrustCompnay, String entrustName, String projectName, String componentName, String componentNumber, String detectionTime, String pouringDate, String designGrade, String componentStrength, String areaTotal, String areaNo, String reboundData, String testAngle, Integer testSurface, Integer sideIsDry, Integer sideRough, String carbonationDepthOfComponents, String carbonationDepthData, Integer age, String detectionParam, String sectionId) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.sensorNumber = sensorNumber;
@@ -83,6 +85,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
         this.carbonationDepthData = carbonationDepthData;
         this.age = age;
         this.detectionParam = detectionParam;
+        this.sectionId = sectionId;
     }
 
     @JsonProperty(value = "id")
@@ -293,6 +296,15 @@ public class LabConcreteTestHammerModel extends BaseModel {
         return detectionParam;
     }
 
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
     @Override
     public String toString() {
         return "LabConcreteTestHammerModel{" +
@@ -319,6 +331,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
                 ", carbonationDepthData='" + carbonationDepthData + '\'' +
                 ", age=" + age +
                 ", detectionParam='" + detectionParam + '\'' +
+                ", sectionId='" + sectionId + '\'' +
                 '}';
     }
 }

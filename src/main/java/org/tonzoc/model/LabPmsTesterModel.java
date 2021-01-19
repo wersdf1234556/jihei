@@ -65,11 +65,13 @@ public class LabPmsTesterModel extends BaseModel {
     private String strengthGraph;
     @Column(value = "result")
     private String result;
+    @Column(value = "sectionId")
+    private String sectionId;
 
     public LabPmsTesterModel() {
     }
 
-    public LabPmsTesterModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String concreteAge, String loadValue, String displacement1, String displacement2, String strength, String designStrength, String representativeStrength, String strengthGraph, String result) {
+    public LabPmsTesterModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String concreteAge, String loadValue, String displacement1, String displacement2, String strength, String designStrength, String representativeStrength, String strengthGraph, String result, String sectionId) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.equipmentName = equipmentName;
@@ -98,6 +100,7 @@ public class LabPmsTesterModel extends BaseModel {
         this.representativeStrength = representativeStrength;
         this.strengthGraph = strengthGraph;
         this.result = result;
+        this.sectionId = sectionId;
     }
 
     @Override
@@ -131,6 +134,7 @@ public class LabPmsTesterModel extends BaseModel {
                 ", representativeStrength='" + representativeStrength + '\'' +
                 ", strengthGraph='" + strengthGraph + '\'' +
                 ", result='" + result + '\'' +
+                ", sectionId='" + sectionId + '\'' +
                 '}';
     }
 
@@ -384,5 +388,14 @@ public class LabPmsTesterModel extends BaseModel {
     @JsonProperty(value = "result")
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 }

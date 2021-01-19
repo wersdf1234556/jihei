@@ -67,11 +67,13 @@ public class LabMarshallStabilityModel extends BaseModel {
     private String result;
     @Column(value = "otherInformation")
     private String otherInformation;
+    @Column(value = "sectionId")
+    private String sectionId;
 
     public LabMarshallStabilityModel() {
     }
 
-    public LabMarshallStabilityModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String sampleSize, String startTime, String endTime, String upTime, String testTemp, String stability, String flow, String marshalLt, String average, String curve, String curve1, String result, String otherInformation) {
+    public LabMarshallStabilityModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String sampleSize, String startTime, String endTime, String upTime, String testTemp, String stability, String flow, String marshalLt, String average, String curve, String curve1, String result, String otherInformation, String sectionId) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.equipmentName = equipmentName;
@@ -101,6 +103,7 @@ public class LabMarshallStabilityModel extends BaseModel {
         this.curve1 = curve1;
         this.result = result;
         this.otherInformation = otherInformation;
+        this.sectionId = sectionId;
     }
 
     @Override
@@ -135,6 +138,7 @@ public class LabMarshallStabilityModel extends BaseModel {
                 ", curve1='" + curve1 + '\'' +
                 ", result='" + result + '\'' +
                 ", otherInformation='" + otherInformation + '\'' +
+                ", sectionId='" + sectionId + '\'' +
                 '}';
     }
 
@@ -397,5 +401,14 @@ public class LabMarshallStabilityModel extends BaseModel {
     @JsonProperty(value = "other_information")
     public void setOtherInformation(String otherInformation) {
         this.otherInformation = otherInformation;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 }
