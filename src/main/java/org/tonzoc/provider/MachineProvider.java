@@ -50,7 +50,7 @@ public class MachineProvider {
         return stringBuilder.toString();
     }
 
-    // 查询重点机械
+    // 查询全部机械
     public String allImportantMachine(@Param(value = "tenderGuid") String tenderGuid) {
 
         StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from " +

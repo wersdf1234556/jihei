@@ -11,6 +11,8 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
+import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.TenderModel;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -122,5 +124,19 @@ public class QualityTraceabilityController extends BaseController {
     public void updateSortId(){
 
         qualityTraceabilityService.updateSortId();
+    }
+
+    // 追溯统计
+    @GetMapping(value = "traceabilityCount")
+    public List<ReturnModel> traceabilityCount(){
+
+        return qualityTraceabilityService.traceabilityCount();
+    }
+
+    // 标段统计
+    @GetMapping(value = "tenderCount")
+    public List<TenderModel> tenderCount(){
+
+        return qualityTraceabilityService.tenderCount();
     }
 }

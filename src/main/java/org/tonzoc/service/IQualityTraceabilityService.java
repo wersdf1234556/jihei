@@ -3,6 +3,8 @@ package org.tonzoc.service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
+import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.TenderModel;
 
 import java.text.ParseException;
 import java.util.List;
@@ -30,4 +32,10 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // 将质量表中的sortId同步
     void updateSortId();
+
+    // 追溯统计
+    List<ReturnModel> traceabilityCount();
+
+    // 标段统计
+    List<TenderModel> tenderCount();
 }

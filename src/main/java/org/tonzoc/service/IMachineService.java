@@ -10,6 +10,9 @@ import java.util.Map;
 
 public interface IMachineService extends IBaseService<MachineModel> {
 
+    // 机械公用方法
+    List<ReturnModel> machinePublic(Integer allNumber, List<ReturnModel> list);
+
     // 机械概况
     List<ReturnModel> machineSurvey(String tenderGuid);
 

@@ -12,10 +12,10 @@ import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
-import org.tonzoc.model.AttachmentModel;
-import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.SubTypeModel;
+import org.tonzoc.mapper.TenderMapper;
+import org.tonzoc.model.*;
 import org.tonzoc.service.IAttachmentService;
+import org.tonzoc.service.IMachineService;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -39,6 +39,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     private AttachmentMapper attachmentMapper;
 
     @Autowired
+    private TenderMapper tenderMapper;
+
+    @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
     @Autowired
@@ -46,6 +49,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     @Autowired
     private ISubTypeService subTypeService;
+
+    @Autowired
+    private IMachineService machineService;
 
     @Autowired
     private FileHelper fileHelper;
@@ -149,5 +155,28 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
             qualityTraceabilityMapper.updateSortId(li.getGuid());
         }
+    }
+
+    // 追溯统计
+    public List<ReturnModel> traceabilityCount(){
+
+        Integer count = qualityTraceabilityMapper.count();
+        List<ReturnModel> list = qualityTraceabilityMapper.traceabilityCount();
+
+        return machineService.machinePublic(count,list);
+    }
+
+    // 标段统计
+    public List<TenderModel> tenderCount(){
+
+        List<TenderModel> list1 = tenderMapper.list();
+
+        for (TenderModel li: list1) {
+
+            List<ReturnModel> list2 = qualityTraceabilityMapper.tenderCount(li.getGuid());
+            li.setList(list2);
+        }
+
+        return list1;
     }
 }
