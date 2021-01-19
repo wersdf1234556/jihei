@@ -51,6 +51,16 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
         return statModels;
     }
 
+    //flag=0查询技术工种,首件认可
+    public List<AttendanceStatModel> statArticle(String tenderName){
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("name", tenderName, "eq"));
+        TenderModel tenderModel = tenderService.list(sqlQueryParams).get(0);
+        List<AttendanceStatModel> stats = attArtificialDataMapper.statAttByTender(0,tenderModel.getGuid());
+        return stats;
+    }
+
+    //添加假数据
     public void insertAllArti(Integer flag){
         List<PersonTypeModel> personTypes = personTypeService.listByFlag(flag).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();

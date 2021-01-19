@@ -37,13 +37,13 @@ public class TenderController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid TenderModel tenderModel) {
-        this.tenderService.save(tenderModel);
+    public void add(@RequestBody @Valid TenderModel tenderModel) throws Exception {
+        this.tenderService.insertStack(tenderModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid TenderModel tenderModel) {
-        this.tenderService.update(tenderModel);
+    public void update(@RequestBody @Valid TenderModel tenderModel) throws Exception {
+        this.tenderService.updateStack(tenderModel);
     }
 
     @DeleteMapping(value = "{guid}")

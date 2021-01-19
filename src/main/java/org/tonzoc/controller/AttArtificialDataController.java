@@ -63,6 +63,12 @@ public class AttArtificialDataController extends BaseController {
 
     }
 
+    //首件认可
+    @GetMapping(value = "statArticle")
+    public List<AttendanceStatModel> statArticle(String tenderName){
+        return attArtificialDataService.statArticle(tenderName);
+    }
+
     @PostMapping(value = "insertAllArti")
     public void insertAllArti(Integer flag){
         attArtificialDataService.insertAllArti(flag);

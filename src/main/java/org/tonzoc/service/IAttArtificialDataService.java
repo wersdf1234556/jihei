@@ -9,4 +9,5 @@ public interface IAttArtificialDataService extends IBaseService<AttArtificialDat
     List<AttendanceStatModel> statAll(Integer flag);
     List<Object> statByTender(Integer flag);
     void insertAllArti(Integer flag);
+    List<AttendanceStatModel> statArticle(String tenderName);
 }
