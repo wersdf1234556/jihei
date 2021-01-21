@@ -10,6 +10,8 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.CameraTypeModel;
+import org.tonzoc.model.support.AttDateStatModel;
+import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.service.IAttendanceService;
 import org.tonzoc.service.ICameraTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -60,6 +62,15 @@ public class AttendanceController extends BaseController {
     public List<Object> statAttendanceData(String date,Integer flag){
         return attendanceService.statAttendanceData(date,flag);
     }
+    //疫情防控左上、左下根据日期查考勤数及体温
+    @GetMapping(value = "statByMonth")
+    public List<AttDateStatModel> statByMonth(String date){
+        return attendanceService.statByMonth(date);
+    }
 
-
+    //疫情防控右上角按a、b、s、z的标段类型进行考勤统计查询
+    @GetMapping(value = "statByTenderType")
+    public List<AttendanceStatModel> statByTenderType(String date){
+        return attendanceService.statByTenderType(date);
+    }
 }

@@ -1,9 +1,11 @@
 package org.tonzoc.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.exception.NotOneResultFoundException;
+import org.tonzoc.mapper.PersonMapper;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.service.IPersonService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service("personService")
 public class PersonService extends BaseService<PersonModel> implements IPersonService {
+    @Autowired
+    private PersonMapper personMapper;
 
     public PersonModel listBySign(String sign) throws Exception {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -29,7 +33,12 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     }
 
 
-    public PersonModel login(String sign,String password) throws Exception {
+    @Override
+    public List<PersonModel> listByTenderName(String tenderName) {
+        return personMapper.listByTenderName(tenderName);
+    }
+
+    public PersonModel login(String sign, String password) throws Exception {
         /**
          * create by: fang
          * description:本方法用于人员登录手机端，验证密码是否正确

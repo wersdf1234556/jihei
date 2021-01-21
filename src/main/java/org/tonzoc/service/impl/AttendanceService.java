@@ -12,6 +12,7 @@ import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.PersonTypeModel;
 import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttStatTenderModel;
 import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.service.IAttendanceService;
@@ -21,10 +22,7 @@ import org.tonzoc.service.ITenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service(value = "attendanceService")
@@ -60,6 +58,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         save(attendanceModel);
     }
 
+    //人员信息统计
     public List<Object> statAttendanceData(String date,Integer flag){
         List<Object> statModels = new ArrayList<>();
         if (flag==0){
@@ -76,6 +75,76 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             }
         }
         return statModels;
+    }
+
+    //疫情：按日期统计打卡人数
+    public List<AttDateStatModel> statByMonth(String date){
+        int year = Integer.valueOf(date.substring(0,date.indexOf("-")));
+        int month = Integer.valueOf(date.substring(date.indexOf("-")+1));
+        Integer days = getDaysByYearMonth(year,month);
+        List<AttDateStatModel> list = new ArrayList<>();
+        String day="";
+        for (int i=1;i<=days;i++){
+            if(i<10){
+                day="0"+i;
+            }else {
+                day=String.valueOf(i);
+            }
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("createdAt", date+"-"+day, "dateLike"));
+            List<AttendanceModel> attendanceModels = list(sqlQueryParams).stream().sorted(Comparator.comparing(AttendanceModel::getCreatedAt)).collect(Collectors.toList());
+            AttDateStatModel findMaxAndMinTemp = attendanceMapper.findMaxAndMinTemp(date+"-"+day);
+            AttDateStatModel attDateStatModel = new AttDateStatModel();
+            attDateStatModel.setDate(String.valueOf(i));
+            attDateStatModel.setAttNum(String.valueOf(attendanceModels.size()));
+            if (findMaxAndMinTemp==null){
+                attDateStatModel.setMaxTemp("0");
+                attDateStatModel.setMinTemp("0");
+            }else {
+                attDateStatModel.setMaxTemp(findMaxAndMinTemp.getMaxTemp());
+                attDateStatModel.setMinTemp(findMaxAndMinTemp.getMinTemp());
+            }
+            list.add(attDateStatModel);
+        }
+        return list;
+    }
+
+    //根据a、b、s、z标来统计人数和考勤数
+    public List<AttendanceStatModel> statByTenderType(String date){
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        System.out.println(date);
+        List<AttendanceStatModel> list = new ArrayList<>();
+        String[] strings = {"A","B","S","Z"};
+        for (String tenderType : strings){
+            AttendanceStatModel statModel = new AttendanceStatModel();
+            Integer attNum = attendanceMapper.countByTenderType(date,tenderType);
+            Integer total = personService.listByTenderName(tenderType).size();
+            statModel.setTypeName(tenderType+"标");
+            statModel.setAttNum(attNum.toString());
+            statModel.setTotal(total.toString());
+            list.add(statModel);
+        }
+
+        return list;
+    }
+
+
+
+    /**
+     * 根据年 月 获取对应的月份 天数
+     */
+    public static Integer getDaysByYearMonth(int year, int month) {
+
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, year);
+        a.set(Calendar.MONTH, month - 1);
+        a.set(Calendar.DATE, 1);
+        a.roll(Calendar.DATE, -1);
+        Integer maxDate = a.get(Calendar.DATE);
+        return maxDate;
     }
 
     public List<AttendanceStatModel> sumAtt(String tenderGuid,String date){

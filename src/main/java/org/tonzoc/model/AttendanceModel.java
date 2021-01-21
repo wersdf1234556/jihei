@@ -19,6 +19,8 @@ public class AttendanceModel extends BaseModel{
     private String address;  //登录地点
     @JoinColumn(value = "tenderGuid", type = PersonModel.class, leftColumn = "idCard", rightColumn = "idCard")
     private String tenderGuid;
+    @Column(value = "temperature")
+    private String temperature;
 
     public String getGuid() {
         return guid;
@@ -58,6 +60,14 @@ public class AttendanceModel extends BaseModel{
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 
     @Override
