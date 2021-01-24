@@ -65,11 +65,13 @@ public class LabCoverProtectometerModel extends BaseModel {
     private Integer gradingResults;
     @Column(value = "sectionId")
     private String sectionId;
+    @Column(value = "sectionName")
+    private String sectionName;
 
     public LabCoverProtectometerModel() {
     }
 
-    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, Integer averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethods, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingResults, String sectionId) {
+    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, Integer averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethods, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingResults, String sectionId, String sectionName) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.componentName = componentName;
@@ -98,6 +100,7 @@ public class LabCoverProtectometerModel extends BaseModel {
         this.diameter = diameter;
         this.gradingResults = gradingResults;
         this.sectionId = sectionId;
+        this.sectionName = sectionName;
     }
 
     @Override
@@ -131,6 +134,7 @@ public class LabCoverProtectometerModel extends BaseModel {
                 ", diameter='" + diameter + '\'' +
                 ", gradingResults=" + gradingResults +
                 ", sectionId=" + sectionId +
+                ", sectionName=" + sectionName +
                 '}';
     }
 
@@ -384,5 +388,14 @@ public class LabCoverProtectometerModel extends BaseModel {
     @JsonProperty(value = "section_id")
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
+    }
+
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    @JsonProperty(value = "section_name")
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
     }
 }
