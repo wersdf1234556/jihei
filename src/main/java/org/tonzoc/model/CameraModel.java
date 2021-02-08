@@ -26,10 +26,14 @@ public class CameraModel extends BaseModel {
     private String tenderGuid; //标段
     @Column(value = "typeGuid")
     private String typeGuid; //类型
+    @Column(value = "purposeGuid")
+    private String purposeGuid; //用途guid
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
     @JoinColumn(value = "name", type = CameraTypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
     private String typeName; //类型
+    @JoinColumn(value = "name", type = CameraPurposeModel.class, leftColumn = "purposeGuid", rightColumn = "guid")
+    private String purposeName; //用途
 
     public String getGuid() {
         return guid;
@@ -126,5 +130,21 @@ public class CameraModel extends BaseModel {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getPurposeGuid() {
+        return purposeGuid;
+    }
+
+    public void setPurposeGuid(String purposeGuid) {
+        this.purposeGuid = purposeGuid;
+    }
+
+    public String getPurposeName() {
+        return purposeName;
+    }
+
+    public void setPurposeName(String purposeName) {
+        this.purposeName = purposeName;
     }
 }

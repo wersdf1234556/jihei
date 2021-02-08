@@ -5,21 +5,16 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-// 步骤类型表
-@Table("stepTypes")
-public class StepTypeModel extends BaseModel {
-
-    @NotInsertColumn
+@Table(value = "cameraPurpose")
+public class CameraPurposeModel extends BaseModel{
     @PrimaryKey
+    @NotInsertColumn
     @Column(value = "guid")
     private String guid;
     @Column(value = "name")
-    private String name;
+    private String name; // 摄像头用途
     @Column(value = "sortId")
-    private Integer sortId;
-
-    public StepTypeModel() {
-    }
+    private Integer sortId; // 排序
 
     public String getGuid() {
         return guid;
