@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabSofteningPointModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabSofteningPointService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -43,4 +44,8 @@ public class LabSofteningPointController extends BaseController {
         //        this.labSofteningPointService.save(labSofteningPointModel);
     }
 
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labSofteningPointService.listStatistics();
+    }
 }

@@ -9,15 +9,12 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabStressMachineModel;
-import org.tonzoc.model.support.LabStressMachineStatModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabStressMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
 
-import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "labStressMachine")
@@ -52,7 +49,7 @@ public class LabStressMachineController extends BaseController {
     }
 
     @GetMapping(value = "statistics")
-    public List<LabStressMachineStatModel> listStatistics() {
+    public List<LabStatModel> listStatistics() {
         return labStressMachineService.listStatistics();
     }
 

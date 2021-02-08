@@ -1,11 +1,11 @@
 package org.tonzoc.model.support;
 
-public class LabStressMachineStatModel {
+public class LabStatModel {
     private String tenderGuid;
     private String tenderName;
     private Integer num;
 
-    public LabStressMachineStatModel(String tenderGuid, String tenderName, Integer num) {
+    public LabStatModel(String tenderGuid, String tenderName, Integer num) {
         this.tenderGuid = tenderGuid;
         this.tenderName = tenderName;
         this.num = num;
