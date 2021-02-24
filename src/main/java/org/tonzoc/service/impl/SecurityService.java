@@ -11,17 +11,10 @@ import org.tonzoc.mapper.DocumentMapper;
 import org.tonzoc.mapper.SecurityMapper;
 import org.tonzoc.mapper.TenderScoreMapper;
 import org.tonzoc.model.*;
-import org.tonzoc.service.IAttachmentService;
-import org.tonzoc.service.IDocumentService;
-import org.tonzoc.service.ISecurityService;
-import org.tonzoc.service.ITenderScoreService;
+import org.tonzoc.service.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.DataFormatException;
+import java.util.*;
 
 
 @Service
@@ -42,6 +35,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     @Autowired
     private IAttachmentService attachmentService;
+
+    @Autowired
+    private IAttachmentSecurityService attachmentSecurityService;
 
     @Autowired
     private IDocumentService documentService;
@@ -75,21 +71,30 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 上传安全文件
     @Override
-    public Map<String, String> upFile(MultipartFile file) {
+    public Map<String, String> upFile(MultipartFile file, Integer judge) {
 
         intelliSiteProperties.setFileUrl("/安全/");
 
         // 获取的实际时间
         String[] str = fileHelper.fileUpload(file, new SimpleDateFormat("yyyy-MM-dd").format(new Date()),  "");
 
+        String uuid = fileHelper.newGUID();
         AttachmentModel attachmentModel = new AttachmentModel();
-        attachmentModel.setGuid(fileHelper.newGUID());
+        attachmentModel.setGuid(uuid);
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
         attachmentModel.setSortId(0);
         attachmentModel.setQualityTraceabilityGuid("");
-
         attachmentService.save(attachmentModel);
+
+        AttachmentSecurityModel attachmentSecurityModel = new AttachmentSecurityModel();
+        if (judge == 0) {
+            attachmentSecurityModel.setInspectImgAttachment(uuid);
+        }else{
+            attachmentSecurityModel.setChangeImgAttachment(uuid);
+        }
+        attachmentSecurityService.save(attachmentSecurityModel);
+
         intelliSiteProperties.setFileUrl("/");
         Map<String, String> map = new HashMap<>();
         map.put("attachmentGuid", attachmentMapper.getGuid(str[0],  ""));
@@ -105,5 +110,18 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         tenderScoreService.updateScore(tenderScoreModel.getScores(), score);
 
         this.saveMany(list);
+    }
+
+    // 安全统计
+    @Override
+    public List<ReturnModel> securityStatics() {
+    List<ReturnModel> list = new ArrayList<>();
+
+    ReturnModel returnModel = new ReturnModel();
+    returnModel.setName("下单数量");
+    returnModel.setNumber(securityMapper.count());
+    list.add(returnModel);
+
+    return list;
     }
 }

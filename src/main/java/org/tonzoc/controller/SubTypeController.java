@@ -36,13 +36,21 @@ public class SubTypeController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SubTypeModel subTypeModel) {
+    public String add(@RequestBody @Valid SubTypeModel subTypeModel) {
+        if (subTypeService.contain(subTypeModel.getName())) {
+            return "不可重复添加";
+        }
         this.subTypeService.save(subTypeModel);
+        return "添加成功";
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid SubTypeModel subTypeModel) {
+    public String update(@RequestBody @Valid SubTypeModel subTypeModel) {
+        if (subTypeModel.getName() != null && !subTypeModel.getName().equals("") && subTypeService.contain(subTypeModel.getName())) {
+            return "该名称已存在";
+        }
         this.subTypeService.update(subTypeModel);
+        return "修改成功";
     }
 
     @DeleteMapping(value = "{guid}")

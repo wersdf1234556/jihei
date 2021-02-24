@@ -15,6 +15,10 @@ public class SubTypeModel extends BaseModel {
     private Integer sortId;
     @Column(value = "typeId")
     private Integer typeId;
+    @Column(value = "paragraph")
+    private String paragraph; // 段落
+    @Column(value = "parts")
+    private String parts; // 部位
 
     @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;  // 文件类型名称
@@ -60,5 +64,34 @@ public class SubTypeModel extends BaseModel {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getParagraph() {
+        return paragraph;
+    }
+
+    public void setParagraph(String paragraph) {
+        this.paragraph = paragraph;
+    }
+
+    public String getParts() {
+        return parts;
+    }
+
+    public void setParts(String parts) {
+        this.parts = parts;
+    }
+
+    @Override
+    public String toString() {
+        return "SubTypeModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", sortId=" + sortId +
+                ", typeId=" + typeId +
+                ", paragraph='" + paragraph + '\'' +
+                ", parts='" + parts + '\'' +
+                ", typeName='" + typeName + '\'' +
+                '}';
     }
 }

@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
 import org.tonzoc.service.ISecurityService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -68,9 +69,9 @@ public class SecurityController extends BaseController {
 
     // 上传安全文件
     @PostMapping(value = "upFile")
-    public Map<String, String> upFile(MultipartFile file) {
+    public Map<String, String> upFile(MultipartFile file, Integer judge) {
 
-        return securityService.upFile(file);
+        return securityService.upFile(file, judge);
     }
 
     // 添加多条并修改分数
@@ -78,5 +79,12 @@ public class SecurityController extends BaseController {
     public void adds(List<SecurityModel> list) {
 
         securityService.adds(list);
+    }
+
+    // 安全统计
+    @GetMapping(value = "securityStatics")
+    public List<ReturnModel> securityStatics() {
+
+        return securityService.securityStatics();
     }
 }
