@@ -17,6 +17,8 @@ public class PersonTypeModel extends BaseModel{
     private Integer sortId; // 排序
     @Column(value = "flag")
     private Integer flag; //0：技术工种 1：管理人员
+    @Column(value = "colour")
+    private String colour; //颜色
 
     public String getGuid() {
         return guid;
@@ -50,6 +52,14 @@ public class PersonTypeModel extends BaseModel{
         this.flag = flag;
     }
 
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
     @Override
     public String toString() {
         return "PersonTypeModel{" +
@@ -57,6 +67,7 @@ public class PersonTypeModel extends BaseModel{
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
                 ", flag=" + flag +
+                ", colour='" + colour + '\'' +
                 '}';
     }
 }
