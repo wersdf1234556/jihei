@@ -40,6 +40,7 @@ public class SecurityController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid SecurityModel securityModel) {
 
+        securityModel.setStatus("start");
         this.securityService.save(securityModel);
     }
 

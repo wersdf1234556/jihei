@@ -6,7 +6,6 @@ import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IMachineService extends IBaseService<MachineModel> {
 

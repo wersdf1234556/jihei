@@ -24,6 +24,8 @@ public class SecurityModel extends BaseModel {
     private String imgAttachmentGuid;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "status")
+    private String status;
 
     @JoinColumn(value = "name", type = DocumentModel.class, leftColumn = "documentGuid", rightColumn = "guid")
     private String documentName;  // 明细名称
@@ -153,6 +155,14 @@ public class SecurityModel extends BaseModel {
         this.imgAttachmentName = imgAttachmentName;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "SecurityModel{" +
@@ -164,6 +174,7 @@ public class SecurityModel extends BaseModel {
                 ", score=" + score +
                 ", imgAttachmentGuid='" + imgAttachmentGuid + '\'' +
                 ", sortId=" + sortId +
+                ", status='" + status + '\'' +
                 ", documentName='" + documentName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +

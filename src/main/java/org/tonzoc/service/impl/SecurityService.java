@@ -13,6 +13,7 @@ import org.tonzoc.mapper.TenderScoreMapper;
 import org.tonzoc.model.*;
 import org.tonzoc.service.*;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -87,6 +88,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         attachmentModel.setQualityTraceabilityGuid("");
         attachmentService.save(attachmentModel);
 
+
         AttachmentSecurityModel attachmentSecurityModel = new AttachmentSecurityModel();
         if (judge == 0) {
             attachmentSecurityModel.setInspectImgAttachment(uuid);
@@ -115,13 +117,43 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     // 安全统计
     @Override
     public List<ReturnModel> securityStatics() {
-    List<ReturnModel> list = new ArrayList<>();
+        List<ReturnModel> list = new ArrayList<>();
 
-    ReturnModel returnModel = new ReturnModel();
-    returnModel.setName("下单数量");
-    returnModel.setNumber(securityMapper.count());
-    list.add(returnModel);
+        ReturnModel returnModel = new ReturnModel();
+        returnModel.setName("下单数量");
+        returnModel.setNumber(securityMapper.count());
 
-    return list;
+        ReturnModel returnModel1 = new ReturnModel();
+        returnModel1.setName("已整改");
+        returnModel1.setNumber(securityMapper.count() - securityMapper.countStatus("start"));
+
+        ReturnModel returnModel2 = new ReturnModel();
+        returnModel2.setName("未整改");
+        returnModel2.setNumber(securityMapper.countStatus("start"));
+
+        ReturnModel returnModel3 = new ReturnModel();
+        returnModel3.setName("合格数");
+        returnModel3.setNumber(securityMapper.countStatus("qualified"));
+
+        ReturnModel returnModel4 = new ReturnModel();
+        returnModel4.setName("整改通过率");
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        numberFormat.setMaximumFractionDigits(2);   // 设置小数最多两位
+        numberFormat.setMinimumFractionDigits(2);   // 设置小数最少两位
+        if (returnModel3.getNumber() > 0) {
+            String result = numberFormat.format(((double)returnModel3.getNumber()  / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
+            returnModel4.setProportion(result + "%");
+        }else{
+            returnModel4.setProportion("0%");
+        }
+
+
+        list.add(returnModel);
+        list.add(returnModel1);
+        list.add(returnModel2);
+        list.add(returnModel3);
+        list.add(returnModel4);
+
+        return list;
     }
 }

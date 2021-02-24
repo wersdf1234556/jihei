@@ -15,4 +15,7 @@ public interface SecurityMapper extends BaseMapper<SecurityModel> {
     @Select("select count(guid) from securitys")
     Integer count();
 
+    @Select("select count(guid) from securitys where status = #{statue}")
+    Integer countStatus(String status);
+
 }
