@@ -21,6 +21,9 @@ public interface IAttachmentService extends IBaseService<AttachmentModel> {
     // 图片预览
     byte[] getImage(String attachmentId) throws IOException;
 
+    // 视频预览
+    void getVideo(HttpServletResponse response, String attachmentId);
+
     // PDF在线预览
     void PdfPreview(HttpServletResponse response, String guid) throws IOException;
 

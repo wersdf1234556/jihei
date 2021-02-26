@@ -10,6 +10,7 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
+import sun.misc.Resource;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -79,16 +80,24 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
 
     // 预览图片
     public byte[] getImage(String attachmentId) throws IOException {
-        AttachmentModel attachmentsModel =get(attachmentId);
-        String url =attachmentsModel.getUrl();
+        AttachmentModel attachmentsModel = get(attachmentId);
+        String url = attachmentsModel.getUrl();
         return fileHelper.getImage(url);
+    }
+
+    // 预览视频
+    public void getVideo(HttpServletResponse response, String attachmentId){
+        System.out.println("attachmentId" + attachmentId);
+
+        AttachmentModel attachmentsModel = this.get(attachmentId);
+        String url = attachmentsModel.getUrl();
+        fileHelper.getVideo(response, url);
     }
 
     // 预览PDF
     public void PdfPreview (HttpServletResponse response, String guid) throws IOException {
 
         AttachmentModel attachmentsModel = this.get(guid);
-
         fileHelper.PdfPreview(response, attachmentsModel.getUrl());
     }
 

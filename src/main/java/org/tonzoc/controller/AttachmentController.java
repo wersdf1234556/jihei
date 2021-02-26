@@ -2,7 +2,6 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.AttachmentQueryParams;
@@ -84,10 +83,18 @@ public class AttachmentController extends BaseController {
     }
 
     // 预览图片
-    @GetMapping(value = "image/{guid}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE, MediaType.IMAGE_PNG_VALUE})
+    @GetMapping(value = "image/{guid}")
     @ResponseBody
     public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
+
         return attachmentService.getImage(guid);
+    }
+
+    // 预览视频
+    @GetMapping(value = "video/{guid}")
+    public void getVideo(HttpServletResponse response, @PathVariable(value = "guid") String guid) {
+
+        attachmentService.getVideo(response, guid);
     }
 
     // 预览PDF

@@ -131,6 +131,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
+        System.out.println("输出" + intelliSiteProperties.getFilePath());
         attachmentService.upFile(file, qualityTraceabilityGuid);
         intelliSiteProperties.setFileUrl("/");
     }
