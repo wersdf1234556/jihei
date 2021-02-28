@@ -19,6 +19,8 @@ public class SubTypeModel extends BaseModel {
     private String paragraph; // 段落
     @Column(value = "parts")
     private String parts; // 部位
+    @Column(value = "major")
+    private String major; // 专业
 
     @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;  // 文件类型名称
@@ -82,6 +84,14 @@ public class SubTypeModel extends BaseModel {
         this.parts = parts;
     }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
     @Override
     public String toString() {
         return "SubTypeModel{" +
@@ -91,6 +101,7 @@ public class SubTypeModel extends BaseModel {
                 ", typeId=" + typeId +
                 ", paragraph='" + paragraph + '\'' +
                 ", parts='" + parts + '\'' +
+                ", major='" + major + '\'' +
                 ", typeName='" + typeName + '\'' +
                 '}';
     }

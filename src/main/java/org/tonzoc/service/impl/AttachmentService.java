@@ -10,7 +10,6 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
-import sun.misc.Resource;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -87,7 +86,6 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
 
     // 预览视频
     public void getVideo(HttpServletResponse response, String attachmentId){
-        System.out.println("attachmentId" + attachmentId);
 
         AttachmentModel attachmentsModel = this.get(attachmentId);
         String url = attachmentsModel.getUrl();

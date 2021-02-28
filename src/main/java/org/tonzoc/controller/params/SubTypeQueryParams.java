@@ -22,6 +22,9 @@ public class SubTypeQueryParams {
     @Operator(value = "eq", field = "parts")
     private String parts; // 部位
 
+    @Operator(value = "eq", field = "major")
+    private String major;
+
     public String getGuid() {
         return guid;
     }
@@ -68,5 +71,13 @@ public class SubTypeQueryParams {
 
     public void setParts(String parts) {
         this.parts = parts;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 }

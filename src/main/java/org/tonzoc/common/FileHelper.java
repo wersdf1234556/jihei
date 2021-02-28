@@ -161,22 +161,21 @@ public class FileHelper {
     }
 
     // 预览视频
-    public void getVideo(HttpServletResponse response, String url){
-        File file = new File(url);
-        ServletOutputStream out = null;
-        try {
-            FileInputStream instream = new FileInputStream(file);
-            byte[] b = new byte[1024];
-            int length = 0;
-            BufferedInputStream buf = new BufferedInputStream(instream);
-            out = response.getOutputStream();
-            BufferedOutputStream bot = new BufferedOutputStream(out);
+    public void getVideo(HttpServletResponse response, String url) {
 
-            while((length = buf.read(b)) != -1) {
+        File file=new File(url);
+        ServletOutputStream out=null;
+        try {
+            FileInputStream instream=new FileInputStream(file);
+            byte[] b=new byte[1024];
+            int length=0;
+            BufferedInputStream buf=new BufferedInputStream(instream);
+            out=response.getOutputStream();
+            BufferedOutputStream bot=new BufferedOutputStream(out);
+            while((length=buf.read(b))!=-1) {
                 bot.write(b,0, b.length);
             }
-        } catch (Exception e) {
-            System.out.println("出错啦");
+        } catch (Exception  e) {
             e.printStackTrace();
         }
     }

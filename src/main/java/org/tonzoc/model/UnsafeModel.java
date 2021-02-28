@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 // 安全隐患表
 @Table("unsafes")
@@ -13,12 +10,17 @@ public class UnsafeModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "name")
-    private String name; // 安全隐患名称
-    @Column(value = "number")
-    private String number; // 安全隐患数量
+    @Column(value = "grade")
+    private String grade; // 安全隐患等级
+    @Column(value = "parts")
+    private String parts; // 部位
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
     @Column(value = "sortId")
     private String sortId;
+
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;  // 标段单位名称
 
     public UnsafeModel() {
     }
@@ -31,20 +33,36 @@ public class UnsafeModel extends BaseModel {
         this.guid = guid;
     }
 
-    public String getName() {
-        return name;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
-    public String getNumber() {
-        return number;
+    public String getParts() {
+        return parts;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setParts(String parts) {
+        this.parts = parts;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 
     public String getSortId() {
@@ -59,9 +77,11 @@ public class UnsafeModel extends BaseModel {
     public String toString() {
         return "UnsafeModel{" +
                 "guid='" + guid + '\'' +
-                ", name='" + name + '\'' +
-                ", number='" + number + '\'' +
+                ", grade='" + grade + '\'' +
+                ", parts='" + parts + '\'' +
+                ", tenderGuid='" + tenderGuid + '\'' +
                 ", sortId='" + sortId + '\'' +
+                ", tenderName='" + tenderName + '\'' +
                 '}';
     }
 }
