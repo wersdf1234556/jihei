@@ -31,7 +31,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     private IQualityTraceabilityService qualityTraceabilityService;
 
     // 单文件上传
-    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType) {
 
         QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
         String[] str = fileHelper.fileUpload(file, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
@@ -40,13 +40,14 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         attachmentModel.setGuid(fileHelper.newGUID());
         attachmentModel.setUrl(str[0]);
         attachmentModel.setName(str[1]);
+        attachmentModel.setFileType(fileType);
         attachmentModel.setQualityTraceabilityGuid(qualityTraceabilityGuid);
 
         this.save(attachmentModel);
     }
 
     // 多文件上传
-    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid, String fileType) {
 
         if (file.length > 0) {
             QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
@@ -59,6 +60,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
                 attachmentModel.setGuid(fileHelper.newGUID());
                 attachmentModel.setUrl(str[0]);
                 attachmentModel.setName(str[1]);
+                attachmentModel.setFileType(fileType);
                 attachmentModel.setQualityTraceabilityGuid(qualityTraceabilityGuid);
                 attachmentModel.setSortId(0);
 

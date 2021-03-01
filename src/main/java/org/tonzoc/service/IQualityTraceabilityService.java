@@ -22,10 +22,10 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     Map<String, String> qrcode(String qualityTraceabilityGuid);
 
     // 上传多个质量追溯文件
-    void upFiles(MultipartFile[] file, String qualityTraceabilityGuid);
+    void upFiles(MultipartFile[] file, String qualityTraceabilityGuid, String fileType);
 
     // 上传质量追溯文件
-    void upFile(MultipartFile file, String qualityTraceabilityGuid);
+    void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType);
 
     // 按照名称模糊查询的功能
     List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid);

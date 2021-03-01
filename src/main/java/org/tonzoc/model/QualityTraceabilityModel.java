@@ -37,7 +37,6 @@ public class QualityTraceabilityModel extends BaseModel {
     @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;  // 文件名称
 
-
     public QualityTraceabilityModel() {
     }
 

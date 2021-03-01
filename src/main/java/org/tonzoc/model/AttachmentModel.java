@@ -19,6 +19,8 @@ public class AttachmentModel extends BaseModel {
     private Integer sortId;
     @Column(value = "qualityTraceabilityGuid")
     private String qualityTraceabilityGuid;
+    @Column(value = "fileType")
+    private String fileType;  // 文件类型
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -66,6 +68,14 @@ public class AttachmentModel extends BaseModel {
         this.qualityTraceabilityGuid = qualityTraceabilityGuid;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -82,6 +92,7 @@ public class AttachmentModel extends BaseModel {
                 ", url='" + url + '\'' +
                 ", sortId=" + sortId +
                 ", qualityTraceabilityGuid='" + qualityTraceabilityGuid + '\'' +
+                ", fileType=" + fileType +
                 ", createdAt=" + createdAt +
                 '}';
     }

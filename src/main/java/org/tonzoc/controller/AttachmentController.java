@@ -63,16 +63,16 @@ public class AttachmentController extends BaseController {
 
     // 单文件上传
     @PostMapping(value = "/upFile")
-    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType) {
 
-        attachmentService.upFile(file, qualityTraceabilityGuid);
+        attachmentService.upFile(file, qualityTraceabilityGuid, fileType);
     }
 
     // 多文件上传
     @PostMapping(value = "/upFiles")
-    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid, String fileType) {
 
-        attachmentService.upFiles(file, qualityTraceabilityGuid);
+        attachmentService.upFiles(file, qualityTraceabilityGuid, fileType);
     }
 
     // 下载文件

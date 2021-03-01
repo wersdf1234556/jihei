@@ -100,16 +100,16 @@ public class QualityTraceabilityController extends BaseController {
 
     // 上传多个质量追溯文件
     @PostMapping(value = "upFiles")
-    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid){
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid, String fileType){
 
-        qualityTraceabilityService.upFiles(file, qualityTraceabilityGuid);
+        qualityTraceabilityService.upFiles(file, qualityTraceabilityGuid, fileType);
     }
 
     // 上传质量追溯文件
     @PostMapping(value = "upFile")
-    public void upFile(MultipartFile file, String qualityTraceabilityGuid){
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType){
 
-        qualityTraceabilityService.upFile(file, qualityTraceabilityGuid);
+        qualityTraceabilityService.upFile(file, qualityTraceabilityGuid, fileType);
     }
 
     // 按照名称模糊查询的功能

@@ -119,20 +119,19 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 上传多个质量追溯文件
     @Override
-    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid) {
+    public void upFiles(MultipartFile[] file, String qualityTraceabilityGuid, String fileType) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
-        attachmentService.upFiles(file, qualityTraceabilityGuid);
+        attachmentService.upFiles(file, qualityTraceabilityGuid, fileType);
         intelliSiteProperties.setFileUrl("/");
     }
 
     // 上传质量追溯文件
     @Override
-    public void upFile(MultipartFile file, String qualityTraceabilityGuid) {
+    public void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType) {
 
         intelliSiteProperties.setFileUrl("/质量追溯/");
-        System.out.println("输出" + intelliSiteProperties.getFilePath());
-        attachmentService.upFile(file, qualityTraceabilityGuid);
+        attachmentService.upFile(file, qualityTraceabilityGuid, fileType);
         intelliSiteProperties.setFileUrl("/");
     }
 

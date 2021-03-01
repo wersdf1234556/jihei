@@ -24,6 +24,9 @@ public class AttachmentQueryParams {
     @Operator(value = "lte", field = "createdAt")
     private Date endTime;
 
+    @Operator(value = "eq", field = "fileType")
+    private String fileType;
+
     public String getGuid() {
         return guid;
     }
@@ -70,5 +73,13 @@ public class AttachmentQueryParams {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 }
