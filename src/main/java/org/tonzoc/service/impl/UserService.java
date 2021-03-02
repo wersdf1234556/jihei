@@ -32,4 +32,16 @@ public class UserService extends BaseService<UserModel> implements IUserService 
         return userModels.get(0);
     }
 
+    public void insertStack(UserModel userModel){
+        if (userModel.getTenderGuid()==null){
+            userModel.setTenderGuid("");
+        }
+        save(userModel);
+    }
+    public void updateStack(UserModel userModel){
+        if (userModel.getTenderGuid()==null){
+            userModel.setTenderGuid("");
+        }
+        update(userModel);
+    }
 }

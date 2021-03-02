@@ -62,7 +62,7 @@ public class UserController extends BaseController {
 
         userModel.setPassword(passwordEncoder.encode(intelliSiteProperties.getDefaultUserPassword()));
 
-        this.userService.save(userModel);
+        this.userService.insertStack(userModel);
 
     }
 
@@ -72,7 +72,7 @@ public class UserController extends BaseController {
         // 不修改密码
         userModel.setPassword(null);
 
-        this.userService.update(userModel);
+        this.userService.updateStack(userModel);
 
     }
 

@@ -9,4 +9,6 @@ public interface IUserService extends IBaseService<UserModel> {
     List<UserModel> listByUser(String guid);
 
     UserModel getByName(String name) throws NotOneResultFoundException;
+    void insertStack(UserModel userModel);
+    void updateStack(UserModel userModel);
 }

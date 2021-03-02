@@ -13,6 +13,9 @@ public class UserQueryParams {
     @Operator(value = "eq", field = "flag")
     private String flag="0";
 
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+
     public UserQueryParams() {
 
     }
@@ -39,5 +42,13 @@ public class UserQueryParams {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }

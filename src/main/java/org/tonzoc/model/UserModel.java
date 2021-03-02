@@ -31,6 +31,12 @@ public class UserModel extends BaseModel {
     private String projectGuid;
     @JoinColumn(value = "name", type = ProjectModel.class, leftColumn = "projectGuid", rightColumn = "guid")
     private String projectName;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName; //标段
+    @Column(value = "accounType")
+    private String accounType;  //账户类型
 
     public UserModel() {
     }
@@ -113,5 +119,28 @@ public class UserModel extends BaseModel {
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getAccounType() {
+        return accounType;
+    }
+
+    public void setAccounType(String accounType) {
+        this.accounType = accounType;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 }
