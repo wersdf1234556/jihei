@@ -16,6 +16,14 @@ public class UnsafeModel extends BaseModel {
     private String parts; // 部位
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "stakeName")
+    private String stakeName; // 桩号名称
+    @Column(value = "riskType")
+    private String riskType; // 风险类型
+    @Column(value = "measures")
+    private String measures; // 防控措施
+    @Column(value = "describe")
+    private String describe; // 风险点简单描述
     @Column(value = "sortId")
     private String sortId;
 
@@ -49,6 +57,38 @@ public class UnsafeModel extends BaseModel {
         this.parts = parts;
     }
 
+    public String getStakeName() {
+        return stakeName;
+    }
+
+    public void setStakeName(String stakeName) {
+        this.stakeName = stakeName;
+    }
+
+    public String getRiskType() {
+        return riskType;
+    }
+
+    public void setRiskType(String riskType) {
+        this.riskType = riskType;
+    }
+
+    public String getMeasures() {
+        return measures;
+    }
+
+    public void setMeasures(String measures) {
+        this.measures = measures;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
     public String getTenderGuid() {
         return tenderGuid;
     }
@@ -80,6 +120,10 @@ public class UnsafeModel extends BaseModel {
                 ", grade='" + grade + '\'' +
                 ", parts='" + parts + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", stakeName='" + stakeName + '\'' +
+                ", riskType='" + riskType + '\'' +
+                ", measures='" + measures + '\'' +
+                ", describe='" + describe + '\'' +
                 ", sortId='" + sortId + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 '}';

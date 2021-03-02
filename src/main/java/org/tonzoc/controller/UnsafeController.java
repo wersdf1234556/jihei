@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.UnsafeQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.UnsafeModel;
 import org.tonzoc.service.IUnsafeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -52,5 +53,11 @@ public class UnsafeController extends BaseController {
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         unsafeService.removeMany(guids);
+    }
+
+    @GetMapping(value = "count")
+    public List<ReturnModel> count(){
+
+        return unsafeService.count();
     }
 }
