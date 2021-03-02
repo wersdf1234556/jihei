@@ -10,6 +10,7 @@ import org.tonzoc.model.AuthorityModel;
 import org.tonzoc.model.RoleAuthorityModel;
 import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IAuthorityService;
+import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.IRoleAuthorityService;
 import org.tonzoc.service.IUserService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -25,6 +26,8 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
 
     @Autowired
     private IRoleAuthorityService roleAuthorityService;
+    @Autowired
+    private IRedisAuthService redisAuthService;
 
     @Cacheable(value = "list_by_user", key = "#userGuid")
     public List<AuthorityModel> listByUser(String userGuid) {
@@ -65,10 +68,14 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
 
         List<AuthorityModel> allAuthorityModels = null;
         if (StringUtils.isEmpty(userGuid)) {
-            Page page = PageHelper.startPage(1, 0, "sortId asc");
-            page.setOrderByOnly(true);
+
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-            sqlQueryParams.add(new SqlQueryParam("flag", "0", "eq"));
+            UserModel userModel = redisAuthService.getCurrentUser();
+            if (userModel.getFlag()==0){
+                sqlQueryParams.add(new SqlQueryParam("flag", "0", "eq"));
+            }
+            Page page = PageHelper.startPage(1, 0, "mainTable.sortId asc");
+            page.setOrderByOnly(true);
             allAuthorityModels = this.list(sqlQueryParams);
         } else {
 
