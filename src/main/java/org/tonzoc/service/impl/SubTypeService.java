@@ -16,8 +16,16 @@ public class SubTypeService extends BaseService<SubTypeModel> implements ISubTyp
 
     // 是否包含
     @Override
-    public Boolean contain(String name) {
-        List<String> list = subTypeMapper.listName();
+    public Boolean containGuid(String guid, String name) {
+        List<String> list = subTypeMapper.listName(guid);
+        if (list.contains(name)) {
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean containName(String name) {
+        List<String> list = subTypeMapper.listName(name);
         if (list.contains(name)) {
             return true;
         }

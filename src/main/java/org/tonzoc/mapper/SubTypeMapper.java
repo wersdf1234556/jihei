@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface SubTypeMapper extends BaseMapper<SubTypeModel> {
 
-    @Select("select name from subTypes")
-    List<String> listName();
+    @Select("select name from subTypes where guid != #{guid}")
+    List<String> listGuid(String guid);
+
+    @Select("select name from subTypes where name != #{name}")
+    List<String> listName(String guid);
 
 }

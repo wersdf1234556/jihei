@@ -37,7 +37,7 @@ public class SubTypeController extends BaseController {
 
     @PostMapping
     public String add(@RequestBody @Valid SubTypeModel subTypeModel) {
-        if (subTypeService.contain(subTypeModel.getName())) {
+        if (subTypeService.containName(subTypeModel.getName())) {
             return "不可重复添加";
         }
         this.subTypeService.save(subTypeModel);
@@ -46,7 +46,7 @@ public class SubTypeController extends BaseController {
 
     @PutMapping(value = "{guid}")
     public String update(@RequestBody @Valid SubTypeModel subTypeModel) {
-        if (subTypeModel.getName() != null && !subTypeModel.getName().equals("") && subTypeService.contain(subTypeModel.getName())) {
+        if (subTypeService.containGuid(subTypeModel.getGuid(), subTypeModel.getName())) {
             return "该名称已存在";
         }
         this.subTypeService.update(subTypeModel);
