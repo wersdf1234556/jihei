@@ -12,6 +12,7 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -92,9 +93,9 @@ public class AttachmentController extends BaseController {
 
     // 预览视频
     @GetMapping(value = "video/{guid}")
-    public void getVideo(HttpServletResponse response, @PathVariable(value = "guid") String guid) {
+    public void getVideo(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "guid") String guid) {
 
-        attachmentService.getVideo(response, guid);
+        attachmentService.getVideo(request, response, guid);
     }
 
     // 预览PDF

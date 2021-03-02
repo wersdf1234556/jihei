@@ -3,6 +3,7 @@ package org.tonzoc.service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.model.AttachmentModel;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -22,7 +23,7 @@ public interface IAttachmentService extends IBaseService<AttachmentModel> {
     byte[] getImage(String attachmentId) throws IOException;
 
     // 视频预览
-    void getVideo(HttpServletResponse response, String attachmentId);
+    void getVideo(HttpServletRequest request, HttpServletResponse response, String attachmentId);
 
     // PDF在线预览
     void PdfPreview(HttpServletResponse response, String guid) throws IOException;

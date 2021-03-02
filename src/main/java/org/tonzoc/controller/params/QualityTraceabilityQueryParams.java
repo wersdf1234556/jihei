@@ -25,6 +25,13 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
 
+    @Operator(value = "like", field = "parts")
+    private String parts;
+
+    @Operator(value = "like", field = "major")
+    private String major;
+
+
     public String getGuid() {
         return guid;
     }
@@ -79,5 +86,21 @@ public class QualityTraceabilityQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getParts() {
+        return parts;
+    }
+
+    public void setParts(String parts) {
+        this.parts = parts;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 }

@@ -21,19 +21,21 @@ public class QualityTraceabilityModel extends BaseModel {
     private Integer sortId;
     @Column(value = "tenderGuid")
     private String tenderGuid;
-    @Column(value = "subTypeGuid")
-    private String subTypeGuid;
+    @Column(value = "name")
+    private String name;
     @Column(value = "typeId")
     private Integer typeId;
     @Column(value = "qrcodeGuid")
     private String qrcodeGuid;
     @Column(value = "createdAt")
     private Date createdAt;
+    @Column(value = "parts")
+    private String parts; // 部位
+    @Column(value = "major")
+    private String major; // 专业
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
-    @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
-    private String subTypeName;  // 附属文件名称
     @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;  // 文件名称
 
@@ -88,14 +90,6 @@ public class QualityTraceabilityModel extends BaseModel {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getSubTypeGuid() {
-        return subTypeGuid;
-    }
-
-    public void setSubTypeGuid(String subTypeGuid) {
-        this.subTypeGuid = subTypeGuid;
-    }
-
     public Integer getTypeId() {
         return typeId;
     }
@@ -120,12 +114,28 @@ public class QualityTraceabilityModel extends BaseModel {
         this.tenderName = tenderName;
     }
 
-    public String getSubTypeName() {
-        return subTypeName;
+    public String getName() {
+        return name;
     }
 
-    public void setSubTypeName(String subTypeName) {
-        this.subTypeName = subTypeName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParts() {
+        return parts;
+    }
+
+    public void setParts(String parts) {
+        this.parts = parts;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public String getTypeName() {
@@ -153,12 +163,13 @@ public class QualityTraceabilityModel extends BaseModel {
                 ", operator='" + operator + '\'' +
                 ", sortId=" + sortId +
                 ", tenderGuid='" + tenderGuid + '\'' +
-                ", subTypeGuid='" + subTypeGuid + '\'' +
+                ", name='" + name + '\'' +
                 ", typeId=" + typeId +
                 ", qrcodeGuid='" + qrcodeGuid + '\'' +
                 ", createdAt=" + createdAt +
+                ", parts='" + parts + '\'' +
+                ", major='" + major + '\'' +
                 ", tenderName='" + tenderName + '\'' +
-                ", subTypeName='" + subTypeName + '\'' +
                 ", typeName='" + typeName + '\'' +
                 '}';
     }

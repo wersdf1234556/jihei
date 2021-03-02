@@ -52,18 +52,11 @@ public class QualityTraceabilityController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
-        Map<String, String> map = this.qrcode(qualityTraceabilityModel.getSubTypeGuid());
+        Map<String, String> map = this.qrcode(qualityTraceabilityModel.getGuid());
         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
-        }
-        if (!"".equals(qualityTraceabilityModel.getSubTypeGuid()) && qualityTraceabilityModel.getSubTypeGuid() != null) {
-            qualityTraceabilityModel.setTypeId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getTypeId());
-        }
-        if (qualityTraceabilityModel.getSubTypeGuid() == null) {
-
-            qualityTraceabilityModel.setSortId(subTypeService.get(qualityTraceabilityModel.getSubTypeGuid()).getSortId());
         }
 
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
@@ -93,9 +86,9 @@ public class QualityTraceabilityController extends BaseController {
 
     // 生成二维码
     @PostMapping(value = "qrcode")
-    public Map<String, String> qrcode(String subTypeGuid){
+    public Map<String, String> qrcode(String guid){
 
-        return qualityTraceabilityService.qrcode(subTypeGuid);
+        return qualityTraceabilityService.qrcode(guid);
     }
 
     // 上传多个质量追溯文件

@@ -11,6 +11,7 @@ import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -34,7 +35,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     public void upFile(MultipartFile file, String qualityTraceabilityGuid, String fileType) {
 
         QualityTraceabilityModel qualityTraceabilityModel = qualityTraceabilityService.get(qualityTraceabilityGuid);
-        String[] str = fileHelper.fileUpload(file, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
+        String[] str = fileHelper.fileUpload(file, qualityTraceabilityModel.getName(), qualityTraceabilityGuid);
 
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setGuid(fileHelper.newGUID());
@@ -54,7 +55,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
             List<AttachmentModel> list = new ArrayList<>();
 
             for (MultipartFile f : file) {
-                String[] str = fileHelper.fileUpload(f, qualityTraceabilityModel.getSubTypeName(), qualityTraceabilityGuid);
+                String[] str = fileHelper.fileUpload(f, qualityTraceabilityModel.getName(), qualityTraceabilityGuid);
 
                 AttachmentModel attachmentModel = new AttachmentModel();
                 attachmentModel.setGuid(fileHelper.newGUID());
@@ -87,11 +88,11 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     }
 
     // 预览视频
-    public void getVideo(HttpServletResponse response, String attachmentId){
+    public void getVideo(HttpServletRequest request, HttpServletResponse response, String attachmentId){
 
         AttachmentModel attachmentsModel = this.get(attachmentId);
         String url = attachmentsModel.getUrl();
-        fileHelper.getVideo(response, url);
+        fileHelper.getVideo(request,response, url);
     }
 
     // 预览PDF

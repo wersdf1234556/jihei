@@ -83,13 +83,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 生成二维码
     @Override
-    public Map<String, String> qrcode(String subTypeGuid) {
+    public Map<String, String> qrcode(String qualityTraceabilityGuid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String address = request.getLocalPort() + ""; // 获取端口号
 
-        String payUrl = intelliSiteProperties.getIp() + address + "/attachment?subTypeGuid =" + subTypeGuid; // 二维码存的内容
+        String payUrl = intelliSiteProperties.getIp() + address + "/attachment?guid =" + qualityTraceabilityGuid; // 二维码存的内容
         String guid = fileHelper.newGUID(); // 二维码名称
 
         try {
