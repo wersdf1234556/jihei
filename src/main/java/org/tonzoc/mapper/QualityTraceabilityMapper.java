@@ -30,4 +30,12 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
             "GROUP BY types.name")
     List<ReturnModel> tenderCount(String tenderGuid);
 
+    // 修改时
+    @Select("select name from qualityTraceabilitys where guid != #{guid}")
+    List<String> listGuid(String guid);
+
+    // 添加时
+    @Select("select name from qualityTraceabilitys where name != #{name}")
+    List<String> listName(String guid);
+
 }

@@ -16,9 +16,6 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "typeId")
     private String typeId;
 
-    @Operator(value = "eq", field = "subTypeGuid")
-    private Integer subTypeGuid;
-
     @Operator(value = "eq", field = "qrcodeGuid")
     private String qrcodeGuid;
 
@@ -62,14 +59,6 @@ public class QualityTraceabilityQueryParams {
 
     public void setTypeId(String typeId) {
         this.typeId = typeId;
-    }
-
-    public Integer getSubTypeGuid() {
-        return subTypeGuid;
-    }
-
-    public void setSubTypeGuid(Integer subTypeGuid) {
-        this.subTypeGuid = subTypeGuid;
     }
 
     public String getQrcodeGuid() {

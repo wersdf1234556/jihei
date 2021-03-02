@@ -38,4 +38,10 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // 标段统计
     List<TenderModel> tenderCount();
+
+    // 修改时是否包含
+    Boolean containGuid(String guid, String name);
+
+    // 添加时是否包含
+    Boolean containName(String name);
 }

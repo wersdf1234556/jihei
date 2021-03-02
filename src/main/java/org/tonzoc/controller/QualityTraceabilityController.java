@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -34,6 +35,9 @@ public class QualityTraceabilityController extends BaseController {
     @Autowired
     private ISubTypeService subTypeService;
 
+    @Autowired
+    private FileHelper fileHelper;
+
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams laboratoryQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -50,9 +54,11 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void add(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
-        Map<String, String> map = this.qrcode(qualityTraceabilityModel.getGuid());
+        String guid = fileHelper.newGUID();
+        qualityTraceabilityModel.setGuid(guid);
+        Map<String, String> map = this.qrcode(guid);
         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
@@ -63,7 +69,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void update(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);
@@ -86,9 +92,10 @@ public class QualityTraceabilityController extends BaseController {
 
     // 生成二维码
     @PostMapping(value = "qrcode")
-    public Map<String, String> qrcode(String guid){
+    public Map<String, String> qrcode(String qualityTraceabilityGuid){
 
-        return qualityTraceabilityService.qrcode(guid);
+        System.out.println("qualityTraceabilityGuid" + qualityTraceabilityGuid);
+        return qualityTraceabilityService.qrcode(qualityTraceabilityGuid);
     }
 
     // 上传多个质量追溯文件

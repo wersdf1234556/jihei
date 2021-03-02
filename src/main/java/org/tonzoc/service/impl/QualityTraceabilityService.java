@@ -100,20 +100,21 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             e.printStackTrace();
         }
 
-        String oldGuid = attachmentMapper.getGuid(guid + ".png", "");
-        if (oldGuid != null) {
-            attachmentService.remove(oldGuid);
-        }
+//        String oldGuid = attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", "");
+//        if (oldGuid != null) {
+//            attachmentService.remove(oldGuid);
+//        }
         AttachmentModel attachmentModel = new AttachmentModel();
         attachmentModel.setGuid(guid);
         attachmentModel.setUrl(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png");
         attachmentModel.setName(guid + ".png");
         attachmentModel.setSortId(0);
         attachmentModel.setQualityTraceabilityGuid("");
+        attachmentModel.setFileType("");
         attachmentService.save(attachmentModel);
 
         Map<String, String> map = new HashMap<>();
-        map.put("attachmentGuid", attachmentMapper.getGuid(intelliSiteProperties.getFilePath() + "/qrcodeImg/" + guid + ".png", ""));
+        map.put("attachmentGuid", attachmentMapper.guid(guid + ".png"));
         return map;
     }
 
@@ -178,5 +179,24 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }
 
         return list1;
+    }
+
+    // 修改时是否包含
+    @Override
+    public Boolean containGuid(String guid, String name) {
+        List<String> list = qualityTraceabilityMapper.listGuid(guid);
+        if (list.contains(name)) {
+            return true;
+        }
+        return false;
+    }
+
+    // 添加时是否包含
+    public Boolean containName(String name) {
+        List<String> list = qualityTraceabilityMapper.listName(name);
+        if (list.contains(name)) {
+            return true;
+        }
+        return false;
     }
 }
