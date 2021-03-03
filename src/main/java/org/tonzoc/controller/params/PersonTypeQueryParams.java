@@ -11,6 +11,8 @@ public class PersonTypeQueryParams {
     private String name;
     @Operator(value = "eq", field = "flag")
     private String flag;
+    @Operator(value = "eq", field = "parentId")
+    private String parentId;
 
 
     public String getGuid() {
@@ -35,5 +37,13 @@ public class PersonTypeQueryParams {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

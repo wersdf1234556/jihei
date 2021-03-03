@@ -83,11 +83,9 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
         }
 
         HashMap<String, AuthorityModel> authorityModelMap = new HashMap<>();
-
         while (allAuthorityModels.size() != 0) {
             int count = allAuthorityModels.size();
             Iterator<AuthorityModel> iterator = allAuthorityModels.iterator();
-
             while (iterator.hasNext()) {
                 AuthorityModel authorityModel = iterator.next();
 

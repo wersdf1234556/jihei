@@ -58,4 +58,9 @@ public class PersonTypeController extends BaseController {
     public void removeMany(String guids) throws Exception {
         personTypeService.removeMany(guids);
     }
+
+    @GetMapping(value = "withLevel")
+    public List<PersonTypeModel> listWithLevel(String parentId) throws Exception {
+        return personTypeService.listWithLevel(parentId);
+    }
 }

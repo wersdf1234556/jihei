@@ -36,6 +36,9 @@ public class UserService extends BaseService<UserModel> implements IUserService 
         if (userModel.getTenderGuid()==null){
             userModel.setTenderGuid("");
         }
+        if (userModel.getProjectGuid()==null){
+            userModel.setProjectGuid("");
+        }
         save(userModel);
     }
     public void updateStack(UserModel userModel){

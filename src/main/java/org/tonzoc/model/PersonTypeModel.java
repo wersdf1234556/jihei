@@ -5,6 +5,8 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.util.List;
+
 @Table(value = "personTypes")
 public class PersonTypeModel extends BaseModel{
     @PrimaryKey
@@ -19,6 +21,9 @@ public class PersonTypeModel extends BaseModel{
     private Integer flag; //0：技术工种 1：管理人员
     @Column(value = "colour")
     private String colour; //颜色
+    @Column(value = "parentId")
+    private String parentId;
+    private List<PersonTypeModel> children;
 
     public String getGuid() {
         return guid;
@@ -60,6 +65,22 @@ public class PersonTypeModel extends BaseModel{
         this.colour = colour;
     }
 
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<PersonTypeModel> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<PersonTypeModel> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString() {
         return "PersonTypeModel{" +
@@ -68,6 +89,8 @@ public class PersonTypeModel extends BaseModel{
                 ", sortId=" + sortId +
                 ", flag=" + flag +
                 ", colour='" + colour + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", children=" + children +
                 '}';
     }
 }
