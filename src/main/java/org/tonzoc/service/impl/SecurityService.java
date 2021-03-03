@@ -156,4 +156,10 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         return list;
     }
+
+    // 安全隐患排查
+    public List<SecurityModel> unsafeSelect() {
+
+        return securityMapper.unsafeSelect();
+    }
 }

@@ -25,6 +25,9 @@ public class SecurityQueryParams {
     @Operator(value = "eq", field = "state")
     private String state;
 
+    @Operator(value = "eq", field = "describe")
+    private String describe;
+
     public String getGuid() {
         return guid;
     }
@@ -79,5 +82,13 @@ public class SecurityQueryParams {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 }

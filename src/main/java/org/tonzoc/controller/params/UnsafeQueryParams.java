@@ -7,14 +7,14 @@ public class UnsafeQueryParams {
     @Operator(value = "eq", field = "guid")
     private Integer guid;
 
-    @Operator(value = "like", field = "grade")
-    private String grade;
-
     @Operator(value = "like", field = "parts")
     private String parts;
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+
+    @Operator(value = "eq", field = "unsafeTypeGuid")
+    private String unsafeTypeGuid;
 
     public Integer getGuid() {
         return guid;
@@ -22,14 +22,6 @@ public class UnsafeQueryParams {
 
     public void setGuid(Integer guid) {
         this.guid = guid;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
     }
 
     public String getParts() {
@@ -47,4 +39,13 @@ public class UnsafeQueryParams {
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
     }
+
+    public String getUnsafeTypeGuid() {
+        return unsafeTypeGuid;
+    }
+
+    public void setUnsafeTypeGuid(String unsafeTypeGuid) {
+        this.unsafeTypeGuid = unsafeTypeGuid;
+    }
+
 }

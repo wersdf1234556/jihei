@@ -10,10 +10,7 @@ import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
-import org.tonzoc.model.AttachmentModel;
-import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.ReturnModel;
-import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.*;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -54,7 +51,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         String guid = fileHelper.newGUID();
         qualityTraceabilityModel.setGuid(guid);
@@ -69,7 +66,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    public void update(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void update(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);

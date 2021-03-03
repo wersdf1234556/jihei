@@ -26,6 +26,8 @@ public class SecurityModel extends BaseModel {
     private Integer sortId;
     @Column(value = "status")
     private String status;
+    @Column(value = "describe")
+    private String describe; // 问题描述
 
     @JoinColumn(value = "name", type = DocumentModel.class, leftColumn = "documentGuid", rightColumn = "guid")
     private String documentName;  // 明细名称
@@ -163,6 +165,14 @@ public class SecurityModel extends BaseModel {
         this.status = status;
     }
 
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
     @Override
     public String toString() {
         return "SecurityModel{" +
@@ -175,6 +185,7 @@ public class SecurityModel extends BaseModel {
                 ", imgAttachmentGuid='" + imgAttachmentGuid + '\'' +
                 ", sortId=" + sortId +
                 ", status='" + status + '\'' +
+                ", describe='" + describe + '\'' +
                 ", documentName='" + documentName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +

@@ -21,6 +21,7 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     // 安全统计
     List<ReturnModel> securityStatics();
 
-    // 安全比例
+    // 安全隐患排查
+    List<SecurityModel> unsafeSelect();
 
 }

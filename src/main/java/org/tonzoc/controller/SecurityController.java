@@ -88,4 +88,11 @@ public class SecurityController extends BaseController {
 
         return securityService.securityStatics();
     }
+
+    // 安全隐患排查
+    @GetMapping(value = "unsafeSelect")
+    public List<SecurityModel> unsafeSelect() {
+
+        return securityService.unsafeSelect();
+    }
 }

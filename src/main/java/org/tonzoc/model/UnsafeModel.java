@@ -10,8 +10,8 @@ public class UnsafeModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "grade")
-    private String grade; // 安全隐患等级
+    @Column(value = "unsafeTypeGuid")
+    private String unsafeTypeGuid; // 安全等级
     @Column(value = "parts")
     private String parts; // 部位
     @Column(value = "tenderGuid")
@@ -29,6 +29,10 @@ public class UnsafeModel extends BaseModel {
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段单位名称
+    @JoinColumn(value = "name", type = UnsafeTypeModel.class, leftColumn = "unsafeTypeGuid", rightColumn = "guid")
+    private String UnsafeTypeName;  // 等级名称
+    @JoinColumn(value = "uname", type = UnsafeTypeModel.class, leftColumn = "unsafeTypeGuid", rightColumn = "guid")
+    private String UnsafeTypeUName;  // 等级另一个名称
 
     public UnsafeModel() {
     }
@@ -41,12 +45,12 @@ public class UnsafeModel extends BaseModel {
         this.guid = guid;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getUnsafeTypeGuid() {
+        return unsafeTypeGuid;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setUnsafeTypeGuid(String unsafeTypeGuid) {
+        this.unsafeTypeGuid = unsafeTypeGuid;
     }
 
     public String getParts() {
@@ -113,11 +117,27 @@ public class UnsafeModel extends BaseModel {
         this.sortId = sortId;
     }
 
+    public String getUnsafeTypeName() {
+        return UnsafeTypeName;
+    }
+
+    public void setUnsafeTypeName(String unsafeTypeName) {
+        UnsafeTypeName = unsafeTypeName;
+    }
+
+    public String getUnsafeTypeUName() {
+        return UnsafeTypeUName;
+    }
+
+    public void setUnsafeTypeUName(String unsafeTypeUName) {
+        UnsafeTypeUName = unsafeTypeUName;
+    }
+
     @Override
     public String toString() {
         return "UnsafeModel{" +
                 "guid='" + guid + '\'' +
-                ", grade='" + grade + '\'' +
+                ", unsafeTypeGuid='" + unsafeTypeGuid + '\'' +
                 ", parts='" + parts + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
                 ", stakeName='" + stakeName + '\'' +
@@ -126,6 +146,8 @@ public class UnsafeModel extends BaseModel {
                 ", describe='" + describe + '\'' +
                 ", sortId='" + sortId + '\'' +
                 ", tenderName='" + tenderName + '\'' +
+                ", UnsafeTypeName='" + UnsafeTypeName + '\'' +
+                ", UnsafeTypeUName='" + UnsafeTypeUName + '\'' +
                 '}';
     }
 }
