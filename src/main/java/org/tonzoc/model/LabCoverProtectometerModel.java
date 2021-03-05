@@ -32,7 +32,7 @@ public class LabCoverProtectometerModel extends BaseModel {
     @Column(value = "numberOfBars")
     private Integer numberOfBars;
     @Column(value = "averageThickness")
-    private Integer averageThickness;
+    private String averageThickness;
     @Column(value = "minThickness")
     private Integer minThickness;
     @Column(value = "maxThickness")
@@ -71,7 +71,7 @@ public class LabCoverProtectometerModel extends BaseModel {
     public LabCoverProtectometerModel() {
     }
 
-    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, Integer averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethods, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingResults, String sectionId, String sectionName) {
+    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, String averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethods, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingResults, String sectionId, String sectionName) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.componentName = componentName;
@@ -182,7 +182,7 @@ public class LabCoverProtectometerModel extends BaseModel {
         return numberOfBars;
     }
 
-    public Integer getAverageThickness() {
+    public String getAverageThickness() {
         return averageThickness;
     }
 
@@ -302,7 +302,7 @@ public class LabCoverProtectometerModel extends BaseModel {
     }
 
     @JsonProperty(value = "average_thickness")
-    public void setAverageThickness(Integer averageThickness) {
+    public void setAverageThickness(String averageThickness) {
         this.averageThickness = averageThickness;
     }
 
