@@ -27,14 +27,15 @@ public class QualityTraceabilityModel extends BaseModel {
     private Integer typeId;
     @Column(value = "qrcodeGuid")
     private String qrcodeGuid;
-    @Column(value = "createdAt")
-    private Date createdAt;
     @Column(value = "parts")
     private String parts; // 部位
     @Column(value = "major")
     private String major; // 专业
     @Column(value = "status")
     private String status; // 状态false 不展示 true 展示
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private Date createdAt;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称

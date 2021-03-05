@@ -62,6 +62,7 @@ public class QualityTraceabilityController extends BaseController {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
         }
 
+        qualityTraceabilityModel.setStatus("false");
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
     }
 
