@@ -28,6 +28,9 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "like", field = "major")
     private String major;
 
+    @Operator(value = "eq", field = "status")
+    private String status;
+
 
     public String getGuid() {
         return guid;
@@ -91,5 +94,13 @@ public class QualityTraceabilityQueryParams {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

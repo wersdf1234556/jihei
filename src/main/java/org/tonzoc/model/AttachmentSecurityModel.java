@@ -3,26 +3,25 @@ package org.tonzoc.model;
 import org.tonzoc.annotation.*;
 
 // 安全和文件关联表
-@Table(value = "attachmentSecurity")
+@Table(value = "attachmentSecuritys")
 public class AttachmentSecurityModel extends BaseModel {
 
     @NotInsertColumn
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
+    @Column(value = "name")
+    private String name;
+    @Column(value = "url")
+    private String url; // 路径
+    @Column(value = "fileType")
+    private Integer fileType; // 文件类型
     @Column(value = "securityGuid")
     private String securityGuid;
-    @Column(value = "inspectImgAttachment")
-    private String inspectImgAttachment; // 检查图片
-    @Column(value = "changeImgAttachment")
-    private String changeImgAttachment; // 修正图片
+    @Column(value = "securityChangGuid")
+    private String securityChangGuid;
     @Column(value = "sortId")
     private Integer sortId;
-
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "inspectImgAttachment", rightColumn = "guid")
-    private String inspectImgAttachmentUrl; //检查图片的路径
-    @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "changeImgAttachment", rightColumn = "guid")
-    private String changeImgAttachmentUrl; //修正图片的路径
 
     public AttachmentSecurityModel() {
     }
@@ -43,20 +42,36 @@ public class AttachmentSecurityModel extends BaseModel {
         this.securityGuid = securityGuid;
     }
 
-    public String getInspectImgAttachment() {
-        return inspectImgAttachment;
+    public String getName() {
+        return name;
     }
 
-    public void setInspectImgAttachment(String inspectImgAttachment) {
-        this.inspectImgAttachment = inspectImgAttachment;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getChangeImgAttachment() {
-        return changeImgAttachment;
+    public String getUrl() {
+        return url;
     }
 
-    public void setChangeImgAttachment(String changeImgAttachment) {
-        this.changeImgAttachment = changeImgAttachment;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Integer getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(Integer fileType) {
+        this.fileType = fileType;
+    }
+
+    public String getSecurityChangGuid() {
+        return securityChangGuid;
+    }
+
+    public void setSecurityChangGuid(String securityChangGuid) {
+        this.securityChangGuid = securityChangGuid;
     }
 
     public Integer getSortId() {
@@ -67,19 +82,4 @@ public class AttachmentSecurityModel extends BaseModel {
         this.sortId = sortId;
     }
 
-    public String getInspectImgAttachmentUrl() {
-        return inspectImgAttachmentUrl;
-    }
-
-    public void setInspectImgAttachmentUrl(String inspectImgAttachmentUrl) {
-        this.inspectImgAttachmentUrl = inspectImgAttachmentUrl;
-    }
-
-    public String getChangeImgAttachmentUrl() {
-        return changeImgAttachmentUrl;
-    }
-
-    public void setChangeImgAttachmentUrl(String changeImgAttachmentUrl) {
-        this.changeImgAttachmentUrl = changeImgAttachmentUrl;
-    }
 }

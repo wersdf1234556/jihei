@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.common.FileHelper;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -15,6 +17,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -38,15 +41,23 @@ public class SecurityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SecurityModel securityModel) {
+    public void add(@RequestBody @Valid SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
-        securityModel.setStatus("start");
+        if (!"".equals(securityModel.getCreateDate()) && securityModel.getCreateDate() != null) {
+            securityModel.setCreateTime(TimeHelper.stringToDate(securityModel.getCreateDate()));
+        }
+        securityModel.setStatus("0");
+
         this.securityService.save(securityModel);
+        securityService.upFiles(file, securityModel.getGuid(), "", fileType);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid SecurityModel securityModel) {
+    public void update(@RequestBody @Valid SecurityModel securityModel) throws ParseException {
 
+        if (!"".equals(securityModel.getCreateDate()) && securityModel.getCreateDate() != null) {
+            securityModel = securityService.updateTime(securityModel);
+        }
         this.securityService.update(securityModel);
     }
 
@@ -61,26 +72,26 @@ public class SecurityController extends BaseController {
         this.securityService.removeMany(guids);
     }
 
-    // 判断当前时间是否在这个时间内
-    @GetMapping(value = "isTimeInside")
-    public String isTimeInside(String documentGuid) {
-
-        return securityService.isTimeInside(documentGuid);
-    }
-
     // 上传安全文件
     @PostMapping(value = "upFile")
-    public Map<String, String> upFile(MultipartFile file, Integer judge) {
+    public Map<String, String> upFile(MultipartFile file, String securityGuid, String securityChangGuid, Integer fileType) {
 
-        return securityService.upFile(file, judge);
+        return securityService.upFile(file, securityGuid, securityChangGuid, fileType);
     }
 
-    // 添加多条并修改分数
+    // 安全上传多文件
+    @PostMapping(value = "/upFiles")
+    public void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType) {
+
+        securityService.upFiles(file, securityGuid, securityChangGuid, fileType);
+    }
+
+    /*// 添加多条并修改分数
     @PostMapping(value = "adds")
     public void adds(List<SecurityModel> list) {
 
         securityService.adds(list);
-    }
+    }*/
 
     // 安全统计
     @GetMapping(value = "securityStatics")

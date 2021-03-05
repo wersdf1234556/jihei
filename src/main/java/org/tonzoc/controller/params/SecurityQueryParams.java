@@ -6,27 +6,18 @@ public class SecurityQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-
-    @Operator(value = "eq", field = "currentTime")
-    private String currentDate;
-
-    @Operator(value = "eq", field = "personGuid")
-    private String personGuid;
-
+    @Operator(value = "like", field = "guid")
+    private String describe;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
-
-    @Operator(value = "eq", field = "imgAttachmentGuid")
-    private String imgAttachmentGuid;
-
-    @Operator(value = "eq", field = "pdfAttachmentGuid")
-    private String pdfAttachmentGuid;
-
-    @Operator(value = "eq", field = "state")
-    private String state;
-
-    @Operator(value = "eq", field = "describe")
-    private String describe;
+    @Operator(value = "eq", field = "securityRuleGuid")
+    private String securityRuleGuid;
+    @Operator(value = "eq", field = "createPersonGuid")
+    private String createPersonGuid;
+    @Operator(value = "eq", field = "ccPersonGuid")
+    private String ccPersonGuid;
+    @Operator(value = "eq", field = "status")
+    private String status;
 
     public String getGuid() {
         return guid;
@@ -36,20 +27,12 @@ public class SecurityQueryParams {
         this.guid = guid;
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public String getDescribe() {
+        return describe;
     }
 
-    public void setCurrentDate(String currentDate) {
-        this.currentDate = currentDate;
-    }
-
-    public String getPersonGuid() {
-        return personGuid;
-    }
-
-    public void setPersonGuid(String personGuid) {
-        this.personGuid = personGuid;
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 
     public String getTenderGuid() {
@@ -60,35 +43,35 @@ public class SecurityQueryParams {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getImgAttachmentGuid() {
-        return imgAttachmentGuid;
+    public String getSecurityRuleGuid() {
+        return securityRuleGuid;
     }
 
-    public void setImgAttachmentGuid(String imgAttachmentGuid) {
-        this.imgAttachmentGuid = imgAttachmentGuid;
+    public void setSecurityRuleGuid(String securityRuleGuid) {
+        this.securityRuleGuid = securityRuleGuid;
     }
 
-    public String getPdfAttachmentGuid() {
-        return pdfAttachmentGuid;
+    public String getCreatePersonGuid() {
+        return createPersonGuid;
     }
 
-    public void setPdfAttachmentGuid(String pdfAttachmentGuid) {
-        this.pdfAttachmentGuid = pdfAttachmentGuid;
+    public void setCreatePersonGuid(String createPersonGuid) {
+        this.createPersonGuid = createPersonGuid;
     }
 
-    public String getState() {
-        return state;
+    public String getCcPersonGuid() {
+        return ccPersonGuid;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setCcPersonGuid(String ccPersonGuid) {
+        this.ccPersonGuid = ccPersonGuid;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -1,20 +1,31 @@
 package org.tonzoc.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.tonzoc.model.SecurityModel;
-import org.tonzoc.model.SecurityRuleModel;
 
+import java.util.Date;
 import java.util.List;
-
 
 public interface SecurityMapper extends BaseMapper<SecurityModel> {
 
-    @Select("select sum(score) from securitys where documentGuid = #{documentGuid} and tenderGuid = #{tenderGuid}")
-    Integer score(String documentGuid, String tenderGuid);
+//    @Select("select sum(score) from securitys where documentGuid = #{documentGuid} and tenderGuid = #{tenderGuid}")
+//    Integer score(String documentGuid, String tenderGuid);
 
+    // 处理时间字段
+    @Update("update securitys set createTime = #{createTime} where guid = #{guid}")
+    void updateTime(@Param("createTime")Date createTime, @Param("guid") String guid);
+
+    // 修改安全检查表的状态
+    @Update("update securitys set status = #{status} where guid = #{guid}")
+    void updateStatus(@Param("status")String status, @Param("guid")String guid);
+
+    // 查询总数
     @Select("select count(guid) from securitys")
     Integer count();
 
+    // 按照状态查数量
     @Select("select count(guid) from securitys where status = #{statue}")
     Integer countStatus(String status);
 

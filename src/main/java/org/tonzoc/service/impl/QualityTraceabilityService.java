@@ -70,15 +70,15 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 处理时间
     @Override
-    public QualityTraceabilityModel updateTime(QualityTraceabilityModel mapInformationModel) throws ParseException {
+    public QualityTraceabilityModel updateTime(QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
-        if (!mapInformationModel.getCurrentDate().equals("") && mapInformationModel.getCurrentDate() != null) {
+        if (!qualityTraceabilityModel.getCurrentDate().equals("") && qualityTraceabilityModel.getCurrentDate() != null) {
 
-            qualityTraceabilityMapper.updateTime(TimeHelper.stringToDate(mapInformationModel.getCurrentDate()), mapInformationModel.getGuid());
+            qualityTraceabilityMapper.updateTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()), qualityTraceabilityModel.getGuid());
         }
-        mapInformationModel.setSortId(0);
-        mapInformationModel.setCurrentDate("");
-        return mapInformationModel;
+        qualityTraceabilityModel.setSortId(0);
+        qualityTraceabilityModel.setCurrentDate("");
+        return qualityTraceabilityModel;
     }
 
     // 生成二维码

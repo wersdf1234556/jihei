@@ -33,6 +33,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String parts; // 部位
     @Column(value = "major")
     private String major; // 专业
+    @Column(value = "status")
+    private String status; // 状态false 不展示 true 展示
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -154,6 +156,14 @@ public class QualityTraceabilityModel extends BaseModel {
         this.createdAt = createdAt;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "QualityTraceabilityModel{" +
@@ -169,6 +179,7 @@ public class QualityTraceabilityModel extends BaseModel {
                 ", createdAt=" + createdAt +
                 ", parts='" + parts + '\'' +
                 ", major='" + major + '\'' +
+                ", status='" + status + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 ", typeName='" + typeName + '\'' +
                 '}';

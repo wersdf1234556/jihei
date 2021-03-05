@@ -58,11 +58,11 @@ public class FileHelper {
 
         if (dest.exists()) { // 如果原先有相同文件，则删除
             dest.delete();
-            // 删除这个表中关联的这条记录
+            /*// 删除这个表中关联的这条记录
             String guid = attachmentMapper.getGuid(url, qualityTraceabilityGuid);
             if (!"".equals(guid) && guid != null) {
                 attachmentService.remove(guid);
-            }
+            }*/
         }
         if (!dest.getParentFile().exists()) { // 判断文件父目录是否存在
             dest.getParentFile().mkdirs();

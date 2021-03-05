@@ -6,14 +6,17 @@ public class AttachmentSecurityQueryParams  {
 
     @Operator(value = "eq",field = "guid")
     private String guid;
+    @Operator(value = "like",field = "guid")
+    private String name;
+    @Operator(value = "eq",field = "fileType")
+    private Integer fileType;
     @Operator(value = "eq",field = "securityGuid")
     private String securityGuid;
-    @Operator(value = "eq",field = "inspectImgAttachment")
-    private String inspectImgAttachment;
-    @Operator(value = "eq",field = "changeImgAttachment")
-    private String changeImgAttachment;
+    @Operator(value = "eq",field = "securityChangGuid")
+    private String securityChangGuid;
     @Operator(value = "eq",field = "sortId")
     private Integer sortId;
+
 
     public String getGuid() {
         return guid;
@@ -31,20 +34,28 @@ public class AttachmentSecurityQueryParams  {
         this.securityGuid = securityGuid;
     }
 
-    public String getInspectImgAttachment() {
-        return inspectImgAttachment;
+    public String getName() {
+        return name;
     }
 
-    public void setInspectImgAttachment(String inspectImgAttachment) {
-        this.inspectImgAttachment = inspectImgAttachment;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getChangeImgAttachment() {
-        return changeImgAttachment;
+    public Integer getFileType() {
+        return fileType;
     }
 
-    public void setChangeImgAttachment(String changeImgAttachment) {
-        this.changeImgAttachment = changeImgAttachment;
+    public void setFileType(Integer fileType) {
+        this.fileType = fileType;
+    }
+
+    public String getSecurityChangGuid() {
+        return securityChangGuid;
+    }
+
+    public void setSecurityChangGuid(String securityChangGuid) {
+        this.securityChangGuid = securityChangGuid;
     }
 
     public Integer getSortId() {
