@@ -1,10 +1,8 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 // 项目表
@@ -16,17 +14,58 @@ public class ProjectModel extends BaseModel {
     @Column(value = "guid")
     private String guid;
     @Column(value = "name")
-    private String name;
+    private String name; // 项目名称
     @Column(value = "sortId")
     private Integer sortId;
     @Column(value = "lng")
-    private String lng;
+    private String lng; // 经度
     @Column(value = "lat")
-    private String lat;
+    private String lat; // 纬度
     @Column(value = "alias")
-    private String alias;
+    private String alias; // 别名
     @Column(value = "value")
-    private Integer value;
+    private Integer value; //缩放等级
+    @Column(value = "startDate")
+    private String startDate; //开工日期
+    @Column(value = "completeDate")
+    private String completeDate; //交工日期
+    @Column(value = "tenderLength")
+    private String tenderLength; // 建设规模
+    @Column(value = "position")
+    private String position; // 地理位置
+    @Column(value = "bluePrint")
+    private String bluePrint; // 平面图
+    @Column(value = "tenderNum")
+    private String tenderNum; //标段划分
+    @Column(value = "isImportant")
+    private Integer isImportant; // 1是 0否
+    @Column(value = "winningAmount")
+    private BigDecimal winningAmount; //批复总投资额
+    @Column(value = "completeAmount")
+    private BigDecimal completeAmount; // 完成投资额
+    @Column(value = "completePercent")
+    private BigDecimal completePercent; // 完成比例
+    @Column(value = "quantity")
+    private String quantity; // 主要工作量
+    @Column(value = "constructionProgress")
+    private String constructionProgress; // 进度情况
+    @Column(value = "industryCategoryGuid")
+    private String industryCategoryGuid; // 行业类别
+    @Column(value = "managementPowerGuid")
+    private String managementPowerGuid; // 管理权属
+    @Column(value = "buildLevelGuid")
+    private String buildLevelGuid; // 等级
+    @Column(value = "projectStateGuid")
+    private String projectStateGuid; // 项目状态
+
+    @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
+    private String industryCategoryName; //行业类别名称
+    @JoinColumn(value = "name", type = ManagementPowerModel.class, leftColumn = "managementPowerGuid", rightColumn = "guid")
+    private String managementPowerName; //管理权属名称
+    @JoinColumn(value = "name", type = BuildLevelModel.class, leftColumn = "buildLevelGuid", rightColumn = "guid")
+    private String buildLevelName; //等级名称
+    @JoinColumn(value = "name", type = ProjectStateModel.class, leftColumn = "projectStateGuid", rightColumn = "guid")
+    private String projectStateName; //项目状态名称
 
     public ProjectModel() {
     }
@@ -85,5 +124,198 @@ public class ProjectModel extends BaseModel {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getCompleteDate() {
+        return completeDate;
+    }
+
+    public void setCompleteDate(String completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    public String getTenderLength() {
+        return tenderLength;
+    }
+
+    public void setTenderLength(String tenderLength) {
+        this.tenderLength = tenderLength;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getBluePrint() {
+        return bluePrint;
+    }
+
+    public void setBluePrint(String bluePrint) {
+        this.bluePrint = bluePrint;
+    }
+
+    public String getTenderNum() {
+        return tenderNum;
+    }
+
+    public void setTenderNum(String tenderNum) {
+        this.tenderNum = tenderNum;
+    }
+
+    public Integer getIsImportant() {
+        return isImportant;
+    }
+
+    public void setIsImportant(Integer isImportant) {
+        this.isImportant = isImportant;
+    }
+
+    public BigDecimal getWinningAmount() {
+        return winningAmount;
+    }
+
+    public void setWinningAmount(BigDecimal winningAmount) {
+        this.winningAmount = winningAmount;
+    }
+
+    public BigDecimal getCompleteAmount() {
+        return completeAmount;
+    }
+
+    public void setCompleteAmount(BigDecimal completeAmount) {
+        this.completeAmount = completeAmount;
+    }
+
+    public BigDecimal getCompletePercent() {
+        return completePercent;
+    }
+
+    public void setCompletePercent(BigDecimal completePercent) {
+        this.completePercent = completePercent;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getConstructionProgress() {
+        return constructionProgress;
+    }
+
+    public void setConstructionProgress(String constructionProgress) {
+        this.constructionProgress = constructionProgress;
+    }
+
+    public String getIndustryCategoryGuid() {
+        return industryCategoryGuid;
+    }
+
+    public void setIndustryCategoryGuid(String industryCategoryGuid) {
+        this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getManagementPowerGuid() {
+        return managementPowerGuid;
+    }
+
+    public void setManagementPowerGuid(String managementPowerGuid) {
+        this.managementPowerGuid = managementPowerGuid;
+    }
+
+    public String getBuildLevelGuid() {
+        return buildLevelGuid;
+    }
+
+    public void setBuildLevelGuid(String buildLevelGuid) {
+        this.buildLevelGuid = buildLevelGuid;
+    }
+
+    public String getProjectStateGuid() {
+        return projectStateGuid;
+    }
+
+    public void setProjectStateGuid(String projectStateGuid) {
+        this.projectStateGuid = projectStateGuid;
+    }
+
+    public String getIndustryCategoryName() {
+        return industryCategoryName;
+    }
+
+    public void setIndustryCategoryName(String industryCategoryName) {
+        this.industryCategoryName = industryCategoryName;
+    }
+
+    public String getManagementPowerName() {
+        return managementPowerName;
+    }
+
+    public void setManagementPowerName(String managementPowerName) {
+        this.managementPowerName = managementPowerName;
+    }
+
+    public String getBuildLevelName() {
+        return buildLevelName;
+    }
+
+    public void setBuildLevelName(String buildLevelName) {
+        this.buildLevelName = buildLevelName;
+    }
+
+    public String getProjectStateName() {
+        return projectStateName;
+    }
+
+    public void setProjectStateName(String projectStateName) {
+        this.projectStateName = projectStateName;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", sortId=" + sortId +
+                ", lng='" + lng + '\'' +
+                ", lat='" + lat + '\'' +
+                ", alias='" + alias + '\'' +
+                ", value=" + value +
+                ", startDate='" + startDate + '\'' +
+                ", completeDate='" + completeDate + '\'' +
+                ", tenderLength='" + tenderLength + '\'' +
+                ", position='" + position + '\'' +
+                ", bluePrint='" + bluePrint + '\'' +
+                ", tenderNum='" + tenderNum + '\'' +
+                ", isImportant=" + isImportant +
+                ", winningAmount=" + winningAmount +
+                ", completeAmount=" + completeAmount +
+                ", completePercent=" + completePercent +
+                ", quantity='" + quantity + '\'' +
+                ", constructionProgress='" + constructionProgress + '\'' +
+                ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
+                ", managementPowerGuid='" + managementPowerGuid + '\'' +
+                ", buildLevelGuid='" + buildLevelGuid + '\'' +
+                ", projectStateGuid='" + projectStateGuid + '\'' +
+                ", industryCategoryName='" + industryCategoryName + '\'' +
+                ", managementPowerName='" + managementPowerName + '\'' +
+                ", buildLevelName='" + buildLevelName + '\'' +
+                ", projectStateName='" + projectStateName + '\'' +
+                '}';
     }
 }
