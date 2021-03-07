@@ -156,7 +156,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         String allNextTenderGuids=null;
         List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
         if(tenderGuids.size()!=0) {
-            allNextTenderGuids=tenderGuids.toString();
+            allNextTenderGuids=String.join(",",tenderGuids);
         }
         return allNextTenderGuids;
     }

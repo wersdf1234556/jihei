@@ -44,23 +44,26 @@ public class SqlHelper {
                     List<String> list = new ArrayList();
                     StringBuffer resultBuffer = new StringBuffer();
                     String bondNo=null;
-                    if (sqlQueryParam.getQueryValue().contains(",")){
-                        list = Arrays.asList(org.apache.commons.lang.StringUtils.split(sqlQueryParam.getQueryValue(),","));
-                        for (int m=0;m<list.size();m++){
-                            System.out.println(list.get(m));
-                            bondNo="mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + list.get(m) + "'";
-                            if (m == 0) {
-                                //只有一个值的时候输出
-                                resultBuffer.append(bondNo);
-                            }else{
-                                //有多个值的时候or分割
-                                resultBuffer.append(" or " + bondNo);
+                    if (!sqlQueryParam.getQueryValue().contains("*")){
+                        if (sqlQueryParam.getQueryValue().contains(",")){
+                            list = Arrays.asList(org.apache.commons.lang.StringUtils.split(sqlQueryParam.getQueryValue(),","));
+                            for (int m=0;m<list.size();m++){
+                                System.out.println(list.get(m));
+                                bondNo="mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + list.get(m) + "'";
+                                if (m == 0) {
+                                    //只有一个值的时候输出
+                                    resultBuffer.append(bondNo);
+                                }else{
+                                    //有多个值的时候or分割
+                                    resultBuffer.append(" or " + bondNo);
+                                }
                             }
+                        }else {
+                            resultBuffer.append("mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + sqlQueryParam.getQueryValue() + "'");
                         }
-                    }else {
-                        resultBuffer.append("mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + sqlQueryParam.getQueryValue() + "'");
+                        sql.WHERE(resultBuffer.toString());
                     }
-                    sql.WHERE(resultBuffer.toString());
+
                     break;
                 default:
                     throw new QueryParamNotSupportedException(sqlQueryParam.getOperator() + "操作符不受支持！");
