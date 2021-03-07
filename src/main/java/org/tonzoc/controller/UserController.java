@@ -12,6 +12,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.RoleModel;
+import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.IUserService;
@@ -127,5 +128,11 @@ public class UserController extends BaseController {
         userModel.setPassword(passwordEncoder.encode(intelliSiteProperties.getDefaultUserPassword()));
         userService.update(userModel);
 
+    }
+
+    //查询管理标段信息list
+    @GetMapping(value = "listTendersByUserId")
+    public List<TenderModel> listTendersByUserId(String userGuid) throws Exception{
+        return userService.listTendersByUserId(userGuid);
     }
 }

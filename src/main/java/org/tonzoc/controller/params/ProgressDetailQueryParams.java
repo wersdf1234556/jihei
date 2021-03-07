@@ -8,7 +8,7 @@ public class ProgressDetailQueryParams {
     private String guid;
     @Operator(value = "eq", field = "progressNameGuid")
     private String progressNameGuid;
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "date")
     private String date;

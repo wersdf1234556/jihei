@@ -10,7 +10,7 @@ public class AerialPhotographyQueryParams {
     @Operator(value = "like", field = "month")
     private String month;
 
-    @Operator(value = "like", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     public AerialPhotographyQueryParams() {

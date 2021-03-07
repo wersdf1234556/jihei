@@ -10,7 +10,7 @@ public class PersonTenderQueryParams {
     @Operator(value = "eq", field = "personGuid")
     private String personGuid;
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     public String getGuid() {

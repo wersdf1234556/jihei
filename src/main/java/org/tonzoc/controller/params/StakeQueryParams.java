@@ -4,7 +4,7 @@ import org.tonzoc.annotation.Operator;
 
 public class StakeQueryParams {
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     public StakeQueryParams() {

@@ -17,6 +17,8 @@ public class RoleModel extends BaseModel {
     private String name;
     @Column(value = "flag")
     private Integer flag;
+    @Column(value = "sign")
+    private Integer sign;//身份标识0：标段 1：监理/指挥部 2：管理员
 
     private List<AuthorityModel> authorityModels;
 
@@ -53,6 +55,14 @@ public class RoleModel extends BaseModel {
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    public Integer getSign() {
+        return sign;
+    }
+
+    public void setSign(Integer sign) {
+        this.sign = sign;
     }
 
     @Override

@@ -1,24 +1,20 @@
 package org.tonzoc.service.impl;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.ProgressDetailMapper;
-import org.tonzoc.model.ProgressDetailModel;
-import org.tonzoc.model.ProgressNameModel;
-import org.tonzoc.model.ProgressTotalDataModel;
+import org.tonzoc.mapper.UserMapper;
+import org.tonzoc.model.*;
 import org.tonzoc.model.support.ProgressStatModel;
-import org.tonzoc.service.IProgressDetailService;
-import org.tonzoc.service.IProgressNameService;
-import org.tonzoc.service.IProgressTotalDataService;
+import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("progressDetailService")
@@ -29,6 +25,12 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     private ProgressDetailMapper progressDetailMapper;
     @Autowired
     private IProgressTotalDataService progressTotalDataService;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private IRedisAuthService redisAuthService;
 
 
     public List<ProgressDetailModel> listByTender(String tenderGuid,String date,String progressNameGuid){
@@ -129,6 +131,62 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
             list.add(progressStatModel);
         }
         return list;
+
+    }
+    public void insertStack(ProgressDetailModel progressDetailModel){
+        progressDetailModel.setApprovalTime("");
+        progressDetailModel.setCurrentTenderGuid(progressDetailModel.getTenderGuid());
+        progressDetailModel.setStatus("unSubmit");
+        save(progressDetailModel);
+    }
+
+    public void updateStack(ProgressDetailModel progressDetailModel) throws Exception {
+        UserModel userModel = redisAuthService.getCurrentUser();
+        if (userModel.getTenderGuid().equals(progressDetailModel.getTenderGuid())&&!progressDetailModel.getStatus().equals("unSubmit")){
+            throw new NotMatchException("该数据已被本标段，无法修改");
+        }
+        if (!userModel.getTenderGuid().equals(progressDetailModel.getTenderGuid())&&progressDetailModel.getStatus().equals("unSubmit")){
+            throw new NotMatchException("该数据未被提交，无法修改");
+        }
+        update(progressDetailModel);
+    }
+
+    //查询上级标段
+    public String getNextTender(String tenderGuid){
+        String allNextTenderGuids=null;
+        List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
+        if(tenderGuids.size()!=0) {
+            allNextTenderGuids=tenderGuids.toString();
+        }
+        return allNextTenderGuids;
+    }
+
+    public void approval(String progressGuid){
+        /**
+         * create by: fang
+         * description:审批
+         * create time: 15:50 2021-3-5
+         * 
+          * @Param: progressGuid
+         * @return void
+         */
+        ProgressDetailModel progressDetailModel = get(progressGuid);
+        String nextTenderGuids = getNextTender(progressDetailModel.getTenderGuid());
+        if (!nextTenderGuids.equals("")){
+            //修改该条状态为已提交
+            progressDetailModel.setStatus("submitted");
+            progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
+        }else {
+            //修改该条状态为已结束
+            progressDetailModel.setStatus("finish");
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        progressDetailModel.setApprovalTime(df.format(new Date()));
+        update(progressDetailModel);
+        //根据管理标段查上级
+//        List<UserModel> userModels = userMapper.listByTenderManage(1,progressDetailModel.getTenderGuid());
+
 
     }
 }

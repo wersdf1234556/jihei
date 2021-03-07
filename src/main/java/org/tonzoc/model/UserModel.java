@@ -37,7 +37,8 @@ public class UserModel extends BaseModel {
     private String tenderName; //标段
     @Column(value = "accounType")
     private String accounType;  //账户类型
-
+    @Column(value = "tenderManage")
+    private String tenderManage;  //管理标段
     public UserModel() {
     }
 
@@ -142,5 +143,13 @@ public class UserModel extends BaseModel {
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

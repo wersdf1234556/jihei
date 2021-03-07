@@ -13,7 +13,7 @@ public class UserQueryParams {
     @Operator(value = "eq", field = "flag")
     private String flag="0";
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     public UserQueryParams() {

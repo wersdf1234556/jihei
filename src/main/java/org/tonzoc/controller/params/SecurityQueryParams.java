@@ -8,7 +8,7 @@ public class SecurityQueryParams {
     private String guid;
     @Operator(value = "like", field = "guid")
     private String describe;
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "securityRuleGuid")
     private String securityRuleGuid;

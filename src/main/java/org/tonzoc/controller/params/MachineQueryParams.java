@@ -12,7 +12,7 @@ public class MachineQueryParams {
     private String machineTypeGuid;
     @Operator(value = "eq", field = "machineCategoryGuid")
     private String machineCategoryGuid;
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     public String getGuid() {

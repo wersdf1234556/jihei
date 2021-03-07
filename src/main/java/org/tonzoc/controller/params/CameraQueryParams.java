@@ -9,7 +9,7 @@ public class CameraQueryParams {
     private String name;
     @Operator(value = "like", field = "deviceSerial")
     private String deviceSerial;
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "typeGuid")
     private String typeGuid;

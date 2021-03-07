@@ -22,6 +22,14 @@ public class ProgressDetailModel extends BaseModel{
     private String progressName; //进度名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
+    @Column(value = "status")
+    private String status; //审批状态
+    @Column(value = "currentTenderGuid")
+    private String currentTenderGuid; //当前审批标段guid
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
+    private String currentTenderName; //当前审批标段name
+    @Column(value = "approvalTime")
+    private String approvalTime; //审批时间
 
     public String getGuid() {
         return guid;
@@ -78,4 +86,37 @@ public class ProgressDetailModel extends BaseModel{
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
+    }
+
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
+    }
+
+    public String getCurrentTenderName() {
+        return currentTenderName;
+    }
+
+    public void setCurrentTenderName(String currentTenderName) {
+        this.currentTenderName = currentTenderName;
+    }
+
+    public String getApprovalTime() {
+        return approvalTime;
+    }
+
+    public void setApprovalTime(String approvalTime) {
+        this.approvalTime = approvalTime;
+    }
+
 }

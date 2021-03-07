@@ -10,7 +10,7 @@ public class UnsafeQueryParams {
     @Operator(value = "like", field = "parts")
     private String parts;
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     @Operator(value = "eq", field = "unsafeTypeGuid")

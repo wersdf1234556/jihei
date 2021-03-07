@@ -10,7 +10,7 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
 
     @Operator(value = "eq", field = "typeId")

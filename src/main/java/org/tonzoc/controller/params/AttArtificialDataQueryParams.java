@@ -7,7 +7,7 @@ public class AttArtificialDataQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "eq", field = "tenderGuid")
+    @Operator(value = "or", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;

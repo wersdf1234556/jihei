@@ -45,8 +45,8 @@ public class ProgressDetailController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid ProgressDetailModel progressDetailModel) {
-        this.progressDetailService.update(progressDetailModel);
+    public void update(@RequestBody @Valid ProgressDetailModel progressDetailModel) throws Exception {
+        this.progressDetailService.updateStack(progressDetailModel);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -55,7 +55,7 @@ public class ProgressDetailController extends BaseController {
     }
 
     @PostMapping(value = "removeMany")
-    public void removeMany(String  guids) throws Exception {
+    public void removeMany(String guids) throws Exception {
         progressDetailService.removeMany(guids);
     }
 
@@ -64,4 +64,8 @@ public class ProgressDetailController extends BaseController {
         return progressDetailService.statCurrentMonth(tender,date);
     }
 
+    @GetMapping(value = "getNextTender")
+    public String getNextTender(String tenderGuid){
+        return progressDetailService.getNextTender(tenderGuid);
+    }
 }
