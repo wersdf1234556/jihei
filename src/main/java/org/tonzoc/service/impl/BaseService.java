@@ -40,7 +40,7 @@ public abstract class BaseService<Entity> implements IBaseService<Entity> {
     }
 
     public void removeMany(String primaryKeys) throws Exception {
-        if (primaryKeys==null){
+        if (primaryKeys == null){
             throw new NotFoundException("未删除");
         }
         String[] split = primaryKeys.split(",");//以逗号分割

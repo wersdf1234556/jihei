@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface UnsafeMapper extends BaseMapper<UnsafeModel> {
 
-    @Select("select count(guid) number, grade name from unsafes GROUP BY grade")
+    @Select("select unsafeTypes.uname name, count(unsafes.guid) number from unsafes LEFT JOIN unsafeTypes on unsafes.unsafeTypeGuid = unsafeTypes.guid GROUP BY unsafeTypes.uname")
     List<ReturnModel> count();
 }

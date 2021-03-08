@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 // 管理权属
 @Table("managementPowers")
@@ -17,6 +14,11 @@ public class ManagementPowerModel extends BaseModel{
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "industryCategoryGuid")
+    private String industryCategoryGuid; // 行业类别
+
+    @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
+    private String industryCategoryName;  // 行业名称
 
     public ManagementPowerModel() {
     }
@@ -45,12 +47,30 @@ public class ManagementPowerModel extends BaseModel{
         this.sortId = sortId;
     }
 
+    public String getIndustryCategoryGuid() {
+        return industryCategoryGuid;
+    }
+
+    public void setIndustryCategoryGuid(String industryCategoryGuid) {
+        this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getIndustryCategoryName() {
+        return industryCategoryName;
+    }
+
+    public void setIndustryCategoryName(String industryCategoryName) {
+        this.industryCategoryName = industryCategoryName;
+    }
+
     @Override
     public String toString() {
-        return "ManagementPower{" +
+        return "ManagementPowerModel{" +
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
+                ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
+                ", industryCategoryName='" + industryCategoryName + '\'' +
                 '}';
     }
 }

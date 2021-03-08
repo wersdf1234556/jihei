@@ -6,7 +6,7 @@ public class IndustryCategoryQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "like", field = "guid")
+    @Operator(value = "like", field = "name")
     private String name;
 
     public String getGuid() {
