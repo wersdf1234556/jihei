@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.ProgressDetailQueryParams;
 import org.tonzoc.controller.params.ProjectQueryParams;
 import org.tonzoc.controller.response.PageResponse;
+import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ProgressDetailModel;
 import org.tonzoc.model.ProjectModel;
@@ -41,7 +42,7 @@ public class ProgressDetailController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid ProgressDetailModel progressDetailModel) {
-        this.progressDetailService.save(progressDetailModel);
+        this.progressDetailService.insertStack(progressDetailModel);
     }
 
     @PutMapping(value = "{guid}")
@@ -67,5 +68,17 @@ public class ProgressDetailController extends BaseController {
     @GetMapping(value = "getNextTender")
     public String getNextTender(String tenderGuid){
         return progressDetailService.getNextTender(tenderGuid);
+    }
+
+    //审批
+    @PostMapping(value = "approval")
+    public void approval(String progressGuid) throws Exception {
+        progressDetailService.approval(progressGuid);
+    }
+
+    //批量审批
+    @PostMapping(value = "batchApproval")
+    public void batchApproval(String progressGuids) throws Exception{
+        progressDetailService.batchApproval(progressGuids);
     }
 }

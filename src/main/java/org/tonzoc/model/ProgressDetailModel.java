@@ -1,8 +1,11 @@
 package org.tonzoc.model;
 
+import org.apache.commons.lang.StringUtils;
 import org.tonzoc.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Table(value = "progressDetails")
 public class ProgressDetailModel extends BaseModel{
@@ -119,4 +122,20 @@ public class ProgressDetailModel extends BaseModel{
         this.approvalTime = approvalTime;
     }
 
+    @Override
+    public String toString() {
+        return "ProgressDetailModel{" +
+                "guid='" + guid + '\'' +
+                ", progressNameGuid='" + progressNameGuid + '\'' +
+                ", tenderGuid='" + tenderGuid + '\'' +
+                ", date='" + date + '\'' +
+                ", num=" + num +
+                ", progressName='" + progressName + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", status='" + status + '\'' +
+                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", currentTenderName='" + currentTenderName + '\'' +
+                ", approvalTime='" + approvalTime + '\'' +
+                '}';
+    }
 }

@@ -142,18 +142,26 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 
     public void updateStack(ProgressDetailModel progressDetailModel) throws Exception {
         UserModel userModel = redisAuthService.getCurrentUser();
-        if (userModel.getTenderGuid().equals(progressDetailModel.getTenderGuid())&&!progressDetailModel.getStatus().equals("unSubmit")){
-            throw new NotMatchException("该数据已被本标段，无法修改");
-        }
-        if (!userModel.getTenderGuid().equals(progressDetailModel.getTenderGuid())&&progressDetailModel.getStatus().equals("unSubmit")){
-            throw new NotMatchException("该数据未被提交，无法修改");
+        ProgressDetailModel oldProgressDetail =get(progressDetailModel.getGuid());
+        System.out.println(oldProgressDetail.toString());
+        System.out.println(userModel.toString());
+        //当当前标段和登录人标段一致，可修改；且管理员可随时能改；
+        //当前标段和登录人标段不一致，不可修改
+        if (!userModel.getTenderManage().equals("*")){
+            System.out.println(!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid()));
+            if (!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid())){
+                throw new NotMatchException("该数据已被提交，无法修改");
+            }
+            if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
+                throw new NotMatchException("该数据未被提交，无法修改");
+            }
         }
         update(progressDetailModel);
     }
 
     //查询上级标段
     public String getNextTender(String tenderGuid){
-        String allNextTenderGuids=null;
+        String allNextTenderGuids="";
         List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
         if(tenderGuids.size()!=0) {
             allNextTenderGuids=String.join(",",tenderGuids);
@@ -161,7 +169,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         return allNextTenderGuids;
     }
 
-    public void approval(String progressGuid){
+    public void approval(String progressGuid) throws NotMatchException {
         /**
          * create by: fang
          * description:审批
@@ -170,8 +178,13 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
           * @Param: progressGuid
          * @return void
          */
+
         ProgressDetailModel progressDetailModel = get(progressGuid);
-        String nextTenderGuids = getNextTender(progressDetailModel.getTenderGuid());
+//        if (progressDetailModel.getStatus().equals("finish")){
+//            throw new NotMatchException("本条已审批结束");
+//        }
+        String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
+        System.out.println("nextTenderGuids="+nextTenderGuids);
         if (!nextTenderGuids.equals("")){
             //修改该条状态为已提交
             progressDetailModel.setStatus("submitted");
@@ -179,14 +192,18 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         }else {
             //修改该条状态为已结束
             progressDetailModel.setStatus("finish");
+            progressDetailModel.setCurrentTenderGuid("*");
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         progressDetailModel.setApprovalTime(df.format(new Date()));
         update(progressDetailModel);
-        //根据管理标段查上级
-//        List<UserModel> userModels = userMapper.listByTenderManage(1,progressDetailModel.getTenderGuid());
+    }
 
-
+    public void batchApproval(String progressGuids) throws Exception {
+        String[] split = progressGuids.split(",");//以逗号分割
+        for (String primaryKey:split){
+            approval(primaryKey);
+        }
     }
 }

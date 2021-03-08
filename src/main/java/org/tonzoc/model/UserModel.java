@@ -152,4 +152,24 @@ public class UserModel extends BaseModel {
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
     }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", staffName='" + staffName + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", flag=" + flag +
+                ", roleGuid='" + roleGuid + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", projectGuid='" + projectGuid + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", tenderGuid='" + tenderGuid + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", accounType='" + accounType + '\'' +
+                ", tenderManage='" + tenderManage + '\'' +
+                '}';
+    }
 }
