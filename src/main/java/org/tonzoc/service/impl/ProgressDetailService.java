@@ -3,6 +3,7 @@ package org.tonzoc.service.impl;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.common.ApprovalHelper;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.ProgressDetailMapper;
 import org.tonzoc.mapper.UserMapper;
@@ -27,7 +28,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     private IProgressTotalDataService progressTotalDataService;
 
     @Autowired
-    private UserMapper userMapper;
+    private ApprovalHelper approvalHelper;
 
     @Autowired
     private IRedisAuthService redisAuthService;
@@ -162,20 +163,12 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         update(progressDetailModel);
     }
 
-    //查询上级标段
-    public String getNextTender(String tenderGuid){
-        String allNextTenderGuids="";
-        List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
-        if(tenderGuids.size()!=0) {
-            allNextTenderGuids=String.join(",",tenderGuids);
-        }
-        return allNextTenderGuids;
-    }
+
 
     //提交
     public void submit(String progressGuid){
         ProgressDetailModel progressDetailModel = get(progressGuid);
-        String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
+        String nextTenderGuids = approvalHelper.getNextTender(progressDetailModel.getCurrentTenderGuid());
         progressDetailModel.setStatus("submitted");
         progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -198,7 +191,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //        if (progressDetailModel.getStatus().equals("finish")){
 //            throw new NotMatchException("本条已审批结束");
 //        }
-        String supervisorGuid = getNextTender(progressDetailModel.getTenderGuid());
+        String supervisorGuid = approvalHelper.getNextTender(progressDetailModel.getTenderGuid());
         if (flag==0){
             //修改该条状态为已结束
             progressDetailModel.setStatus("finish");

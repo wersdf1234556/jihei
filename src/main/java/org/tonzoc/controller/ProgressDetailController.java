@@ -65,11 +65,6 @@ public class ProgressDetailController extends BaseController {
         return progressDetailService.statCurrentMonth(tender,date);
     }
 
-    @GetMapping(value = "getNextTender")
-    public String getNextTender(String tenderGuid){
-        return progressDetailService.getNextTender(tenderGuid);
-    }
-
     //提交
     @PostMapping(value = "submit")
     public void submit(String progressGuid){
