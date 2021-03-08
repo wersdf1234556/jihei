@@ -132,7 +132,6 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
             list.add(progressStatModel);
         }
         return list;
-
     }
     public void insertStack(ProgressDetailModel progressDetailModel){
         progressDetailModel.setApprovalTime("");
