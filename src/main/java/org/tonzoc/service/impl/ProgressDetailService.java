@@ -80,10 +80,12 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         sqlQueryParams.add(new SqlQueryParam("flag", flag.toString(), "eq"));
         List<ProgressNameModel> progressNameModels = progressNameService.list(sqlQueryParams);
         progressNameModels=progressNameModels.stream().sorted(Comparator.comparing(ProgressNameModel::getSortId)).collect(Collectors.toList());
+        System.out.println(progressNameModels.toString());
         for (ProgressNameModel progressNameModel:progressNameModels){
             ArrayList<String> dates = new ArrayList<String>();
             dates.add(date);
             List<ProgressDetailModel> progressDetailModelList = progressDetailMapper.listByProgressNameAndDate(tender,date,progressNameModel.getGuid());
+            System.out.println(progressDetailModelList.toString());
             BigDecimal cumulantNum = progressDetailModelList
                     .stream()
                     .map(ProgressDetailModel::getNum)
@@ -93,17 +95,15 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                     .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                     .map(ProgressDetailModel::getNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-//            System.out.println(progressNameModel.getName());
-//            System.out.println(date);
-//            System.out.println(cumulantNum);
-//            System.out.println(currentMonthNum);
-//            System.out.println(progressNameModel.getTotalNum());
-//            System.out.println(progressNameModel.getName());
-//            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
+            System.out.println(progressNameModel.getName());
+            System.out.println(date);
+            System.out.println(cumulantNum);
+            System.out.println(currentMonthNum);
+            System.out.println(progressNameModel.getName());
+            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
             BigDecimal totalNum=progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).stream()
                     .map(ProgressTotalDataModel::getTotalNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-            System.out.println(totalNum);
             BigDecimal currentMonthPercent=BigDecimal.ZERO;
             BigDecimal cumulantPercent=BigDecimal.ZERO;
             if (currentMonthNum.compareTo(BigDecimal.ZERO)==0){

@@ -13,7 +13,7 @@ public class CameraPurposeModel extends BaseModel{
     @Column(value = "sortId")
     private Integer sortId; // 排序
     @Column(value = "typeGuid")
-    private Integer typeGuid;
+    private String typeGuid;
     @JoinColumn(value = "name", type = CameraTypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
     private String typeName; //类型
 
@@ -41,11 +41,11 @@ public class CameraPurposeModel extends BaseModel{
         this.sortId = sortId;
     }
 
-    public Integer getTypeGuid() {
+    public String getTypeGuid() {
         return typeGuid;
     }
 
-    public void setTypeGuid(Integer typeGuid) {
+    public void setTypeGuid(String typeGuid) {
         this.typeGuid = typeGuid;
     }
 

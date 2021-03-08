@@ -8,7 +8,7 @@ public class CameraPurposeQueryParams {
 
     @Operator(value = "like", field = "name")
     private String name;
-    @Operator(value = "eq", field = "guid")
+    @Operator(value = "eq", field = "typeGuid")
     private String typeGuid;
 
     public String getGuid() {

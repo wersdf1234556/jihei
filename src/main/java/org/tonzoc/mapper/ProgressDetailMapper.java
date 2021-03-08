@@ -10,7 +10,10 @@ import java.util.List;
 public interface ProgressDetailMapper extends BaseMapper<ProgressDetailModel> {
     @Select("SELECT mainTable.progressNameGuid,pn.name as progressName,mainTable.num,mainTable.[date] from progressDetails mainTable \n" +
             "LEFT JOIN progressNames pn on mainTable.progressNameGuid=pn.guid \n" +
-            "LEFT JOIN tenders t ON mainTable.tenderGuid=t.guid where t.name LIKE '%${tenderName}%' and mainTable.[date]<=#{date} and mainTable.progressNameGuid=#{progressNameGuid}")
+            "LEFT JOIN tenders t ON mainTable.tenderGuid=t.guid " +
+            "where t.name LIKE '%${tenderName}%' and mainTable.[date]<=#{date} " +
+            "and mainTable.progressNameGuid=#{progressNameGuid} " +
+            "and mainTable.status='finish'")
     List<ProgressDetailModel> listByProgressNameAndDate(@Param(value = "tenderName") String tenderName,@Param(value = "date") String date, @Param(value = "progressNameGuid") String progressNameGuid);
 
 }
