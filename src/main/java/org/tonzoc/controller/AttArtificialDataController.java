@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttArtificialDataModel;
 import org.tonzoc.model.support.AttendanceStatModel;
+import org.tonzoc.model.support.StatTotalModel;
 import org.tonzoc.service.IAttArtificialDataService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -52,25 +53,30 @@ public class AttArtificialDataController extends BaseController {
     public void removeMany(String guids) throws Exception {
         attArtificialDataService.removeMany(guids);
     }
+    @GetMapping(value = "statByCategoryGuid")
+    public List<AttendanceStatModel> statAllByCategoryGuid(String categoryGuid){
+        return attArtificialDataService.statAllByCategoryGuid(categoryGuid);
+    }
+
     @GetMapping(value = "statAll")
-    public List<AttendanceStatModel> statAll(Integer flag){
-        return attArtificialDataService.statAll(flag);
+    public StatTotalModel statAll(){
+        return attArtificialDataService.statAll();
     }
 
-    @GetMapping(value = "statByTender")
-    public List<Object> statByTender(Integer flag){
-        return attArtificialDataService.statByTender(flag);
+//    @GetMapping(value = "statByTender")
+//    public List<Object> statByTender(String categoryGuid){
+//        return attArtificialDataService.statByTender(categoryGuid);
+//
+//    }
 
-    }
-
-    //首件认可
-    @GetMapping(value = "statArticle")
-    public List<AttendanceStatModel> statArticle(String tenderName){
-        return attArtificialDataService.statArticle(tenderName);
-    }
+//    //首件认可
+//    @GetMapping(value = "statArticle")
+//    public List<AttendanceStatModel> statArticle(String tenderName){
+//        return attArtificialDataService.statArticle(tenderName);
+//    }
 
     @PostMapping(value = "insertAllArti")
-    public void insertAllArti(Integer flag){
-        attArtificialDataService.insertAllArti(flag);
+    public void insertAllArti(String categoryGuid){
+        attArtificialDataService.insertAllArti(categoryGuid);
     }
 }

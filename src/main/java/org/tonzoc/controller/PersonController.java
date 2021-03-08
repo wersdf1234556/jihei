@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.PersonQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -59,7 +60,13 @@ public class PersonController extends BaseController {
     手机端登录验证
     */
     @PostMapping(value = "login")
-    public PersonModel login(String sign,String password) throws Exception {
-        return personService.login(sign,password);
+    public PersonModel login(String sign,String password,Integer flag) throws Exception {
+        return personService.login(sign,password,flag);
+    }
+
+    //人员上传证书照片/人员照片
+    @PostMapping(value = "upFile")
+    public void upFile(String guid, MultipartFile file, Integer flag) {
+        personService.upFile(guid,file,flag);
     }
 }

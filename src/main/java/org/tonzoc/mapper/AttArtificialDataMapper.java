@@ -11,13 +11,12 @@ import java.util.List;
 public interface AttArtificialDataMapper extends BaseMapper<AttArtificialDataModel> {
 
     @Select("select py.name typeName, SUM(ISNULL(a.personNum, 0)) total ,SUM(ISNULL(a.attNum, 0)) attNum from " +
-            "(select DISTINCT name,guid,parentId,sortId from personTypes WHERE flag=#{flag} ) py " +
+            "(select DISTINCT name,guid,sortId from personTypes WHERE categoryGuid=#{categoryGuid} ) py " +
             "LEFT JOIN (select personTypeGuid,tenderGuid, attNum ,personNum from attArtificialDatas " +
             ") a on py.guid = a.personTypeGuid " +
-            "where py.parentId!='0' " +
             "GROUP BY py.sortId,py.name " +
             "ORDER BY py.sortId asc,py.name asc")
-    List<AttendanceStatModel> statAtt(@Param(value = "flag") Integer flag);
+    List<AttendanceStatModel> statAtt(@Param(value = "categoryGuid") String categoryGuid);
 
     @Select("select py.name typeName, SUM(ISNULL(a.personNum, 0)) total ,SUM(ISNULL(a.attNum, 0)) attNum from " +
             "(select DISTINCT name,guid,parentId,sortId from personTypes WHERE flag=#{flag}) py " +
@@ -27,5 +26,5 @@ public interface AttArtificialDataMapper extends BaseMapper<AttArtificialDataMod
             "where py.parentId!='0' " +
             "GROUP BY py.sortId,py.name " +
             "ORDER BY py.sortId asc,py.name asc")
-    List<AttendanceStatModel> statAttByTender(@Param(value = "flag") Integer flag,@Param(value = "tenderGuid") String tenderGuid);
+    List<AttendanceStatModel> statAttByTender(@Param(value = "categoryGuid") String categoryGuid,@Param(value = "tenderGuid") String tenderGuid);
 }

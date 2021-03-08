@@ -8,6 +8,7 @@ import org.tonzoc.model.PersonTypeModel;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.support.AttStatTenderModel;
 import org.tonzoc.model.support.AttendanceStatModel;
+import org.tonzoc.model.support.StatTotalModel;
 import org.tonzoc.service.IAttArtificialDataService;
 import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.service.ITenderService;
@@ -29,14 +30,28 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
     @Autowired
     private AttArtificialDataMapper attArtificialDataMapper;
 
-    public List<AttendanceStatModel> statAll(Integer flag){
-        List<AttendanceStatModel> stats = attArtificialDataMapper.statAtt(flag);
+    public List<AttendanceStatModel> statAllByCategoryGuid(String categoryGuid){
+        List<AttendanceStatModel> stats = attArtificialDataMapper.statAtt(categoryGuid);
         return stats;
+    }
+
+    @Override
+    public StatTotalModel statAll() {
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<AttArtificialDataModel> list = this.list(sqlQueryParams);
+        Integer total=list.stream().mapToInt(AttArtificialDataModel::getPersonNum).sum();
+        Integer attNum=list.stream().mapToInt(AttArtificialDataModel::getAttNum).sum();
+        Object percent=(float) attNum / total * 100;
+        StatTotalModel statTotalModel = new StatTotalModel();
+        statTotalModel.setTotal(total.toString());
+        statTotalModel.setAttNum(attNum.toString());
+        statTotalModel.setPercent(percent.toString());
+        return statTotalModel;
     }
 
 
     //flag=0查询技术工种，flag=1查询管理人员
-    public List<Object> statByTender(Integer flag){
+    public List<Object> statByTender(String categoryGuid){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<TenderModel> tenderModels = tenderService.list(sqlQueryParams).stream().sorted(Comparator.comparing(TenderModel::getSortId)).collect(Collectors.toList());
         List<Object> statModels = new ArrayList<>();
@@ -44,7 +59,7 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
             AttStatTenderModel statModel = new AttStatTenderModel();
             statModel.setTenderGuid(tender.getGuid());
             statModel.setTenderName(tender.getName());
-            List<AttendanceStatModel> stats = attArtificialDataMapper.statAttByTender(flag,tender.getGuid());
+            List<AttendanceStatModel> stats = attArtificialDataMapper.statAttByTender(categoryGuid,tender.getGuid());
             statModel.setStatModels(stats);
             statModels.add(statModel) ;
         }
@@ -52,44 +67,45 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
     }
 
     //flag=0查询技术工种,首件认可
-    public List<AttendanceStatModel> statArticle(String tenderName){
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("name", tenderName, "eq"));
-        TenderModel tenderModel = tenderService.list(sqlQueryParams).get(0);
-        List<AttendanceStatModel> stats = attArtificialDataMapper.statAttByTender(0,tenderModel.getGuid());
-        return stats;
-    }
+//    public List<AttendanceStatModel> statArticle(String tenderName){
+//        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+//        sqlQueryParams.add(new SqlQueryParam("name", tenderName, "eq"));
+//        TenderModel tenderModel = tenderService.list(sqlQueryParams).get(0);
+//        List<AttendanceStatModel> stats = attArtificialDataMapper.statAttByTender(0,tenderModel.getGuid());
+//        return stats;
+//    }
 
     //添加假数据
-    public void insertAllArti(Integer flag){
-        List<PersonTypeModel> personTypes = personTypeService.listByFlag(flag).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());
+    public void insertAllArti(String categoryGuid){
+        List<PersonTypeModel> personTypes = personTypeService.listByCategoryGuid(categoryGuid).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        List<TenderModel> tenderModels = tenderService.list(sqlQueryParams).stream().sorted(Comparator.comparing(TenderModel::getSortId)).collect(Collectors.toList());
-        for (TenderModel tenderModel:tenderModels){
+//        List<TenderModel> tenderModels = tenderService.list(sqlQueryParams).stream().sorted(Comparator.comparing(TenderModel::getSortId)).collect(Collectors.toList());
+//        for (TenderModel tenderModel:tenderModels){
         for (PersonTypeModel typeModel:personTypes){
                 sqlQueryParams.add(new SqlQueryParam("personTypeGuid", typeModel.getGuid(), "eq"));
-                sqlQueryParams.add(new SqlQueryParam("tenderGuid", tenderModel.getGuid(), "eq"));
+//                sqlQueryParams.add(new SqlQueryParam("tenderGuid", tenderModel.getGuid(), "eq"));
                 List<AttArtificialDataModel> dataModels = list(sqlQueryParams);
                 if (dataModels.size()==0){
-                    int t;
-                    if (flag==0){
-                        //5~10之间的随机数
-                        t=(int)(Math.random()*6+5);
-                    }else {
-                        int max=4;
-                        int min=2;
-                        Random random = new Random();
-                        t = random.nextInt(max)%(max-min+1) + min;
-                    }
+                    int t=new java.util.Random().nextInt(10)+1;
+//                    if (flag==0){
+//                        //5~10之间的随机数
+//                        t=(int)(Math.random()*6+5);
+//                    }else {
+//                        int max=4;
+//                        int min=1;
+//                        Random random = new Random();
+//                        t = random.nextInt(max)%(max-min+1) + min;
+//                    }
                     AttArtificialDataModel dataModel = new AttArtificialDataModel();
                     dataModel.setPersonTypeGuid(typeModel.getGuid());
-                    dataModel.setTenderGuid(tenderModel.getGuid());
+                    dataModel.setTenderGuid("");
+                    dataModel.setCategoryGuid(typeModel.getCategoryGuid());
                     dataModel.setAttNum(t);
                     dataModel.setPersonNum(t);
                     save(dataModel);
                 }
 
-            }
+//            }
 
         }
     }

@@ -20,6 +20,10 @@ public class AttArtificialDataModel extends BaseModel{
     private Integer personNum;  //人员数量
     @Column(value = "attNum")
     private Integer attNum; //考勤数量
+    @Column(value = "categoryGuid")
+    private String categoryGuid;
+    @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
+    private String categoryName; //类别
 
     public String getGuid() {
         return guid;
@@ -75,5 +79,21 @@ public class AttArtificialDataModel extends BaseModel{
 
     public void setAttNum(Integer attNum) {
         this.attNum = attNum;
+    }
+
+    public String getCategoryGuid() {
+        return categoryGuid;
+    }
+
+    public void setCategoryGuid(String categoryGuid) {
+        this.categoryGuid = categoryGuid;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

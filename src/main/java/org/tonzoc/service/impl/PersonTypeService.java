@@ -26,11 +26,11 @@ public class PersonTypeService extends BaseService<PersonTypeModel> implements I
         return list;
     }
 
-    public List<PersonTypeModel> listByParentId(String parentId) {
+    public List<PersonTypeModel> listByCategoryGuid(String categoryGuid) {
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
 
-        sqlQueryParams.add(new SqlQueryParam("parentId", parentId, "eq"));
+        sqlQueryParams.add(new SqlQueryParam("categoryGuid", categoryGuid, "eq"));
 
         List<PersonTypeModel> list = list(sqlQueryParams);
 

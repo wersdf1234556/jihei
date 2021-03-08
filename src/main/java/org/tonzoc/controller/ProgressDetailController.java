@@ -77,7 +77,6 @@ public class ProgressDetailController extends BaseController {
     public void submit(String progressGuid){
         progressDetailService.submit(progressGuid);
     }
-
     //审批
     @PostMapping(value = "approval")
     public void approval(String progressGuid,Integer flag) throws Exception {

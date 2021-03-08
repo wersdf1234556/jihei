@@ -12,6 +12,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.*;
 import org.tonzoc.service.IQualityTraceabilityService;
+import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISubTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -34,6 +35,8 @@ public class QualityTraceabilityController extends BaseController {
 
     @Autowired
     private FileHelper fileHelper;
+    @Autowired
+    private IRedisAuthService redisAuthService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams laboratoryQueryParams)
@@ -69,25 +72,25 @@ public class QualityTraceabilityController extends BaseController {
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws Exception {
-
+        UserModel userModel = redisAuthService.getCurrentUser();
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);
         }
 
-        qualityTraceabilityService.updateStack(qualityTraceabilityModel);
+        qualityTraceabilityService.updateStack(qualityTraceabilityModel,userModel);
         this.qualityTraceabilityService.update(qualityTraceabilityModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) throws Exception {
-
-        qualityTraceabilityService.removeStack(guid);
+        UserModel userModel = redisAuthService.getCurrentUser();
+        qualityTraceabilityService.removeStack(guid,userModel);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
-
-        qualityTraceabilityService.batchRemoveStack(guids);
+        UserModel userModel = redisAuthService.getCurrentUser();
+        qualityTraceabilityService.batchRemoveStack(guids,userModel);
     }
 
     // 生成二维码
