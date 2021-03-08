@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 @Table(value = "cameraPurpose")
 public class CameraPurposeModel extends BaseModel{
@@ -15,6 +12,10 @@ public class CameraPurposeModel extends BaseModel{
     private String name; // 摄像头用途
     @Column(value = "sortId")
     private Integer sortId; // 排序
+    @Column(value = "typeGuid")
+    private String typeGuid;
+    @JoinColumn(value = "name", type = CameraTypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
+    private String typeName; //类型
 
     public String getGuid() {
         return guid;
@@ -38,5 +39,21 @@ public class CameraPurposeModel extends BaseModel{
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getTypeGuid() {
+        return typeGuid;
+    }
+
+    public void setTypeGuid(String typeGuid) {
+        this.typeGuid = typeGuid;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

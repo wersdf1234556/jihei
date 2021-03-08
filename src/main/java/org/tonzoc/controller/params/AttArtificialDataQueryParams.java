@@ -7,8 +7,10 @@ public class AttArtificialDataQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
 
@@ -34,5 +36,13 @@ public class AttArtificialDataQueryParams {
 
     public void setPersonTypeGuid(String personTypeGuid) {
         this.personTypeGuid = personTypeGuid;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

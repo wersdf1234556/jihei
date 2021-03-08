@@ -3,6 +3,8 @@ package org.tonzoc.service.impl;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.common.ApprovalHelper;
+import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.ProgressDetailMapper;
 import org.tonzoc.mapper.UserMapper;
@@ -27,10 +29,8 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     private IProgressTotalDataService progressTotalDataService;
 
     @Autowired
-    private UserMapper userMapper;
+    private ApprovalHelper approvalHelper;
 
-    @Autowired
-    private IRedisAuthService redisAuthService;
 
 
     public List<ProgressDetailModel> listByTender(String tenderGuid,String date,String progressNameGuid){
@@ -78,10 +78,12 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         sqlQueryParams.add(new SqlQueryParam("flag", flag.toString(), "eq"));
         List<ProgressNameModel> progressNameModels = progressNameService.list(sqlQueryParams);
         progressNameModels=progressNameModels.stream().sorted(Comparator.comparing(ProgressNameModel::getSortId)).collect(Collectors.toList());
+        System.out.println(progressNameModels.toString());
         for (ProgressNameModel progressNameModel:progressNameModels){
             ArrayList<String> dates = new ArrayList<String>();
             dates.add(date);
             List<ProgressDetailModel> progressDetailModelList = progressDetailMapper.listByProgressNameAndDate(tender,date,progressNameModel.getGuid());
+            System.out.println(progressDetailModelList.toString());
             BigDecimal cumulantNum = progressDetailModelList
                     .stream()
                     .map(ProgressDetailModel::getNum)
@@ -91,17 +93,15 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                     .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                     .map(ProgressDetailModel::getNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-//            System.out.println(progressNameModel.getName());
-//            System.out.println(date);
-//            System.out.println(cumulantNum);
-//            System.out.println(currentMonthNum);
-//            System.out.println(progressNameModel.getTotalNum());
-//            System.out.println(progressNameModel.getName());
-//            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
+            System.out.println(progressNameModel.getName());
+            System.out.println(date);
+            System.out.println(cumulantNum);
+            System.out.println(currentMonthNum);
+            System.out.println(progressNameModel.getName());
+            System.out.println(progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).toString());
             BigDecimal totalNum=progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).stream()
                     .map(ProgressTotalDataModel::getTotalNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
-            System.out.println(totalNum);
             BigDecimal currentMonthPercent=BigDecimal.ZERO;
             BigDecimal cumulantPercent=BigDecimal.ZERO;
             if (currentMonthNum.compareTo(BigDecimal.ZERO)==0){
@@ -131,7 +131,6 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
             list.add(progressStatModel);
         }
         return list;
-
     }
     public void insertStack(ProgressDetailModel progressDetailModel){
         progressDetailModel.setApprovalTime("");
@@ -140,36 +139,67 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         save(progressDetailModel);
     }
 
-    public void updateStack(ProgressDetailModel progressDetailModel) throws Exception {
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void updateStack(ProgressDetailModel progressDetailModel,UserModel userModel) throws Exception {
         ProgressDetailModel oldProgressDetail =get(progressDetailModel.getGuid());
         System.out.println(oldProgressDetail.toString());
         System.out.println(userModel.toString());
-        //当当前标段和登录人标段一致，可修改；且管理员可随时能改；
-        //当前标段和登录人标段不一致，不可修改
+        //施工方未提交时，监理不可改；
+        // 且管理员可随时能改；
+        //施工方提交后，施工方、监理都可改
+        //结束审批后，施工方、监理都不可改
         if (!userModel.getTenderManage().equals("*")){
             System.out.println(!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid()));
-            if (!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid())){
-                throw new NotMatchException("该数据已被提交，无法修改");
-            }
             if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
                 throw new NotMatchException("该数据未被提交，无法修改");
             }
+            if(oldProgressDetail.getStatus().equals("finish")){
+                throw new NotMatchException("该数据已结束审批，无法修改");
+            }
+        }
+
+        update(progressDetailModel);
+    }
+
+    public void removeStack(String guid,UserModel userModel) throws Exception{
+        ProgressDetailModel oldProgressDetail =get(guid);
+        if (!userModel.getTenderManage().equals("*")){
+            if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
+                throw new NotMatchException("该数据未被提交，无法删除");
+            }
+            if(oldProgressDetail.getStatus().equals("finish")){
+                throw new NotMatchException("该数据已结束审批，无法删除");
+            }
+        }
+        remove(guid);
+    }
+
+    public void batchRemoveStack(String guids,UserModel userModel) throws Exception{
+        if (guids == null){
+            throw new NotFoundException("未删除");
+        }
+        String[] split = guids.split(",");//以逗号分割
+        for (String primaryKey:split){
+            removeStack(primaryKey,userModel);
+        }
+    }
+
+
+
+    //提交
+    public void submit(String progressGuid){
+        ProgressDetailModel progressDetailModel = get(progressGuid);
+        String nextTenderGuids = approvalHelper.getNextTender(progressDetailModel.getCurrentTenderGuid());
+        progressDetailModel.setStatus("submitted");
+        progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
+        if (progressDetailModel.getStatus().equals("unSubmitted")){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            progressDetailModel.setApprovalTime(df.format(new Date()));
         }
         update(progressDetailModel);
     }
 
-    //查询上级标段
-    public String getNextTender(String tenderGuid){
-        String allNextTenderGuids="";
-        List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
-        if(tenderGuids.size()!=0) {
-            allNextTenderGuids=String.join(",",tenderGuids);
-        }
-        return allNextTenderGuids;
-    }
-
-    public void approval(String progressGuid) throws NotMatchException {
+    //审批
+    public void approval(String progressGuid,Integer flag) throws NotMatchException {
         /**
          * create by: fang
          * description:审批
@@ -183,16 +213,16 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //        if (progressDetailModel.getStatus().equals("finish")){
 //            throw new NotMatchException("本条已审批结束");
 //        }
-        String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
-        System.out.println("nextTenderGuids="+nextTenderGuids);
-        if (!nextTenderGuids.equals("")){
-            //修改该条状态为已提交
-            progressDetailModel.setStatus("submitted");
-            progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
-        }else {
+        String supervisorGuid = approvalHelper.getNextTender(progressDetailModel.getTenderGuid());
+        if (flag==1){
             //修改该条状态为已结束
             progressDetailModel.setStatus("finish");
             progressDetailModel.setCurrentTenderGuid("*");
+        }else if (flag==2){
+            if (progressDetailModel.getCurrentTenderGuid().equals("*")&&progressDetailModel.getStatus().equals("finish")){
+                progressDetailModel.setStatus("submitted");
+                progressDetailModel.setCurrentTenderGuid(supervisorGuid);
+            }
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -200,10 +230,15 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         update(progressDetailModel);
     }
 
-    public void batchApproval(String progressGuids) throws Exception {
+    public void batchApproval(String progressGuids,Integer flag) throws Exception {
         String[] split = progressGuids.split(",");//以逗号分割
         for (String primaryKey:split){
-            approval(primaryKey);
+            if (flag==0){//提交
+                submit(primaryKey);
+            }else if (flag==1||flag==2){
+                approval(primaryKey,flag);
+            }
+
         }
     }
 }

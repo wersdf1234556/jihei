@@ -10,8 +10,10 @@ public class AerialPhotographyQueryParams {
     @Operator(value = "like", field = "month")
     private String month;
 
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     public AerialPhotographyQueryParams() {
 
@@ -39,5 +41,13 @@ public class AerialPhotographyQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

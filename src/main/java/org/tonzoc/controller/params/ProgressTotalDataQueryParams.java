@@ -8,8 +8,10 @@ public class ProgressTotalDataQueryParams {
     private String guid;
     @Operator(value = "eq", field = "progressNameGuid")
     private String progressNameGuid;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     public String getGuid() {
         return guid;
@@ -35,4 +37,11 @@ public class ProgressTotalDataQueryParams {
         this.tenderGuid = tenderGuid;
     }
 
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
+    }
 }

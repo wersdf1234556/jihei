@@ -1,10 +1,8 @@
 package org.tonzoc.service;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.tonzoc.model.AttachmentModel;
-import org.tonzoc.model.QualityTraceabilityModel;
-import org.tonzoc.model.ReturnModel;
-import org.tonzoc.model.TenderModel;
+import org.tonzoc.exception.NotMatchException;
+import org.tonzoc.model.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -44,4 +42,22 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // 添加时是否包含
     Boolean containName(String name);
+
+    // 提交
+    void submit(String qualityTraceabilityGuid);
+
+    // 审批
+    void approval(String qualityTraceabilityGuid, Integer flag);
+
+    // 多条提交或审批
+    void batchApproval(String qualityTraceabilityGuid, Integer flag);
+
+    // 修改时询问是否能修改
+    void updateStack(QualityTraceabilityModel qualityTraceabilityModel) throws Exception;
+
+    // 删除一条
+    void removeStack(String guid) throws Exception;
+
+    // 循环删除
+    void batchRemoveStack(String guids) throws Exception;
 }

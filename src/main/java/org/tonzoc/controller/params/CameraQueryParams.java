@@ -9,7 +9,7 @@ public class CameraQueryParams {
     private String name;
     @Operator(value = "like", field = "deviceSerial")
     private String deviceSerial;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "typeGuid")
     private String typeGuid;
@@ -17,6 +17,8 @@ public class CameraQueryParams {
     private Integer status;
     @Operator(value = "eq", field = "purposeGuid")
     private String purposeGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     public String getName() {
         return name;
@@ -72,5 +74,13 @@ public class CameraQueryParams {
 
     public void setPurposeGuid(String purposeGuid) {
         this.purposeGuid = purposeGuid;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

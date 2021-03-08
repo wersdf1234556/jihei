@@ -39,4 +39,12 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
     @Select("select name from qualityTraceabilitys where name != #{name}")
     List<String> listName(@Param("guid")String guid);
 
+    // 修改状态
+    @Update("update qualityTraceabilitys set status = #{status}, approvalTime = #{approvalTime}, " +
+            "currentTenderGuid = #{currentTenderGuid} where guid = #{guid}")
+    void updateStatus(@Param(value = "status") String status,
+                      @Param(value = "approvalTime") String approvalTime,
+                      @Param(value = "currentTenderGuid") String currentTenderGuid,
+                      @Param(value = "guid") String guid);
+
 }
