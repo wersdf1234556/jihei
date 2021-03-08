@@ -62,30 +62,32 @@ public class QualityTraceabilityController extends BaseController {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
         }
 
-        qualityTraceabilityModel.setStatus("false");
+        qualityTraceabilityModel.setStatus("unSubmit");
+        qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
         this.qualityTraceabilityService.save(qualityTraceabilityModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void update(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws Exception {
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel = qualityTraceabilityService.updateTime(qualityTraceabilityModel);
         }
 
+        qualityTraceabilityService.updateStack(qualityTraceabilityModel);
         this.qualityTraceabilityService.update(qualityTraceabilityModel);
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        this.qualityTraceabilityService.remove(guid);
+        qualityTraceabilityService.removeStack(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        qualityTraceabilityService.removeMany(guids);
+        qualityTraceabilityService.batchRemoveStack(guids);
     }
 
     // 生成二维码
@@ -137,4 +139,27 @@ public class QualityTraceabilityController extends BaseController {
 
         return qualityTraceabilityService.tenderCount();
     }
+
+    //提交
+    @PostMapping(value = "submit")
+    public void submit(String qualityTraceabilityGuid){
+
+        qualityTraceabilityService.submit(qualityTraceabilityGuid);
+    }
+
+    //审批
+    @PostMapping(value = "approval")
+    public void approval(String qualityTraceabilityGuid,Integer flag) {
+
+        qualityTraceabilityService.approval(qualityTraceabilityGuid,flag);
+    }
+
+    //批量审批
+    @PostMapping(value = "batchApproval")
+    public void batchApproval(String qualityTraceabilityGuid,Integer flag) {
+
+        qualityTraceabilityService.batchApproval(qualityTraceabilityGuid,flag);
+    }
+
+
 }

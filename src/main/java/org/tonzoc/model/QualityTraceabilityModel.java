@@ -12,27 +12,31 @@ public class QualityTraceabilityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
+    @Column(value = "typeId")
+    private Integer typeId;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+    @Column(value = "name")
+    private String name;
     @Column(value = "currentTime")
     private Date currentTime;  // 时间
     private String currentDate;
     @Column(value = "operator")
     private String operator; // 操作人
-    @Column(value = "sortId")
-    private Integer sortId;
-    @Column(value = "tenderGuid")
-    private String tenderGuid;
-    @Column(value = "name")
-    private String name;
-    @Column(value = "typeId")
-    private Integer typeId;
-    @Column(value = "qrcodeGuid")
-    private String qrcodeGuid;
     @Column(value = "parts")
     private String parts; // 部位
     @Column(value = "major")
     private String major; // 专业
+    @Column(value = "qrcodeGuid")
+    private String qrcodeGuid;
+    @Column(value = "sortId")
+    private Integer sortId;
     @Column(value = "status")
-    private String status; // 状态false 不展示 true 展示
+    private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
+    @Column(value = "currentTenderGuid")
+    private String currentTenderGuid; // 当前审批标段
+    @Column(value = "approvalTime")
+    private String approvalTime; // 审批时间
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -41,6 +45,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String tenderName;  // 标段名称
     @JoinColumn(value = "name", type = TypeModel.class, leftColumn = "typeId", rightColumn = "id")
     private String typeName;  // 文件名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
+    private String currentTenderName;  // 审批标段名称
 
     public QualityTraceabilityModel() {
     }
@@ -165,24 +171,52 @@ public class QualityTraceabilityModel extends BaseModel {
         this.status = status;
     }
 
+
+    public String getApprovalTime() {
+        return approvalTime;
+    }
+
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
+    }
+
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
+    }
+
+    public void setApprovalTime(String approvalTime) {
+        this.approvalTime = approvalTime;
+    }
+
+    public String getCurrentTenderName() {
+        return currentTenderName;
+    }
+
+    public void setCurrentTenderName(String currentTenderName) {
+        this.currentTenderName = currentTenderName;
+    }
+
     @Override
     public String toString() {
         return "QualityTraceabilityModel{" +
                 "guid='" + guid + '\'' +
+                ", typeId=" + typeId +
+                ", tenderGuid='" + tenderGuid + '\'' +
+                ", name='" + name + '\'' +
                 ", currentTime=" + currentTime +
                 ", currentDate='" + currentDate + '\'' +
                 ", operator='" + operator + '\'' +
-                ", sortId=" + sortId +
-                ", tenderGuid='" + tenderGuid + '\'' +
-                ", name='" + name + '\'' +
-                ", typeId=" + typeId +
-                ", qrcodeGuid='" + qrcodeGuid + '\'' +
-                ", createdAt=" + createdAt +
                 ", parts='" + parts + '\'' +
                 ", major='" + major + '\'' +
+                ", qrcodeGuid='" + qrcodeGuid + '\'' +
+                ", sortId=" + sortId +
                 ", status='" + status + '\'' +
+                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", approvalTime='" + approvalTime + '\'' +
+                ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", typeName='" + typeName + '\'' +
+                ", currentTenderName='" + currentTenderName + '\'' +
                 '}';
     }
 }

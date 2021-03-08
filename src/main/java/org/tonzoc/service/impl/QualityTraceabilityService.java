@@ -7,26 +7,24 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.common.ApprovalHelper;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
+import org.tonzoc.exception.NotFoundException;
+import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.mapper.TenderMapper;
 import org.tonzoc.model.*;
-import org.tonzoc.service.IAttachmentService;
-import org.tonzoc.service.IMachineService;
-import org.tonzoc.service.IQualityTraceabilityService;
-import org.tonzoc.service.ISubTypeService;
+import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -54,7 +52,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     private IMachineService machineService;
 
     @Autowired
+    private IRedisAuthService redisAuthService;
+
+    @Autowired
     private FileHelper fileHelper;
+
+    @Autowired
+    private ApprovalHelper approvalHelper;
 
     // 查询字符串转时间
     @Override
@@ -192,11 +196,123 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     // 添加时是否包含
+    @Override
     public Boolean containName(String name) {
         List<String> list = qualityTraceabilityMapper.listName(name);
         if (list.contains(name)) {
             return true;
         }
         return false;
+    }
+
+    //提交
+    @Override
+    public void submit(String qualityTraceabilityGuid){
+        QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
+        String nextTenderGuids = approvalHelper.getNextTender(qualityTraceabilityModel.getCurrentTenderGuid());
+
+        String approvalTime = "";
+        if (qualityTraceabilityModel.getStatus().equals("unSubmitted")){
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            approvalTime = df.format(new Date());
+        }
+
+        qualityTraceabilityMapper.updateStatus("submitted", approvalTime, nextTenderGuids, qualityTraceabilityGuid);
+    }
+
+    //审批
+    @Override
+    public void approval(String qualityTraceabilityGuid, Integer flag) {
+
+        QualityTraceabilityModel qualityTraceabilityModel = get(qualityTraceabilityGuid);
+
+        String supervisorGuid = approvalHelper.getNextTender(qualityTraceabilityModel.getTenderGuid());
+        String status = "";
+        String currentTenderGuid = "";
+        if (flag == 1){
+            //修改该条状态为已结束
+            status = "finish";
+            currentTenderGuid = "*";
+        }else if (flag == 2){
+            if (qualityTraceabilityModel.getCurrentTenderGuid().equals("*") && qualityTraceabilityModel.getStatus().equals("finish")){
+
+                status = "submitted";
+                currentTenderGuid = supervisorGuid;
+            }
+        }
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        qualityTraceabilityMapper.updateStatus(status, df.format(new Date()), currentTenderGuid, qualityTraceabilityGuid);
+    }
+
+    // 多条提交或审批
+    @Override
+    public void batchApproval(String progressGuids, Integer flag) {
+        String[] split = progressGuids.split(",");//以逗号分割
+        for (String primaryKey:split){
+            if (flag == 0){//提交
+
+                this.submit(primaryKey);
+            }else if (flag == 1 || flag == 2){
+
+                this.approval(primaryKey, flag);
+            }
+
+        }
+    }
+
+    // 修改时询问是否能修改
+    @Override
+    public void updateStack(QualityTraceabilityModel qualityTraceabilityModel) throws Exception {
+        UserModel userModel = redisAuthService.getCurrentUser();
+        QualityTraceabilityModel qualityTraceabilityModel1 = this.get(qualityTraceabilityModel.getGuid());
+        //施工方未提交时，监理不可改；
+        //且管理员可随时能改；
+        //施工方提交后，施工方、监理都可改
+        //结束审批后，施工方、监理都不可改
+        if (!userModel.getTenderManage().equals("*")){ // 没有最终批复
+
+            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
+
+                throw new NotMatchException("该数据未被提交，无法修改");
+            }
+            if(qualityTraceabilityModel1.getStatus().equals("finish")){
+
+                throw new NotMatchException("该数据已结束审批，无法修改");
+            }
+        }
+    }
+
+    // 删除一条
+    @Override
+    public void removeStack(String guid) throws Exception{
+        UserModel userModel = redisAuthService.getCurrentUser();
+        QualityTraceabilityModel qualityTraceabilityModel1 = this.get(guid);
+        if (!userModel.getTenderManage().equals("*")){ // 没有最终批复
+
+            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
+
+                throw new NotMatchException("该数据未被提交，无法删除");
+            }
+            if(qualityTraceabilityModel1.getStatus().equals("finish")){
+
+                throw new NotMatchException("该数据已结束审批，无法删除");
+            }
+        }
+        this.remove(guid);
+    }
+
+    // 循环删除
+    @Override
+    public void batchRemoveStack(String guids) throws Exception{
+        if (guids == null){
+            throw new NotFoundException("未删除");
+        }
+        String[] split = guids.split(",");//以逗号分割
+        for (String primaryKey:split){
+
+            removeStack(primaryKey);
+        }
     }
 }

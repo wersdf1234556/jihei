@@ -32,7 +32,6 @@ public class SecurityModel extends BaseModel {
     @Column(value = "status")
     private String status; // 状态 0是未处理，1是已处理
 
-
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
     @JoinColumn(value = "name", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
