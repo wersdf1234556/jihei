@@ -4,6 +4,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.common.ApprovalHelper;
+import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.ProgressDetailMapper;
 import org.tonzoc.mapper.UserMapper;
@@ -160,6 +161,30 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         }
 
         update(progressDetailModel);
+    }
+
+    public void removeStack(String guid) throws Exception{
+        UserModel userModel = redisAuthService.getCurrentUser();
+        ProgressDetailModel oldProgressDetail =get(guid);
+        if (!userModel.getTenderManage().equals("*")){
+            if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
+                throw new NotMatchException("该数据未被提交，无法删除");
+            }
+            if(oldProgressDetail.getStatus().equals("finish")){
+                throw new NotMatchException("该数据已结束审批，无法删除");
+            }
+        }
+        remove(guid);
+    }
+
+    public void batchRemoveStack(String guids) throws Exception{
+        if (guids == null){
+            throw new NotFoundException("未删除");
+        }
+        String[] split = guids.split(",");//以逗号分割
+        for (String primaryKey:split){
+            removeStack(primaryKey);
+        }
     }
 
 

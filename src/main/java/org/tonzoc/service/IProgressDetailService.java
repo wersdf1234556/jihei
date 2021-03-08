@@ -10,6 +10,9 @@ public interface IProgressDetailService  extends IBaseService<ProgressDetailMode
     List<ProgressStatModel> statCurrentMonth(String tender,String date);
     void insertStack(ProgressDetailModel progressDetailModel);
     void updateStack(ProgressDetailModel progressDetailModel) throws Exception;
+    void removeStack(String guid) throws Exception;
+    void batchRemoveStack(String guids) throws Exception;
+
     void submit(String progressGuid);
     void approval(String progressGuid,Integer flag) throws NotMatchException;
     void batchApproval(String progressGuids,Integer flag) throws Exception;

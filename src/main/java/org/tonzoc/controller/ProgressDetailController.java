@@ -24,12 +24,12 @@ public class ProgressDetailController extends BaseController {
     private IProgressDetailService progressDetailService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams,Integer accounType)
+    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams,String accounType)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<ProgressDetailModel> page = parsePage(pageQueryParams);
         //监理
-        if (accounType==2){
+        if (accounType.equals("2")){
             progressDetailQueryParams.setStatus("submitted,finish");
         }
 
@@ -51,13 +51,13 @@ public class ProgressDetailController extends BaseController {
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
-        this.progressDetailService.remove(guid);
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
+        this.progressDetailService.removeStack(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
-        progressDetailService.removeMany(guids);
+        progressDetailService.batchRemoveStack(guids);
     }
 
     @GetMapping(value = "statCurrentMonth")
