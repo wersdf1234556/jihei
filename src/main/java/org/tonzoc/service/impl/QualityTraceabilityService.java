@@ -248,30 +248,28 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 多条提交或审批
     @Override
-    public void batchApproval(String progressGuids, Integer flag) {
-        String[] split = progressGuids.split(",");//以逗号分割
+    public void batchApproval(String qualityTraceabilityModels, Integer flag) {
+        String[] split = qualityTraceabilityModels.split(",");//以逗号分割
         for (String primaryKey:split){
-            if (flag == 0){//提交
+            if (flag == 0){ // 提交
 
                 this.submit(primaryKey);
             }else if (flag == 1 || flag == 2){
 
                 this.approval(primaryKey, flag);
             }
-
         }
     }
 
     // 修改时询问是否能修改
     @Override
-    public void updateStack(QualityTraceabilityModel qualityTraceabilityModel) throws Exception {
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void updateStack(QualityTraceabilityModel qualityTraceabilityModel, UserModel userModel) throws Exception {
         QualityTraceabilityModel qualityTraceabilityModel1 = this.get(qualityTraceabilityModel.getGuid());
         //施工方未提交时，监理不可改；
         //且管理员可随时能改；
         //施工方提交后，施工方、监理都可改
         //结束审批后，施工方、监理都不可改
-        if (!userModel.getTenderManage().equals("*")){ // 没有最终批复
+        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
             if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
 
@@ -286,10 +284,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 删除一条
     @Override
-    public void removeStack(String guid) throws Exception{
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void removeStack(String guid, UserModel userModel) throws Exception{
         QualityTraceabilityModel qualityTraceabilityModel1 = this.get(guid);
-        if (!userModel.getTenderManage().equals("*")){ // 没有最终批复
+        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
             if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
 
@@ -305,14 +302,15 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 循环删除
     @Override
-    public void batchRemoveStack(String guids) throws Exception{
+    public void batchRemoveStack(String guids, UserModel userModel) throws Exception{
         if (guids == null){
+
             throw new NotFoundException("未删除");
         }
         String[] split = guids.split(",");//以逗号分割
         for (String primaryKey:split){
 
-            removeStack(primaryKey);
+            removeStack(primaryKey,userModel);
         }
     }
 }
