@@ -19,9 +19,13 @@ public class SecurityChangModel extends BaseModel{
     @Column(value = "changTime")
     private String changTime; // 整改时间
     @Column(value = "tenderGuid")
-    private String tenderGuid; // 整改创建人
+    private String tenderGuid; // 整改创建标段
+    @Column(value = "createPersonName")
+    private String createPersonName; // 创建人名称
+    @Column(value = "approvalPersonName")
+    private String approvalPersonName; // 审批人名称
     @Column(value = "currentTenderGuid")
-    private String currentTenderGuid;  // 当前审核人guid
+    private String currentTenderGuid;  // 当前审核标段guid
     @Column(value = "approvalTime")
     private String approvalTime; // 审核时间
     @Column(value = "status")
@@ -104,6 +108,22 @@ public class SecurityChangModel extends BaseModel{
         this.securityGuid = securityGuid;
     }
 
+    public String getCreatePersonName() {
+        return createPersonName;
+    }
+
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
+    }
+
+    public String getApprovalPersonName() {
+        return approvalPersonName;
+    }
+
+    public void setApprovalPersonName(String approvalPersonName) {
+        this.approvalPersonName = approvalPersonName;
+    }
+
     @Override
     public String toString() {
         return "SecurityChangModel{" +
@@ -112,6 +132,8 @@ public class SecurityChangModel extends BaseModel{
                 ", chang='" + chang + '\'' +
                 ", changTime='" + changTime + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", createPersonName='" + createPersonName + '\'' +
+                ", approvalPersonName='" + approvalPersonName + '\'' +
                 ", currentTenderGuid='" + currentTenderGuid + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +
                 ", status='" + status + '\'' +

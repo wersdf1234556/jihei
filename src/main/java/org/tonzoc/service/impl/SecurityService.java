@@ -227,8 +227,8 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 修改时询问是否能修改
     @Override
-    public void updateStack(SecurityModel securityModel) throws Exception {
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void updateStack(SecurityModel securityModel, UserModel userModel) throws Exception {
+
         SecurityModel securityModel1 = this.get(securityModel.getGuid());
         //监理未提交时，施工单位不能添加新表；
         //且管理员可随时能改；
@@ -249,9 +249,8 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 删除一条
     @Override
-    public void removeStack(String guid) throws Exception{
+    public void removeStack(String guid, UserModel userModel) throws Exception{
 
-        UserModel userModel = redisAuthService.getCurrentUser();
         SecurityModel securityModel1 = this.get(guid);
         if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
@@ -269,7 +268,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 循环删除
     @Override
-    public void batchRemoveStack(String guids) throws Exception{
+    public void batchRemoveStack(String guids, UserModel userModel) throws Exception{
         if (guids == null){
 
             throw new NotFoundException("未删除");
@@ -277,7 +276,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         String[] split = guids.split(",");// 以逗号分割
         for (String primaryKey:split){
 
-            removeStack(primaryKey);
+            removeStack(primaryKey, userModel);
         }
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
+import org.tonzoc.model.UserModel;
 
 import java.text.ParseException;
 import java.util.List;
@@ -37,12 +38,12 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void batchApproval(String securityGuid, String currentTenderGuid, Integer flag);
 
     // 修改时询问是否能修改
-    void updateStack(SecurityModel securityGuid) throws Exception;
+    void updateStack(SecurityModel securityGuid, UserModel userModel) throws Exception;
 
     // 删除一条
-    void removeStack(String guid) throws Exception;
+    void removeStack(String guid, UserModel userModel) throws Exception;
 
     // 循环删除
-    void batchRemoveStack(String guids) throws Exception;
+    void batchRemoveStack(String guids, UserModel userModel) throws Exception;
 
 }

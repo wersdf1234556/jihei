@@ -6,7 +6,7 @@ public class SecurityQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "like", field = "guid")
+    @Operator(value = "like", field = "describe")
     private String describe;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
@@ -14,10 +14,12 @@ public class SecurityQueryParams {
     private String tenderManage;
     @Operator(value = "eq", field = "securityRuleGuid")
     private String securityRuleGuid;
-    @Operator(value = "eq", field = "createPersonGuid")
-    private String createPersonGuid;
+    @Operator(value = "eq", field = "currentTenderGuid")
+    private String currentTenderGuid;
     @Operator(value = "eq", field = "ccPersonGuid")
     private String ccPersonGuid;
+    @Operator(value = "eq", field = "createPersonName")
+    private String createPersonName;
     @Operator(value = "eq", field = "status")
     private String status;
 
@@ -53,12 +55,20 @@ public class SecurityQueryParams {
         this.securityRuleGuid = securityRuleGuid;
     }
 
-    public String getCreatePersonGuid() {
-        return createPersonGuid;
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
     }
 
-    public void setCreatePersonGuid(String createPersonGuid) {
-        this.createPersonGuid = createPersonGuid;
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
+    }
+
+    public String getCreatePersonName() {
+        return createPersonName;
+    }
+
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
     }
 
     public String getCcPersonGuid() {

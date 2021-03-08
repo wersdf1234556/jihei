@@ -21,7 +21,9 @@ public class SecurityModel extends BaseModel {
     @Column(value = "score")
     private Integer score; // 分数
     @Column(value = "createTime")
-    private String createTime;  // 创建时间
+    private String createTime; // 创建时间
+    @Column(value = "createPersonName")
+    private String createPersonName; // 创建人名称
     @Column(value = "ccPersonGuid")
     private String ccPersonGuid; // 抄送人的guid
     @Column(value = "status")
@@ -43,7 +45,6 @@ public class SecurityModel extends BaseModel {
     private String currentTenderName;  // 当前审批标段名称
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "ccPersonGuid", rightColumn = "guid")
     private String ccPersonName;  // 抄送人员名称
-
 
     public SecurityModel() {
     }
@@ -168,6 +169,14 @@ public class SecurityModel extends BaseModel {
         this.currentTenderGuid = currentTenderGuid;
     }
 
+    public String getCreatePersonName() {
+        return createPersonName;
+    }
+
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
+    }
+
     public String getCurrentTenderName() {
         return currentTenderName;
     }
@@ -175,6 +184,7 @@ public class SecurityModel extends BaseModel {
     public void setCurrentTenderName(String currentTenderName) {
         this.currentTenderName = currentTenderName;
     }
+
 
     @Override
     public String toString() {
@@ -185,6 +195,7 @@ public class SecurityModel extends BaseModel {
                 ", securityRuleGuid='" + securityRuleGuid + '\'' +
                 ", score=" + score +
                 ", createTime='" + createTime + '\'' +
+                ", createPersonName='" + createPersonName + '\'' +
                 ", ccPersonGuid='" + ccPersonGuid + '\'' +
                 ", status='" + status + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +

@@ -106,8 +106,8 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     // 修改时询问是否能修改
     @Override
-    public void updateStack(SecurityChangModel securityChangModel) throws Exception {
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void updateStack(SecurityChangModel securityChangModel, UserModel userModel) throws Exception {
+
         SecurityChangModel securityChangModel1 = this.get(securityChangModel.getGuid());
         //施工方未提交时，监理不可改；
         //且管理员可随时能改；
@@ -128,9 +128,8 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     // 删除一条
     @Override
-    public void removeStack(String guid) throws Exception{
+    public void removeStack(String guid, UserModel userModel) throws Exception{
 
-        UserModel userModel = redisAuthService.getCurrentUser();
         SecurityChangModel securityChangModel1 = this.get(guid);
         if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
@@ -148,7 +147,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     // 循环删除
     @Override
-    public void batchRemoveStack(String guids) throws Exception{
+    public void batchRemoveStack(String guids, UserModel userModel) throws Exception{
         if (guids == null){
 
             throw new NotFoundException("未删除");
@@ -156,7 +155,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
         String[] split = guids.split(",");//以逗号分割
         for (String primaryKey:split){
 
-            removeStack(primaryKey);
+            removeStack(primaryKey, userModel);
         }
     }
 }

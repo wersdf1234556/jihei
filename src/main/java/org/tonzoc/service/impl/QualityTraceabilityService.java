@@ -310,7 +310,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         String[] split = guids.split(",");//以逗号分割
         for (String primaryKey:split){
 
-            removeStack(primaryKey,userModel);
+            removeStack(primaryKey, userModel);
         }
     }
 }

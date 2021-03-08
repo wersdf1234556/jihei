@@ -10,6 +10,8 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
+import org.tonzoc.model.UserModel;
+import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISecurityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -25,6 +27,9 @@ public class SecurityController extends BaseController {
 
     @Autowired
     private ISecurityService securityService;
+
+    @Autowired
+    private IRedisAuthService redisAuthService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams)
@@ -51,20 +56,23 @@ public class SecurityController extends BaseController {
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid SecurityModel securityModel) throws Exception {
 
-        securityService.updateStack(securityModel);
+        UserModel userModel = redisAuthService.getCurrentUser();
+        securityService.updateStack(securityModel, userModel);
         this.securityService.update(securityModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        this.securityService.removeStack(guid);
+        UserModel userModel = redisAuthService.getCurrentUser();
+        this.securityService.removeStack(guid, userModel);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        this.securityService.batchRemoveStack(guids);
+        UserModel userModel = redisAuthService.getCurrentUser();
+        this.securityService.batchRemoveStack(guids, userModel);
     }
 
     // 上传安全文件
