@@ -209,7 +209,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         String[] split = progressGuids.split(",");//以逗号分割
         for (String primaryKey:split){
             if (flag==0){//批量审批
-                approval(primaryKey);
+                approval(primaryKey,flag);
             }else if (flag==1){//批量取消审批
 
             }
