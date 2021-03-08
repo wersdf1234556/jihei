@@ -43,25 +43,29 @@ public class LabConcreteTestHammerModel extends BaseModel {
     private String testAngle;
     @Column(value = "testSurface")
     private Integer testSurface;
-    @Column(value = "sideIsDry")
-    private Integer sideIsDry;
+    @Column(value = "sideIsdry")
+    private Integer sideIsdry;
     @Column(value = "sideRough")
     private Integer sideRough;
-    @Column(value = "carbonationDepthOfComponents")
-    private String carbonationDepthOfComponents;
-    @Column(value = "carbonationDepthData")
-    private String carbonationDepthData;
+    @Column(value = "carbonationDepthofcomponents")
+    private String carbonationDepthofcomponents;
+    @Column(value = "carbonationDepthdata")
+    private String carbonationDepthdata;
     @Column(value = "age")
     private Integer age;
     @Column(value = "detectionParam")
     private String detectionParam;
     @Column(value = "sectionId")
     private String sectionId;
+    @Column(value = "equipmentName")
+    private String equipmentName;
+    @Column(value = "entrustNumber")
+    private String entrustNumber;
 
     public LabConcreteTestHammerModel() {
     }
 
-    public LabConcreteTestHammerModel(String guid, String equipmentNumber, String sensorNumber, String entrustCompnay, String entrustName, String projectName, String componentName, String componentNumber, String detectionTime, String pouringDate, String designGrade, String componentStrength, String areaTotal, String areaNo, String reboundData, String testAngle, Integer testSurface, Integer sideIsDry, Integer sideRough, String carbonationDepthOfComponents, String carbonationDepthData, Integer age, String detectionParam, String sectionId) {
+    public LabConcreteTestHammerModel(String guid, String equipmentNumber, String sensorNumber, String entrustCompnay, String entrustName, String projectName, String componentName, String componentNumber, String detectionTime, String pouringDate, String designGrade, String componentStrength, String areaTotal, String areaNo, String reboundData, String testAngle, Integer testSurface, Integer sideIsdry, Integer sideRough, String carbonationDepthofcomponents, String carbonationDepthdata, Integer age, String detectionParam, String sectionId, String equipmentName, String entrustNumber) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.sensorNumber = sensorNumber;
@@ -79,13 +83,15 @@ public class LabConcreteTestHammerModel extends BaseModel {
         this.reboundData = reboundData;
         this.testAngle = testAngle;
         this.testSurface = testSurface;
-        this.sideIsDry = sideIsDry;
+        this.sideIsdry = sideIsdry;
         this.sideRough = sideRough;
-        this.carbonationDepthOfComponents = carbonationDepthOfComponents;
-        this.carbonationDepthData = carbonationDepthData;
+        this.carbonationDepthofcomponents = carbonationDepthofcomponents;
+        this.carbonationDepthdata = carbonationDepthdata;
         this.age = age;
         this.detectionParam = detectionParam;
         this.sectionId = sectionId;
+        this.equipmentName = equipmentName;
+        this.entrustNumber = entrustNumber;
     }
 
     @JsonProperty(value = "id")
@@ -174,8 +180,8 @@ public class LabConcreteTestHammerModel extends BaseModel {
     }
 
     @JsonProperty(value = "side_isdry")
-    public void setSideIsDry(Integer sideIsDry) {
-        this.sideIsDry = sideIsDry;
+    public void setSideIsdry(Integer sideIsdry) {
+        this.sideIsdry = sideIsdry;
     }
 
     @JsonProperty(value = "side_rough")
@@ -184,13 +190,13 @@ public class LabConcreteTestHammerModel extends BaseModel {
     }
 
     @JsonProperty(value = "carbonation_depthofcomponents")
-    public void setCarbonationDepthOfComponents(String carbonationDepthOfComponents) {
-        this.carbonationDepthOfComponents = carbonationDepthOfComponents;
+    public void setCarbonationDepthofcomponents(String carbonationDepthofcomponents) {
+        this.carbonationDepthofcomponents = carbonationDepthofcomponents;
     }
 
     @JsonProperty(value = "carbonation_depthdata")
-    public void setCarbonationDepthData(String carbonationDepthData) {
-        this.carbonationDepthData = carbonationDepthData;
+    public void setCarbonationDepthdata(String carbonationDepthdata) {
+        this.carbonationDepthdata = carbonationDepthdata;
     }
 
     @JsonProperty(value = "age")
@@ -272,20 +278,20 @@ public class LabConcreteTestHammerModel extends BaseModel {
         return testSurface;
     }
 
-    public Integer getSideIsDry() {
-        return sideIsDry;
+    public Integer getSideIsdry() {
+        return sideIsdry;
     }
 
     public Integer getSideRough() {
         return sideRough;
     }
 
-    public String getCarbonationDepthOfComponents() {
-        return carbonationDepthOfComponents;
+    public String getCarbonationDepthofcomponents() {
+        return carbonationDepthofcomponents;
     }
 
-    public String getCarbonationDepthData() {
-        return carbonationDepthData;
+    public String getCarbonationDepthdata() {
+        return carbonationDepthdata;
     }
 
     public Integer getAge() {
@@ -300,9 +306,27 @@ public class LabConcreteTestHammerModel extends BaseModel {
         return sectionId;
     }
 
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    public String getEntrustNumber() {
+        return entrustNumber;
+    }
+
     @JsonProperty(value = "section_id")
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
+    }
+
+    @JsonProperty(value = "equipment_name")
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
+    }
+
+    @JsonProperty(value = "entrust_number")
+    public void setEntrustNumber(String entrustNumber) {
+        this.entrustNumber = entrustNumber;
     }
 
     @Override
@@ -325,13 +349,15 @@ public class LabConcreteTestHammerModel extends BaseModel {
                 ", reboundData='" + reboundData + '\'' +
                 ", testAngle='" + testAngle + '\'' +
                 ", testSurface=" + testSurface +
-                ", sideIsDry=" + sideIsDry +
+                ", sideIsDry=" + sideIsdry +
                 ", sideRough=" + sideRough +
-                ", carbonationDepthOfComponents='" + carbonationDepthOfComponents + '\'' +
-                ", carbonationDepthData='" + carbonationDepthData + '\'' +
+                ", carbonationDepthOfComponents='" + carbonationDepthofcomponents + '\'' +
+                ", carbonationDepthData='" + carbonationDepthdata + '\'' +
                 ", age=" + age +
                 ", detectionParam='" + detectionParam + '\'' +
                 ", sectionId='" + sectionId + '\'' +
+                ", equipmentName='" + equipmentName + '\'' +
+                ", entrustNumber='" + entrustNumber + '\'' +
                 '}';
     }
 }

@@ -322,6 +322,10 @@ public class LabStressMachineModel extends BaseModel {
         this.originProcessStress = JSON.toJSONString(processStress);
     }
 
+    public void setProcessStress(String processStress) {
+        this.processStress = processStress;
+    }
+
     public String getOriginProcessStress() {
         return originProcessStress;
     }

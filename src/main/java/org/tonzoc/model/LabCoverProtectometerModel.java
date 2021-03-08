@@ -41,8 +41,8 @@ public class LabCoverProtectometerModel extends BaseModel {
     private String totalLines;
     @Column(value = "pouringDate")
     private String pouringDate;
-    @Column(value = "testMethods")
-    private String testMethods;
+    @Column(value = "testMethod")
+    private String testMethod;
     @Column(value = "designSpacing")
     private String designSpacing;
     @Column(value = "presetDiameter")
@@ -61,17 +61,19 @@ public class LabCoverProtectometerModel extends BaseModel {
     private String position;
     @Column(value = "diameter")
     private String diameter;
-    @Column(value = "gradingResults")
-    private Integer gradingResults;
+    @Column(value = "gradingresults")
+    private Integer gradingresults;
     @Column(value = "sectionId")
     private String sectionId;
     @Column(value = "sectionName")
     private String sectionName;
+    @Column(value = "equipmentName")
+    private String equipmentName;
 
     public LabCoverProtectometerModel() {
     }
 
-    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, String averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethods, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingResults, String sectionId, String sectionName) {
+    public LabCoverProtectometerModel(String guid, String equipmentNumber, String componentName, String projectName, String projectAddress, String componentType, String designStrengthGrade, String uploadTime, String detectionTime, Integer designThickness, Integer numberOfBars, String averageThickness, Integer minThickness, Integer maxThickness, String totalLines, String pouringDate, String testMethod, String designSpacing, String presetDiameter, String qualifiedPoints, String lineNumber, String testDirection, String curve, String thicknessDeviation, String position, String diameter, Integer gradingresults, String sectionId, String sectionName, String equipmentName) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.componentName = componentName;
@@ -88,7 +90,7 @@ public class LabCoverProtectometerModel extends BaseModel {
         this.maxThickness = maxThickness;
         this.totalLines = totalLines;
         this.pouringDate = pouringDate;
-        this.testMethods = testMethods;
+        this.testMethod = testMethod;
         this.designSpacing = designSpacing;
         this.presetDiameter = presetDiameter;
         this.qualifiedPoints = qualifiedPoints;
@@ -98,9 +100,10 @@ public class LabCoverProtectometerModel extends BaseModel {
         this.thicknessDeviation = thicknessDeviation;
         this.position = position;
         this.diameter = diameter;
-        this.gradingResults = gradingResults;
+        this.gradingresults = gradingresults;
         this.sectionId = sectionId;
         this.sectionName = sectionName;
+        this.equipmentName = equipmentName;
     }
 
     @Override
@@ -122,7 +125,7 @@ public class LabCoverProtectometerModel extends BaseModel {
                 ", maxThickness=" + maxThickness +
                 ", totalLines='" + totalLines + '\'' +
                 ", pouringDate='" + pouringDate + '\'' +
-                ", testMethods='" + testMethods + '\'' +
+                ", testMethod='" + testMethod + '\'' +
                 ", designSpacing='" + designSpacing + '\'' +
                 ", presetDiameter='" + presetDiameter + '\'' +
                 ", qualifiedPoints='" + qualifiedPoints + '\'' +
@@ -132,9 +135,10 @@ public class LabCoverProtectometerModel extends BaseModel {
                 ", thicknessDeviation='" + thicknessDeviation + '\'' +
                 ", position='" + position + '\'' +
                 ", diameter='" + diameter + '\'' +
-                ", gradingResults=" + gradingResults +
+                ", gradingResults=" + gradingresults +
                 ", sectionId=" + sectionId +
                 ", sectionName=" + sectionName +
+                ", equipmentName=" + equipmentName +
                 '}';
     }
 
@@ -202,8 +206,8 @@ public class LabCoverProtectometerModel extends BaseModel {
         return pouringDate;
     }
 
-    public String getTestMethods() {
-        return testMethods;
+    public String getTestMethod() {
+        return testMethod;
     }
 
     public String getDesignSpacing() {
@@ -242,8 +246,12 @@ public class LabCoverProtectometerModel extends BaseModel {
         return diameter;
     }
 
-    public Integer getGradingResults() {
-        return gradingResults;
+    public Integer getGradingresults() {
+        return gradingresults;
+    }
+
+    public String getEquipmentName() {
+        return equipmentName;
     }
 
     @JsonProperty(value = "id")
@@ -326,9 +334,9 @@ public class LabCoverProtectometerModel extends BaseModel {
         this.pouringDate = pouringDate;
     }
 
-    @JsonProperty(value = "test_methods")
-    public void setTestMethods(String testMethods) {
-        this.testMethods = testMethods;
+    @JsonProperty(value = "test_method")
+    public void setTestMethod(String testMethod) {
+        this.testMethod = testMethod;
     }
 
     @JsonProperty(value = "design_spacing")
@@ -377,8 +385,8 @@ public class LabCoverProtectometerModel extends BaseModel {
     }
     
     @JsonProperty(value = "gradingresults")
-    public void setGradingResults(Integer gradingResults) {
-        this.gradingResults = gradingResults;
+    public void setGradingresults(Integer gradingresults) {
+        this.gradingresults = gradingresults;
     }
 
     public String getSectionId() {
@@ -397,5 +405,10 @@ public class LabCoverProtectometerModel extends BaseModel {
     @JsonProperty(value = "section_name")
     public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
+    }
+
+    @JsonProperty(value = "equipment_name")
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
     }
 }

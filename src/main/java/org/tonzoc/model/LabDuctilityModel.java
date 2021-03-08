@@ -1,12 +1,13 @@
 package org.tonzoc.model;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-@Table(value = "labPmsTesters")
-public class LabPmsTesterModel extends BaseModel {
+@Table(value = "labDuctilities")
+public class LabDuctilityModel extends BaseModel {
 
     @PrimaryKey
     @Column(value = "guid")
@@ -47,33 +48,27 @@ public class LabPmsTesterModel extends BaseModel {
     private String endTime;
     @Column(value = "uploadTime")
     private String uploadTime;
-    @Column(value = "concreteAge")
-    private String concreteAge;
-    @Column(value = "loadValue")
-    private String loadValue;
-    @Column(value = "displacement1")
-    private String displacement1;
-    @Column(value = "displacement2")
-    private String displacement2;
-    @Column(value = "strength")
-    private String strength;
-    @Column(value = "designStrength")
-    private String designStrength;
-    @Column(value = "representativeStrength")
-    private String representativeStrength;
-    @Column(value = "strengthGraph")
-    private String strengthGraph;
+    @Column(value = "testTemp")
+    private String testTemp;
+    @Column(value = "extensionSpeed")
+    private String extensionSpeed;
+    @Column(value = "ductility")
+    private String ductility;
+    @Column(value = "averageDuctility")
+    private String averageDuctility;
+    @Column(value = "curve")
+    private String curve;
+    @Column(value = "curve1")
+    private String curve1;
     @Column(value = "result")
     private String result;
-    @Column(value = "sectionId")
-    private String sectionId;
-    @Column(value = "sectionName")
-    private String sectionName;
+    @Column(value = "otherInformation")
+    private String otherInformation;
 
-    public LabPmsTesterModel() {
+    public LabDuctilityModel() {
     }
 
-    public LabPmsTesterModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String concreteAge, String loadValue, String displacement1, String displacement2, String strength, String designStrength, String representativeStrength, String strengthGraph, String result, String sectionId, String sectionName) {
+    public LabDuctilityModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String testTemp, String extensionSpeed, String ductility, String averageDuctility, String curve, String curve1, String result, String otherInformation) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.equipmentName = equipmentName;
@@ -93,22 +88,19 @@ public class LabPmsTesterModel extends BaseModel {
         this.startTime = startTime;
         this.endTime = endTime;
         this.uploadTime = uploadTime;
-        this.concreteAge = concreteAge;
-        this.loadValue = loadValue;
-        this.displacement1 = displacement1;
-        this.displacement2 = displacement2;
-        this.strength = strength;
-        this.designStrength = designStrength;
-        this.representativeStrength = representativeStrength;
-        this.strengthGraph = strengthGraph;
+        this.testTemp = testTemp;
+        this.extensionSpeed = extensionSpeed;
+        this.ductility = ductility;
+        this.averageDuctility = averageDuctility;
+        this.curve = curve;
+        this.curve1 = curve1;
         this.result = result;
-        this.sectionId = sectionId;
-        this.sectionName = sectionName;
+        this.otherInformation = otherInformation;
     }
 
     @Override
     public String toString() {
-        return "LabPmsTesterModel{" +
+        return "LabDuctilityModel{" +
                 "guid='" + guid + '\'' +
                 ", equipmentNumber='" + equipmentNumber + '\'' +
                 ", equipmentName='" + equipmentName + '\'' +
@@ -128,17 +120,14 @@ public class LabPmsTesterModel extends BaseModel {
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", uploadTime='" + uploadTime + '\'' +
-                ", concreteAge='" + concreteAge + '\'' +
-                ", loadValue='" + loadValue + '\'' +
-                ", displacement1='" + displacement1 + '\'' +
-                ", displacement2='" + displacement2 + '\'' +
-                ", strength='" + strength + '\'' +
-                ", designStrength='" + designStrength + '\'' +
-                ", representativeStrength='" + representativeStrength + '\'' +
-                ", strengthGraph='" + strengthGraph + '\'' +
+                ", testTemp='" + testTemp + '\'' +
+                ", extensionSpeed='" + extensionSpeed + '\'' +
+                ", ductility='" + ductility + '\'' +
+                ", averageDuctility='" + averageDuctility + '\'' +
+                ", curve='" + curve + '\'' +
+                ", curve1='" + curve1 + '\'' +
                 ", result='" + result + '\'' +
-                ", sectionId='" + sectionId + '\'' +
-                ", sectionName='" + sectionName + '\'' +
+                ", otherInformation='" + otherInformation + '\'' +
                 '}';
     }
 
@@ -218,44 +207,36 @@ public class LabPmsTesterModel extends BaseModel {
         return uploadTime;
     }
 
-    public String getConcreteAge() {
-        return concreteAge;
+    public String getTestTemp() {
+        return testTemp;
     }
 
-    public String getLoadValue() {
-        return loadValue;
+    public String getExtensionSpeed() {
+        return extensionSpeed;
     }
 
-    public String getDisplacement1() {
-        return displacement1;
+    public String getDuctility() {
+        return ductility;
     }
 
-    public String getDisplacement2() {
-        return displacement2;
+    public String getAverageDuctility() {
+        return averageDuctility;
     }
 
-    public String getStrength() {
-        return strength;
+    public String getCurve() {
+        return curve;
     }
 
-    public String getDesignStrength() {
-        return designStrength;
-    }
-
-    public String getRepresentativeStrength() {
-        return representativeStrength;
-    }
-
-    public String getStrengthGraph() {
-        return strengthGraph;
+    public String getCurve1() {
+        return curve1;
     }
 
     public String getResult() {
         return result;
     }
 
-    public String getSectionName() {
-        return sectionName;
+    public String getOtherInformation() {
+        return otherInformation;
     }
 
     @JsonProperty(value = "id")
@@ -318,7 +299,7 @@ public class LabPmsTesterModel extends BaseModel {
         this.tester = tester;
     }
 
-    @JsonProperty(value = "sampleName")
+    @JsonProperty(value = "sample_name")
     public void setSampleName(String sampleName) {
         this.sampleName = sampleName;
     }
@@ -353,44 +334,34 @@ public class LabPmsTesterModel extends BaseModel {
         this.uploadTime = uploadTime;
     }
 
-    @JsonProperty(value = "concrete_age")
-    public void setConcreteAge(String concreteAge) {
-        this.concreteAge = concreteAge;
+    @JsonProperty(value = "test_temp")
+    public void setTestTemp(String testTemp) {
+        this.testTemp = testTemp;
     }
 
-    @JsonProperty(value = "load_value")
-    public void setLoadValue(String loadValue) {
-        this.loadValue = loadValue;
+    @JsonProperty(value = "extension_speed")
+    public void setExtensionSpeed(String extensionSpeed) {
+        this.extensionSpeed = extensionSpeed;
     }
 
-    @JsonProperty(value = "displacement_1")
-    public void setDisplacement1(String displacement1) {
-        this.displacement1 = displacement1;
+    @JsonProperty(value = "ductility")
+    public void setDuctility(String ductility) {
+        this.ductility = ductility;
     }
 
-    @JsonProperty(value = "displacement_2")
-    public void setDisplacement2(String displacement2) {
-        this.displacement2 = displacement2;
+    @JsonProperty(value = "average_ductility")
+    public void setAverageDuctility(String averageDuctility) {
+        this.averageDuctility = averageDuctility;
     }
 
-    @JsonProperty(value = "strength")
-    public void setStrength(String strength) {
-        this.strength = strength;
+    @JsonProperty(value = "curve")
+    public void setCurve(String curve) {
+        this.curve = curve;
     }
 
-    @JsonProperty(value = "design_strength")
-    public void setDesignStrength(String designStrength) {
-        this.designStrength = designStrength;
-    }
-
-    @JsonProperty(value = "representative_strength")
-    public void setRepresentativeStrength(String representativeStrength) {
-        this.representativeStrength = representativeStrength;
-    }
-
-    @JsonProperty(value = "strength_graph")
-    public void setStrengthGraph(String strengthGraph) {
-        this.strengthGraph = strengthGraph;
+    @JsonProperty(value = "curve_1")
+    public void setCurve1(String curve1) {
+        this.curve1 = curve1;
     }
 
     @JsonProperty(value = "result")
@@ -398,17 +369,8 @@ public class LabPmsTesterModel extends BaseModel {
         this.result = result;
     }
 
-    public String getSectionId() {
-        return sectionId;
-    }
-
-    @JsonProperty(value = "section_id")
-    public void setSectionId(String sectionId) {
-        this.sectionId = sectionId;
-    }
-
-    @JsonProperty(value = "section_name")
-    public void setSectionName(String sectionName) {
-        this.sectionName = sectionName;
+    @JsonProperty(value = "other_information")
+    public void setOtherInformation(String otherInformation) {
+        this.otherInformation = otherInformation;
     }
 }

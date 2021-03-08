@@ -5,8 +5,8 @@ import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-@Table(value = "labPmsTesters")
-public class LabPmsTesterModel extends BaseModel {
+@Table(value = "labPmsCbrs")
+public class LabPmsCbrModel extends BaseModel {
 
     @PrimaryKey
     @Column(value = "guid")
@@ -15,6 +15,10 @@ public class LabPmsTesterModel extends BaseModel {
     private String equipmentNumber;
     @Column(value = "equipmentName")
     private String equipmentName;
+    @Column(value = "sectionId")
+    private String sectionId;
+    @Column(value = "sectionName")
+    private String sectionName;
     @Column(value = "engineeringName")
     private String engineeringName;
     @Column(value = "engineeringSite")
@@ -47,36 +51,32 @@ public class LabPmsTesterModel extends BaseModel {
     private String endTime;
     @Column(value = "uploadTime")
     private String uploadTime;
-    @Column(value = "concreteAge")
-    private String concreteAge;
-    @Column(value = "loadValue")
-    private String loadValue;
+    @Column(value = "diameter")
+    private String diameter;
+    @Column(value = "cbr25")
+    private String cbr25;
+    @Column(value = "cbr50")
+    private String cbr50;
+    @Column(value = "load")
+    private String load;
     @Column(value = "displacement1")
     private String displacement1;
     @Column(value = "displacement2")
     private String displacement2;
-    @Column(value = "strength")
-    private String strength;
-    @Column(value = "designStrength")
-    private String designStrength;
-    @Column(value = "representativeStrength")
-    private String representativeStrength;
-    @Column(value = "strengthGraph")
-    private String strengthGraph;
+    @Column(value = "displacement3")
+    private String displacement3;
     @Column(value = "result")
     private String result;
-    @Column(value = "sectionId")
-    private String sectionId;
-    @Column(value = "sectionName")
-    private String sectionName;
 
-    public LabPmsTesterModel() {
+    public LabPmsCbrModel() {
     }
 
-    public LabPmsTesterModel(String guid, String equipmentNumber, String equipmentName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String concreteAge, String loadValue, String displacement1, String displacement2, String strength, String designStrength, String representativeStrength, String strengthGraph, String result, String sectionId, String sectionName) {
+    public LabPmsCbrModel(String guid, String equipmentNumber, String equipmentName, String sectionId, String sectionName, String engineeringName, String engineeringSite, String taskNo, String testType, String testName, String testNo, String groupId, String testDate, String tester, String sampleName, String testAllFr, String testFr, String sampleNo, String startTime, String endTime, String uploadTime, String diameter, String cbr25, String cbr50, String load, String displacement1, String displacement2, String displacement3, String result) {
         this.guid = guid;
         this.equipmentNumber = equipmentNumber;
         this.equipmentName = equipmentName;
+        this.sectionId = sectionId;
+        this.sectionName = sectionName;
         this.engineeringName = engineeringName;
         this.engineeringSite = engineeringSite;
         this.taskNo = taskNo;
@@ -93,25 +93,24 @@ public class LabPmsTesterModel extends BaseModel {
         this.startTime = startTime;
         this.endTime = endTime;
         this.uploadTime = uploadTime;
-        this.concreteAge = concreteAge;
-        this.loadValue = loadValue;
+        this.diameter = diameter;
+        this.cbr25 = cbr25;
+        this.cbr50 = cbr50;
+        this.load = load;
         this.displacement1 = displacement1;
         this.displacement2 = displacement2;
-        this.strength = strength;
-        this.designStrength = designStrength;
-        this.representativeStrength = representativeStrength;
-        this.strengthGraph = strengthGraph;
+        this.displacement3 = displacement3;
         this.result = result;
-        this.sectionId = sectionId;
-        this.sectionName = sectionName;
     }
 
     @Override
     public String toString() {
-        return "LabPmsTesterModel{" +
+        return "LabPmsCbrModel{" +
                 "guid='" + guid + '\'' +
                 ", equipmentNumber='" + equipmentNumber + '\'' +
                 ", equipmentName='" + equipmentName + '\'' +
+                ", sectionId='" + sectionId + '\'' +
+                ", sectionName='" + sectionName + '\'' +
                 ", engineeringName='" + engineeringName + '\'' +
                 ", engineeringSite='" + engineeringSite + '\'' +
                 ", taskNo='" + taskNo + '\'' +
@@ -128,17 +127,14 @@ public class LabPmsTesterModel extends BaseModel {
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", uploadTime='" + uploadTime + '\'' +
-                ", concreteAge='" + concreteAge + '\'' +
-                ", loadValue='" + loadValue + '\'' +
+                ", diameter='" + diameter + '\'' +
+                ", cbr25='" + cbr25 + '\'' +
+                ", cbr50='" + cbr50 + '\'' +
+                ", load='" + load + '\'' +
                 ", displacement1='" + displacement1 + '\'' +
                 ", displacement2='" + displacement2 + '\'' +
-                ", strength='" + strength + '\'' +
-                ", designStrength='" + designStrength + '\'' +
-                ", representativeStrength='" + representativeStrength + '\'' +
-                ", strengthGraph='" + strengthGraph + '\'' +
+                ", displacement3='" + displacement3 + '\'' +
                 ", result='" + result + '\'' +
-                ", sectionId='" + sectionId + '\'' +
-                ", sectionName='" + sectionName + '\'' +
                 '}';
     }
 
@@ -152,6 +148,10 @@ public class LabPmsTesterModel extends BaseModel {
 
     public String getEquipmentName() {
         return equipmentName;
+    }
+
+    public String getSectionName() {
+        return sectionName;
     }
 
     public String getEngineeringName() {
@@ -218,12 +218,20 @@ public class LabPmsTesterModel extends BaseModel {
         return uploadTime;
     }
 
-    public String getConcreteAge() {
-        return concreteAge;
+    public String getDiameter() {
+        return diameter;
     }
 
-    public String getLoadValue() {
-        return loadValue;
+    public String getCbr25() {
+        return cbr25;
+    }
+
+    public String getCbr50() {
+        return cbr50;
+    }
+
+    public String getLoad() {
+        return load;
     }
 
     public String getDisplacement1() {
@@ -234,28 +242,12 @@ public class LabPmsTesterModel extends BaseModel {
         return displacement2;
     }
 
-    public String getStrength() {
-        return strength;
-    }
-
-    public String getDesignStrength() {
-        return designStrength;
-    }
-
-    public String getRepresentativeStrength() {
-        return representativeStrength;
-    }
-
-    public String getStrengthGraph() {
-        return strengthGraph;
+    public String getDisplacement3() {
+        return displacement3;
     }
 
     public String getResult() {
         return result;
-    }
-
-    public String getSectionName() {
-        return sectionName;
     }
 
     @JsonProperty(value = "id")
@@ -353,16 +345,6 @@ public class LabPmsTesterModel extends BaseModel {
         this.uploadTime = uploadTime;
     }
 
-    @JsonProperty(value = "concrete_age")
-    public void setConcreteAge(String concreteAge) {
-        this.concreteAge = concreteAge;
-    }
-
-    @JsonProperty(value = "load_value")
-    public void setLoadValue(String loadValue) {
-        this.loadValue = loadValue;
-    }
-
     @JsonProperty(value = "displacement_1")
     public void setDisplacement1(String displacement1) {
         this.displacement1 = displacement1;
@@ -373,24 +355,29 @@ public class LabPmsTesterModel extends BaseModel {
         this.displacement2 = displacement2;
     }
 
-    @JsonProperty(value = "strength")
-    public void setStrength(String strength) {
-        this.strength = strength;
+    @JsonProperty(value = "diameter")
+    public void setDiameter(String diameter) {
+        this.diameter = diameter;
     }
 
-    @JsonProperty(value = "design_strength")
-    public void setDesignStrength(String designStrength) {
-        this.designStrength = designStrength;
+    @JsonProperty(value = "cbr25")
+    public void setCbr25(String cbr25) {
+        this.cbr25 = cbr25;
     }
 
-    @JsonProperty(value = "representative_strength")
-    public void setRepresentativeStrength(String representativeStrength) {
-        this.representativeStrength = representativeStrength;
+    @JsonProperty(value = "cbr50")
+    public void setCbr50(String cbr50) {
+        this.cbr50 = cbr50;
     }
 
-    @JsonProperty(value = "strength_graph")
-    public void setStrengthGraph(String strengthGraph) {
-        this.strengthGraph = strengthGraph;
+    @JsonProperty(value = "load")
+    public void setLoad(String load) {
+        this.load = load;
+    }
+
+    @JsonProperty(value = "displacement_3")
+    public void setDisplacement3(String displacement3) {
+        this.displacement3 = displacement3;
     }
 
     @JsonProperty(value = "result")
