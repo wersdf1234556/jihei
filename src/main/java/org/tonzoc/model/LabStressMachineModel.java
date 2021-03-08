@@ -58,11 +58,13 @@ public class LabStressMachineModel extends BaseModel {
     private String processStress;
     @Column(value = "originProcessStress")
     private String originProcessStress;
+    @Column(value = "equipmentType")
+    private String equipmentType;
 
     public LabStressMachineModel() {
     }
 
-    public LabStressMachineModel(String guid, String organizationId, String sectionId, String sectionName, String equipmentNumber, String equipmentName, String projectName, String constructionSpot, String testType, String testId, String testDate, String concreteAge, String cubeArea, String cubeCode, Integer cubeCount, String representativeStrength, String designStrength, Integer testEvaluation, String loadValue, String compressiveStrength, String graphId, String processStress) {
+    public LabStressMachineModel(String guid, String organizationId, String sectionId, String sectionName, String equipmentNumber, String equipmentName, String projectName, String constructionSpot, String testType, String testId, String testDate, String concreteAge, String cubeArea, String cubeCode, Integer cubeCount, String representativeStrength, String designStrength, Integer testEvaluation, String loadValue, String compressiveStrength, String graphId, String processStress, String equipmentType) {
         this.guid = guid;
         this.organizationId = organizationId;
         this.sectionId = sectionId;
@@ -85,6 +87,7 @@ public class LabStressMachineModel extends BaseModel {
         this.compressiveStrength = compressiveStrength;
         this.graphId = graphId;
         this.processStress = processStress;
+        this.equipmentType = equipmentType;
     }
 
     @Override
@@ -112,6 +115,7 @@ public class LabStressMachineModel extends BaseModel {
                 ", compressiveStrength='" + compressiveStrength + '\'' +
                 ", graphId='" + graphId + '\'' +
                 ", processStress='" + processStress + '\'' +
+                ", equipmentType='" + equipmentType + '\'' +
                 '}';
     }
 
@@ -201,6 +205,10 @@ public class LabStressMachineModel extends BaseModel {
 
     public String getProcessStress() {
         return processStress;
+    }
+
+    public String getEquipmentType() {
+        return equipmentType;
     }
 
     @JsonProperty(value = "id")
@@ -320,5 +328,10 @@ public class LabStressMachineModel extends BaseModel {
 
     public void setOriginProcessStress(String originProcessStress) {
         this.originProcessStress = originProcessStress;
+    }
+
+    @JsonProperty(value = "equipment_type")
+    public void setEquipmentType(String equipmentType) {
+        this.equipmentType = equipmentType;
     }
 }
