@@ -9,10 +9,8 @@ public class PersonTypeQueryParams {
 
     @Operator(value = "like", field = "name")
     private String name;
-    @Operator(value = "eq", field = "flag")
-    private String flag;
-    @Operator(value = "eq", field = "parentId")
-    private String parentId;
+    @Operator(value = "eq", field = "categoryGuid")
+    private String categoryGuid;
 
 
     public String getGuid() {
@@ -31,19 +29,11 @@ public class PersonTypeQueryParams {
         this.name = name;
     }
 
-    public String getFlag() {
-        return flag;
+    public String getCategoryGuid() {
+        return categoryGuid;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
-
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public void setCategoryGuid(String categoryGuid) {
+        this.categoryGuid = categoryGuid;
     }
 }

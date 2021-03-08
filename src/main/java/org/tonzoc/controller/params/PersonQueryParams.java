@@ -12,6 +12,8 @@ public class PersonQueryParams {
     private String tenderGuid;
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
+    @Operator(value = "eq", field = "categoryGuid")
+    private String categoryGuid;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
     @Operator(value = "eq", field = "idCard")
@@ -64,5 +66,13 @@ public class PersonQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getCategoryGuid() {
+        return categoryGuid;
+    }
+
+    public void setCategoryGuid(String categoryGuid) {
+        this.categoryGuid = categoryGuid;
     }
 }

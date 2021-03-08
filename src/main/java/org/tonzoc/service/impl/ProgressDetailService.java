@@ -31,8 +31,6 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     @Autowired
     private ApprovalHelper approvalHelper;
 
-    @Autowired
-    private IRedisAuthService redisAuthService;
 
 
     public List<ProgressDetailModel> listByTender(String tenderGuid,String date,String progressNameGuid){
@@ -141,8 +139,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         save(progressDetailModel);
     }
 
-    public void updateStack(ProgressDetailModel progressDetailModel) throws Exception {
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void updateStack(ProgressDetailModel progressDetailModel,UserModel userModel) throws Exception {
         ProgressDetailModel oldProgressDetail =get(progressDetailModel.getGuid());
         System.out.println(oldProgressDetail.toString());
         System.out.println(userModel.toString());
@@ -163,8 +160,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         update(progressDetailModel);
     }
 
-    public void removeStack(String guid) throws Exception{
-        UserModel userModel = redisAuthService.getCurrentUser();
+    public void removeStack(String guid,UserModel userModel) throws Exception{
         ProgressDetailModel oldProgressDetail =get(guid);
         if (!userModel.getTenderManage().equals("*")){
             if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
@@ -177,13 +173,13 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         remove(guid);
     }
 
-    public void batchRemoveStack(String guids) throws Exception{
+    public void batchRemoveStack(String guids,UserModel userModel) throws Exception{
         if (guids == null){
             throw new NotFoundException("未删除");
         }
         String[] split = guids.split(",");//以逗号分割
         for (String primaryKey:split){
-            removeStack(primaryKey);
+            removeStack(primaryKey,userModel);
         }
     }
 

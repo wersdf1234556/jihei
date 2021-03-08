@@ -37,59 +37,6 @@ public class PersonTypeService extends BaseService<PersonTypeModel> implements I
         return list;
     }
 
-    public List<PersonTypeModel> listWithLevel(String parentId) throws Exception {
-        List<PersonTypeModel> authorityModels = new ArrayList<>();
-
-        List<PersonTypeModel> allPersonTypes = null;
-        if (parentId==null||StringUtils.isEmpty(parentId)) {
-            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-
-            Page page = PageHelper.startPage(1, 0, "mainTable.sortId asc");
-            page.setOrderByOnly(true);
-            allPersonTypes = this.list(sqlQueryParams);
-        }else {
-            allPersonTypes=this.listByParentId(parentId).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());;
-            allPersonTypes.add(get(parentId));
-        }
-        HashMap<String, PersonTypeModel> personTypeModelMap = new HashMap<>();
-        while (allPersonTypes.size() != 0) {
-            int count = allPersonTypes.size();
-            Iterator<PersonTypeModel> iterator = allPersonTypes.iterator();
-            while (iterator.hasNext()) {
-                PersonTypeModel personTypeModel = iterator.next();
-
-                System.out.println(personTypeModel);
-
-                if (personTypeModel.getParentId().equals("0")) {
-                    personTypeModelMap.put(personTypeModel.getGuid(), personTypeModel);
-                    iterator.remove();
-                } else if (personTypeModelMap.containsKey(personTypeModel.getParentId())) {
-                    PersonTypeModel parentPersonTypeModel = personTypeModelMap.get(personTypeModel.getParentId());
-                    if (parentPersonTypeModel.getChildren() == null) {
-                        parentPersonTypeModel.setChildren(new ArrayList<>());
-                    }
-                    parentPersonTypeModel.getChildren().add(personTypeModel);
-                    personTypeModelMap.put(personTypeModel.getGuid(), personTypeModel);
-                    iterator.remove();
-                }
-            }
-            if (count == allPersonTypes.size()) {
-                // TODO 需要自定义异常类型
-                throw new Exception("进入循环");
-            }
-        }
-
-        for (PersonTypeModel personTypeModel : personTypeModelMap.values()) {
-            if (personTypeModel.getParentId().equals("0")) {
-                authorityModels.add(personTypeModel);
-            }
-        }
-
-        return authorityModels
-                .stream()
-                .sorted(Comparator.comparing(PersonTypeModel::getSortId))
-                .collect(Collectors.toList());
-    }
 
 
 }
