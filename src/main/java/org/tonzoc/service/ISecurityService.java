@@ -22,12 +22,27 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType);
 
     // 修改状态
-    void updateStatus(String status, String guid);
+    void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid);
 
     // 安全统计
     List<ReturnModel> securityStatics();
 
     // 安全隐患排查
     List<SecurityModel> unsafeSelect();
+
+    // 提交
+    void submit(String securityGuid, String currentTenderGuid);
+
+    // 多条提交
+    void batchApproval(String securityGuid, String currentTenderGuid, Integer flag);
+
+    // 修改时询问是否能修改
+    void updateStack(SecurityModel securityGuid) throws Exception;
+
+    // 删除一条
+    void removeStack(String guid) throws Exception;
+
+    // 循环删除
+    void batchRemoveStack(String guids) throws Exception;
 
 }

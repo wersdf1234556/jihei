@@ -4,8 +4,6 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.tonzoc.common.FileHelper;
-import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -43,33 +41,30 @@ public class SecurityController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
-        if (!"".equals(securityModel.getCreateDate()) && securityModel.getCreateDate() != null) {
-            securityModel.setCreateTime(TimeHelper.stringToDate(securityModel.getCreateDate()));
-        }
-        securityModel.setStatus("0");
+        securityModel.setStatus("unSubmit");
+        securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
 
         this.securityService.save(securityModel);
         securityService.upFiles(file, securityModel.getGuid(), "", fileType);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid SecurityModel securityModel) throws ParseException {
+    public void update(@RequestBody @Valid SecurityModel securityModel) throws Exception {
 
-        if (!"".equals(securityModel.getCreateDate()) && securityModel.getCreateDate() != null) {
-            securityModel = securityService.updateTime(securityModel);
-        }
+        securityService.updateStack(securityModel);
         this.securityService.update(securityModel);
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
-        this.securityService.remove(guid);
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
+
+        this.securityService.removeStack(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        this.securityService.removeMany(guids);
+        this.securityService.batchRemoveStack(guids);
     }
 
     // 上传安全文件
@@ -105,5 +100,19 @@ public class SecurityController extends BaseController {
     public List<SecurityModel> unsafeSelect() {
 
         return securityService.unsafeSelect();
+    }
+
+    // 提交
+    @PostMapping(value = "submit")
+    public void submit(String securityGuid, String currentTenderGuid){
+
+        securityService.submit(securityGuid, currentTenderGuid);
+    }
+
+    // 批量提交
+    @PostMapping(value = "batchApproval")
+    public void batchApproval(String securityGuid, String currentTenderGuid, Integer flag) {
+
+        securityService.batchApproval(securityGuid, currentTenderGuid, flag);
     }
 }

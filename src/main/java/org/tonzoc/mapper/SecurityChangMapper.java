@@ -13,10 +13,6 @@ public interface SecurityChangMapper extends BaseMapper<SecurityChangModel>{
     @Update("update securityChangs set changTime = #{changTime} where guid = #{guid}")
     void updateChangTime(@Param("changTime") Date changTime, @Param("guid") String guid);
 
-    // 处理check时间字段
-    @Update("update securityChangs set checkTime = #{checkTime} where guid = #{guid}")
-    void updateCheckTime(@Param("checkTime") Date checkTime, @Param("guid") String guid);
-
     // 查询总数
     @Select("select count(guid) from securityChangs")
     Integer count();
@@ -24,4 +20,11 @@ public interface SecurityChangMapper extends BaseMapper<SecurityChangModel>{
     // 按照状态查数量
     @Select("select count(guid) from securityChangs where status = #{statue}")
     Integer countStatus(String status);
+
+    // 修改安全检查表的状态
+    @Update("update securitysChangs set status = #{status}, approvalTime = #{approvalTime}, currentTenderGuid = #{currentTenderGuid} where guid = #{guid}")
+    void updateStatus(@Param("status")String status,
+                      @Param("approvalTime")String approvalTime,
+                      @Param("currentTenderGuid")String currentTenderGuid,
+                      @Param("guid")String guid);
 }

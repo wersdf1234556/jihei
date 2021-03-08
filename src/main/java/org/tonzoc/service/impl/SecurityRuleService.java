@@ -34,16 +34,16 @@ public class SecurityRuleService extends BaseService<SecurityRuleModel> implemen
 
     // 积分变化情况
     @Override
-    public List<ReturnModel> selectChang(){
+    public List<ReturnModel> selectChang(){  // 有问题
 
         List<ReturnModel> list1 = new ArrayList<>();
         Map<String, Integer> map = new HashMap(); // 存年月
         Map<String, Integer> map1 = new HashMap<>(); // 存数据
         List<SecurityModel> list = securityRuleMapper.selectChang();
         for (SecurityModel li: list){
-             String year = li.getCreatePersonGuid().substring(0, 4); // 年
-             String month = li.getCreatePersonGuid().substring(5, 7); // 月
-             String day = li.getCreatePersonGuid().substring(8, 10); // 日
+             String year = li.getCurrentTenderGuid().substring(0, 4); // 年
+             String month = li.getCurrentTenderGuid().substring(5, 7); // 月
+             String day = li.getCurrentTenderGuid().substring(8, 10); // 日
              String str = Integer.valueOf(year) + "年" + Integer.valueOf(month) + "月"; //年+月
              if (map.containsKey(str)) { //如果map中有年+月
                  if (map.get(str) < Integer.valueOf(day)) { // 如果map的日小于现在日

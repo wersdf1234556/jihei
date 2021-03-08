@@ -5,8 +5,6 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-import java.util.Date;
-
 @Table(value = "securityChangs")
 public class SecurityChangModel extends BaseModel{
 
@@ -14,26 +12,22 @@ public class SecurityChangModel extends BaseModel{
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
+    @Column(value = "securityGuid")
+    private String securityGuid;
     @Column(value = "chang")
     private String chang; // 整改描述
     @Column(value = "changTime")
-    private Date changTime; // 整改时间
-    private String changDate;
-    @Column(value = "createPersonGuid")
-    private String createPersonGuid;  //整改创建人
+    private String changTime; // 整改时间
     @Column(value = "tenderGuid")
-    private String tenderGuid; // 标段
-    @Column(value = "checkPersonGuid")
-    private String checkPersonGuid; // 审核人
-    @Column(value = "checkTime")
-    private Date checkTime; // 审核时间
-    private String checkDate;
+    private String tenderGuid; // 整改创建人
+    @Column(value = "currentTenderGuid")
+    private String currentTenderGuid;  // 当前审核人guid
+    @Column(value = "approvalTime")
+    private String approvalTime; // 审核时间
     @Column(value = "status")
-    private String status; // 状态
+    private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "securityGuid")
-    private String securityGuid;
 
     public SecurityChangModel() {
     }
@@ -54,30 +48,6 @@ public class SecurityChangModel extends BaseModel{
         this.chang = chang;
     }
 
-    public Date getChangTime() {
-        return changTime;
-    }
-
-    public void setChangTime(Date changTime) {
-        this.changTime = changTime;
-    }
-
-    public String getChangDate() {
-        return changDate;
-    }
-
-    public void setChangDate(String changDate) {
-        this.changDate = changDate;
-    }
-
-    public String getCreatePersonGuid() {
-        return createPersonGuid;
-    }
-
-    public void setCreatePersonGuid(String createPersonGuid) {
-        this.createPersonGuid = createPersonGuid;
-    }
-
     public String getTenderGuid() {
         return tenderGuid;
     }
@@ -86,28 +56,28 @@ public class SecurityChangModel extends BaseModel{
         this.tenderGuid = tenderGuid;
     }
 
-    public String getCheckPersonGuid() {
-        return checkPersonGuid;
+    public String getChangTime() {
+        return changTime;
     }
 
-    public void setCheckPersonGuid(String checkPersonGuid) {
-        this.checkPersonGuid = checkPersonGuid;
+    public void setChangTime(String changTime) {
+        this.changTime = changTime;
     }
 
-    public Date getCheckTime() {
-        return checkTime;
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
     }
 
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
     }
 
-    public String getCheckDate() {
-        return checkDate;
+    public String getApprovalTime() {
+        return approvalTime;
     }
 
-    public void setCheckDate(String checkDate) {
-        this.checkDate = checkDate;
+    public void setApprovalTime(String approvalTime) {
+        this.approvalTime = approvalTime;
     }
 
     public String getStatus() {
@@ -138,17 +108,14 @@ public class SecurityChangModel extends BaseModel{
     public String toString() {
         return "SecurityChangModel{" +
                 "guid='" + guid + '\'' +
+                ", securityGuid='" + securityGuid + '\'' +
                 ", chang='" + chang + '\'' +
-                ", changTime=" + changTime +
-                ", changDate='" + changDate + '\'' +
-                ", createPersonGuid='" + createPersonGuid + '\'' +
+                ", changTime='" + changTime + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
-                ", checkPersonGuid='" + checkPersonGuid + '\'' +
-                ", checkTime=" + checkTime +
-                ", checkDate='" + checkDate + '\'' +
+                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", approvalTime='" + approvalTime + '\'' +
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
-                ", securityGuid='" + securityGuid + '\'' +
                 '}';
     }
 }

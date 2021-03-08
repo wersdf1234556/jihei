@@ -149,17 +149,15 @@ public class QualityTraceabilityController extends BaseController {
 
     //审批
     @PostMapping(value = "approval")
-    public void approval(String qualityTraceabilityGuid,Integer flag) {
+    public void approval(String qualityTraceabilityGuid, Integer flag) {
 
-        qualityTraceabilityService.approval(qualityTraceabilityGuid,flag);
+        qualityTraceabilityService.approval(qualityTraceabilityGuid, flag);
     }
 
     //批量审批
     @PostMapping(value = "batchApproval")
-    public void batchApproval(String qualityTraceabilityGuid,Integer flag) {
+    public void batchApproval(String qualityTraceabilityGuid, Integer flag) {
 
-        qualityTraceabilityService.batchApproval(qualityTraceabilityGuid,flag);
+        qualityTraceabilityService.batchApproval(qualityTraceabilityGuid, flag);
     }
-
-
 }

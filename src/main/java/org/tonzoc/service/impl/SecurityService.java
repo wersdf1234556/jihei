@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.tonzoc.common.ApprovalHelper;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
+import org.tonzoc.exception.NotFoundException;
+import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.AttachmentSecurityMapper;
 import org.tonzoc.mapper.SecurityChangMapper;
 import org.tonzoc.mapper.SecurityMapper;
@@ -43,6 +46,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     private ITenderScoreService tenderScoreService;
 
     @Autowired
+    private IRedisAuthService redisAuthService;
+
+    @Autowired
     private IntelliSiteProperties intelliSiteProperties;
 
     @Autowired
@@ -52,12 +58,12 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     @Override
     public SecurityModel updateTime(SecurityModel securityModel) throws ParseException {
 
-        if (!securityModel.getCreateDate().equals("") && securityModel.getCreateDate() != null) {
+        /*if (!securityModel.getCreateDate().equals("") && securityModel.getCreateDate() != null) {
 
            securityMapper.updateTime( TimeHelper.stringToDate(securityModel.getCreateDate()), securityModel.getGuid());
         }
         securityModel.setSortId(0);
-        securityModel.setCreateDate("");
+        securityModel.setCreateDate("");*/
         return securityModel;
     }
 
@@ -115,9 +121,10 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     }
 
     // 修改状态
-    public void updateStatus(String status, String guid){
+    @Override
+    public void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid){
 
-        securityMapper.updateStatus(status, guid);
+        securityMapper.updateStatus(status, approvalTime, currentTenderGuid, guid);
     }
 
     /*// 添加多条并修改分数
@@ -187,8 +194,90 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     }
 
     // 安全隐患排查
+    @Override
     public List<SecurityModel> unsafeSelect() {
 
         return securityMapper.unsafeSelect();
+    }
+
+    //提交
+    @Override
+    public void submit(String securityGuid, String currentTenderGuid){
+        SecurityModel securityModel = this.get(securityGuid);
+        String approvalTime = "";
+        if (securityModel.getStatus().equals("unSubmitted")){
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            approvalTime = df.format(new Date());
+        }
+        securityMapper.updateStatus("submitted", approvalTime, currentTenderGuid, securityGuid);
+    }
+
+    // 多条提交
+    @Override
+    public void batchApproval(String securityGuid, String currentTenderGuid, Integer flag) {
+        String[] split = securityGuid.split(","); // 以逗号分割
+        for (String primaryKey:split){
+            if (flag == 0) {// 提交
+
+                this.submit(primaryKey, currentTenderGuid);
+            }
+        }
+    }
+
+    // 修改时询问是否能修改
+    @Override
+    public void updateStack(SecurityModel securityModel) throws Exception {
+        UserModel userModel = redisAuthService.getCurrentUser();
+        SecurityModel securityModel1 = this.get(securityModel.getGuid());
+        //监理未提交时，施工单位不能添加新表；
+        //且管理员可随时能改；
+        //监理提交后，监理可改
+        //结束审批后，监理不可改
+        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
+
+            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+
+                throw new NotMatchException("您无法修改");
+            }
+            if(securityModel1.getStatus().equals("finish")){
+
+                throw new NotMatchException("该数据已结束审批，无法修改");
+            }
+        }
+    }
+
+    // 删除一条
+    @Override
+    public void removeStack(String guid) throws Exception{
+
+        UserModel userModel = redisAuthService.getCurrentUser();
+        SecurityModel securityModel1 = this.get(guid);
+        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
+
+            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+
+                throw new NotMatchException("您无法删除"); // 施工单位不能删除
+            }
+            if(securityModel1.getStatus().equals("finish")){
+
+                throw new NotMatchException("该数据已结束审批，无法删除");
+            }
+        }
+        this.remove(guid);
+    }
+
+    // 循环删除
+    @Override
+    public void batchRemoveStack(String guids) throws Exception{
+        if (guids == null){
+
+            throw new NotFoundException("未删除");
+        }
+        String[] split = guids.split(",");// 以逗号分割
+        for (String primaryKey:split){
+
+            removeStack(primaryKey);
+        }
     }
 }

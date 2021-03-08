@@ -12,25 +12,26 @@ public class SecurityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "describe")
-    private String describe; // 问题描述
-    @Column(value = "score")
-    private Integer score; // 分数
     @Column(value = "tenderGuid")
     private String tenderGuid; // 标段表guid
+    @Column(value = "describe")
+    private String describe; // 问题描述
     @Column(value = "securityRuleGuid")
     private String securityRuleGuid; // 分数规则表guid
-    @Column(value = "createPersonGuid")
-    private String createPersonGuid; // 创建人的guid
+    @Column(value = "score")
+    private Integer score; // 分数
+    @Column(value = "createTime")
+    private String createTime;  // 创建时间
     @Column(value = "ccPersonGuid")
     private String ccPersonGuid; // 抄送人的guid
-    @Column(value = "createTime")
-    private Date createTime;  // 创建时间
-    private String createDate;
+    @Column(value = "status")
+    private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
+    @Column(value = "approvalTime")
+    private String approvalTime; // 审批时间
+    @Column(value = "currentTenderGuid")
+    private String currentTenderGuid; // 当前审批标段
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "status")
-    private String status; // 状态 0是未处理，1是已处理
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -38,10 +39,10 @@ public class SecurityModel extends BaseModel {
     private String securityRuleName;  // 分数规则名称
     @JoinColumn(value = "rules", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
     private String securityRule;  // 分数规则说明
-    @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "createPersonGuid", rightColumn = "guid")
-    private String createPersonName;  // 创建人员名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
+    private String currentTenderName;  // 当前审批标段名称
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "ccPersonGuid", rightColumn = "guid")
-    private String ccPersonName;  // 创建人员名称
+    private String ccPersonName;  // 抄送人员名称
 
 
     public SecurityModel() {
@@ -87,36 +88,12 @@ public class SecurityModel extends BaseModel {
         this.securityRuleGuid = securityRuleGuid;
     }
 
-    public String getCreatePersonGuid() {
-        return createPersonGuid;
-    }
-
-    public void setCreatePersonGuid(String createPersonGuid) {
-        this.createPersonGuid = createPersonGuid;
-    }
-
     public String getCcPersonGuid() {
         return ccPersonGuid;
     }
 
     public void setCcPersonGuid(String ccPersonGuid) {
         this.ccPersonGuid = ccPersonGuid;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
     }
 
     public Integer getSortId() {
@@ -159,14 +136,6 @@ public class SecurityModel extends BaseModel {
         this.securityRule = securityRule;
     }
 
-    public String getCreatePersonName() {
-        return createPersonName;
-    }
-
-    public void setCreatePersonName(String createPersonName) {
-        this.createPersonName = createPersonName;
-    }
-
     public String getCcPersonName() {
         return ccPersonName;
     }
@@ -175,24 +144,56 @@ public class SecurityModel extends BaseModel {
         this.ccPersonName = ccPersonName;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getApprovalTime() {
+        return approvalTime;
+    }
+
+    public void setApprovalTime(String approvalTime) {
+        this.approvalTime = approvalTime;
+    }
+
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
+    }
+
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
+    }
+
+    public String getCurrentTenderName() {
+        return currentTenderName;
+    }
+
+    public void setCurrentTenderName(String currentTenderName) {
+        this.currentTenderName = currentTenderName;
+    }
+
     @Override
     public String toString() {
         return "SecurityModel{" +
                 "guid='" + guid + '\'' +
-                ", describe='" + describe + '\'' +
-                ", score=" + score +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", describe='" + describe + '\'' +
                 ", securityRuleGuid='" + securityRuleGuid + '\'' +
-                ", createPersonGuid='" + createPersonGuid + '\'' +
+                ", score=" + score +
+                ", createTime='" + createTime + '\'' +
                 ", ccPersonGuid='" + ccPersonGuid + '\'' +
-                ", createTime=" + createTime +
-                ", createDate='" + createDate + '\'' +
-                ", sortId=" + sortId +
                 ", status='" + status + '\'' +
+                ", approvalTime='" + approvalTime + '\'' +
+                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", sortId=" + sortId +
                 ", tenderName='" + tenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +
                 ", securityRule='" + securityRule + '\'' +
-                ", createPersonName='" + createPersonName + '\'' +
+                ", currentTenderName='" + currentTenderName + '\'' +
                 ", ccPersonName='" + ccPersonName + '\'' +
                 '}';
     }
