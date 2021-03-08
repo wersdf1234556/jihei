@@ -170,8 +170,10 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         String nextTenderGuids = approvalHelper.getNextTender(progressDetailModel.getCurrentTenderGuid());
         progressDetailModel.setStatus("submitted");
         progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        progressDetailModel.setApprovalTime(df.format(new Date()));
+        if (progressDetailModel.getStatus().equals("unSubmitted")){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+            progressDetailModel.setApprovalTime(df.format(new Date()));
+        }
         update(progressDetailModel);
     }
 
@@ -191,11 +193,11 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //            throw new NotMatchException("本条已审批结束");
 //        }
         String supervisorGuid = approvalHelper.getNextTender(progressDetailModel.getTenderGuid());
-        if (flag==0){
+        if (flag==1){
             //修改该条状态为已结束
             progressDetailModel.setStatus("finish");
             progressDetailModel.setCurrentTenderGuid("*");
-        }else if (flag==1){
+        }else if (flag==2){
             if (progressDetailModel.getCurrentTenderGuid().equals("*")&&progressDetailModel.getStatus().equals("finish")){
                 progressDetailModel.setStatus("submitted");
                 progressDetailModel.setCurrentTenderGuid(supervisorGuid);
@@ -210,7 +212,12 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     public void batchApproval(String progressGuids,Integer flag) throws Exception {
         String[] split = progressGuids.split(",");//以逗号分割
         for (String primaryKey:split){
-            approval(primaryKey,flag);
+            if (flag==0){//提交
+                submit(primaryKey);
+            }else if (flag==1||flag==2){
+                approval(primaryKey,flag);
+            }
+
         }
     }
 }

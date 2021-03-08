@@ -5,15 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.ProgressDetailQueryParams;
-import org.tonzoc.controller.params.ProjectQueryParams;
 import org.tonzoc.controller.response.PageResponse;
-import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ProgressDetailModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.support.ProgressStatModel;
 import org.tonzoc.service.IProgressDetailService;
-import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -28,10 +24,14 @@ public class ProgressDetailController extends BaseController {
     private IProgressDetailService progressDetailService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams,Integer accounType)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<ProgressDetailModel> page = parsePage(pageQueryParams);
+        //监理
+        if (accounType==2){
+            progressDetailQueryParams.setStatus("submitted,finish");
+        }
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(progressDetailQueryParams);
 
