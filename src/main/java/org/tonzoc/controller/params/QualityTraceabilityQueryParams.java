@@ -10,8 +10,10 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
 
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     @Operator(value = "eq", field = "typeId")
     private String typeId;
@@ -102,5 +104,13 @@ public class QualityTraceabilityQueryParams {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

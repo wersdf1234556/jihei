@@ -7,8 +7,10 @@ public class TenderMachineTypeQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     @Operator(value = "eq", field = "machineTypeGuid")
     private String machineTypeGuid;
@@ -35,5 +37,13 @@ public class TenderMachineTypeQueryParams {
 
     public void setMachineTypeGuid(String machineTypeGuid) {
         this.machineTypeGuid = machineTypeGuid;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

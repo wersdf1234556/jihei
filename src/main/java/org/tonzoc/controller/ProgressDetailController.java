@@ -72,13 +72,13 @@ public class ProgressDetailController extends BaseController {
 
     //审批
     @PostMapping(value = "approval")
-    public void approval(String progressGuid) throws Exception {
-        progressDetailService.approval(progressGuid);
+    public void approval(String progressGuid,Integer flag) throws Exception {
+        progressDetailService.approval(progressGuid,flag);
     }
 
     //批量审批
     @PostMapping(value = "batchApproval")
-    public void batchApproval(String progressGuids) throws Exception{
-        progressDetailService.batchApproval(progressGuids);
+    public void batchApproval(String progressGuids,Integer flag) throws Exception{
+        progressDetailService.batchApproval(progressGuids,flag);
     }
 }

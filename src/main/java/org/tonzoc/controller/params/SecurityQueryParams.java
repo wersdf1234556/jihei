@@ -8,8 +8,10 @@ public class SecurityQueryParams {
     private String guid;
     @Operator(value = "like", field = "guid")
     private String describe;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
     @Operator(value = "eq", field = "securityRuleGuid")
     private String securityRuleGuid;
     @Operator(value = "eq", field = "createPersonGuid")
@@ -73,5 +75,13 @@ public class SecurityQueryParams {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

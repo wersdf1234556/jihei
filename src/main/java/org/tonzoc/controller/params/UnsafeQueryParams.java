@@ -10,8 +10,10 @@ public class UnsafeQueryParams {
     @Operator(value = "like", field = "parts")
     private String parts;
 
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     @Operator(value = "eq", field = "unsafeTypeGuid")
     private String unsafeTypeGuid;
@@ -48,4 +50,11 @@ public class UnsafeQueryParams {
         this.unsafeTypeGuid = unsafeTypeGuid;
     }
 
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
+    }
 }

@@ -8,8 +8,10 @@ public class PersonQueryParams {
     private String guid;
     @Operator(value = "like", field = "guid")
     private String name;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
     @Operator(value = "eq", field = "idCard")
@@ -54,5 +56,13 @@ public class PersonQueryParams {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }

@@ -169,7 +169,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         return allNextTenderGuids;
     }
 
-    public void approval(String progressGuid) throws NotMatchException {
+    public void approval(String progressGuid,Integer flag) throws NotMatchException {
         /**
          * create by: fang
          * description:审批
@@ -183,27 +183,38 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //        if (progressDetailModel.getStatus().equals("finish")){
 //            throw new NotMatchException("本条已审批结束");
 //        }
-        String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
-        System.out.println("nextTenderGuids="+nextTenderGuids);
-        if (!nextTenderGuids.equals("")){
-            //修改该条状态为已提交
-            progressDetailModel.setStatus("submitted");
-            progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
-        }else {
-            //修改该条状态为已结束
-            progressDetailModel.setStatus("finish");
-            progressDetailModel.setCurrentTenderGuid("*");
+        if (flag==0){
+            String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
+            System.out.println("nextTenderGuids="+nextTenderGuids);
+            if (!nextTenderGuids.equals("")){
+                //修改该条状态为已提交
+                progressDetailModel.setStatus("submitted");
+                progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
+            }else {
+                //修改该条状态为已结束
+                progressDetailModel.setStatus("finish");
+                progressDetailModel.setCurrentTenderGuid("*");
+            }
+        }else if (flag==1){
+//            String previousTenderGuids =
         }
+
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         progressDetailModel.setApprovalTime(df.format(new Date()));
         update(progressDetailModel);
     }
 
-    public void batchApproval(String progressGuids) throws Exception {
+    public void batchApproval(String progressGuids,Integer flag) throws Exception {
         String[] split = progressGuids.split(",");//以逗号分割
         for (String primaryKey:split){
-            approval(primaryKey);
+            if (flag==0){//批量审批
+                approval(primaryKey);
+            }else if (flag==1){//批量取消审批
+
+            }
         }
+
+
     }
 }

@@ -11,6 +11,6 @@ public interface IProgressDetailService  extends IBaseService<ProgressDetailMode
     void insertStack(ProgressDetailModel progressDetailModel);
     void updateStack(ProgressDetailModel progressDetailModel) throws Exception;
     String getNextTender(String tenderGuid);
-    void approval(String progressGuid) throws NotMatchException;
-    void batchApproval(String progressGuids) throws Exception;
+    void approval(String progressGuid,Integer flag) throws NotMatchException;
+    void batchApproval(String progressGuids,Integer flag) throws Exception;
 }

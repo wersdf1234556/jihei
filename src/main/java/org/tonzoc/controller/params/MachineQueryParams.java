@@ -12,8 +12,10 @@ public class MachineQueryParams {
     private String machineTypeGuid;
     @Operator(value = "eq", field = "machineCategoryGuid")
     private String machineCategoryGuid;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "or", field = "tenderGuid")
+    private String tenderManage;
 
     public String getGuid() {
         return guid;
@@ -53,5 +55,13 @@ public class MachineQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderManage() {
+        return tenderManage;
+    }
+
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 }
