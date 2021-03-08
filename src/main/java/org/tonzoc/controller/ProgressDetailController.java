@@ -70,6 +70,12 @@ public class ProgressDetailController extends BaseController {
         return progressDetailService.getNextTender(tenderGuid);
     }
 
+    //提交
+    @PostMapping(value = "submit")
+    public void submit(String progressGuid){
+        progressDetailService.submit(progressGuid);
+    }
+
     //审批
     @PostMapping(value = "approval")
     public void approval(String progressGuid,Integer flag) throws Exception {

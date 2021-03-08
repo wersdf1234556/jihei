@@ -145,17 +145,20 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         ProgressDetailModel oldProgressDetail =get(progressDetailModel.getGuid());
         System.out.println(oldProgressDetail.toString());
         System.out.println(userModel.toString());
-        //当当前标段和登录人标段一致，可修改；且管理员可随时能改；
-        //当前标段和登录人标段不一致，不可修改
+        //施工方未提交时，监理不可改；
+        // 且管理员可随时能改；
+        //施工方提交后，施工方、监理都可改
+        //结束审批后，施工方、监理都不可改
         if (!userModel.getTenderManage().equals("*")){
             System.out.println(!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid()));
-            if (!oldProgressDetail.getCurrentTenderGuid().contains(userModel.getTenderGuid())){
-                throw new NotMatchException("该数据已被提交，无法修改");
-            }
             if (!userModel.getTenderGuid().equals(oldProgressDetail.getTenderGuid())&&oldProgressDetail.getStatus().equals("unSubmit")){
                 throw new NotMatchException("该数据未被提交，无法修改");
             }
+            if(oldProgressDetail.getStatus().equals("finish")){
+                throw new NotMatchException("该数据已结束审批，无法修改");
+            }
         }
+
         update(progressDetailModel);
     }
 
@@ -169,6 +172,18 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         return allNextTenderGuids;
     }
 
+    //提交
+    public void submit(String progressGuid){
+        ProgressDetailModel progressDetailModel = get(progressGuid);
+        String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
+        progressDetailModel.setStatus("submitted");
+        progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        progressDetailModel.setApprovalTime(df.format(new Date()));
+        update(progressDetailModel);
+    }
+
+    //审批
     public void approval(String progressGuid,Integer flag) throws NotMatchException {
         /**
          * create by: fang
@@ -183,22 +198,17 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 //        if (progressDetailModel.getStatus().equals("finish")){
 //            throw new NotMatchException("本条已审批结束");
 //        }
+        String supervisorGuid = getNextTender(progressDetailModel.getTenderGuid());
         if (flag==0){
-            String nextTenderGuids = getNextTender(progressDetailModel.getCurrentTenderGuid());
-            System.out.println("nextTenderGuids="+nextTenderGuids);
-            if (!nextTenderGuids.equals("")){
-                //修改该条状态为已提交
-                progressDetailModel.setStatus("submitted");
-                progressDetailModel.setCurrentTenderGuid(nextTenderGuids);
-            }else {
-                //修改该条状态为已结束
-                progressDetailModel.setStatus("finish");
-                progressDetailModel.setCurrentTenderGuid("*");
-            }
+            //修改该条状态为已结束
+            progressDetailModel.setStatus("finish");
+            progressDetailModel.setCurrentTenderGuid("*");
         }else if (flag==1){
-//            String previousTenderGuids =
+            if (progressDetailModel.getCurrentTenderGuid().equals("*")&&progressDetailModel.getStatus().equals("finish")){
+                progressDetailModel.setStatus("submitted");
+                progressDetailModel.setCurrentTenderGuid(supervisorGuid);
+            }
         }
-
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         progressDetailModel.setApprovalTime(df.format(new Date()));
@@ -208,13 +218,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
     public void batchApproval(String progressGuids,Integer flag) throws Exception {
         String[] split = progressGuids.split(",");//以逗号分割
         for (String primaryKey:split){
-            if (flag==0){//批量审批
-                approval(primaryKey,flag);
-            }else if (flag==1){//批量取消审批
-
-            }
+            approval(primaryKey,flag);
         }
-
-
     }
 }
