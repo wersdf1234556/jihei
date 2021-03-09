@@ -8,17 +8,12 @@ import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.mapper.AttendanceMapper;
 import org.tonzoc.mapper.PersonMapper;
-import org.tonzoc.model.AttendanceModel;
-import org.tonzoc.model.PersonModel;
-import org.tonzoc.model.PersonTypeModel;
-import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.*;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttStatTenderModel;
 import org.tonzoc.model.support.AttendanceStatModel;
-import org.tonzoc.service.IAttendanceService;
-import org.tonzoc.service.IPersonService;
-import org.tonzoc.service.IPersonTypeService;
-import org.tonzoc.service.ITenderService;
+import org.tonzoc.model.support.PersonLocationDataModel;
+import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.text.SimpleDateFormat;
@@ -35,10 +30,12 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     private IPersonService personService;
     @Autowired
     private ITenderService tenderService;
+    @Autowired
+    private IPersonCategoryService personCategoryService;
 
     public List<AttendanceModel> listBySignAndDate(String sign,String createdAt){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("idCard", sign, "eq"));
+        sqlQueryParams.add(new SqlQueryParam("personGuid", sign, "eq"));
         sqlQueryParams.add(new SqlQueryParam("createdAt", createdAt, "dateLike"));
         List<AttendanceModel> list = this.list(sqlQueryParams);
 
@@ -46,17 +43,18 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     }
 
 
-    public void insertStack(AttendanceModel attendanceModel) throws Exception {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format( new Date());
-        System.out.println(dateString);
-        List<AttendanceModel> list = listBySignAndDate(attendanceModel.getIdCard(),dateString);
-        System.out.println(list.toString());
-        if (list.size()!=0){
-            throw new NotOneResultFoundException("今天已经有该人员（"+attendanceModel.getIdCard()+"）的打卡数据了，本次打卡未添加上");
-        }
-        save(attendanceModel);
-    }
+    //限制每天只能打一次卡
+//    public void insertStack(AttendanceModel attendanceModel) throws Exception {
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        String dateString = formatter.format( new Date());
+//        System.out.println(dateString);
+//        List<AttendanceModel> list = listBySignAndDate(attendanceModel.getPersonGuid(),dateString);
+//        System.out.println(list.toString());
+//        if (list.size()!=0){
+//            throw new NotOneResultFoundException("今天已经有该人员（"+attendanceModel.getPersonName()+"）的打卡数据了，本次打卡未添加上");
+//        }
+//        save(attendanceModel);
+//    }
 
     //人员信息统计
     public List<Object> statAttendanceData(String date,Integer flag){
@@ -185,6 +183,21 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         }
         return statModels;
 
+    }
+
+    public List<PersonLocationDataModel> listPersonLocationDatas(String date,String categoryGuid){
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        if (categoryGuid==null||categoryGuid.isEmpty()){
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
+            if (personCategoryModels.size()!=0){
+                categoryGuid=personCategoryModels.get(0).getGuid();
+            }
+        }
+        return attendanceMapper.listPersonLocationDatas(date,categoryGuid);
     }
 
 }

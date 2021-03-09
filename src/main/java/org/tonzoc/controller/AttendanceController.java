@@ -9,11 +9,10 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttendanceModel;
-import org.tonzoc.model.CameraTypeModel;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttendanceStatModel;
+import org.tonzoc.model.support.PersonLocationDataModel;
 import org.tonzoc.service.IAttendanceService;
-import org.tonzoc.service.ICameraTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -39,8 +38,8 @@ public class AttendanceController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid AttendanceModel attendanceModel) throws Exception {
-        this.attendanceService.insertStack(attendanceModel);
+    public void add(@RequestBody @Valid AttendanceModel attendanceModel) {
+        this.attendanceService.save(attendanceModel);
     }
 
     @PutMapping(value = "{guid}")
@@ -72,5 +71,11 @@ public class AttendanceController extends BaseController {
     @GetMapping(value = "statByTenderType")
     public List<AttendanceStatModel> statByTenderType(String date){
         return attendanceService.statByTenderType(date);
+    }
+
+    //查询每个人指定日期最后一条定位信息
+    @GetMapping(value = "listPersonLocationDatas")
+    public List<PersonLocationDataModel> listPersonLocationDatas(String date, String categoryGuid){
+        return attendanceService.listPersonLocationDatas(date,categoryGuid);
     }
 }

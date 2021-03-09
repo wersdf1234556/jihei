@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttendanceStatModel;
+import org.tonzoc.model.support.PersonLocationDataModel;
 
 import java.util.List;
 @Component
@@ -29,4 +30,15 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             "where Convert(varchar,a.createdAt,120) LIKE '${createdAt}%' " +
             "and t.name like '%${tenderName}%'")
     Integer countByTenderType(@Param(value = "createdAt") String createdAt,@Param(value = "tenderName") String tenderName);
+
+    //人员定位获取
+    @Select("select * from " +
+            "(" +
+            "select attendances.guid attGuid,persons.guid personGuid,persons.name,persons.categoryGuid,personCategory.name categoryName , " +
+            "persons.personTypeGuid personTypeGuid,personTypes.name personTypeName,attendances.lat,attendances.lng,personTypes.colour colour,personTypes.number,attendances.createdAt, " +
+            "ROW_NUMBER() OVER (PARTITION BY persons.guid ORDER BY attendances.createdAt DESC) rowrId " +
+            "from persons LEFT JOIN attendances on persons.guid=attendances.personGuid LEFT JOIN personCategory on persons.categoryGuid=personCategory.guid  " +
+            "LEFT JOIN personTypes on persons.personTypeGuid=personTypes.guid " +
+            ")b where b.rowrId=1 and b.attGuid is not NULL and Convert(varchar, b.createdAt ,120)like '%${createdAt}%' and b.categoryGuid=#{categoryGuid}")
+    List<PersonLocationDataModel> listPersonLocationDatas(@Param(value = "createdAt") String createdAt,@Param(value = "categoryGuid") String categoryGuid);
 }
