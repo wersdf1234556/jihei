@@ -9,7 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.ReturnModel;
-import org.tonzoc.model.support.HallModel;
+import org.tonzoc.model.support.ReturnProjectModel;
 import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -54,51 +54,93 @@ public class ProjectController extends BaseController {
 
     // 全部项目的数据
     @GetMapping(value = "dateAll")
-    public List<ReturnModel> dateAll(){
+    public List<ReturnProjectModel> dateAll(){
 
         return projectService.dateAll();
     }
 
     // 项目情况
     @GetMapping(value = "typeOne")
-    public List<ReturnModel> typeOne(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.typeOne(industryCategoryGuid, managementPowerGuid);
+        return projectService.typeOne(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 项目数
     @GetMapping(value = "typeTwo")
-    public List<ReturnModel> typeTwo(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.typeTwo(industryCategoryGuid, managementPowerGuid);
+        return projectService.typeTwo(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 总投资额
     @GetMapping(value = "typeThree")
-    public List<ReturnModel> typeThree(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.typeThree(industryCategoryGuid, managementPowerGuid);
+        return projectService.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 已完成投资额
     @GetMapping(value = "typeFour")
-    public List<ReturnModel> typeFour(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.typeFour(industryCategoryGuid, managementPowerGuid);
+        return projectService.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 投资完成率
     @GetMapping(value = "typeFive")
-    public List<ReturnModel> typeFive(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.typeFive(industryCategoryGuid, managementPowerGuid);
+        return projectService.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 条件查询
     @GetMapping(value = "conditionSelect")
-    public List<ReturnModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        return projectService.conditionSelect(typeId, industryCategoryGuid, managementPowerGuid);
+        return projectService.conditionSelect(typeId, industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+    }
+
+    // 百大项目
+    @GetMapping(value = "hundredOne")
+    public List<ReturnProjectModel> hundredOne(String projectStateGuid){
+
+        return projectService.hundredOne(projectStateGuid);
+    }
+
+    // 百大铁路
+    @GetMapping(value = "hundredTwo")
+    public List<ReturnProjectModel> hundredTwo(){
+
+        return projectService.hundredTwo();
+    }
+
+    // 百大公路
+    @GetMapping(value = "hundredThree")
+    public List<ReturnProjectModel> hundredThree(){
+
+        return projectService.hundredThree();
+    }
+
+    // 百大机场
+    @GetMapping(value = "hundredFour")
+    public List<ReturnProjectModel> hundredFour(){
+
+        return projectService.hundredFour();
+    }
+
+    // 百大水运
+    @GetMapping(value = "hundredFive")
+    public List<ReturnProjectModel> hundredFive(){
+
+        return projectService.hundredFive();
+    }
+
+    // 百大查询
+    @GetMapping(value = "hundredSelect")
+    public List<ReturnProjectModel> hundredSelect(Integer typeId){
+
+        return projectService.hundredSelect(typeId);
     }
 
 }

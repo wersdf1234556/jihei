@@ -2,6 +2,7 @@ package org.tonzoc.service;
 
 import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.support.ReturnProjectModel;
 
 import java.util.List;
 
@@ -11,29 +12,50 @@ public interface IProjectService extends IBaseService<ProjectModel> {
     Integer count();
 
     // 全部项目的数据
-    List<ReturnModel> dateAll();
+    List<ReturnProjectModel> dateAll();
 
     // 项目情况
-    List<ReturnModel> typeOne(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 项目数
-    List<ReturnModel> typeTwo(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+
+    // 公用总投资额
+    List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list);
 
     // 总投资额
-    List<ReturnModel> typeThree(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 已完成投资额
-    List<ReturnModel> typeFour(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 投资完成率
-    List<ReturnModel> typeFive(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 开工率
-    List<ReturnModel> typeSix(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeSix(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 项目投资情况
-    List<ReturnModel> typeSeven(String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 条件查询
-    List<ReturnModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid);
+    List<ReturnProjectModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+
+    // 百大项目
+    List<ReturnProjectModel> hundredOne(String projectStateGuid);
+
+    // 百大铁路
+    List<ReturnProjectModel> hundredTwo();
+
+    // 百大公路
+    List<ReturnProjectModel> hundredThree();
+
+    // 百大机场
+    List<ReturnProjectModel> hundredFour();
+
+    // 百大水运
+    List<ReturnProjectModel> hundredFive();
+
+    // 百大查询
+    List<ReturnProjectModel> hundredSelect(Integer typeId);
 }

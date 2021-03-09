@@ -5,13 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.ProgressNameQueryParams;
-import org.tonzoc.controller.params.ProjectQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ProgressNameModel;
-import org.tonzoc.model.ProjectModel;
 import org.tonzoc.service.IProgressNameService;
-import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -54,7 +51,7 @@ public class ProgressNameController extends BaseController {
     }
 
     @PostMapping(value = "removeMany")
-    public void removeMany(String  guids) throws Exception {
+    public void removeMany(String guids) throws Exception {
         progressNameService.removeMany(guids);
     }
 

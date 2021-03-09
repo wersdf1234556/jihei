@@ -8,6 +8,8 @@ public class ProjectQueryParams {
     private String guid;
     @Operator(value = "like", field = "name")
     private String name;
+    @Operator(value = "eq", field = "isImportant")
+    private Integer isImportant;
     @Operator(value = "eq", field = "industryCategoryGuid")
     private String industryCategoryGuid;
     @Operator(value = "eq", field = "managementPowerGuid")
@@ -31,6 +33,14 @@ public class ProjectQueryParams {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getIsImportant() {
+        return isImportant;
+    }
+
+    public void setIsImportant(Integer isImportant) {
+        this.isImportant = isImportant;
     }
 
     public String getIndustryCategoryGuid() {

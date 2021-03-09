@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.ProjectMapper;
 import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.ReturnModel;
+import org.tonzoc.model.support.ReturnProjectModel;
 import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -25,11 +26,11 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
     // 全部项目的数据
-    public List<ReturnModel> dateAll() {
-        List<ReturnModel> list = new ArrayList<>();
-        ReturnModel returnModel = new ReturnModel();
-        returnModel.setName("项目总数");
-        returnModel.setProportion(this.count() + "个");
+    public List<ReturnProjectModel> dateAll() {
+        List<ReturnProjectModel> list = new ArrayList<>();
+        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
+        returnProjectModel.setName("项目总数");
+        returnProjectModel.setProportion(this.count() + "个");
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<ProjectModel> list1 = this.list(sqlQueryParams);
@@ -39,56 +40,62 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             winningAmount = winningAmount.add(li.getWinningAmount()); // 批复总投资额
             completeAmount = completeAmount.add(li.getCompleteAmount()); // 完成投资额
         }
-        ReturnModel returnModel1 = new ReturnModel();
-        returnModel1.setName("项目完成投资");
-        returnModel1.setProportion(completeAmount + "万元");
+        ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
+        returnProjectModel1.setName("项目完成投资");
+        returnProjectModel1.setProportion(completeAmount + "万元");
 
-        ReturnModel returnModel2 = new ReturnModel();
-        returnModel2.setName("总投资额");
-        returnModel2.setProportion(winningAmount + "万元");
+        ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
+        returnProjectModel2.setName("总投资额");
+        returnProjectModel2.setProportion(winningAmount + "万元");
 
-        ReturnModel returnModel3 = new ReturnModel();
-        returnModel3.setName("完成投资额");
+        ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
+        returnProjectModel3.setName("完成投资额");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
-            String s = (completeAmount.divide(winningAmount, 4, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+            String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
         } else {
-            returnModel3.setProportion("0%");
+            returnProjectModel3.setProportion("0%");
         }
 
-        list.add(returnModel);
-        list.add(returnModel1);
-        list.add(returnModel2);
-        list.add(returnModel3);
+        list.add(returnProjectModel);
+        list.add(returnProjectModel1);
+        list.add(returnProjectModel2);
+        list.add(returnProjectModel3);
 
         return list;
     }
 
     // 项目情况
-    public List<ReturnModel> typeOne(String industryCategoryGuid, String managementPowerGuid){
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
+    public List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return this.dateAll(); // 查询全部
         }
         Integer count = 0;
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        if (managementPowerGuid == null || "".equals(managementPowerGuid)) {
+        if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             count = projectMapper.industryCategoryCount(industryCategoryGuid);
             sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业查询
-        }else{
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
             count = projectMapper.industryAndManageCount(industryCategoryGuid, managementPowerGuid);
-            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业和管理查询
-            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
+        }else {
+
+            count = projectMapper.industryAndManageAndBuildCount(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
+            sqlQueryParams.add(new SqlQueryParam("buildLevelGuid", buildLevelGuid, "eq"));  // 和等级
         }
 
         List<ProjectModel> list1 = this.list(sqlQueryParams);
-        List<ReturnModel> list2 = new ArrayList<>();
-        ReturnModel returnModel = new ReturnModel();
-        returnModel.setName("项目总数");
-        returnModel.setProportion(count + "个");
+        List<ReturnProjectModel> list2 = new ArrayList<>();
+        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
+        returnProjectModel.setName("项目总数");
+        returnProjectModel.setProportion(count + "个");
 
         BigDecimal winningAmount = new BigDecimal(0);
         BigDecimal completeAmount = new BigDecimal(0);
@@ -96,157 +103,137 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             winningAmount = winningAmount.add(li.getWinningAmount()); // 批复总投资额
             completeAmount = completeAmount.add(li.getCompleteAmount()); // 完成投资额
         }
-        ReturnModel returnModel1 = new ReturnModel();
-        returnModel1.setName("项目完成投资");
-        returnModel1.setProportion(completeAmount + "万元");
+        ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
+        returnProjectModel1.setName("项目完成投资");
+        returnProjectModel1.setProportion(completeAmount + "万元");
 
-        ReturnModel returnModel2 = new ReturnModel();
-        returnModel2.setName("总投资额");
-        returnModel2.setProportion(winningAmount + "万元");
+        ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
+        returnProjectModel2.setName("总投资额");
+        returnProjectModel2.setProportion(winningAmount + "万元");
 
-        ReturnModel returnModel3 = new ReturnModel();
-        returnModel3.setName("完成投资额");
+        ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
+        returnProjectModel3.setName("完成投资额");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
-            String s = (completeAmount.divide(winningAmount, 4, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+            String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
         } else {
-            returnModel3.setProportion("0%");
+            returnProjectModel3.setProportion("0%");
         }
 
-        list2.add(returnModel);
-        list2.add(returnModel1);
-        list2.add(returnModel2);
-        list2.add(returnModel3);
+        list2.add(returnProjectModel);
+        list2.add(returnProjectModel1);
+        list2.add(returnProjectModel2);
+        list2.add(returnProjectModel3);
 
         return list2;
     }
 
     // 项目数
-    public List<ReturnModel> typeTwo(String industryCategoryGuid, String managementPowerGuid){
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
+    public List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.status();
 
-        }
-        if (managementPowerGuid == null || "".equals(managementPowerGuid)) {
+        } else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.statusIndustry(industryCategoryGuid);
-        }
+        } else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-        return projectMapper.statusIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            return projectMapper.statusIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+        }else {
+
+            return projectMapper.statusIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        }
     }
 
-    // 总投资额
-    public List<ReturnModel> typeThree(String industryCategoryGuid, String managementPowerGuid){
+    // 公用总投资额
+    public List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list){
 
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
-
-            List<ReturnModel> list = projectMapper.winning();
-            int n = 0;
-            BigDecimal bSum = new BigDecimal(0);
-            for (ReturnModel returnModel: list) {
-                if (returnModel.getNumber() != null) {
-                    n = n++;
-                    BigDecimal bigDecimal = new BigDecimal(returnModel.getNumber());
-                    BigDecimal bigDecimal1 = bigDecimal.divide(new BigDecimal(projectMapper.sum()), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
-                    bSum = bSum.add(bigDecimal1);
-                    String s = bigDecimal1.toString();
-                    if (n == list.size()) {
-                        returnModel.setProportion(new BigDecimal(1).subtract(bSum) + "%");
-                    }else{
-                        returnModel.setProportion(s.substring(0, s.length() - 2) + "%");
-                    }
-                }else{
-                    returnModel.setProportion("0%");
-                }
-            }
-
-            return list;
-        }
-        if (managementPowerGuid == null || "".equals(managementPowerGuid)) {
-
-            List<ReturnModel> list = projectMapper.winningIndustry(industryCategoryGuid);
-            int n = 0;
-            BigDecimal bSum = new BigDecimal(0);
-            for (ReturnModel returnModel: list) {
-                if (returnModel.getNumber() != null) {
-                    n = n++;
-                    BigDecimal bigDecimal = new BigDecimal(returnModel.getNumber());
-                    BigDecimal bigDecimal1 = bigDecimal.divide(new BigDecimal(projectMapper.sumIndustry(industryCategoryGuid)), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
-                    bSum = bSum.add(bigDecimal1);
-                    String s = bigDecimal1.toString();
-                    if (n == list.size()) {
-                        returnModel.setProportion(new BigDecimal(1).subtract(bSum) + "%");
-                    }else{
-                        returnModel.setProportion(s.substring(0, s.length() - 2) + "%");
-                    }
-                }else{
-                    returnModel.setProportion("0%");
-                }
-            }
-
-            return list;
-        }
-
-        List<ReturnModel> list = projectMapper.winningIndustryAndManage(industryCategoryGuid, managementPowerGuid);
         int n = 0;
         BigDecimal bSum = new BigDecimal(0);
-        for (ReturnModel returnModel: list) {
-            if (returnModel.getNumber() != null) {
-                n = n++;
-                BigDecimal bigDecimal = new BigDecimal(returnModel.getNumber());
-                BigDecimal bigDecimal1 = bigDecimal.divide(new BigDecimal(projectMapper.sumIndustryAndManage(industryCategoryGuid, managementPowerGuid)), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
-                bSum = bSum.add(bigDecimal1);
-                String s = bigDecimal1.toString();
+        for (ReturnProjectModel li: list) {
+            if (!"".equals(li.getAmount())) {
+                n = n+1;
+                BigDecimal bigDecimal = new BigDecimal(li.getAmount());
+                BigDecimal bigDecimal1 = bigDecimal.divide(new BigDecimal(projectMapper.sum()), 3, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                 if (n == list.size()) {
-                    returnModel.setProportion(new BigDecimal(1).subtract(bSum) + "%");
+
+                    String str = new BigDecimal(100).subtract(bSum).toString();
+                    li.setProportion(str.substring(0, str.length() - 2) + "%");
                 }else{
-                    returnModel.setProportion(s.substring(0, s.length() - 2) + "%");
+
+                    bSum = bSum.add(bigDecimal1);
+                    String s = bigDecimal1.toString();
+                    li.setProportion(s.substring(0, s.length() - 2) + "%");
                 }
             }else{
-                returnModel.setProportion("0%");
+                li.setProportion("0%");
             }
         }
 
         return list;
     }
 
-    // 已完成投资额
-    public List<ReturnModel> typeFour(String industryCategoryGuid, String managementPowerGuid){
+    // 总投资额
+    public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            return this.publicTypeThree(projectMapper.winning());
+        }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            return this.publicTypeThree(projectMapper.winningIndustry(industryCategoryGuid));
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
+
+            return this.publicTypeThree(projectMapper.winningIndustryAndManage(industryCategoryGuid, managementPowerGuid));
+        }else {
+
+            return this.publicTypeThree(projectMapper.winningIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
+        }
+    }
+
+    // 已完成投资额
+    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.complete();
 
-        }
-        if (managementPowerGuid == null || "".equals(managementPowerGuid)) {
+        }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.completeIndustry(industryCategoryGuid);
-        }
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-        return projectMapper.completeIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            return projectMapper.completeIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+        }else {
+            return projectMapper.completeIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        }
     }
 
     // 投资完成率
-    public List<ReturnModel> typeFive(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        List<ReturnModel> list1 = new ArrayList<>();
+        List<ReturnProjectModel> list1 = new ArrayList<>();
 
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
-        }
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-        if ((managementPowerGuid == null || "".equals(managementPowerGuid)) && (industryCategoryGuid != null && !"".equals(industryCategoryGuid))) {
+        }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
             sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业查询
-        }
+        }else if (buildLevelGuid == null || "".equals(managementPowerGuid)) {
 
-        if (industryCategoryGuid != null && !"".equals(industryCategoryGuid) && managementPowerGuid != null && !"".equals(managementPowerGuid)) {
-            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业和管理查询
-            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq")); // 和管理查询
+        }else {
+
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq")); // 和管理查询
+            sqlQueryParams.add(new SqlQueryParam("buildLevelGuid", buildLevelGuid, "eq")); // 和等级
         }
 
         List<ProjectModel> list = this.list(sqlQueryParams);
-        ReturnModel returnModel = new ReturnModel();
+        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         BigDecimal winningAmount = new BigDecimal(0); // 批复总投资额
         BigDecimal completeAmount = new BigDecimal(0); // 完成投资额
 
@@ -254,70 +241,162 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             winningAmount = winningAmount.add(li.getWinningAmount());
             completeAmount = completeAmount.add(li.getCompleteAmount());
         }
-        System.out.println("winningAmount" + winningAmount);
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
-            String s = (completeAmount.divide(winningAmount, 4, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnModel.setName("投资完成率");
-            returnModel.setProportion(s.substring(0, s.length() - 2) + "%");
 
+            String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
+            returnProjectModel.setName("投资完成率");
+            returnProjectModel.setProportion(s.substring(0, s.length() - 2) + "%");
         } else {
-            returnModel.setName("投资完成率");
-            returnModel.setProportion("0%");
+
+            returnProjectModel.setName("投资完成率");
+            returnProjectModel.setProportion("0%");
         }
-        list1.add(returnModel);
+        list1.add(returnProjectModel);
 
         return list1;
     }
 
 
     // 开工率
-    public List<ReturnModel> typeSix(String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> typeSix(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
         return null;
     }
 
     // 项目投资情况
-    public List<ReturnModel> typeSeven(String industryCategoryGuid, String managementPowerGuid){
-        if ((industryCategoryGuid == null && managementPowerGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid))) {
+    public List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.sumProjectStates();
-
-        }
-        if (managementPowerGuid == null || "".equals(managementPowerGuid)) {
+        } else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.sumProjectStatesIndustry(industryCategoryGuid);
-        }
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-        return projectMapper.sumProjectStatesIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            return projectMapper.sumProjectStatesIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+        } else {
+
+            return projectMapper.sumProjectStatesIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        }
     }
 
     // 条件查询
-    public List<ReturnModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid){
+    public List<ReturnProjectModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
         if (typeId == 1) {
 
-           return this.typeOne(industryCategoryGuid, managementPowerGuid);
-        }
-        if (typeId == 2) {
+           return this.typeOne(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 2) {
 
-           return this.typeTwo(industryCategoryGuid, managementPowerGuid);
-        }
-        if (typeId == 3) {
+           return this.typeTwo(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 3) {
 
-            return this.typeThree(industryCategoryGuid, managementPowerGuid);
-        }
-        if (typeId == 4) {
+            return this.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 4) {
 
-            return this.typeFour(industryCategoryGuid, managementPowerGuid);
-        }
-        if (typeId == 5) {
+            return this.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 5) {
 
-            return this.typeFive(industryCategoryGuid, managementPowerGuid);
+            return this.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 6) {
+
+            return this.typeSix(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        } else if (typeId == 7) {
+
+            return this.typeSeven(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
         }
-        if (typeId == 6) {
-            return this.typeSix(industryCategoryGuid, managementPowerGuid);
+
+        return null;
+    }
+
+    // 百大项目
+    public List<ReturnProjectModel> hundredOne(String industryCategoryGuid){
+        List<ReturnProjectModel> list = new ArrayList<>();
+        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
+        returnProjectModel.setName("项目总数");
+        returnProjectModel.setProportion(projectMapper.hundredCount() + "个");
+
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("isImportant", "1", "eq"));
+
+        if (industryCategoryGuid != null && !"".equals(industryCategoryGuid)) {
+
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq"));
+            returnProjectModel.setProportion(projectMapper.hundredIndustryCount(industryCategoryGuid) + "个");
         }
-        if (typeId == 7) {
-            return this.typeSeven(industryCategoryGuid, managementPowerGuid);
+        List<ProjectModel> list1 = this.list(sqlQueryParams);
+        BigDecimal winningAmount = new BigDecimal(0);
+        BigDecimal completeAmount = new BigDecimal(0);
+        for (ProjectModel li : list1) {
+            winningAmount = winningAmount.add(li.getWinningAmount()); // 批复总投资额
+            completeAmount = completeAmount.add(li.getCompleteAmount()); // 完成投资额
+        }
+        ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
+        returnProjectModel1.setName("项目完成投资");
+        returnProjectModel1.setProportion(completeAmount + "万元");
+
+        ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
+        returnProjectModel2.setName("总投资额");
+        returnProjectModel2.setProportion(winningAmount + "万元");
+
+        ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
+        returnProjectModel3.setName("完成投资额");
+        if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
+            String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+        } else {
+            returnProjectModel3.setProportion("0%");
+        }
+
+        list.add(returnProjectModel);
+        list.add(returnProjectModel1);
+        list.add(returnProjectModel2);
+        list.add(returnProjectModel3);
+
+        return list;
+    }
+
+    // 百大铁路
+    public List<ReturnProjectModel> hundredTwo(){
+
+        return this.hundredOne("A5338EFD-C3E3-42CB-A07D-F18110555264");
+    }
+
+    // 百大铁路
+    public List<ReturnProjectModel> hundredThree(){
+
+        return this.hundredOne("3C9953CE-11F1-44CB-A105-EA21612A9FC4");
+    }
+
+    // 百大机场
+    public List<ReturnProjectModel> hundredFour(){
+
+        return this.hundredOne("CC06DE57-98A6-4A35-8E31-C754F36D2F4A");
+    }
+
+    // 百大水运
+    public List<ReturnProjectModel> hundredFive(){
+
+        return this.hundredOne("2DCCE189-CF0A-4C65-9B38-06F1498C57AA");
+    }
+
+    // 百大查询
+    public List<ReturnProjectModel> hundredSelect(Integer typeId){
+
+        if (typeId == 1) {
+
+            return this.hundredOne("");
+        } else if (typeId == 2) {
+
+            return this.hundredTwo();
+        } else if (typeId == 3) {
+
+            return this.hundredThree();
+        } else if (typeId == 4) {
+
+            return this.hundredFour();
+        }else if (typeId == 5) {
+
+            return this.hundredFive();
         }
 
         return null;
