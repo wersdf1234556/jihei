@@ -3,8 +3,8 @@ package org.tonzoc.model.support;
 public class StatTotalModel {
     private String total;
     private String attNum;
+    private String noAttNum;
     private String percent;
-
 
     public String getPercent() {
         return percent;
@@ -28,5 +28,13 @@ public class StatTotalModel {
 
     public void setAttNum(String attNum) {
         this.attNum = attNum;
+    }
+
+    public String getNoAttNum() {
+        return noAttNum;
+    }
+
+    public void setNoAttNum(String noAttNum) {
+        this.noAttNum = noAttNum;
     }
 }

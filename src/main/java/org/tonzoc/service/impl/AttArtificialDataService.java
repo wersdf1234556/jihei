@@ -36,15 +36,19 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
     }
 
     @Override
-    public StatTotalModel statAll() {
+    public StatTotalModel statAll(String categoryGuid) {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
         List<AttArtificialDataModel> list = this.list(sqlQueryParams);
+
         Integer total=list.stream().mapToInt(AttArtificialDataModel::getPersonNum).sum();
         Integer attNum=list.stream().mapToInt(AttArtificialDataModel::getAttNum).sum();
+        Integer noAttNum = total-attNum;
         Object percent=(float) attNum / total * 100;
         StatTotalModel statTotalModel = new StatTotalModel();
         statTotalModel.setTotal(total.toString());
         statTotalModel.setAttNum(attNum.toString());
+        statTotalModel.setNoAttNum(noAttNum.toString());
         statTotalModel.setPercent(percent.toString());
         return statTotalModel;
     }

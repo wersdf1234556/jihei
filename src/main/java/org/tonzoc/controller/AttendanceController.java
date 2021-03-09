@@ -75,7 +75,7 @@ public class AttendanceController extends BaseController {
 
     //查询每个人指定日期最后一条定位信息
     @GetMapping(value = "listLocationDatas")
-    public List<PersonLocationDataModel> listPersonLocationDatas(String date, String categoryGuid){
-        return attendanceService.listPersonLocationDatas(date,categoryGuid);
+    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid){
+        return attendanceService.listPersonLocationDatas(categoryGuid);
     }
 }

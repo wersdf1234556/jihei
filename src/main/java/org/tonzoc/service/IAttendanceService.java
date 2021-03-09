@@ -16,5 +16,5 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
     List<AttendanceStatModel> statByTenderType(String date);
 
-    List<PersonLocationDataModel> listPersonLocationDatas(String date, String categoryGuid);
+    List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid);
 }

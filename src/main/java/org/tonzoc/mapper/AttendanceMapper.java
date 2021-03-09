@@ -39,6 +39,8 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             "ROW_NUMBER() OVER (PARTITION BY persons.guid ORDER BY attendances.createdAt DESC) rowrId " +
             "from persons LEFT JOIN attendances on persons.guid=attendances.personGuid LEFT JOIN personCategory on persons.categoryGuid=personCategory.guid  " +
             "LEFT JOIN personTypes on persons.personTypeGuid=personTypes.guid " +
-            ")b where b.rowrId=1 and b.attGuid is not NULL and Convert(varchar, b.createdAt ,120)like '%${createdAt}%' and b.categoryGuid=#{categoryGuid}")
-    List<PersonLocationDataModel> listPersonLocationDatas(@Param(value = "createdAt") String createdAt,@Param(value = "categoryGuid") String categoryGuid);
+            ")b where b.rowrId=1 and b.attGuid is not NULL " +
+//            "and Convert(varchar, b.createdAt ,120)like '%${createdAt}%' " +
+            "and b.categoryGuid=#{categoryGuid}")
+    List<PersonLocationDataModel> listPersonLocationDatas(@Param(value = "categoryGuid") String categoryGuid);
 }

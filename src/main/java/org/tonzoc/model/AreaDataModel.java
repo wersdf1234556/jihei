@@ -5,6 +5,8 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.util.List;
+
 //各省市信息
 @Table(value = "areaDatas")
 public class AreaDataModel extends BaseModel{
@@ -22,6 +24,7 @@ public class AreaDataModel extends BaseModel{
     private Integer level;
     @Column(value = "flag")
     private Integer flag;
+    private List<AreaDataModel> children;;
 
 
     public String getGuid() {
@@ -70,5 +73,26 @@ public class AreaDataModel extends BaseModel{
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    public List<AreaDataModel> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<AreaDataModel> children) {
+        this.children = children;
+    }
+
+    @Override
+    public String toString() {
+        return "AreaDataModel{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", parentCode='" + parentCode + '\'' +
+                ", level=" + level +
+                ", flag=" + flag +
+                ", children=" + children +
+                '}';
     }
 }

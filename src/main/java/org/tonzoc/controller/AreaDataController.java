@@ -57,4 +57,9 @@ public class AreaDataController extends BaseController {
         areaDataService.removeMany(guids);
     }
 
+    @GetMapping(value = "listWithLevel")
+    public List<AreaDataModel> listWithLevel(String parentCode) throws Exception {
+        return areaDataService.listWithLevel(parentCode);
+    }
+
 }

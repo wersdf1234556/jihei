@@ -185,11 +185,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
     }
 
-    public List<PersonLocationDataModel> listPersonLocationDatas(String date,String categoryGuid){
-        if (date==null||date.isEmpty()){
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date= formatter.format( new Date());
-        }
+    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid){
+//        if (date==null||date.isEmpty()){
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            date= formatter.format( new Date());
+//        }
         if (categoryGuid==null||categoryGuid.isEmpty()){
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
@@ -197,7 +197,9 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 categoryGuid=personCategoryModels.get(0).getGuid();
             }
         }
-        return attendanceMapper.listPersonLocationDatas(date,categoryGuid);
+        return attendanceMapper.listPersonLocationDatas(categoryGuid);
     }
+
+
 
 }
