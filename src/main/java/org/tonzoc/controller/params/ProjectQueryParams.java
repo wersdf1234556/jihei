@@ -18,6 +18,8 @@ public class ProjectQueryParams {
     private String buildLevelGuid;
     @Operator(value = "eq", field = "projectStateGuid")
     private String projectStateGuid;
+    @Operator(value = "eq", field = "isStart")
+    private String isStart;
 
     public String getGuid() {
         return guid;
@@ -73,5 +75,13 @@ public class ProjectQueryParams {
 
     public void setProjectStateGuid(String projectStateGuid) {
         this.projectStateGuid = projectStateGuid;
+    }
+
+    public String getIsStart() {
+        return isStart;
+    }
+
+    public void setIsStart(String isStart) {
+        this.isStart = isStart;
     }
 }

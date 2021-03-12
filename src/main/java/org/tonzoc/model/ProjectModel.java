@@ -38,7 +38,7 @@ public class ProjectModel extends BaseModel {
     @Column(value = "tenderNum")
     private String tenderNum; //标段划分
     @Column(value = "isImportant")
-    private Integer isImportant; // 1是 0否
+    private Integer isImportant; // 1是 0否 是否是百大项目
     @Column(value = "winningAmount")
     private BigDecimal winningAmount; //批复总投资额
     @Column(value = "completeAmount")
@@ -57,6 +57,8 @@ public class ProjectModel extends BaseModel {
     private String buildLevelGuid; // 等级
     @Column(value = "projectStateGuid")
     private String projectStateGuid; // 项目状态
+    @Column(value = "isStart")
+    private String isStart; // 是否开工 1 开工 2 不开工
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName; //行业类别名称
@@ -286,6 +288,14 @@ public class ProjectModel extends BaseModel {
         this.projectStateName = projectStateName;
     }
 
+    public String getIsStart() {
+        return isStart;
+    }
+
+    public void setIsStart(String isStart) {
+        this.isStart = isStart;
+    }
+
     @Override
     public String toString() {
         return "ProjectModel{" +
@@ -312,6 +322,7 @@ public class ProjectModel extends BaseModel {
                 ", managementPowerGuid='" + managementPowerGuid + '\'' +
                 ", buildLevelGuid='" + buildLevelGuid + '\'' +
                 ", projectStateGuid='" + projectStateGuid + '\'' +
+                ", isStart='" + isStart + '\'' +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
                 ", managementPowerName='" + managementPowerName + '\'' +
                 ", buildLevelName='" + buildLevelName + '\'' +

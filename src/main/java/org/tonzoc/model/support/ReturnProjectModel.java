@@ -4,8 +4,11 @@ public class ReturnProjectModel {
 
     private String name;
     private String amount; // 金额
+    private String amounts; // 亿元
     private String amountOne; // 金额1
+    private String amountOnes; // 亿元1
     private String proportion; // 比例
+    private String proportions; // 比例亿元
 
     public ReturnProjectModel() {
     }
@@ -40,5 +43,29 @@ public class ReturnProjectModel {
 
     public void setAmountOne(String amountOne) {
         this.amountOne = amountOne;
+    }
+
+    public String getAmounts() {
+        return amounts;
+    }
+
+    public void setAmounts(String amounts) {
+        this.amounts = amounts;
+    }
+
+    public String getAmountOnes() {
+        return amountOnes;
+    }
+
+    public void setAmountOnes(String amountOnes) {
+        this.amountOnes = amountOnes;
+    }
+
+    public String getProportions() {
+        return proportions;
+    }
+
+    public void setProportions(String proportions) {
+        this.proportions = proportions;
     }
 }

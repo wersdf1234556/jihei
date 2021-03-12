@@ -4,6 +4,7 @@ import org.tonzoc.model.ProjectModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.ReturnProjectModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IProjectService extends IBaseService<ProjectModel> {
@@ -58,4 +59,7 @@ public interface IProjectService extends IBaseService<ProjectModel> {
 
     // 百大查询
     List<ReturnProjectModel> hundredSelect(Integer typeId);
+
+    // 将万元转化成亿元
+    String company (BigDecimal money);
 }

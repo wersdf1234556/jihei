@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.ProjectMapper;
 import org.tonzoc.model.ProjectModel;
-import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.ReturnProjectModel;
 import org.tonzoc.service.IProjectService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -30,7 +29,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         List<ReturnProjectModel> list = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(this.count() + "个");
+        returnProjectModel.setProportion(this.count() + "");
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<ProjectModel> list1 = this.list(sqlQueryParams);
@@ -42,19 +41,22 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         }
         ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
         returnProjectModel1.setName("项目完成投资");
-        returnProjectModel1.setProportion(completeAmount + "万元");
+        returnProjectModel1.setProportion(completeAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+        returnProjectModel1.setProportions(this.company(completeAmount));
+
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
-        returnProjectModel2.setProportion(winningAmount + "万元");
+        returnProjectModel2.setProportion(winningAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+        returnProjectModel2.setProportions(this.company(winningAmount));
 
         ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
         returnProjectModel3.setName("完成投资额");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
             String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2));
         } else {
-            returnProjectModel3.setProportion("0%");
+            returnProjectModel3.setProportion("0");
         }
 
         list.add(returnProjectModel);
@@ -95,7 +97,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         List<ReturnProjectModel> list2 = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(count + "个");
+        returnProjectModel.setProportion(count + "");
 
         BigDecimal winningAmount = new BigDecimal(0);
         BigDecimal completeAmount = new BigDecimal(0);
@@ -105,19 +107,21 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         }
         ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
         returnProjectModel1.setName("项目完成投资");
-        returnProjectModel1.setProportion(completeAmount + "万元");
+        returnProjectModel1.setProportion(completeAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+        returnProjectModel1.setProportions(this.company(completeAmount));
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
-        returnProjectModel2.setProportion(winningAmount + "万元");
+        returnProjectModel2.setProportion(winningAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+        returnProjectModel2.setProportions(this.company(winningAmount));
 
         ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
         returnProjectModel3.setName("完成投资额");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
             String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2));
         } else {
-            returnProjectModel3.setProportion("0%");
+            returnProjectModel3.setProportion("0");
         }
 
         list2.add(returnProjectModel);
@@ -130,6 +134,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
     // 项目数
     public List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
             return projectMapper.status();
@@ -152,22 +157,22 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         int n = 0;
         BigDecimal bSum = new BigDecimal(0);
         for (ReturnProjectModel li: list) {
-            if (!"".equals(li.getAmount())) {
-                n = n+1;
+            if (!"".equals(li.getAmount()) && li.getAmount() != null) {
+                n = n + 1;
                 BigDecimal bigDecimal = new BigDecimal(li.getAmount());
                 BigDecimal bigDecimal1 = bigDecimal.divide(new BigDecimal(projectMapper.sum()), 3, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100));
                 if (n == list.size()) {
 
                     String str = new BigDecimal(100).subtract(bSum).toString();
-                    li.setProportion(str.substring(0, str.length() - 2) + "%");
+                    li.setProportion(str.substring(0, str.length() - 2));
                 }else{
 
                     bSum = bSum.add(bigDecimal1);
                     String s = bigDecimal1.toString();
-                    li.setProportion(s.substring(0, s.length() - 2) + "%");
+                    li.setProportion(s.substring(0, s.length() - 2));
                 }
             }else{
-                li.setProportion("0%");
+                li.setProportion("0");
             }
         }
 
@@ -177,37 +182,67 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     // 总投资额
     public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
+        List<ReturnProjectModel> list = null;
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return this.publicTypeThree(projectMapper.winning());
+            list = this.publicTypeThree(projectMapper.winning());
         }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return this.publicTypeThree(projectMapper.winningIndustry(industryCategoryGuid));
+            list = this.publicTypeThree(projectMapper.winningIndustry(industryCategoryGuid));
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-            return this.publicTypeThree(projectMapper.winningIndustryAndManage(industryCategoryGuid, managementPowerGuid));
+            list = this.publicTypeThree(projectMapper.winningIndustryAndManage(industryCategoryGuid, managementPowerGuid));
         }else {
 
-            return this.publicTypeThree(projectMapper.winningIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
+            list = this.publicTypeThree(projectMapper.winningIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
         }
+
+        for (ReturnProjectModel li: list) {
+            if (li.getAmount() != null && !"".equals(li.getAmount()) ) {
+
+                li.setAmount(new BigDecimal(li.getAmount()).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+                li.setAmounts(this.company(new BigDecimal(li.getAmount())));
+            }else{
+
+                li.setAmount("0");
+                li.setAmounts("0");
+            }
+        }
+
+        return list;
     }
 
     // 已完成投资额
     public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
+        List<ReturnProjectModel> list = null;
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return projectMapper.complete();
-
+            list = projectMapper.complete();
         }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return projectMapper.completeIndustry(industryCategoryGuid);
+            list = projectMapper.completeIndustry(industryCategoryGuid);
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-            return projectMapper.completeIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            list = projectMapper.completeIndustryAndManage(industryCategoryGuid, managementPowerGuid);
         }else {
-            return projectMapper.completeIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+
+            list = projectMapper.completeIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
         }
+
+        for (ReturnProjectModel li: list) {
+            if (li.getAmount() != null && !"".equals(li.getAmount()) ) {
+
+                li.setAmount(new BigDecimal(li.getAmount()).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+                li.setAmounts(this.company(new BigDecimal(li.getAmount())));
+            }else{
+
+                li.setAmount("0");
+                li.setAmounts("0");
+            }
+        }
+
+        return list;
     }
 
     // 投资完成率
@@ -245,11 +280,11 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
             String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
             returnProjectModel.setName("投资完成率");
-            returnProjectModel.setProportion(s.substring(0, s.length() - 2) + "%");
+            returnProjectModel.setProportion(s.substring(0, s.length() - 2));
         } else {
 
             returnProjectModel.setName("投资完成率");
-            returnProjectModel.setProportion("0%");
+            returnProjectModel.setProportion("0");
         }
         list1.add(returnProjectModel);
 
@@ -265,19 +300,44 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
     // 项目投资情况
     public List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
+        List<ReturnProjectModel> list = null;
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return projectMapper.sumProjectStates();
+            list = projectMapper.sumProjectStates();
         } else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            return projectMapper.sumProjectStatesIndustry(industryCategoryGuid);
+            list = projectMapper.sumProjectStatesIndustry(industryCategoryGuid);
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-            return projectMapper.sumProjectStatesIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            list = projectMapper.sumProjectStatesIndustryAndManage(industryCategoryGuid, managementPowerGuid);
         } else {
 
-            return projectMapper.sumProjectStatesIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+            list = projectMapper.sumProjectStatesIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
         }
+        for (ReturnProjectModel li: list) {
+            if (li.getAmount() != null && !"".equals(li.getAmount())) {
+
+                li.setAmount(new BigDecimal(li.getAmount()).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+                li.setAmounts(this.company(new BigDecimal(li.getAmount())));
+            }else{
+
+                li.setAmount("0");
+                li.setAmounts("0");
+            }
+
+            if (li.getAmountOne() != null && !"".equals(li.getAmountOne())) {
+
+                li.setAmountOne(new BigDecimal(li.getAmountOne()).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
+                li.setAmountOnes(this.company(new BigDecimal(li.getAmountOne())));
+            }else{
+
+                li.setAmountOne("0");
+                li.setAmountOnes("0");
+            }
+        }
+
+        return list;
     }
 
     // 条件查询
@@ -313,7 +373,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         List<ReturnProjectModel> list = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(projectMapper.hundredCount() + "个");
+        returnProjectModel.setProportion(projectMapper.hundredCount() + "");
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("isImportant", "1", "eq"));
@@ -321,7 +381,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         if (industryCategoryGuid != null && !"".equals(industryCategoryGuid)) {
 
             sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq"));
-            returnProjectModel.setProportion(projectMapper.hundredIndustryCount(industryCategoryGuid) + "个");
+            returnProjectModel.setProportion(projectMapper.hundredIndustryCount(industryCategoryGuid) + "");
         }
         List<ProjectModel> list1 = this.list(sqlQueryParams);
         BigDecimal winningAmount = new BigDecimal(0);
@@ -332,19 +392,19 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         }
         ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
         returnProjectModel1.setName("项目完成投资");
-        returnProjectModel1.setProportion(completeAmount + "万元");
+        returnProjectModel1.setProportion(completeAmount + "");
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
-        returnProjectModel2.setProportion(winningAmount + "万元");
+        returnProjectModel2.setProportion(winningAmount + "");
 
         ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
         returnProjectModel3.setName("完成投资额");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
             String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
-            returnProjectModel3.setProportion(s.substring(0, s.length() - 2) + "%");
+            returnProjectModel3.setProportion(s.substring(0, s.length() - 2));
         } else {
-            returnProjectModel3.setProportion("0%");
+            returnProjectModel3.setProportion("0");
         }
 
         list.add(returnProjectModel);
@@ -361,7 +421,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return this.hundredOne("A5338EFD-C3E3-42CB-A07D-F18110555264");
     }
 
-    // 百大铁路
+    // 百大公路
     public List<ReturnProjectModel> hundredThree(){
 
         return this.hundredOne("3C9953CE-11F1-44CB-A105-EA21612A9FC4");
@@ -402,4 +462,18 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return null;
     }
 
+    // 将万元转化成亿元
+    public String company (BigDecimal money){
+
+        String str = "";
+        if (money != null && !"".equals(money) && money.compareTo(BigDecimal.ZERO) != 0) {
+
+            str = (money.divide(new BigDecimal(10000))).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        }else{
+
+            str = "0";
+        }
+
+        return str;
+    }
 }
