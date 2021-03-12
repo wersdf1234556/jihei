@@ -13,7 +13,5 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
             "where t.name like '${tenderName}%'")
     List<PersonModel> listByTenderName(@Param(value = "tenderName") String tenderName);
 
-    //截取所有人员idcard的前4位
-    @Select("SELECT DISTINCT LEFT(idCard, 2)  idCard from persons")
-    List<String> listIdCard();
+
 }

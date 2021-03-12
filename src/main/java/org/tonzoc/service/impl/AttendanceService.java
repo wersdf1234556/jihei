@@ -33,6 +33,8 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     private PersonMapper personMapper;
     @Autowired
     private IAreaDataService areaDataService;
+    @Autowired
+    private IPersonNucleicInfoService personNucleicInfoService;
 
     public List<AttendanceModel> listBySignAndDate(String sign,String createdAt){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -228,24 +230,14 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     //统计各市人数情况
     public List<AttendanceStatModel> countPersonByCity(){
         List<AttendanceStatModel> list = new ArrayList<>();
-        List<String> subIdCards = personMapper.listIdCard();
-        for (String subIdCard:subIdCards){
-            System.out.println(subIdCard);
-
-            AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
+        List<String> listAreaCodes = personNucleicInfoService.listAreaCode();
+        for (String areaCode:listAreaCodes){
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-            sqlQueryParams.add(new SqlQueryParam("code", subIdCard, "like"));
-            List<AreaDataModel> areaDataModels = areaDataService.list(sqlQueryParams);
-            if (areaDataModels.size()!=0){
-                attendanceStatModel.setTypeName(areaDataModels.get(0).getName());
-                System.out.println(areaDataModels.get(0).getName());
-            }
-            List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
-            sqlQueryParams2.add(new SqlQueryParam("idCard", subIdCard, "like"));
-            List<PersonModel> personModels = personService.list(sqlQueryParams2);
-            attendanceStatModel.setTotal(String.valueOf(personModels.size()));
-            list.add(attendanceStatModel);
+            sqlQueryParams.add(new SqlQueryParam("departurePlaceCode",areaCode,"eq"));
+            List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams);
+
         }
+
         return list;
 
     }

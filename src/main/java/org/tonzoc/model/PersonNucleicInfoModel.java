@@ -12,12 +12,12 @@ public class PersonNucleicInfoModel extends BaseModel{
     private String personGuid;
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName; //人员姓名
-    @Column(value = "departurePlaceGuid")
-    private String departurePlaceGuid;
-    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceGuid", rightColumn = "guid")
+    @Column(value = "departurePlaceCode")
+    private String departurePlaceCode; //出发地code
+    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceCode", rightColumn = "code")
     private String departurePlace; //出发地
-    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceGuid", rightColumn = "guid")
-    private String departurePlaceCode;//出发地code
+    @Column(value = "remark")
+    private String remark;//补充地址信息
     @Column(value = "isRisk")
     private Integer isRisk; //是否从高风险地区来
     @Column(value = "vehicle")
@@ -42,6 +42,7 @@ public class PersonNucleicInfoModel extends BaseModel{
     private String testingOrgan;
     @Column(value = "address")
     private String address;
+
 
     public String getGuid() {
         return guid;
@@ -171,14 +172,6 @@ public class PersonNucleicInfoModel extends BaseModel{
         this.personName = personName;
     }
 
-    public String getDeparturePlaceGuid() {
-        return departurePlaceGuid;
-    }
-
-    public void setDeparturePlaceGuid(String departurePlaceGuid) {
-        this.departurePlaceGuid = departurePlaceGuid;
-    }
-
     public String getDeparturePlaceCode() {
         return departurePlaceCode;
     }
@@ -187,15 +180,22 @@ public class PersonNucleicInfoModel extends BaseModel{
         this.departurePlaceCode = departurePlaceCode;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return "PersonNucleicInfoModel{" +
                 "guid='" + guid + '\'' +
                 ", personGuid='" + personGuid + '\'' +
                 ", personName='" + personName + '\'' +
-                ", departurePlaceGuid='" + departurePlaceGuid + '\'' +
-                ", departurePlace='" + departurePlace + '\'' +
                 ", departurePlaceCode='" + departurePlaceCode + '\'' +
+                ", departurePlace='" + departurePlace + '\'' +
                 ", isRisk=" + isRisk +
                 ", vehicle='" + vehicle + '\'' +
                 ", travelTime='" + travelTime + '\'' +
@@ -208,6 +208,7 @@ public class PersonNucleicInfoModel extends BaseModel{
                 ", reportTime='" + reportTime + '\'' +
                 ", testingOrgan='" + testingOrgan + '\'' +
                 ", address='" + address + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }
