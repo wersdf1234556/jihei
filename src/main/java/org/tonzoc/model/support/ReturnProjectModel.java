@@ -68,4 +68,17 @@ public class ReturnProjectModel {
     public void setProportions(String proportions) {
         this.proportions = proportions;
     }
+
+    @Override
+    public String toString() {
+        return "ReturnProjectModel{" +
+                "name='" + name + '\'' +
+                ", amount='" + amount + '\'' +
+                ", amounts='" + amounts + '\'' +
+                ", amountOne='" + amountOne + '\'' +
+                ", amountOnes='" + amountOnes + '\'' +
+                ", proportion='" + proportion + '\'' +
+                ", proportions='" + proportions + '\'' +
+                '}';
+    }
 }
