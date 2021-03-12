@@ -37,7 +37,7 @@ public class PersonNucleicInfoController  extends BaseController{
 
     @PostMapping
     public void add(@RequestBody @Valid PersonNucleicInfoModel personNucleicInfoModel ){
-        this.personNucleicInfoService.insertStack(personNucleicInfoModel);
+        this.personNucleicInfoService.save(personNucleicInfoModel);
     }
 
     @PutMapping(value = "{guid}")
