@@ -58,29 +58,35 @@ public class AttendanceController extends BaseController {
         attendanceService.removeMany(guids);
     }
 
-    @GetMapping(value = "statAttendanceData")
-    public List<Object> statAttendanceData(String date,Integer flag){
-        return attendanceService.statAttendanceData(date,flag);
-    }
-    //疫情防控左上、左下根据日期查考勤数及体温
+//    @GetMapping(value = "statAttendanceData")
+//    public List<Object> statAttendanceData(String date,Integer flag){
+//        return attendanceService.statAttendanceData(date,flag);
+//    }
+    //疫情防控右上、右下根据日期查考勤数及体温
     @GetMapping(value = "statByMonth")
     public List<AttDateStatModel> statByMonth(String date){
         return attendanceService.statByMonth(date);
     }
 
-    //疫情防控右上角按a、b、s、z的标段类型进行考勤统计查询
+    //疫情防控左上角按a、b、s、z的标段类型进行考勤统计查询
     @GetMapping(value = "statByTenderType")
     public List<AttendanceStatModel> statByTenderType(String date){
         return attendanceService.statByTenderType(date);
     }
 
-    //查询每个人指定日期最后一条定位信息
+    //人员模块查询每个人指定日期最后一条定位信息
     @GetMapping(value = "listLocationDatas")
     public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid,String date){
         return attendanceService.listPersonLocationDatas(categoryGuid,date);
     }
+    //人员右上饼图统计数据
     @GetMapping(value = "statAll")
     public StatTotalModel statAll(String categoryGuid, String date){
         return attendanceService.statAll(categoryGuid,date);
+    }
+    //疫情左上角按市统计人员饼图
+    @GetMapping(value = "countPersonByCity")
+    public List<AttendanceStatModel> countPersonByCity(){
+        return attendanceService.countPersonByCity();
     }
 }
