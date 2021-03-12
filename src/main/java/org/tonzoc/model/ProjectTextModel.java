@@ -21,7 +21,7 @@ public class ProjectTextModel extends BaseModel{
     @JoinColumn(value = "name", type = ProjectTypeModel.class, leftColumn = "typeGuid", rightColumn = "guid")
     private String typeName;
     @JoinColumn(value = "url", type = AttachmentModel.class, leftColumn = "pictureGuid", rightColumn = "guid")
-    private String pictureurl;
+    private String pictureUrl;
 
     public String getGuid() {
         return guid;
@@ -79,12 +79,12 @@ public class ProjectTextModel extends BaseModel{
         this.typeName = typeName;
     }
 
-    public String getPictureurl() {
-        return pictureurl;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public void setPictureurl(String pictureurl) {
-        this.pictureurl = pictureurl;
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ProjectTextModel extends BaseModel{
                 ", content='" + content + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", typeName='" + typeName + '\'' +
-                ", pictureurl='" + pictureurl + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
                 '}';
     }
 }
