@@ -236,10 +236,9 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             sqlQueryParams.add(new SqlQueryParam("departurePlaceCode",areaCode,"eq"));
             List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams);
 
+
         }
-
         return list;
-
     }
 
 }

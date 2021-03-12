@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface PersonNucleicInfoMapper extends BaseMapper<PersonNucleicInfoModel> {
 
-    //截取所有人员idcard的前4位
+    //获取所有人员的areaCode
     @Select("SELECT DISTINCT departurePlaceCode from personNucleicInfo")
     List<String> listAreaCode();
 }
