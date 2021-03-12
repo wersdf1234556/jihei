@@ -13,7 +13,13 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
     Integer hundredCount();
 
     @Select("select count(guid) from projects where isImportant = 1 and industryCategoryGuid = #{industryCategoryGuid}")
-    Integer hundredIndustryCount(String industryCategoryGuid);
+    Integer hundredIndustryCount(@Param(value = "industryCategoryGuid") String industryCategoryGuid);
+
+    @Select("select count(guid) from projects where isImportant = 1 and isStart = 1")
+    Integer hundredCountAndStart();
+
+    @Select("select count(guid) from projects where isImportant = 1 and isStart = 1 and industryCategoryGuid = #{industryCategoryGuid}")
+    Integer hundredIndustryCountAndStart(@Param(value = "industryCategoryGuid") String industryCategoryGuid);
 
     @Select("select * from projects")
     List<ProjectModel> list();
@@ -134,4 +140,37 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
     List<ReturnProjectModel> sumProjectStatesIndustryAndManageAndBuild(@Param("industryCategoryGuid") String industryCategoryGuid,
                                                                        @Param("managementPowerGuid") String managementPowerGuid,
                                                                        @Param("buildLevelGuid") String buildLevelGuid);
+
+    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects")
+    List<ReturnProjectModel> sumProject();
+
+    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+            "where industryCategoryGuid = #{industryCategoryGuid}")
+    List<ReturnProjectModel> sumProjectIndustry(@Param("industryCategoryGuid") String industryCategoryGuid);
+
+    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+            "where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid}")
+    List<ReturnProjectModel> sumProjectIndustryAndManage(@Param("industryCategoryGuid") String industryCategoryGuid,
+                                                         @Param("managementPowerGuid") String managementPowerGuid);
+
+    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+            "where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid} and buildLevelGuid = #{buildLevelGuid}")
+    List<ReturnProjectModel> sumProjectIndustryAndManageAndBuild(@Param("industryCategoryGuid") String industryCategoryGuid,
+                                                                 @Param("managementPowerGuid") String managementPowerGuid,
+                                                                 @Param("buildLevelGuid") String buildLevelGuid);
+
+    @Select("select count(guid) from projects where isStart = 1")
+    Integer countStart();
+
+    @Select("select count(guid) from projects where isStart = 1 and industryCategoryGuid = #{industryCategoryGuid}")
+    Integer countStartIndustry(@Param("industryCategoryGuid") String industryCategoryGuid);
+
+    @Select("select count(guid) from projects where isStart = 1 and industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid}")
+    Integer countStartIndustryAndManage(@Param("industryCategoryGuid") String industryCategoryGuid,
+                                        @Param("managementPowerGuid") String managementPowerGuid);
+
+    @Select("select count(guid) from projects where isStart = 1 and industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid} and buildLevelGuid = #{buildLevelGuid}")
+    Integer countStartIndustryAndManageAndBuild(@Param("industryCategoryGuid") String industryCategoryGuid,
+                                                @Param("managementPowerGuid") String managementPowerGuid,
+                                                @Param("buildLevelGuid") String buildLevelGuid);
 }

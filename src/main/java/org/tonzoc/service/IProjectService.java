@@ -6,6 +6,7 @@ import org.tonzoc.model.support.ReturnProjectModel;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface IProjectService extends IBaseService<ProjectModel> {
 
@@ -14,9 +15,6 @@ public interface IProjectService extends IBaseService<ProjectModel> {
 
     // 全部项目的数据
     List<ReturnProjectModel> dateAll();
-
-    // 项目情况
-    List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 项目数
     List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
@@ -39,9 +37,6 @@ public interface IProjectService extends IBaseService<ProjectModel> {
     // 项目投资情况
     List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
-    // 条件查询
-    List<ReturnProjectModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
-
     // 百大项目
     List<ReturnProjectModel> hundredOne(String projectStateGuid);
 
@@ -57,9 +52,15 @@ public interface IProjectService extends IBaseService<ProjectModel> {
     // 百大水运
     List<ReturnProjectModel> hundredFive();
 
-    // 百大查询
-    List<ReturnProjectModel> hundredSelect(Integer typeId);
-
     // 将万元转化成亿元
     String company (BigDecimal money);
+
+    // 项目情况
+    List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+
+    // 条件查询
+    Map<String ,List<ReturnProjectModel>> conditionSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+
+    // 百大查询
+    Map<String, List<ReturnProjectModel>> hundredSelect();
 }

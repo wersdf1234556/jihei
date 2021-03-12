@@ -15,6 +15,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("project")
@@ -58,13 +59,6 @@ public class ProjectController extends BaseController {
         return projectService.dateAll();
     }
 
-    // 项目情况
-    @GetMapping(value = "typeOne")
-    public List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
-
-        return projectService.typeOne(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-    }
-
     // 项目数
     @GetMapping(value = "typeTwo")
     public List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
@@ -91,13 +85,6 @@ public class ProjectController extends BaseController {
     public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
         return projectService.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-    }
-
-    // 条件查询
-    @GetMapping(value = "conditionSelect")
-    public List<ReturnProjectModel> conditionSelect(Integer typeId, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
-
-        return projectService.conditionSelect(typeId, industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 百大项目
@@ -135,11 +122,25 @@ public class ProjectController extends BaseController {
         return projectService.hundredFive();
     }
 
+    // 项目情况
+    @GetMapping(value = "projectSelect")
+    public List<ReturnProjectModel> projectSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
+        return projectService.typeOne(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+    }
+
+    // 条件查询
+    @GetMapping(value = "conditionSelect")
+    public Map<String ,List<ReturnProjectModel>> conditionSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
+        return projectService.conditionSelect(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+    }
+
     // 百大查询
     @GetMapping(value = "hundredSelect")
-    public List<ReturnProjectModel> hundredSelect(Integer typeId){
+    public  Map<String, List<ReturnProjectModel>> hundredSelect(){
 
-        return projectService.hundredSelect(typeId);
+        return projectService.hundredSelect();
     }
 
 }
