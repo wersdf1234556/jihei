@@ -17,6 +17,8 @@ public class IndustryCategoryModel extends BaseModel{
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "englishName")
+    private String englishName;
 
     public IndustryCategoryModel() {
     }
@@ -45,12 +47,21 @@ public class IndustryCategoryModel extends BaseModel{
         this.sortId = sortId;
     }
 
+    public String getEnglishName() {
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
     @Override
     public String toString() {
         return "IndustryCategoryModel{" +
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
+                ", englishName='" + englishName + '\'' +
                 '}';
     }
 }

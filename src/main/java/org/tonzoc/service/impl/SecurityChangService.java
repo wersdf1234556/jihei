@@ -60,7 +60,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
-        this.update(securityChangModel);
+
         securityChangMapper.updateStatus("submitted", approvalTime, nextTenderGuids, securityChangGuid);
     }
 

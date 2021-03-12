@@ -386,10 +386,16 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
         ReturnProjectModel returnProjectModel5 = new ReturnProjectModel();
         returnProjectModel5.setName("开复工率");
-        BigDecimal str = (new BigDecimal(returnProjectModel4.getProportion()).divide(new BigDecimal(returnProjectModel.getProportion()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100));
-        returnProjectModel5.setProportion(str.setScale(1, BigDecimal.ROUND_HALF_UP) + "");
+        if (new BigDecimal(returnProjectModel.getProportion()).compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal str = (new BigDecimal(returnProjectModel4.getProportion()).divide(new BigDecimal(returnProjectModel.getProportion()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100));
+            returnProjectModel5.setProportion(str.setScale(1, BigDecimal.ROUND_HALF_UP) + "");
+        } else {
+            returnProjectModel5.setProportions("0");
+        }
+
 
         list.add(returnProjectModel);
+        System.out.println("returnProjectModel" + returnProjectModel.getProportion());
         list.add(returnProjectModel1);
         list.add(returnProjectModel2);
         list.add(returnProjectModel3);

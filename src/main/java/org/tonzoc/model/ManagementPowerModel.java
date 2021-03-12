@@ -16,6 +16,8 @@ public class ManagementPowerModel extends BaseModel{
     private Integer sortId;
     @Column(value = "industryCategoryGuid")
     private String industryCategoryGuid; // 行业类别
+    @Column(value = "videoUrl")
+    private String videoUrl; // 视频地址
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName;  // 行业名称
@@ -63,6 +65,14 @@ public class ManagementPowerModel extends BaseModel{
         this.industryCategoryName = industryCategoryName;
     }
 
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
     @Override
     public String toString() {
         return "ManagementPowerModel{" +
@@ -70,6 +80,7 @@ public class ManagementPowerModel extends BaseModel{
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
                 ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
                 '}';
     }
