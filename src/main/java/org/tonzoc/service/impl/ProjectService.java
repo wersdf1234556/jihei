@@ -27,15 +27,39 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return projectMapper.count();
     }
 
-    // 全部项目的数据
-    public List<ReturnProjectModel> dateAll() {
-        List<ReturnProjectModel> list = new ArrayList<>();
-        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
-        returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(this.count() + "");
+
+    // 项目情况
+    public List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            return this.dateAll(); // 查询全部
+        }
+        Integer count = 0;
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            count = projectMapper.industryCategoryCount(industryCategoryGuid);
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业查询
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
+
+            count = projectMapper.industryAndManageCount(industryCategoryGuid, managementPowerGuid);
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
+        }else {
+
+            count = projectMapper.industryAndManageAndBuildCount(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
+            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
+            sqlQueryParams.add(new SqlQueryParam("buildLevelGuid", buildLevelGuid, "eq"));  // 和等级
+        }
+
         List<ProjectModel> list1 = this.list(sqlQueryParams);
+        List<ReturnProjectModel> list2 = new ArrayList<>();
+        ReturnProjectModel returnProjectModel = new ReturnProjectModel();
+        returnProjectModel.setName("项目总数");
+        returnProjectModel.setProportion(count + "");
+
         BigDecimal winningAmount = new BigDecimal(0);
         BigDecimal completeAmount = new BigDecimal(0);
         for (ProjectModel li : list1) {
@@ -46,7 +70,6 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         returnProjectModel1.setName("项目完成投资");
         returnProjectModel1.setProportion(completeAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
         returnProjectModel1.setProportions(this.company(completeAmount));
-
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
@@ -62,12 +85,12 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             returnProjectModel3.setProportion("0");
         }
 
-        list.add(returnProjectModel);
-        list.add(returnProjectModel1);
-        list.add(returnProjectModel2);
-        list.add(returnProjectModel3);
+        list2.add(returnProjectModel);
+        list2.add(returnProjectModel1);
+        list2.add(returnProjectModel2);
+        list2.add(returnProjectModel3);
 
-        return list;
+        return list2;
     }
 
     // 项目数
@@ -228,22 +251,24 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     // 投资完成率
     public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
-        List<ReturnProjectModel> list = null;
+        List<ReturnProjectModel> list = new ArrayList<>();
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            list = projectMapper.sumProject();
+            list  = projectMapper.sumProject();
         } else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
 
-            list = projectMapper.sumProjectIndustry(industryCategoryGuid);
+            list  = projectMapper.sumProjectIndustry(industryCategoryGuid);
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
 
-            list = projectMapper.sumProjectIndustryAndManage(industryCategoryGuid, managementPowerGuid);
+            list  = projectMapper.sumProjectIndustryAndManage(industryCategoryGuid, managementPowerGuid);
         } else {
 
-            list = projectMapper.sumProjectIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+            list  = projectMapper.sumProjectIndustryAndManageAndBuild(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
         }
+
         for (ReturnProjectModel li: list) {
             li.setName("投资完成率");
+
             if (li.getAmount() != null && !"".equals(li.getAmount())) { // 总
 
                 li.setAmount(new BigDecimal(li.getAmount() ).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
@@ -264,16 +289,22 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
                 li.setAmountOnes("0");
             }
 
-            if (new BigDecimal(li.getAmountOne()).compareTo(BigDecimal.ZERO) > 0) {
+            if (li.getAmountOne() != null && !"".equals(li.getAmountOne()) && li.getAmountOne() != null && !"".equals(li.getAmountOne())) {
+                if (new BigDecimal(li.getAmountOne()).compareTo(BigDecimal.ZERO) > 0) {
 
-                String s = (new BigDecimal(li.getAmount()).divide(new BigDecimal(li.getAmountOne()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
+                    String s = (new BigDecimal(li.getAmount()).divide(new BigDecimal(li.getAmountOne()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
 
-                li.setProportion(s.substring(0, s.length() - 2));
-            } else {
+                    li.setProportion(s.substring(0, s.length() - 2));
+                } else {
+
+                    li.setProportion("0");
+                }
+            }else {
 
                 li.setProportion("0");
             }
         }
+
 
         return list;
     }
@@ -444,38 +475,15 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return str;
     }
 
-    // 项目情况
-    public List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
-        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-
-            return this.dateAll(); // 查询全部
-        }
-        Integer count = 0;
-
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-
-            count = projectMapper.industryCategoryCount(industryCategoryGuid);
-            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业查询
-        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
-
-            count = projectMapper.industryAndManageCount(industryCategoryGuid, managementPowerGuid);
-            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
-            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
-        }else {
-
-            count = projectMapper.industryAndManageAndBuildCount(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-            sqlQueryParams.add(new SqlQueryParam("industryCategoryGuid", industryCategoryGuid, "eq")); // 按照行业
-            sqlQueryParams.add(new SqlQueryParam("managementPowerGuid", managementPowerGuid, "eq"));  // 和管理查询
-            sqlQueryParams.add(new SqlQueryParam("buildLevelGuid", buildLevelGuid, "eq"));  // 和等级
-        }
-
-        List<ProjectModel> list1 = this.list(sqlQueryParams);
-        List<ReturnProjectModel> list2 = new ArrayList<>();
+    // 全部项目的数据
+    public List<ReturnProjectModel> dateAll() {
+        List<ReturnProjectModel> list = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(count + "");
+        returnProjectModel.setProportion(this.count() + "");
 
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<ProjectModel> list1 = this.list(sqlQueryParams);
         BigDecimal winningAmount = new BigDecimal(0);
         BigDecimal completeAmount = new BigDecimal(0);
         for (ProjectModel li : list1) {
@@ -486,6 +494,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         returnProjectModel1.setName("项目完成投资");
         returnProjectModel1.setProportion(completeAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
         returnProjectModel1.setProportions(this.company(completeAmount));
+
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
@@ -501,12 +510,12 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             returnProjectModel3.setProportion("0");
         }
 
-        list2.add(returnProjectModel);
-        list2.add(returnProjectModel1);
-        list2.add(returnProjectModel2);
-        list2.add(returnProjectModel3);
+        list.add(returnProjectModel);
+        list.add(returnProjectModel1);
+        list.add(returnProjectModel2);
+        list.add(returnProjectModel3);
 
-        return list2;
+        return list;
     }
 
     // 条件查询
@@ -516,6 +525,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         map.put("项目建设情况", this.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
         map.put("项目投资情况", this.typeSeven(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
         map.put("投资完成率", this.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
+        System.out.println("2222");
         map.put("开工率", this.typeSix(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
 
         return map;

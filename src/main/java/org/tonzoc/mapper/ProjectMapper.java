@@ -118,42 +118,42 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
     @Select("select sum(projects.winningAmount) from projects")
     Integer sum();
 
-    @Select("select projectStates.name, sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projectStates " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates " +
             "LEFT JOIN projects on projectStates.guid = projects.projectStateGuid " +
             "GROUP BY projectStates.name, projectStates.sortId ORDER BY projectStates.sortId")
     List<ReturnProjectModel> sumProjectStates();
 
-    @Select("select projectStates.name, sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projectStates " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates " +
             "LEFT JOIN (select * from projects where industryCategoryGuid = #{industryCategoryGuid}) projects on projectStates.guid = projects.projectStateGuid " +
             "GROUP BY projectStates.name, projectStates.sortId ORDER BY projectStates.sortId")
     List<ReturnProjectModel> sumProjectStatesIndustry(@Param("industryCategoryGuid") String industryCategoryGuid);
 
-    @Select("select projectStates.name, sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projectStates " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates " +
             "LEFT JOIN (select * from projects where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid}) projects " +
             "on projectStates.guid = projects.projectStateGuid GROUP BY projectStates.name, projectStates.sortId ORDER BY projectStates.sortId")
     List<ReturnProjectModel> sumProjectStatesIndustryAndManage(@Param("industryCategoryGuid") String industryCategoryGuid,
                                                                @Param("managementPowerGuid") String managementPowerGuid);
 
-    @Select("select projectStates.name, sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projectStates " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates " +
             "LEFT JOIN (select * from projects where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid} and buildLevelGuid = #{buildLevelGuid}) projects " +
             "on projectStates.guid = projects.projectStateGuid GROUP BY projectStates.name, projectStates.sortId ORDER BY projectStates.sortId")
     List<ReturnProjectModel> sumProjectStatesIndustryAndManageAndBuild(@Param("industryCategoryGuid") String industryCategoryGuid,
                                                                        @Param("managementPowerGuid") String managementPowerGuid,
                                                                        @Param("buildLevelGuid") String buildLevelGuid);
 
-    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects")
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects")
     List<ReturnProjectModel> sumProject();
 
-    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects " +
             "where industryCategoryGuid = #{industryCategoryGuid}")
     List<ReturnProjectModel> sumProjectIndustry(@Param("industryCategoryGuid") String industryCategoryGuid);
 
-    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects " +
             "where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid}")
     List<ReturnProjectModel> sumProjectIndustryAndManage(@Param("industryCategoryGuid") String industryCategoryGuid,
                                                          @Param("managementPowerGuid") String managementPowerGuid);
 
-    @Select("select sum(projects.winningAmount) amount, sum(projects.completeAmount) amountOne from projects " +
+    @Select("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects " +
             "where industryCategoryGuid = #{industryCategoryGuid} and managementPowerGuid = #{managementPowerGuid} and buildLevelGuid = #{buildLevelGuid}")
     List<ReturnProjectModel> sumProjectIndustryAndManageAndBuild(@Param("industryCategoryGuid") String industryCategoryGuid,
                                                                  @Param("managementPowerGuid") String managementPowerGuid,

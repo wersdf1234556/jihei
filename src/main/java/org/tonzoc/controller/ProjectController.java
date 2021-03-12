@@ -124,9 +124,9 @@ public class ProjectController extends BaseController {
 
     // 项目情况
     @GetMapping(value = "projectSelect")
-    public List<ReturnProjectModel> projectSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> projectSelect(){
 
-        return projectService.typeOne(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        return projectService.dateAll();
     }
 
     // 条件查询
