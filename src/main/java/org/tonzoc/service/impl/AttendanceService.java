@@ -9,10 +9,7 @@ import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.mapper.AttendanceMapper;
 import org.tonzoc.mapper.PersonMapper;
 import org.tonzoc.model.*;
-import org.tonzoc.model.support.AttDateStatModel;
-import org.tonzoc.model.support.AttStatTenderModel;
-import org.tonzoc.model.support.AttendanceStatModel;
-import org.tonzoc.model.support.PersonLocationDataModel;
+import org.tonzoc.model.support.*;
 import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -55,6 +52,29 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 //        }
 //        save(attendanceModel);
 //    }
+
+    //真实打卡数据统计（左上角）
+    public StatTotalModel statAll(String categoryGuid,String date) {
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        List<AttendanceModel> list = attendanceMapper.listAttByCategory(categoryGuid,date);
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
+        List<PersonModel> personModels = personService.list(sqlQueryParams);
+        Integer total=personModels.size();
+
+        Integer attNum=list.size();
+        Integer noAttNum = total-attNum;
+        Object percent=(float) attNum / total * 100;
+        StatTotalModel statTotalModel = new StatTotalModel();
+        statTotalModel.setTotal(total.toString());
+        statTotalModel.setAttNum(attNum.toString());
+        statTotalModel.setNoAttNum(noAttNum.toString());
+        statTotalModel.setPercent(percent.toString());
+        return statTotalModel;
+    }
 
     //人员信息统计
     public List<Object> statAttendanceData(String date,Integer flag){
@@ -185,21 +205,20 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
     }
 
-    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid){
-//        if (date==null||date.isEmpty()){
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            date= formatter.format( new Date());
-//        }
+    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid,String date){
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
         if (categoryGuid==null||categoryGuid.isEmpty()){
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("flag","1","eq"));
             List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
             if (personCategoryModels.size()!=0){
                 categoryGuid=personCategoryModels.get(0).getGuid();
             }
         }
-        return attendanceMapper.listPersonLocationDatas(categoryGuid);
+        return attendanceMapper.listPersonLocationDatas(categoryGuid,date);
     }
-
-
 
 }

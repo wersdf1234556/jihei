@@ -15,6 +15,8 @@ public class PersonCategoryModel extends BaseModel {
     private String name; // 人员类别名称
     @Column(value = "sortId")
     private Integer sortId; // 排序
+    @Column(value = "flag")
+    private Integer flag;
 
     public String getGuid() {
         return guid;
@@ -38,5 +40,13 @@ public class PersonCategoryModel extends BaseModel {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

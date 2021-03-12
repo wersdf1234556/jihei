@@ -4,6 +4,7 @@ import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.model.support.PersonLocationDataModel;
+import org.tonzoc.model.support.StatTotalModel;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
     List<AttendanceStatModel> statByTenderType(String date);
 
-    List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid);
+    List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid,String date);
+
+    StatTotalModel statAll(String categoryGuid, String date);
 }

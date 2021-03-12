@@ -12,6 +12,7 @@ import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.model.support.PersonLocationDataModel;
+import org.tonzoc.model.support.StatTotalModel;
 import org.tonzoc.service.IAttendanceService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -75,7 +76,11 @@ public class AttendanceController extends BaseController {
 
     //查询每个人指定日期最后一条定位信息
     @GetMapping(value = "listLocationDatas")
-    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid){
-        return attendanceService.listPersonLocationDatas(categoryGuid);
+    public List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid,String date){
+        return attendanceService.listPersonLocationDatas(categoryGuid,date);
+    }
+    @GetMapping(value = "statAll")
+    public StatTotalModel statAll(String categoryGuid, String date){
+        return attendanceService.statAll(categoryGuid,date);
     }
 }

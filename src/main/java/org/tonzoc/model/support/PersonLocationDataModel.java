@@ -13,6 +13,7 @@ public class PersonLocationDataModel {
     private String colour;
     private String number;
     private String createdAt;
+    private String flag;
     private Integer rowId;
 
     public String getAttGuid() {
@@ -117,5 +118,13 @@ public class PersonLocationDataModel {
 
     public void setPersonGuid(String personGuid) {
         this.personGuid = personGuid;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

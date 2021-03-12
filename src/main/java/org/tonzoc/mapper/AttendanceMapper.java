@@ -35,12 +35,19 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
     @Select("select * from " +
             "(" +
             "select attendances.guid attGuid,persons.guid personGuid,persons.name,persons.categoryGuid,personCategory.name categoryName , " +
-            "persons.personTypeGuid personTypeGuid,personTypes.name personTypeName,attendances.lat,attendances.lng,personTypes.colour colour,personTypes.number,attendances.createdAt, " +
+            "persons.personTypeGuid personTypeGuid,personTypes.name personTypeName,attendances.lat,attendances.lng,personTypes.colour colour,personTypes.number,attendances.createdAt,personCategory.flag, " +
             "ROW_NUMBER() OVER (PARTITION BY persons.guid ORDER BY attendances.createdAt DESC) rowrId " +
             "from persons LEFT JOIN attendances on persons.guid=attendances.personGuid LEFT JOIN personCategory on persons.categoryGuid=personCategory.guid  " +
             "LEFT JOIN personTypes on persons.personTypeGuid=personTypes.guid " +
             ")b where b.rowrId=1 and b.attGuid is not NULL " +
-//            "and Convert(varchar, b.createdAt ,120)like '%${createdAt}%' " +
+            "and Convert(varchar, b.createdAt ,120)like '%${createdAt}%' " +
             "and b.categoryGuid=#{categoryGuid}")
-    List<PersonLocationDataModel> listPersonLocationDatas(@Param(value = "categoryGuid") String categoryGuid);
+    List<PersonLocationDataModel> listPersonLocationDatas(@Param(value = "categoryGuid") String categoryGuid,@Param(value = "createdAt") String createdAt);
+
+    //获取人员类别当日打卡数
+    @Select("SELECT * from attendances a LEFT JOIN persons p on a.personGuid = p.guid " +
+            "where p.categoryGuid=#{categoryGuid} " +
+            "and Convert(VARCHAR,a.createdAt,120)  LIKE  '%${createdAt}%'")
+    List<AttendanceModel> listAttByCategory(@Param(value = "categoryGuid") String categoryGuid,@Param(value = "createdAt") String createdAt);
 }
+
