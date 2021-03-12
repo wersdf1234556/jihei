@@ -9,6 +9,9 @@ public class PersonCategoryQueryParams {
     @Operator(value = "like", field = "name")
     private String name;
 
+    @Operator(value = "eq", field = "flag")
+    private String flag;
+
     public String getName() {
         return name;
     }
@@ -23,5 +26,13 @@ public class PersonCategoryQueryParams {
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }
