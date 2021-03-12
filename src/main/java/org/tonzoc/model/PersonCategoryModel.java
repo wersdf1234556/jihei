@@ -17,6 +17,8 @@ public class PersonCategoryModel extends BaseModel {
     private Integer sortId; // 排序
     @Column(value = "flag")
     private Integer flag;
+    @Column(value = "colour")
+    private String colour; //颜色
 
     public String getGuid() {
         return guid;
@@ -48,5 +50,13 @@ public class PersonCategoryModel extends BaseModel {
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 }

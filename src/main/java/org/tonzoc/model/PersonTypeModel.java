@@ -14,12 +14,12 @@ public class PersonTypeModel extends BaseModel{
     private String name; // 人员工种
     @Column(value = "sortId")
     private Integer sortId; // 排序
-    @Column(value = "colour")
-    private String colour; //颜色
     @Column(value = "categoryGuid")
     private String categoryGuid;
     @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
     private String categoryName; //人员类别
+    @JoinColumn(value = "colour", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
+    private String colour; //颜色
     @Column(value = "number")
     private Integer number;
 

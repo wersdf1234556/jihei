@@ -35,7 +35,7 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
     @Select("select * from " +
             "(" +
             "select attendances.guid attGuid,persons.guid personGuid,persons.name,persons.categoryGuid,personCategory.name categoryName , " +
-            "persons.personTypeGuid personTypeGuid,personTypes.name personTypeName,attendances.lat,attendances.lng,personTypes.colour colour,personTypes.number,attendances.createdAt,personCategory.flag, " +
+            "persons.personTypeGuid personTypeGuid,personTypes.name personTypeName,attendances.lat,attendances.lng,personCategory.colour colour,personTypes.number,attendances.createdAt,personCategory.flag, " +
             "ROW_NUMBER() OVER (PARTITION BY persons.guid ORDER BY attendances.createdAt DESC) rowrId " +
             "from persons LEFT JOIN attendances on persons.guid=attendances.personGuid LEFT JOIN personCategory on persons.categoryGuid=personCategory.guid  " +
             "LEFT JOIN personTypes on persons.personTypeGuid=personTypes.guid " +
