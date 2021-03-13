@@ -151,10 +151,14 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
         returnProjectModel.setProportion(projectMapper.hundredCount() + "");
+        returnProjectModel.setProportions(projectMapper.hundredCount() + "");
+        returnProjectModel.setSortId(1);
 
         ReturnProjectModel returnProjectModel4 = new ReturnProjectModel();
         returnProjectModel4.setName("开复工");
         returnProjectModel4.setProportion(projectMapper.hundredCountAndStart() + "");
+        returnProjectModel4.setProportions(projectMapper.hundredCountAndStart() + "");
+        returnProjectModel4.setSortId(5);
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("isImportant", "1", "eq"));
@@ -173,33 +177,40 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             completeAmount = completeAmount.add(li.getCompleteAmount()); // 完成投资额
         }
         ReturnProjectModel returnProjectModel1 = new ReturnProjectModel();
-        returnProjectModel1.setName("项目完成投资");
+        returnProjectModel1.setName("完成投资额");
         returnProjectModel1.setProportion(completeAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
         returnProjectModel1.setProportions(this.company(completeAmount));
+        returnProjectModel1.setSortId(3);
 
         ReturnProjectModel returnProjectModel2 = new ReturnProjectModel();
         returnProjectModel2.setName("总投资额");
         returnProjectModel2.setProportion(winningAmount.setScale(0, BigDecimal.ROUND_HALF_UP) + "");
         returnProjectModel2.setProportions(this.company(winningAmount));
+        returnProjectModel2.setSortId(2);
 
         ReturnProjectModel returnProjectModel3 = new ReturnProjectModel();
-        returnProjectModel3.setName("完成投资额");
+        returnProjectModel3.setName("完成投资比例");
         if (winningAmount.compareTo(BigDecimal.ZERO) > 0) {
             String s = (completeAmount.divide(winningAmount, 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
             returnProjectModel3.setProportion(s.substring(0, s.length() - 2));
+            returnProjectModel3.setProportions(s.substring(0, s.length() - 2));
         } else {
             returnProjectModel3.setProportion("0");
+            returnProjectModel3.setProportions("0");
         }
+        returnProjectModel3.setSortId(4);
 
         ReturnProjectModel returnProjectModel5 = new ReturnProjectModel();
         returnProjectModel5.setName("开复工率");
         if (new BigDecimal(returnProjectModel.getProportion()).compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal str = (new BigDecimal(returnProjectModel4.getProportion()).divide(new BigDecimal(returnProjectModel.getProportion()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100));
             returnProjectModel5.setProportion(str.setScale(1, BigDecimal.ROUND_HALF_UP) + "");
+            returnProjectModel5.setProportions(str.setScale(1, BigDecimal.ROUND_HALF_UP) + "");
         } else {
             returnProjectModel5.setProportions("0");
+            returnProjectModel5.setProportion("0");
         }
-
+        returnProjectModel5.setSortId(6);
 
         list.add(returnProjectModel);
         list.add(returnProjectModel1);
