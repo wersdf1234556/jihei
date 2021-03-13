@@ -20,6 +20,8 @@ public class ProjectQueryParams {
     private String projectStateGuid;
     @Operator(value = "eq", field = "isStart")
     private String isStart;
+    @Operator(value = "eq", field = "hasMap")
+    private Integer hasMap;
 
     public String getGuid() {
         return guid;
@@ -83,5 +85,13 @@ public class ProjectQueryParams {
 
     public void setIsStart(String isStart) {
         this.isStart = isStart;
+    }
+
+    public Integer getHasMap() {
+        return hasMap;
+    }
+
+    public void setHasMap(Integer hasMap) {
+        this.hasMap = hasMap;
     }
 }
