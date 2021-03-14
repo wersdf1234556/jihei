@@ -26,6 +26,10 @@ public class UnsafeModel extends BaseModel {
     private String describe; // 风险点简单描述
     @Column(value = "sortId")
     private String sortId;
+    @Column(value = "lng")
+    private String lng;
+    @Column(value = "lat")
+    private String lat;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段单位名称
@@ -133,6 +137,22 @@ public class UnsafeModel extends BaseModel {
         UnsafeTypeUName = unsafeTypeUName;
     }
 
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
     @Override
     public String toString() {
         return "UnsafeModel{" +
@@ -145,6 +165,8 @@ public class UnsafeModel extends BaseModel {
                 ", measures='" + measures + '\'' +
                 ", describe='" + describe + '\'' +
                 ", sortId='" + sortId + '\'' +
+                ", lng='" + lng + '\'' +
+                ", lat='" + lat + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 ", UnsafeTypeName='" + UnsafeTypeName + '\'' +
                 ", UnsafeTypeUName='" + UnsafeTypeUName + '\'' +

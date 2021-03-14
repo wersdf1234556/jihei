@@ -298,6 +298,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             }
         }
         this.remove(guid);
+        attachmentService.deleteFile(guid);
     }
 
     // 循环删除
@@ -311,6 +312,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         for (String primaryKey:split){
 
             removeStack(primaryKey, userModel);
+            attachmentService.deleteFile(guids);
         }
     }
 }

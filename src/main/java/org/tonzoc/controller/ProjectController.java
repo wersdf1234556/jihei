@@ -52,6 +52,12 @@ public class ProjectController extends BaseController {
         this.projectService.remove(guid);
     }
 
+    @PostMapping(value = "removeMany")
+    public void removeMany(String guids) throws Exception {
+
+        this.projectService.removeMany(guids);
+    }
+
     // 全部项目的数据
     @GetMapping(value = "dateAll")
     public List<ReturnProjectModel> dateAll(){

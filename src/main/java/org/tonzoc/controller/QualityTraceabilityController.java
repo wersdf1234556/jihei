@@ -84,13 +84,13 @@ public class QualityTraceabilityController extends BaseController {
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) throws Exception {
         UserModel userModel = redisAuthService.getCurrentUser();
-        qualityTraceabilityService.removeStack(guid,userModel);
+        qualityTraceabilityService.removeStack(guid, userModel);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
         UserModel userModel = redisAuthService.getCurrentUser();
-        qualityTraceabilityService.batchRemoveStack(guids,userModel);
+        qualityTraceabilityService.batchRemoveStack(guids, userModel);
     }
 
     // 生成二维码

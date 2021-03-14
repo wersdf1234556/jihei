@@ -12,6 +12,7 @@ public class UnsafeQueryParams {
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
 
