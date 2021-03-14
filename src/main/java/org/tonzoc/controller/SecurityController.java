@@ -1,6 +1,7 @@
 package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,9 +11,11 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
+import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISecurityService;
+import org.tonzoc.service.ITenderScoreService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -30,6 +33,9 @@ public class SecurityController extends BaseController {
 
     @Autowired
     private IRedisAuthService redisAuthService;
+
+    @Autowired
+    private ITenderScoreService tenderScoreService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams)
@@ -50,6 +56,10 @@ public class SecurityController extends BaseController {
         securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
 
         this.securityService.save(securityModel);
+        TenderScoreModel tenderScoreModel = new TenderScoreModel();
+        tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
+        tenderScoreModel.setScores(securityModel.getScore());
+        tenderScoreService.save(tenderScoreModel);
         securityService.upFiles(file, securityModel.getGuid(), "", fileType);
     }
 
