@@ -235,8 +235,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             sqlQueryParams.add(new SqlQueryParam("departurePlaceCode",areaCode,"eq"));
             List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams);
-
-
+            AreaDataModel areaDataModel = areaDataService.listByCode(areaCode).get(0);
+            AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
+            attendanceStatModel.setTotal(String.valueOf(personNucleicInfoModels.size()));
+            attendanceStatModel.setTypeName(areaDataModel.getName());
+            list.add(attendanceStatModel);
         }
         return list;
     }

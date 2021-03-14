@@ -23,6 +23,16 @@ public class AreaDataService  extends BaseService<AreaDataModel> implements IAre
 
         return list;
     }
+    public List<AreaDataModel> listByCode(String code) {
+
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+
+        sqlQueryParams.add(new SqlQueryParam("code", code, "eq"));
+
+        List<AreaDataModel> list = list(sqlQueryParams);
+
+        return list;
+    }
 
     public List<AreaDataModel> listWithLevel(String parentCode) throws Exception {
         List<AreaDataModel> authorityModels = new ArrayList<>();
