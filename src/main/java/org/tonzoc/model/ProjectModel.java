@@ -59,6 +59,10 @@ public class ProjectModel extends BaseModel {
     private String projectStateGuid; // 项目状态
     @Column(value = "isStart")
     private String isStart; // 是否开工 1 开工 2 不开工
+    @Column(value = "hasMap")
+    private Integer hasMap;
+    @Column(value = "mapCode")
+    private String mapCode;
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName; //行业类别名称
@@ -323,10 +327,29 @@ public class ProjectModel extends BaseModel {
                 ", buildLevelGuid='" + buildLevelGuid + '\'' +
                 ", projectStateGuid='" + projectStateGuid + '\'' +
                 ", isStart='" + isStart + '\'' +
+                ", hasMap=" + hasMap +
+                ", mapCode='" + mapCode + '\'' +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
                 ", managementPowerName='" + managementPowerName + '\'' +
                 ", buildLevelName='" + buildLevelName + '\'' +
                 ", projectStateName='" + projectStateName + '\'' +
                 '}';
     }
+
+    public Integer getHasMap() {
+        return hasMap;
+    }
+
+    public void setHasMap(Integer hasMap) {
+        this.hasMap = hasMap;
+    }
+
+    public String getMapCode() {
+        return mapCode;
+    }
+
+    public void setMapCode(String mapCode) {
+        this.mapCode = mapCode;
+    }
+
 }

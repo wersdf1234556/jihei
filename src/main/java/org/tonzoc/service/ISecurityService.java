@@ -1,8 +1,6 @@
 package org.tonzoc.service;
 
-import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.web.multipart.MultipartFile;
-import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
 import org.tonzoc.model.UserModel;

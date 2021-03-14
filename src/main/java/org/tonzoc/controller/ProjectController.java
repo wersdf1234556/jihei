@@ -59,25 +59,11 @@ public class ProjectController extends BaseController {
         return projectService.dateAll();
     }
 
-    // 项目数
-    @GetMapping(value = "typeTwo")
-    public List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
-
-        return projectService.typeTwo(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-    }
-
     // 总投资额
     @GetMapping(value = "typeThree")
     public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
 
         return projectService.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-    }
-
-    // 已完成投资额
-    @GetMapping(value = "typeFour")
-    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
-
-        return projectService.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
     // 投资完成率
@@ -92,34 +78,6 @@ public class ProjectController extends BaseController {
     public List<ReturnProjectModel> hundredOne(String projectStateGuid){
 
         return projectService.hundredOne(projectStateGuid);
-    }
-
-    // 百大铁路
-    @GetMapping(value = "hundredTwo")
-    public List<ReturnProjectModel> hundredTwo(){
-
-        return projectService.hundredTwo();
-    }
-
-    // 百大公路
-    @GetMapping(value = "hundredThree")
-    public List<ReturnProjectModel> hundredThree(){
-
-        return projectService.hundredThree();
-    }
-
-    // 百大机场
-    @GetMapping(value = "hundredFour")
-    public List<ReturnProjectModel> hundredFour(){
-
-        return projectService.hundredFour();
-    }
-
-    // 百大水运
-    @GetMapping(value = "hundredFive")
-    public List<ReturnProjectModel> hundredFive(){
-
-        return projectService.hundredFive();
     }
 
     // 项目情况

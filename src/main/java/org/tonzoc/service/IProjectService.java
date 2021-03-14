@@ -10,23 +10,11 @@ import java.util.Map;
 
 public interface IProjectService extends IBaseService<ProjectModel> {
 
-    // 数量
-    Integer count();
-
-    // 全部项目的数据
-    List<ReturnProjectModel> dateAll();
-
-    // 项目数
-    List<ReturnProjectModel> typeTwo(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
-
     // 公用总投资额
-    List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list);
+    List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 总投资额
     List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
-
-    // 已完成投资额
-    List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
     // 投资完成率
     List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
@@ -40,23 +28,11 @@ public interface IProjectService extends IBaseService<ProjectModel> {
     // 百大项目
     List<ReturnProjectModel> hundredOne(String projectStateGuid);
 
-    // 百大铁路
-    List<ReturnProjectModel> hundredTwo();
-
-    // 百大公路
-    List<ReturnProjectModel> hundredThree();
-
-    // 百大机场
-    List<ReturnProjectModel> hundredFour();
-
-    // 百大水运
-    List<ReturnProjectModel> hundredFive();
-
     // 将万元转化成亿元
     String company (BigDecimal money);
 
-    // 项目情况
-    List<ReturnProjectModel> typeOne(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+    // 全部项目的数据
+    List<ReturnProjectModel> dateAll();
 
     // 条件查询
     Map<String ,List<ReturnProjectModel>> conditionSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
