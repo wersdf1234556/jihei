@@ -39,6 +39,14 @@ public class UserModel extends BaseModel {
     private String accounType;  //账户类型
     @Column(value = "tenderManage")
     private String tenderManage;  //管理标段
+    @Column(value = "industryCategoryGuid")
+    private String industryCategoryGuid;
+    @Column(value = "managementPowerGuid")
+    private String managementPowerGuid;
+    @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
+    private String industryCategoryName; //标段
+    @JoinColumn(value = "name", type = ManagementPowerModel.class, leftColumn = "managementPowerGuid", rightColumn = "guid")
+    private String managementPowerName; //标段
     public UserModel() {
     }
 
@@ -170,6 +178,42 @@ public class UserModel extends BaseModel {
                 ", tenderName='" + tenderName + '\'' +
                 ", accounType='" + accounType + '\'' +
                 ", tenderManage='" + tenderManage + '\'' +
+                ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
+                ", managementPowerGuid='" + managementPowerGuid + '\'' +
+                ", industryCategoryName='" + industryCategoryName + '\'' +
+                ", managementPowerName='" + managementPowerName + '\'' +
                 '}';
+    }
+
+    public String getIndustryCategoryGuid() {
+        return industryCategoryGuid;
+    }
+
+    public void setIndustryCategoryGuid(String industryCategoryGuid) {
+        this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getManagementPowerGuid() {
+        return managementPowerGuid;
+    }
+
+    public void setManagementPowerGuid(String managementPowerGuid) {
+        this.managementPowerGuid = managementPowerGuid;
+    }
+
+    public String getIndustryCategoryName() {
+        return industryCategoryName;
+    }
+
+    public void setIndustryCategoryName(String industryCategoryName) {
+        this.industryCategoryName = industryCategoryName;
+    }
+
+    public String getManagementPowerName() {
+        return managementPowerName;
+    }
+
+    public void setManagementPowerName(String managementPowerName) {
+        this.managementPowerName = managementPowerName;
     }
 }

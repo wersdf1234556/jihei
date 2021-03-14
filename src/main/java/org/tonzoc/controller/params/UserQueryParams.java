@@ -17,6 +17,10 @@ public class UserQueryParams {
     private String tenderGuid;
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
+    @Operator(value = "eq", field = "industryCategoryGuid")
+    private String industryCategoryGuid;
+    @Operator(value = "eq", field = "managementPowerGuid")
+    private String managementPowerGuid;
 
 
     public UserQueryParams() {
@@ -61,5 +65,21 @@ public class UserQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getIndustryCategoryGuid() {
+        return industryCategoryGuid;
+    }
+
+    public void setIndustryCategoryGuid(String industryCategoryGuid) {
+        this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getManagementPowerGuid() {
+        return managementPowerGuid;
+    }
+
+    public void setManagementPowerGuid(String managementPowerGuid) {
+        this.managementPowerGuid = managementPowerGuid;
     }
 }

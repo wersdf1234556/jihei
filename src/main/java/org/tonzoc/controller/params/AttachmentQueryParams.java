@@ -11,6 +11,8 @@ public class AttachmentQueryParams {
 
     @Operator(value = "like", field = "name")
     private String name;
+    @Operator(value = "like", field = "name")
+    private String url;
 
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
@@ -81,5 +83,13 @@ public class AttachmentQueryParams {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

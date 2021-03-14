@@ -25,13 +25,13 @@ public class ProjectTextService extends BaseService<ProjectTextModel> implements
     private FileHelper fileHelper;
 
     public void insertStack(ProjectTextModel projectTextModel, MultipartFile file) throws Exception {
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("projectGuid", projectTextModel.getProjectGuid(), "eq"));
-        sqlQueryParams.add(new SqlQueryParam("typeGuid", projectTextModel.getTypeGuid(), "eq"));
-        List<ProjectTextModel> list = this.list(sqlQueryParams);
-        if (list.size()>0){
-            throw new NotOneResultFoundException("已添加过该项目、该类型的数据");
-        }
+//        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+//        sqlQueryParams.add(new SqlQueryParam("projectGuid", projectTextModel.getProjectGuid(), "eq"));
+//        sqlQueryParams.add(new SqlQueryParam("typeGuid", projectTextModel.getTypeGuid(), "eq"));
+//        List<ProjectTextModel> list = this.list(sqlQueryParams);
+//        if (list.size()>0){
+//            throw new NotOneResultFoundException("已添加过该项目、该类型的数据");
+//        }
         if (projectTextModel.getContent()==null||projectTextModel.getContent().isEmpty()){
             projectTextModel.setContent("");
         }
@@ -40,14 +40,7 @@ public class ProjectTextService extends BaseService<ProjectTextModel> implements
     }
 
     public void updateStack(ProjectTextModel projectTextModel, MultipartFile file) throws Exception {
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("projectGuid", projectTextModel.getProjectGuid(), "eq"));
-        sqlQueryParams.add(new SqlQueryParam("typeGuid", projectTextModel.getTypeGuid(), "eq"));
-        sqlQueryParams.add(new SqlQueryParam("guid", projectTextModel.getGuid(), "neq"));
-        List<ProjectTextModel> list = this.list(sqlQueryParams);
-        if (list.size()>0){
-            throw new NotOneResultFoundException("已添加过该项目、该类型的数据");
-        }
+
         if (file!=null){
             projectTextModel.setPictureGuid(upFile(file));
         }
