@@ -2,6 +2,8 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
+import java.util.Date;
+
 // 标段分数表
 @Table(value = "tenderScores")
 public class TenderScoreModel extends BaseModel {
@@ -16,6 +18,9 @@ public class TenderScoreModel extends BaseModel {
     private Integer sortId;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private Date createdAt;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段单位名称
@@ -73,6 +78,14 @@ public class TenderScoreModel extends BaseModel {
         this.tenderOrganization = tenderOrganization;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "TenderScoreModel{" +
@@ -80,6 +93,7 @@ public class TenderScoreModel extends BaseModel {
                 ", scores=" + scores +
                 ", sortId=" + sortId +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", tenderOrganization='" + tenderOrganization + '\'' +
                 '}';

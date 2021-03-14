@@ -21,6 +21,9 @@ public class AttachmentProjectSurveyModel extends BaseModel {
     private Integer sortId;
     @Column(value = "projectSurveyGuid")
     private String projectSurveyGuid;
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private String createdAt;
 
     public AttachmentProjectSurveyModel() {
     }
@@ -65,6 +68,14 @@ public class AttachmentProjectSurveyModel extends BaseModel {
         this.projectSurveyGuid = projectSurveyGuid;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "AttachmentProjectSurveyModel{" +
@@ -73,6 +84,7 @@ public class AttachmentProjectSurveyModel extends BaseModel {
                 ", url='" + url + '\'' +
                 ", sortId=" + sortId +
                 ", projectSurveyGuid='" + projectSurveyGuid + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 '}';
     }
 }

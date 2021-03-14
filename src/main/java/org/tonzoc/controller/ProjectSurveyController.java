@@ -15,6 +15,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "projectSurvey")
@@ -38,7 +39,9 @@ public class ProjectSurveyController extends BaseController{
 
     @PostMapping
     public void add(ProjectSurveyModel projectSurveyModel, MultipartFile[] file) {
+
         this.projectSurveyService.save(projectSurveyModel);
+        System.out.println("111");
         projectSurveyService.upFiles(file, projectSurveyModel.getGuid());
     }
 
@@ -56,5 +59,19 @@ public class ProjectSurveyController extends BaseController{
     public void removeMany(String guids) throws Exception {
 
         this.projectSurveyService.removeMany(guids);
+    }
+
+    // 项目概况安全文件
+    @PostMapping(value = "upFile")
+    public Map<String, String> upFile(MultipartFile file,  String projectSurveyGuid) {
+
+        return projectSurveyService.upFile(file, projectSurveyGuid);
+    }
+
+    // 项目概况上传多文件
+    @PostMapping(value = "/upFiles")
+    public void upFiles(MultipartFile[] file, String projectSurveyGuid) {
+
+        projectSurveyService.upFiles(file, projectSurveyGuid);
     }
 }

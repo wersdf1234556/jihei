@@ -6,9 +6,6 @@ import org.tonzoc.model.TenderScoreModel;
 
 public interface TenderScoreMapper extends BaseMapper<TenderScoreModel>{
 
-    @Select("select * from tenderScores where tenderGuid = #{tenderGuid}")
-    TenderScoreModel selectByTender(String tenderGuid);
-
-    @Update("update from tenderScores set score = #{score}")
-    void updateScore(Integer score);
+    @Update("update tenderScores set isEffect = #{isEffect} where guid = #{guid}")
+    void updateScore(String isEffect, String guid);
 }

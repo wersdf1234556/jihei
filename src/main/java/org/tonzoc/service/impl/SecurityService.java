@@ -101,6 +101,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     @Override
     public void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType){
         if (file.length > 0) {
+            intelliSiteProperties.setFileUrl("/安全/");
             List<AttachmentSecurityModel> list = new ArrayList<>();
             for (MultipartFile f : file) {
                 String[] str = fileHelper.fileUpload(f, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), "");
@@ -117,6 +118,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
             }
 
             attachmentSecurityService.saveMany(list);
+            intelliSiteProperties.setFileUrl("/");
         }
     }
 
@@ -278,5 +280,29 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
             removeStack(primaryKey, userModel);
         }
+    }
+
+    // 判断当前分数是否超过10天改状态
+    public void updateIsEffect(Date oldDate){
+
+        long end = new Date().getTime(); // 当前时间
+        long createDate = oldDate.getTime(); // 创建时间
+        long start = end - 24*60*60*10;
+
+//        Calendar date = Calendar.getInstance();
+//        date.setTime(nowTime);
+//
+//        Calendar begin = Calendar.getInstance();
+//        begin.setTime(beginTime);
+//
+//        Calendar end = Calendar.getInstance();
+//        end.setTime(new Date());
+//
+//        if (date.after(begin) && date.before(end)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+
     }
 }

@@ -40,6 +40,7 @@ public class ProjectSurveyService extends BaseService<ProjectSurveyModel> implem
 
         // 获取的实际时间
         String[] str = fileHelper.fileUpload(file, new SimpleDateFormat("yyyy-MM-dd").format(new Date()),  "");
+        System.out.println(str[0] + str[1]);
 
         AttachmentProjectSurveyModel attachmentProjectSurveyModel = new AttachmentProjectSurveyModel();
         attachmentProjectSurveyModel.setUrl(str[0]);
@@ -62,6 +63,7 @@ public class ProjectSurveyService extends BaseService<ProjectSurveyModel> implem
     @Override
     public void upFiles(MultipartFile[] file, String projectSurveyGuid){
         if (file.length > 0) {
+            intelliSiteProperties.setFileUrl("/项目图片/");
             List<AttachmentProjectSurveyModel> list = new ArrayList<>();
             for (MultipartFile f : file) {
                 String[] str = fileHelper.fileUpload(f, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), "");
@@ -76,6 +78,7 @@ public class ProjectSurveyService extends BaseService<ProjectSurveyModel> implem
             }
 
             attachmentProjectSurveyService.saveMany(list);
+            intelliSiteProperties.setFileUrl("/");
         }
     }
 }

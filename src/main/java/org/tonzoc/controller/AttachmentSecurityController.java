@@ -12,6 +12,7 @@ import org.tonzoc.service.IAttachmentSecurityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -47,11 +48,21 @@ public class AttachmentSecurityController extends BaseController {
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
+        this.attachmentSecurityService.deleteFile(guid);
         this.attachmentSecurityService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
-        attachmentSecurityService.removeMany(guids);
+        this.attachmentSecurityService.deleteFile(guids);
+        this.attachmentSecurityService.removeMany(guids);
+    }
+
+    // 预览图片
+    @GetMapping(value = "image/{guid}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
+
+        return attachmentSecurityService.getImage(guid);
     }
 }

@@ -158,6 +158,7 @@ public class FileHelper {
         }
         byte[] bytes = new byte[inputStream.available()];
         inputStream.read(bytes, 0, inputStream.available());
+        System.out.println("111");
         return bytes;
     }
 

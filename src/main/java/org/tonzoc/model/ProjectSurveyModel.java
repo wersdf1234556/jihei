@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 @Table("projectSurveys")
 public class ProjectSurveyModel extends BaseModel{
@@ -22,6 +19,9 @@ public class ProjectSurveyModel extends BaseModel{
     private Integer sortId;
     @Column(value = "projectGuid")
     private String projectGuid;
+
+    @JoinColumn(value = "name", type = ProjectModel.class, leftColumn = "projectGuid", rightColumn = "guid")
+    private String projectName;  // 项目名称
 
     public ProjectSurveyModel() {
     }
@@ -74,6 +74,14 @@ public class ProjectSurveyModel extends BaseModel{
         this.projectGuid = projectGuid;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
     @Override
     public String toString() {
         return "ProjectSurveyModel{" +
@@ -83,6 +91,7 @@ public class ProjectSurveyModel extends BaseModel{
                 ", url='" + url + '\'' +
                 ", sortId=" + sortId +
                 ", projectGuid='" + projectGuid + '\'' +
+                ", projectName='" + projectName + '\'' +
                 '}';
     }
 }

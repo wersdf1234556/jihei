@@ -16,6 +16,7 @@ import org.tonzoc.service.IProjectSurveyService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -25,9 +26,6 @@ public class AttachmentProjectSurveyController extends BaseController{
 
     @Autowired
     private IAttachmentProjectSurveyService attachmentProjectSurveyService;
-
-    @Autowired
-    private IAttachmentService attachmentService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, AttachmentProjectSurveyQueryParams attachmentProjectSurveyQueryParams)
@@ -54,14 +52,22 @@ public class AttachmentProjectSurveyController extends BaseController{
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        attachmentService.deleteFile(guid);
+        this.attachmentProjectSurveyService.deleteFile(guid);
         this.attachmentProjectSurveyService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        attachmentService.deleteFile(guids);
-        attachmentProjectSurveyService.removeMany(guids);
+        this.attachmentProjectSurveyService.deleteFile(guids);
+        this.attachmentProjectSurveyService.removeMany(guids);
+    }
+
+    // 预览图片
+    @GetMapping(value = "image/{guid}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
+
+        return attachmentProjectSurveyService.getImage(guid);
     }
 }

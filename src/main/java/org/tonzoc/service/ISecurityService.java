@@ -6,6 +6,7 @@ import org.tonzoc.model.SecurityModel;
 import org.tonzoc.model.UserModel;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +44,8 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
 
     // 循环删除
     void batchRemoveStack(String guids, UserModel userModel) throws Exception;
+
+    // 判断当前分数是否超过10天改状态
+    void updateIsEffect(Date oldDate);
 
 }
