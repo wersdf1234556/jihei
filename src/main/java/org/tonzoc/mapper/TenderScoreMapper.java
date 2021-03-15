@@ -15,7 +15,7 @@ public interface TenderScoreMapper extends BaseMapper<TenderScoreModel>{
                      @Param(value = "guid") String guid);
 
     @Select("select tenders.name, ISNULL(sum(tenderScores.scores), 0) number from (select * from tenders where tenders.name like '%A%' or name like '%B%') tenders " +
-    "LEFT JOIN (select * from tenderScores where isEffect = '3') tenderScores on tenders.guid = tenderScores.tenderGuid " +
+    "LEFT JOIN (select * from tenderScores where isEffect = '1') tenderScores on tenders.guid = tenderScores.tenderGuid " +
     "GROUP BY tenders.name, tenders.sortId ORDER BY tenders.sortId asc")
     List<ReturnModel> tenderScores();
 
