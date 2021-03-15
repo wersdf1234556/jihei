@@ -272,35 +272,35 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     }
 
     // 判断当前分数超过10天改状态
-    public void updateIsEffect(String oldDate, String guid) throws ParseException {
+    public void updateIsEffect() throws ParseException {
+        System.out.println("ok");
+        List<ReturnModel> list = tenderScoreMapper.allScores();
+        for (ReturnModel li: list) {
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -10);
-        long start = calendar.getTime().getTime(); //十天前的时间
-        long end = new Date().getTime(); // 当前时间
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -10);
+            long start = calendar.getTime().getTime(); //十天前的时间
+            long end = new Date().getTime(); // 当前时间
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long createDate = sdf.parse(oldDate).getTime(); // 创建时间
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long createDate = sdf.parse(li.getProportion()).getTime(); // 创建时间
 
-        if(start < createDate && createDate < end) {
+            if(start < createDate && createDate < end) {
 
-        }else { //改变状态
+            }else { //改变状态
 
-            tenderScoreMapper.updateScore("2" , guid);
+                tenderScoreMapper.updateScore("2" , li.getName());
+            }
         }
     }
 
     // 查询分数
-    public List<ReturnModel> selectScore() throws ParseException {
-        List<ReturnModel> list = tenderScoreMapper.allScores();
-        for (ReturnModel li: list) {
-
-            this.updateIsEffect(li.getProportion(), li.getName());
-        }
+    public List<ReturnModel> selectScore() {
 
         List<ReturnModel> list1 = tenderScoreMapper.tenderScores();
-        System.out.println(list1);
+
         for (ReturnModel li: list1) {
+
             li.setNumber(100 - li.getNumber());
         }
 

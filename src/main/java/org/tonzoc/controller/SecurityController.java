@@ -139,7 +139,7 @@ public class SecurityController extends BaseController {
     @GetMapping(value = "updateIsEffect")
     public void updateIsEffect(String oldDate, String guid) throws ParseException {
 
-        securityService.updateIsEffect(oldDate, guid);
+        securityService.updateIsEffect();
     }
 
     // 查询分数
