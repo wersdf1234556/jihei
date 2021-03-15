@@ -89,4 +89,9 @@ public class AttendanceController extends BaseController {
     public List<AttendanceStatModel> countPersonByCity(){
         return attendanceService.countPersonByCity();
     }
+    //疫情左上角按风险等级统计人数
+    @GetMapping(value = "countByRisk")
+    public List<AttendanceStatModel> countByRisk(){
+        return attendanceService.countByRisk();
+    }
 }

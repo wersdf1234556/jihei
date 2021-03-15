@@ -22,4 +22,5 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
     StatTotalModel statAll(String categoryGuid, String date);
 
     List<AttendanceStatModel> countPersonByCity();
+    List<AttendanceStatModel> countByRisk();
 }

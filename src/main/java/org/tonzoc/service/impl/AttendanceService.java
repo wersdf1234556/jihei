@@ -157,6 +157,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
 
 
+
     /**
      * 根据年 月 获取对应的月份 天数
      */
@@ -244,4 +245,32 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         return list;
     }
 
+    public List<AttendanceStatModel> countByRisk(){
+        List<AttendanceStatModel> list = new ArrayList<>();
+        AttendanceStatModel totalModel = new AttendanceStatModel();
+        totalModel.setTypeName("总人数");
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<PersonNucleicInfoModel> total = personNucleicInfoService.list(sqlQueryParams);
+        totalModel.setTotal(String.valueOf(total.size()));
+        list.add(totalModel);
+        String isRisks[] = {"0","1","2"};
+        for (String isRisk:isRisks){
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("isRisk",isRisk,"eq"));
+            List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams1);
+            AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
+            attendanceStatModel.setTotal(String.valueOf(personNucleicInfoModels.size()));
+            if (isRisk.equals("0")){
+                attendanceStatModel.setTypeName("低风险地区");
+            }else if (isRisk.equals("1")){
+                attendanceStatModel.setTypeName("中风险地区");
+            }else if (isRisk.equals("2")){
+                attendanceStatModel.setTypeName("高风险地区");
+            }
+
+            list.add(attendanceStatModel);
+        }
+        return list;
+
+    }
 }
