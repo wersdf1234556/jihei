@@ -17,7 +17,6 @@ public class TimingHelper {
     @Scheduled(cron = "0 0 */1 * * ?")
     public void list () throws ParseException {
 
-        System.out.println("zhixing");
         securityService.updateIsEffect();
     }
 }

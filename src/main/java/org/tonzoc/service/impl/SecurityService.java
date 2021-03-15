@@ -273,7 +273,6 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 判断当前分数超过10天改状态
     public void updateIsEffect() throws ParseException {
-        System.out.println("ok");
         List<ReturnModel> list = tenderScoreMapper.allScores();
         for (ReturnModel li: list) {
 
