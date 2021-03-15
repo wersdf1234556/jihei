@@ -58,4 +58,10 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
     List<ReturnProjectModel> sumProjectStates(@Param("industryCategoryGuid") String industryCategoryGuid,
                                               @Param("managementPowerGuid") String managementPowerGuid,
                                               @Param("buildLevelGuid") String buildLevelGuid);
+
+    // 按照状态数量
+    @SelectProvider(type = ProjectProvider.class, method = "countStatus")
+    List<ReturnProjectModel> countStatus(@Param("industryCategoryGuid") String industryCategoryGuid,
+                                         @Param("managementPowerGuid") String managementPowerGuid,
+                                         @Param("buildLevelGuid") String buildLevelGuid);
 }

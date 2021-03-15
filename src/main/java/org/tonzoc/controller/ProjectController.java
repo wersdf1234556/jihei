@@ -72,6 +72,13 @@ public class ProjectController extends BaseController {
         return projectService.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
     }
 
+    // 数量
+    @GetMapping(value = "typeFour")
+    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+
+        return projectService.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+    }
+
     // 投资完成率
     @GetMapping(value = "typeFive")
     public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
