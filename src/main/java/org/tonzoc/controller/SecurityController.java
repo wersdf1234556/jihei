@@ -21,6 +21,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -132,5 +133,19 @@ public class SecurityController extends BaseController {
     public void batchApproval(String securityGuid, String currentTenderGuid, Integer flag) {
 
         securityService.batchApproval(securityGuid, currentTenderGuid, flag);
+    }
+
+    // 判断当前分数超过10天改状态
+    @GetMapping(value = "updateIsEffect")
+    public void updateIsEffect(String oldDate, String guid) throws ParseException {
+
+        securityService.updateIsEffect();
+    }
+
+    // 查询分数
+    @GetMapping(value = "selectScore")
+    public List<ReturnModel> selectScore() throws ParseException {
+
+       return securityService.selectScore();
     }
 }

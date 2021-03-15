@@ -16,6 +16,9 @@ public interface IProjectService extends IBaseService<ProjectModel> {
     // 总投资额
     List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 
+    // 数量
+    List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
+
     // 投资完成率
     List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid);
 

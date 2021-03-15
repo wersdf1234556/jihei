@@ -142,5 +142,30 @@ public class ProjectProvider {
         return stringBuilder.toString();
     }
 
+    // 按照状态求数量
+    public String countStatus(@Param(value = "industryCategoryGuid") String industryCategoryGuid,
+                              @Param(value = "managementPowerGuid") String managementPowerGuid,
+                              @Param(value = "buildLevelGuid") String buildLevelGuid) {
+
+        StringBuilder stringBuilder = new StringBuilder("select projectStates.name, ISNULL(count(projects.guid), 0) proportion from projectStates");
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            stringBuilder.append(" LEFT JOIN projects on projectStates.guid = projects.projectStateGuid ");
+        }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
+        }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
+
+            stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
+        }else {
+
+            stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
+        }
+
+        stringBuilder.append(" GROUP BY projectStates.name, projectStates.sortId ORDER BY projectStates.sortId");
+
+        return stringBuilder.toString();
+    }
+
 
 }

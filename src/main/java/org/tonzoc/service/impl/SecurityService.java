@@ -129,17 +129,6 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         securityMapper.updateStatus(status, approvalTime, currentTenderGuid, guid);
     }
 
-    /*// 添加多条并修改分数
-    @Override
-    public void adds(List<SecurityModel> list) {
-
-        Integer score = securityMapper.score(list.get(0).getDocumentGuid(), list.get(0).getTenderGuid());
-        TenderScoreModel tenderScoreModel = tenderScoreMapper.selectByTender(list.get(0).getTenderGuid());
-        tenderScoreService.updateScore(tenderScoreModel.getScores(), score);
-
-        this.saveMany(list);
-    }*/
-
     // 安全统计
     @Override
     public List<ReturnModel> securityStatics() {
@@ -282,27 +271,39 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         }
     }
 
-    // 判断当前分数是否超过10天改状态
-    public void updateIsEffect(Date oldDate){
+    // 判断当前分数超过10天改状态
+    public void updateIsEffect() throws ParseException {
+        System.out.println("ok");
+        List<ReturnModel> list = tenderScoreMapper.allScores();
+        for (ReturnModel li: list) {
 
-        long end = new Date().getTime(); // 当前时间
-        long createDate = oldDate.getTime(); // 创建时间
-        long start = end - 24*60*60*10;
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -10);
+            long start = calendar.getTime().getTime(); //十天前的时间
+            long end = new Date().getTime(); // 当前时间
 
-//        Calendar date = Calendar.getInstance();
-//        date.setTime(nowTime);
-//
-//        Calendar begin = Calendar.getInstance();
-//        begin.setTime(beginTime);
-//
-//        Calendar end = Calendar.getInstance();
-//        end.setTime(new Date());
-//
-//        if (date.after(begin) && date.before(end)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            long createDate = sdf.parse(li.getProportion()).getTime(); // 创建时间
 
+            if(start < createDate && createDate < end) {
+
+            }else { //改变状态
+
+                tenderScoreMapper.updateScore("2" , li.getName());
+            }
+        }
+    }
+
+    // 查询分数
+    public List<ReturnModel> selectScore() {
+
+        List<ReturnModel> list1 = tenderScoreMapper.tenderScores();
+
+        for (ReturnModel li: list1) {
+
+            li.setNumber(100 - li.getNumber());
+        }
+
+        return list1;
     }
 }

@@ -40,6 +40,11 @@ public class ProjectSurveyController extends BaseController{
     @PostMapping
     public void add(ProjectSurveyModel projectSurveyModel, MultipartFile[] file) {
 
+        System.out.println("file" + file);
+        for (MultipartFile f: file){
+
+            System.out.println("f" + f);
+        }
         this.projectSurveyService.save(projectSurveyModel);
         System.out.println("111");
         projectSurveyService.upFiles(file, projectSurveyModel.getGuid());

@@ -46,6 +46,9 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void batchRemoveStack(String guids, UserModel userModel) throws Exception;
 
     // 判断当前分数是否超过10天改状态
-    void updateIsEffect(Date oldDate);
+    void updateIsEffect() throws ParseException;
+
+    // 查询分数
+    List<ReturnModel> selectScore() throws ParseException;
 
 }
