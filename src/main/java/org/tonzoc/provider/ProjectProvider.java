@@ -11,7 +11,7 @@ public class ProjectProvider {
                         @Param(value = "isImportant") Integer isImportant) {
 
         StringBuilder stringBuilder = new StringBuilder("select count(guid) from projects");
-        if (isImportant != null && !"".equals(isImportant)) {
+        if (isImportant != null && isImportant == 1) {
             stringBuilder.append(" where isImportant = " + isImportant);
         }else{
             stringBuilder.append(" where 1 = 1");
@@ -40,7 +40,7 @@ public class ProjectProvider {
                              @Param(value = "isImportant") Integer isImportant) {
 
         StringBuilder stringBuilder = new StringBuilder("select count(guid) from projects where isStart = 1");
-        if (isImportant != null && !"".equals(isImportant)) {
+        if (isImportant != null && isImportant == 1) {
             stringBuilder.append(" and projects.isImportant = 1");
         }
 
@@ -69,25 +69,25 @@ public class ProjectProvider {
         StringBuilder stringBuilder = new StringBuilder("select projectStates.name name, ISNULL(sum(projects.winningAmount), 0) amount from projectStates");
 
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1) projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and  industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
@@ -106,7 +106,7 @@ public class ProjectProvider {
                       @Param(value = "isImportant") Integer isImportant) {
 
         StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) from projects");
-        if (isImportant != null && !"".equals(isImportant)) {
+        if (isImportant != null && isImportant == 1) {
             stringBuilder.append(" where isImportant = " + isImportant);
         }else{
             stringBuilder.append(" where 1 = 1");
@@ -135,7 +135,7 @@ public class ProjectProvider {
                              @Param(value = "isImportant") Integer isImportant) {
 
         StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects");
-        if (isImportant != null && !"".equals(isImportant)) {
+        if (isImportant != null && isImportant == 1) {
             stringBuilder.append(" where isImportant = " + isImportant);
         }else{
             stringBuilder.append(" where 1 = 1");
@@ -165,25 +165,25 @@ public class ProjectProvider {
 
         StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates");
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1) projects on projectStates.guid = projects.projectStateGuid ");
             }else{
                 stringBuilder.append(" LEFT JOIN projects on projectStates.guid = projects.projectStateGuid ");
             }
         }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
@@ -203,25 +203,25 @@ public class ProjectProvider {
 
         StringBuilder stringBuilder = new StringBuilder("select projectStates.name, ISNULL(count(projects.guid), 0) proportion from projectStates");
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1) projects on projectStates.guid = projects.projectStateGuid ");
             }else{
                 stringBuilder.append(" LEFT JOIN projects on projectStates.guid = projects.projectStateGuid ");
             }
         }else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }
         }else {
-            if (isImportant != null && !"".equals(isImportant)) {
+            if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1 and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
             }else{
                 stringBuilder.append(" LEFT JOIN (select * from projects where industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "') projects on projects.projectStateGuid = projectStates.guid ");
