@@ -20,6 +20,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
     List<PersonLocationDataModel> listPersonLocationDatas(String categoryGuid,String date);
 
     StatTotalModel statAll(String categoryGuid, String date);
+    List<AttendanceStatModel> statByPersonCategory(String categoryGuid,String date);
 
     List<AttendanceStatModel> countPersonByCity();
     List<AttendanceStatModel> countByRisk();

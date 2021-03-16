@@ -50,6 +50,12 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             "and Convert(VARCHAR,a.createdAt,120)  LIKE  '%${createdAt}%'")
     List<AttendanceModel> listAttByCategory(@Param(value = "categoryGuid") String categoryGuid,@Param(value = "createdAt") String createdAt);
 
+    //获取人员类型当日打卡数
+    @Select("SELECT * from attendances a LEFT JOIN persons p on a.personGuid = p.guid " +
+            "where p.personTypeGuid=#{personTypeGuid} " +
+            "and Convert(VARCHAR,a.createdAt,120)  LIKE  '%${createdAt}%'")
+    List<AttendanceModel> listAttByType(@Param(value = "personTypeGuid") String personTypeGuid,@Param(value = "createdAt") String createdAt);
+
 
 }
 

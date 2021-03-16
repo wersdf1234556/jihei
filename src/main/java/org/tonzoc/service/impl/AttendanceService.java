@@ -82,6 +82,32 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         return statTotalModel;
     }
 
+    //人员左下角按人员类别统计打卡
+    public List<AttendanceStatModel> statByPersonCategory(String categoryGuid,String date){
+        List<AttendanceStatModel> list = new ArrayList<>();
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
+        List<PersonTypeModel> personTypeModels = personTypeService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());
+        for (PersonTypeModel personType :personTypeModels){
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
+            sqlQueryParams1.add(new SqlQueryParam("personTypeGuid",personType.getGuid(),"eq"));
+            List<PersonModel> personModels = personService.list(sqlQueryParams1);
+            AttendanceStatModel statModel = new AttendanceStatModel();
+            statModel.setTotal(String.valueOf(personModels.size()));
+            statModel.setTypeName(personType.getName());
+            List<AttendanceModel> attendanceModels = attendanceMapper.listAttByType(personType.getGuid(),date);
+            statModel.setAttNum(String.valueOf(attendanceModels.size()));
+            list.add(statModel);
+        }
+        return list;
+
+    }
+
     //人员信息统计
     public List<Object> statAttendanceData(String date,Integer flag){
         List<Object> statModels = new ArrayList<>();
