@@ -58,7 +58,6 @@ public class AdvertisingVideoService extends BaseService<AdvertisingVideoModel> 
 
             advertisingVideoMapper.updateTime(TimeHelper.stringToDate(advertisingVideoModel.getCurrentDate()), advertisingVideoModel.getGuid());
         }
-        advertisingVideoModel.setSortId(0);
         advertisingVideoModel.setCurrentDate("");
         return advertisingVideoModel;
     }

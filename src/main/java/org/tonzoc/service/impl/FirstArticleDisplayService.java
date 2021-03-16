@@ -61,7 +61,6 @@ public class FirstArticleDisplayService extends BaseService<FirstArticleDisplayM
 
             firstArticleDisplayMapper.updateTime(TimeHelper.stringToDate(firstArticleDisplayModel.getCurrentDate()), firstArticleDisplayModel.getGuid());
         }
-        firstArticleDisplayModel.setSortId(0);
         firstArticleDisplayModel.setCurrentDate("");
         return firstArticleDisplayModel;
     }
