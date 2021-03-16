@@ -57,6 +57,7 @@ public class AttendanceController extends BaseController {
     public void removeMany(String guids) throws Exception {
         attendanceService.removeMany(guids);
     }
+
     @PostMapping(value = "insertGateData")
     public void insertGateData(@RequestBody  @Valid AttendanceModel attendanceModel){
         attendanceService.insertGateData(attendanceModel);
