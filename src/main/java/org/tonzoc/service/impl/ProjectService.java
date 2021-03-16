@@ -22,11 +22,11 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     private IndustryCategoryService industryCategoryService;
 
     // 公用项目建设情况
-    public List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid,Integer isImportant){
 
         int n = 0;
         BigDecimal bSum = new BigDecimal(0);
-        Integer sum = projectMapper.sum(industryCategoryGuid, managementPowerGuid, buildLevelGuid); // 总和
+        Integer sum = projectMapper.sum(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant); // 总和
 
         for (ReturnProjectModel li: list) {
             if (sum > 0) {
@@ -57,9 +57,9 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
     // 项目建设情况
-    public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
-        List<ReturnProjectModel> list = projectMapper.sumWinning(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        List<ReturnProjectModel> list = projectMapper.sumWinning(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
         for (ReturnProjectModel li: list) {
             if (li.getAmount() != null && !"".equals(li.getAmount()) ) {
 
@@ -72,19 +72,19 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
             }
         }
 
-        return this.publicTypeThree(list, industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        return this.publicTypeThree(list, industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
     }
 
     // 数量
-    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
-        return projectMapper.countStatus(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        return projectMapper.countStatus(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
     }
 
     // 项目投资情况
-    public List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
-        List<ReturnProjectModel> list = projectMapper.sumProjectStates(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        List<ReturnProjectModel> list = projectMapper.sumProjectStates(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
 
         for (ReturnProjectModel li: list) {
 
@@ -101,9 +101,9 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
     // 投资完成率
-    public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
-        List<ReturnProjectModel> list = projectMapper.sumProject(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        List<ReturnProjectModel> list = projectMapper.sumProject(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
 
         for (ReturnProjectModel li: list) {
             li.setName("投资完成率");
@@ -129,11 +129,11 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
 
     // 开工率
-    public List<ReturnProjectModel> typeSix(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public List<ReturnProjectModel> typeSix(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         List<ReturnProjectModel> list = new ArrayList<>();
-        Integer count = projectMapper.countStart(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
-        Integer count1 = projectMapper.count(industryCategoryGuid, managementPowerGuid, buildLevelGuid);
+        Integer count = projectMapper.countStart(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
+        Integer count1 = projectMapper.count(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("开工率");
         returnProjectModel.setAmount(count + "");
@@ -244,11 +244,11 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
     // 全部项目的数据
-    public List<ReturnProjectModel> dateAll() {
+    public List<ReturnProjectModel> dateAll(Integer isImportant) {
         List<ReturnProjectModel> list = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(projectMapper.count("", "", "") + "");
+        returnProjectModel.setProportion(projectMapper.count("", "", "", isImportant) + "");
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<ProjectModel> list1 = this.list(sqlQueryParams);
@@ -287,14 +287,14 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
     // 条件查询
-    public Map<String, List<ReturnProjectModel>> conditionSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid){
+    public Map<String, List<ReturnProjectModel>> conditionSelect(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         Map<String, List<ReturnProjectModel>> map = new LinkedHashMap<>();
-        map.put("项目建设情况", this.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
-        map.put("项目个数", this.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
-        map.put("项目投资情况", this.typeSeven(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
-        map.put("投资完成率", this.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
-        map.put("开工率", this.typeSix(industryCategoryGuid, managementPowerGuid, buildLevelGuid));
+        map.put("项目建设情况", this.typeThree(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant));
+        map.put("项目个数", this.typeFour(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant));
+        map.put("项目投资情况", this.typeSeven(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant));
+        map.put("投资完成率", this.typeFive(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant));
+        map.put("开工率", this.typeSix(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant));
 
         return map;
     }
