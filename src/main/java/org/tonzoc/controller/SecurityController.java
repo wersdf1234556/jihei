@@ -51,7 +51,7 @@ public class SecurityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
         securityModel.setStatus("unSubmit");
         securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
@@ -61,7 +61,9 @@ public class SecurityController extends BaseController {
         tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
         tenderScoreModel.setScores(securityModel.getScore());
         tenderScoreService.save(tenderScoreModel);
-        securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+        if (file != null) {
+            securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+        }
     }
 
     @PutMapping(value = "{guid}")
