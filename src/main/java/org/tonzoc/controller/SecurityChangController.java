@@ -48,7 +48,7 @@ public class SecurityChangController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws ParseException {
+    public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         securityService.updateStatus("finish", df.format(new Date()), "*" , securityChangModel.getSecurityGuid()); // 最终审批
@@ -81,4 +81,24 @@ public class SecurityChangController extends BaseController{
         this.securityChangService.batchRemoveStack(guids, userModel);
     }
 
+    // 提交
+    @PostMapping(value = "submit")
+    public void submit(String securityChangGuid){
+
+        securityChangService.submit(securityChangGuid);
+    }
+
+    // 审批
+    @PostMapping(value = "approval")
+    public void approval(String securityChangGuid, Integer flag) {
+
+        securityChangService.approval(securityChangGuid, flag);
+    }
+
+    // 批量审批
+    @PostMapping(value = "batchApproval")
+    public void batchApproval(String securityChangGuid, Integer flag) {
+
+        securityChangService.batchApproval(securityChangGuid, flag);
+    }
 }

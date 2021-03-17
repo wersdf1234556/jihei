@@ -143,21 +143,21 @@ public class QualityTraceabilityController extends BaseController {
         return qualityTraceabilityService.tenderCount();
     }
 
-    //提交
+    // 提交
     @PostMapping(value = "submit")
     public void submit(String qualityTraceabilityGuid){
 
         qualityTraceabilityService.submit(qualityTraceabilityGuid);
     }
 
-    //审批
+    // 审批
     @PostMapping(value = "approval")
     public void approval(String qualityTraceabilityGuid, Integer flag) {
 
         qualityTraceabilityService.approval(qualityTraceabilityGuid, flag);
     }
 
-    //批量审批
+    // 批量审批
     @PostMapping(value = "batchApproval")
     public void batchApproval(String qualityTraceabilityGuid, Integer flag) {
 

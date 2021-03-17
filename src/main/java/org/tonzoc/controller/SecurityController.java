@@ -51,7 +51,7 @@ public class SecurityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
         securityModel.setStatus("unSubmit");
         securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
