@@ -56,7 +56,9 @@ public class SecurityChangController extends BaseController{
         securityChangModel.setStatus("unSubmit");
         securityChangModel.setCurrentTenderGuid(securityChangModel.getTenderGuid());
         this.securityChangService.save(securityChangModel);
-        securityService.upFiles(file, "", securityChangModel.getGuid(), fileType);
+        if (file != null) {
+            securityService.upFiles(file, "", securityChangModel.getGuid(), fileType);
+        }
     }
 
     @PutMapping(value = "{guid}")

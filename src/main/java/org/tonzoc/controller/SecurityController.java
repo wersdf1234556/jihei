@@ -61,7 +61,9 @@ public class SecurityController extends BaseController {
         tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
         tenderScoreModel.setScores(securityModel.getScore());
         tenderScoreService.save(tenderScoreModel);
-        securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+        if (file != null) {
+            securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+        }
     }
 
     @PutMapping(value = "{guid}")
