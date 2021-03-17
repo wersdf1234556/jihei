@@ -13,6 +13,16 @@ public class LabPenetrationQueryParams {
     @Operator(value = "like", field = "sectionName")
     private String tenderName;
 
+    @Operator(value = "eq", field = "sectionId")
+    private String sectionId;
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
 
     public String getStartDate() {
         return startDate;

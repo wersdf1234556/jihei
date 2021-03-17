@@ -13,6 +13,9 @@ public class LabStressMachineQueryParams {
     @Operator(value = "like", field = "sectionName")
     private String tenderName;
 
+    @Operator(value = "eq", field = "sectionId")
+    private String sectionId;
+
     public LabStressMachineQueryParams() {
 
     }
@@ -40,5 +43,13 @@ public class LabStressMachineQueryParams {
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 }

@@ -13,6 +13,8 @@ public class LabSofteningPointQueryParams {
     @Operator(value = "like", field = "sectionName")
     private String tenderName;
 
+    @Operator(value = "eq", field = "sectionId")
+    private String sectionId;
 
     public String getStartDate() {
         return startDate;
