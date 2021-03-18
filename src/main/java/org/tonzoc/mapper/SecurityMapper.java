@@ -18,18 +18,24 @@ public interface SecurityMapper extends BaseMapper<SecurityModel> {
     void updateTime(@Param("createTime")Date createTime, @Param("guid") String guid);
 
     // 修改安全检查表的状态
-    @Update("update securitys set status = #{status}, approvalTime = #{approvalTime}, currentTenderGuid = #{currentTenderGuid} where guid = #{guid}")
+    @Update("update securitys set status = #{status}, approvalTime = #{approvalTime} where guid = #{guid}")
     void updateStatus(@Param("status")String status,
                       @Param("approvalTime")String approvalTime,
-                      @Param("currentTenderGuid")String currentTenderGuid,
                       @Param("guid")String guid);
+
+    // 修改安全检查表的状态和当前审批人
+    @Update("update securitys set status = #{status}, approvalTime = #{approvalTime}, currentTenderGuid = #{currentTenderGuid} where guid = #{guid}")
+    void updateStatusAndTender(@Param("status")String status,
+                               @Param("approvalTime")String approvalTime,
+                               @Param("currentTenderGuid") String currentTenderGuid,
+                               @Param("guid")String guid);
 
     // 查询总数
     @Select("select count(guid) from securitys")
     Integer count();
 
     // 按照状态查数量
-    @Select("select count(guid) from securitys where status = #{statue}")
+    @Select("select ISNULL(count(guid), 0) from securitys where status = #{status}")
     Integer countStatus(@Param("status")String status);
 
     // 安全整治排查

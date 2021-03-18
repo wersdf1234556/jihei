@@ -30,7 +30,7 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "like", field = "major")
     private String major;
 
-    @Operator(value = "eq", field = "status")
+    @Operator(value = "or", field = "status")
     private String status;
 
 

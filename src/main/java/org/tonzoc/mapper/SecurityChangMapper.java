@@ -18,7 +18,7 @@ public interface SecurityChangMapper extends BaseMapper<SecurityChangModel>{
     Integer count();
 
     // 按照状态查数量
-    @Select("select count(guid) from securityChangs where status = #{statue}")
+    @Select("select count(guid) from securityChangs where status = #{status}")
     Integer countStatus(@Param("status")String status);
 
     // 修改安全检查表的状态

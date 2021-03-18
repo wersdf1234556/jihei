@@ -18,7 +18,7 @@ public class SecurityChangQueryParams {
     private String createPersonName;
     @Operator(value = "eq", field = "approvalPersonName")
     private String approvalPersonName;
-    @Operator(value = "eq", field = "status")
+    @Operator(value = "or", field = "status")
     private String status;
 
     public String getGuid() {

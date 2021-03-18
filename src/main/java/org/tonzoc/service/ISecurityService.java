@@ -22,7 +22,7 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType);
 
     // 修改状态
-    void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid);
+    void updateStatus(String status, String approvalTime, String guid);
 
     // 安全统计
     List<ReturnModel> securityStatics();

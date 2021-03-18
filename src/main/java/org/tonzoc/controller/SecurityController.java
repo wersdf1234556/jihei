@@ -41,11 +41,20 @@ public class SecurityController extends BaseController {
     private ITenderScoreService tenderScoreService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams,String accounType, String flag)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<SecurityModel> page = parsePage(pageQueryParams);
 
+        // 监理
+        if (accounType != null) {
+            if (accounType.equals("2") && "0".equals(flag)){
+                // flag = 0 施工单位查到未提交，监理查不到
+                securityQueryParams.setStatus("submitted,unFinish,finish");
+            }else if (accounType.equals("0") && "1".equals(flag)){
+                securityQueryParams.setStatus("submitted,unFinish,finish");
+            }
+        }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(securityQueryParams);
         List<SecurityModel> list = securityService.list(sqlQueryParams);
 

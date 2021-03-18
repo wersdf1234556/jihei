@@ -59,13 +59,15 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
         String nextTenderGuids = approvalHelper.getNextTender(securityChangModel.getCurrentTenderGuid());
 
         String approvalTime = "";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         if (securityChangModel.getStatus().equals("unSubmitted")){
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
 
         securityChangMapper.updateStatus("submitted", approvalTime, nextTenderGuids, securityChangGuid);
+        securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 最终审批
+
     }
 
     //审批
@@ -82,13 +84,13 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
             //修改该条状态为已结束
             status = "finish";
             currentTenderGuid = "*";
-            securityService.updateStatus("finish", df.format(new Date()), "*" , securityChangModel.getSecurityGuid()); // 安全表最终审批
+            securityService.updateStatus("finish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 安全表最终审批
         }else if (flag == 2){
             if (securityChangModel.getCurrentTenderGuid().equals("*") && securityChangModel.getStatus().equals("finish")){
 
                 status = "submitted";
                 currentTenderGuid = supervisorGuid;
-                securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getTenderGuid() , securityChangModel.getSecurityGuid()); // 取消安全表最终审批
+                securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 取消安全表最终审批
             }
         }
 
