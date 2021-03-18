@@ -52,7 +52,7 @@ public class SqlHelper {
                                 bondNo="mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + list.get(m) + "'";
                                 if (m == 0) {
                                     //只有一个值的时候输出
-                                    resultBuffer.append(bondNo);
+                                    resultBuffer.append("(").append(bondNo);
                                 }else{
                                     //有多个值的时候or分割
                                     resultBuffer.append(" or " + bondNo);
@@ -61,9 +61,9 @@ public class SqlHelper {
                         }else {
                             resultBuffer.append("mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + sqlQueryParam.getQueryValue() + "'");
                         }
+                        resultBuffer.append(")");
                         sql.WHERE(resultBuffer.toString());
                     }
-
                     break;
                 default:
                     throw new QueryParamNotSupportedException(sqlQueryParam.getOperator() + "操作符不受支持！");
