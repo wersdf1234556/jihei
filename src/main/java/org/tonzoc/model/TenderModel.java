@@ -5,6 +5,7 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Table("tenders")
@@ -26,6 +27,8 @@ public class TenderModel extends BaseModel {
     private Integer scale;
     @Column(value = "organization")
     private String organization; // 单位名称
+    @Column(value = "balance")
+    private BigDecimal balance;  //合同总额
 
     private List<ReturnModel> list; //返回值用
 
@@ -96,6 +99,14 @@ public class TenderModel extends BaseModel {
         this.list = list;
     }
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return "TenderModel{" +
@@ -106,6 +117,7 @@ public class TenderModel extends BaseModel {
                 ", lat='" + lat + '\'' +
                 ", scale=" + scale +
                 ", organization='" + organization + '\'' +
+                ", balance=" + balance +
                 ", list=" + list +
                 '}';
     }
