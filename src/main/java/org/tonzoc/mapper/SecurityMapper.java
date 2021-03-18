@@ -30,7 +30,7 @@ public interface SecurityMapper extends BaseMapper<SecurityModel> {
 
     // 按照状态查数量
     @Select("select count(guid) from securitys where status = #{statue}")
-    Integer countStatus(String status);
+    Integer countStatus(@Param("status")String status);
 
     // 安全整治排查
     @Select("select *, tenders.name tenderName from securitys LEFT JOIN tenders on securitys.tenderGuid = tenders.guid " +

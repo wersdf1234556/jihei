@@ -52,7 +52,7 @@ public class SqlHelper {
                                 bondNo="mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + list.get(m) + "'";
                                 if (m == 0) {
                                     //只有一个值的时候输出
-                                    resultBuffer.append("(").append(bondNo);
+                                    resultBuffer.append(bondNo);
                                 }else{
                                     //有多个值的时候or分割
                                     resultBuffer.append(" or " + bondNo);
@@ -61,7 +61,9 @@ public class SqlHelper {
                         }else {
                             resultBuffer.append("mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + sqlQueryParam.getQueryValue() + "'");
                         }
-                        resultBuffer.append(")");
+                        if (resultBuffer.toString().contains("or")){
+                            resultBuffer.insert( 0 , "(" ).append(")");
+                        }
                         sql.WHERE(resultBuffer.toString());
                     }
                     break;
