@@ -2,9 +2,11 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
+import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.SecurityChangQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
@@ -24,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("securityChang")
+@Transactional
 public class SecurityChangController extends BaseController{
 
     @Autowired
@@ -36,11 +39,20 @@ public class SecurityChangController extends BaseController{
     private IRedisAuthService redisAuthService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, SecurityChangQueryParams securityChangQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, SecurityChangQueryParams securityChangQueryParams,String accounType, String flag)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<SecurityChangModel> page = parsePage(pageQueryParams);
 
+        // 监理
+        if (accounType != null) {
+            if (accounType.equals("2") && "0".equals(flag)){
+                // flag = 0 施工单位查到未提交，监理查不到
+                securityChangQueryParams.setStatus("submitted,unFinish,finish");
+            }else if (accounType.equals("0") && "1".equals(flag)){
+                securityChangQueryParams.setStatus("submitted,unFinish,finish");
+            }
+        }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(securityChangQueryParams);
         List<SecurityChangModel> list = securityChangService.list(sqlQueryParams);
 
@@ -49,9 +61,6 @@ public class SecurityChangController extends BaseController{
 
     @PostMapping
     public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws ParseException {
-
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        securityService.updateStatus("finish", df.format(new Date()), "*" , securityChangModel.getSecurityGuid()); // 最终审批
 
         securityChangModel.setStatus("unSubmit");
         securityChangModel.setCurrentTenderGuid(securityChangModel.getTenderGuid());

@@ -61,9 +61,11 @@ public class SqlHelper {
                         }else {
                             resultBuffer.append("mainTable" + "." + sqlQueryParam.getQueryField() + " = " + "'" + sqlQueryParam.getQueryValue() + "'");
                         }
+                        if (resultBuffer.toString().contains("or")){
+                            resultBuffer.insert( 0 , "(" ).append(")");
+                        }
                         sql.WHERE(resultBuffer.toString());
                     }
-
                     break;
                 default:
                     throw new QueryParamNotSupportedException(sqlQueryParam.getOperator() + "操作符不受支持！");

@@ -2,6 +2,7 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("qualityTraceability")
+@Transactional
 public class QualityTraceabilityController extends BaseController {
 
     @Autowired
@@ -39,14 +41,24 @@ public class QualityTraceabilityController extends BaseController {
     private IRedisAuthService redisAuthService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams laboratoryQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams qualityTraceabilityQueryParams,String accounType, String flag)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         pageQueryParams.setOrder("currentTime");
         pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
+        String flag0 = "submitted,unFinish,finish";
+        // 监理
+        if (accounType != null) {
+            if (accounType.equals("2") && "0".equals(flag)){
+                // flag = 0 施工单位查到未提交，监理查不到
+                qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
+            }else if (accounType.equals("0") && "1".equals(flag)){
+                qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
+            }
+        }
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(laboratoryQueryParams);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(qualityTraceabilityQueryParams);
         List<QualityTraceabilityModel> list = qualityTraceabilityService.list(sqlQueryParams);
         list = qualityTraceabilityService.selected(list);
 

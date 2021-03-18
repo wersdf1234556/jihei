@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("security")
+@Transactional
 public class SecurityController extends BaseController {
 
     @Autowired
@@ -39,11 +41,20 @@ public class SecurityController extends BaseController {
     private ITenderScoreService tenderScoreService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams,String accounType, String flag)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<SecurityModel> page = parsePage(pageQueryParams);
 
+        // 监理
+        if (accounType != null) {
+            if (accounType.equals("2") && "0".equals(flag)){
+                // flag = 0 施工单位查到未提交，监理查不到
+                securityQueryParams.setStatus("submitted,unFinish,finish");
+            }else if (accounType.equals("0") && "1".equals(flag)){
+                securityQueryParams.setStatus("submitted,unFinish,finish");
+            }
+        }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(securityQueryParams);
         List<SecurityModel> list = securityService.list(sqlQueryParams);
 
@@ -56,13 +67,14 @@ public class SecurityController extends BaseController {
         securityModel.setStatus("unSubmit");
         securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
 
-        this.securityService.save(securityModel);
+        securityService.save(securityModel);
+
         TenderScoreModel tenderScoreModel = new TenderScoreModel();
         tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
         tenderScoreModel.setScores(securityModel.getScore());
         tenderScoreService.save(tenderScoreModel);
         if (file != null) {
-            securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+            this.upFiles(file, securityModel.getGuid(), "", fileType);
         }
     }
 

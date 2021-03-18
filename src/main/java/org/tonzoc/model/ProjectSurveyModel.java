@@ -19,9 +19,13 @@ public class ProjectSurveyModel extends BaseModel{
     private Integer sortId;
     @Column(value = "projectGuid")
     private String projectGuid;
+    @Column(value = "industryCategoryGuid")
+    private String industryCategoryGuid;
 
     @JoinColumn(value = "name", type = ProjectModel.class, leftColumn = "projectGuid", rightColumn = "guid")
     private String projectName;  // 项目名称
+    @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
+    private String industryCategoryName;  // 权属名称
 
     public ProjectSurveyModel() {
     }
@@ -82,6 +86,22 @@ public class ProjectSurveyModel extends BaseModel{
         this.projectName = projectName;
     }
 
+    public String getIndustryCategoryGuid() {
+        return industryCategoryGuid;
+    }
+
+    public void setIndustryCategoryGuid(String industryCategoryGuid) {
+        this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getIndustryCategoryName() {
+        return industryCategoryName;
+    }
+
+    public void setIndustryCategoryName(String industryCategoryName) {
+        this.industryCategoryName = industryCategoryName;
+    }
+
     @Override
     public String toString() {
         return "ProjectSurveyModel{" +
@@ -91,7 +111,9 @@ public class ProjectSurveyModel extends BaseModel{
                 ", url='" + url + '\'' +
                 ", sortId=" + sortId +
                 ", projectGuid='" + projectGuid + '\'' +
+                ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
                 ", projectName='" + projectName + '\'' +
+                ", industryCategoryName='" + industryCategoryName + '\'' +
                 '}';
     }
 }

@@ -20,8 +20,8 @@ public class SecurityModel extends BaseModel {
     private String securityRuleGuid; // 分数规则表guid
     @Column(value = "score")
     private Integer score; // 分数
-    @Column(value = "createTime")
-    private String createTime; // 创建时间
+    @Column(value = "limitTime")
+    private String limitTime; // 限制时间
     @Column(value = "createPersonName")
     private String createPersonName; // 创建人名称
     @Column(value = "ccPersonGuid")
@@ -34,6 +34,9 @@ public class SecurityModel extends BaseModel {
     private String currentTenderGuid; // 当前审批标段
     @Column(value = "sortId")
     private Integer sortId;
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private Date createdAt;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -145,12 +148,20 @@ public class SecurityModel extends BaseModel {
         this.ccPersonName = ccPersonName;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getLimitTime() {
+        return limitTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setLimitTime(String limitTime) {
+        this.limitTime = limitTime;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getApprovalTime() {
@@ -194,13 +205,14 @@ public class SecurityModel extends BaseModel {
                 ", describe='" + describe + '\'' +
                 ", securityRuleGuid='" + securityRuleGuid + '\'' +
                 ", score=" + score +
-                ", createTime='" + createTime + '\'' +
+                ", limitTime='" + limitTime + '\'' +
                 ", createPersonName='" + createPersonName + '\'' +
                 ", ccPersonGuid='" + ccPersonGuid + '\'' +
                 ", status='" + status + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +
                 ", currentTenderGuid='" + currentTenderGuid + '\'' +
                 ", sortId=" + sortId +
+                ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +
                 ", securityRule='" + securityRule + '\'' +

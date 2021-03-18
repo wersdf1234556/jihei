@@ -11,6 +11,7 @@ import org.tonzoc.model.SecurityChangModel;
 import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISecurityChangService;
+import org.tonzoc.service.ISecurityService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,9 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     @Autowired
     private IRedisAuthService redisAuthService;
+
+    @Autowired
+    private ISecurityService securityService;
 
     @Autowired
     private ApprovalHelper approvalHelper;
@@ -55,13 +59,15 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
         String nextTenderGuids = approvalHelper.getNextTender(securityChangModel.getCurrentTenderGuid());
 
         String approvalTime = "";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         if (securityChangModel.getStatus().equals("unSubmitted")){
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
 
         securityChangMapper.updateStatus("submitted", approvalTime, nextTenderGuids, securityChangGuid);
+        securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 最终审批
+
     }
 
     //审批
@@ -73,19 +79,21 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
         String supervisorGuid = approvalHelper.getNextTender(securityChangModel.getTenderGuid());
         String status = "";
         String currentTenderGuid = "";
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         if (flag == 1){
             //修改该条状态为已结束
             status = "finish";
             currentTenderGuid = "*";
+            securityService.updateStatus("finish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 安全表最终审批
         }else if (flag == 2){
             if (securityChangModel.getCurrentTenderGuid().equals("*") && securityChangModel.getStatus().equals("finish")){
 
                 status = "submitted";
                 currentTenderGuid = supervisorGuid;
+                securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 取消安全表最终审批
             }
         }
 
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         securityChangMapper.updateStatus(status, df.format(new Date()), currentTenderGuid, securityChangGuid);
     }
 

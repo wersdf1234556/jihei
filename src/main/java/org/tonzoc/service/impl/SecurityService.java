@@ -124,14 +124,15 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 修改状态
     @Override
-    public void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid){
+    public void updateStatus(String status, String approvalTime, String guid){
 
-        securityMapper.updateStatus(status, approvalTime, currentTenderGuid, guid);
+        securityMapper.updateStatus(status, approvalTime, guid);
     }
 
     // 安全统计
     @Override
     public List<ReturnModel> securityStatics() {
+        System.out.println("222");
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);   // 设置小数最多两位
         numberFormat.setMinimumFractionDigits(2);   // 设置小数最少两位
@@ -144,19 +145,19 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         ReturnModel returnModel1 = new ReturnModel();
         returnModel1.setName("已整改");
-        returnModel1.setNumber(securityMapper.countStatus("1"));
+        returnModel1.setNumber(securityMapper.countStatus("finish") + securityMapper.countStatus("unFinish"));
 
         ReturnModel returnModel2 = new ReturnModel();
         returnModel2.setName("未整改");
-        returnModel2.setNumber(securityMapper.countStatus("0"));
+        returnModel2.setNumber(securityMapper.countStatus("submitted") + securityMapper.countStatus("unSubmitted"));
 
         ReturnModel returnModel3 = new ReturnModel();
         returnModel3.setName("合格数");
-        returnModel3.setNumber(securityChangMapper.countStatus("1"));
+        returnModel3.setNumber(securityMapper.countStatus("finish"));
 
         ReturnModel returnModel4 = new ReturnModel();
         returnModel4.setName("不合格数");
-        returnModel4.setNumber(securityChangMapper.countStatus("2"));
+        returnModel4.setNumber(securityMapper.countStatus("unFinish"));
         if (returnModel4.getNumber() > 0 || returnModel4.getNumber() > 0) {
             String result = numberFormat.format((1 - ((double)returnModel3.getNumber()  / (double) returnModel1.getNumber())) * 100);
             returnModel4.setProportion(result + "%");
@@ -166,7 +167,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         ReturnModel returnModel5 = new ReturnModel();
         returnModel5.setName("整改通过率");
-        returnModel5.setNumber(securityMapper.countStatus("1"));
+        returnModel5.setNumber(returnModel3.getNumber());
         if (returnModel3.getNumber() > 0) {
             String result = numberFormat.format(((double)returnModel3.getNumber()  / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
             returnModel5.setProportion(result + "%");
@@ -201,7 +202,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
-        securityMapper.updateStatus("submitted", approvalTime, currentTenderGuid, securityGuid);
+        securityMapper.updateStatusAndTender("submitted", approvalTime, currentTenderGuid, securityGuid);
     }
 
     // 多条提交
@@ -227,7 +228,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         //结束审批后，监理不可改
         if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
-            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && ("unSubmit".equals(securityModel1.getStatus()) || "unFinish".equals(securityModel1.getStatus()) )){
 
                 throw new NotMatchException("您无法修改");
             }
@@ -245,9 +246,13 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         SecurityModel securityModel1 = this.get(guid);
         if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
-            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && ("unSubmit".equals(securityModel1.getStatus()) || "unFinish".equals(securityModel1.getStatus()) )){
 
                 throw new NotMatchException("您无法删除"); // 施工单位不能删除
+            }
+            if("submitted".equals(securityModel1.getStatus()) || "unFinish".equals(securityModel1.getStatus())){
+
+                throw new NotMatchException("该数据正在整改，无法删除");
             }
             if(securityModel1.getStatus().equals("finish")){
 

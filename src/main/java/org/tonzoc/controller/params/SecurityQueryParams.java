@@ -20,7 +20,7 @@ public class SecurityQueryParams {
     private String ccPersonGuid;
     @Operator(value = "eq", field = "createPersonName")
     private String createPersonName;
-    @Operator(value = "eq", field = "status")
+    @Operator(value = "or", field = "status")
     private String status;
 
     public String getGuid() {
