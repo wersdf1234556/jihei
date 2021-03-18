@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("security")
+@Transactional
 public class SecurityController extends BaseController {
 
     @Autowired
@@ -56,13 +58,14 @@ public class SecurityController extends BaseController {
         securityModel.setStatus("unSubmit");
         securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
 
-        this.securityService.save(securityModel);
+        securityService.save(securityModel);
+
         TenderScoreModel tenderScoreModel = new TenderScoreModel();
         tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
         tenderScoreModel.setScores(securityModel.getScore());
         tenderScoreService.save(tenderScoreModel);
         if (file != null) {
-            securityService.upFiles(file, securityModel.getGuid(), "", fileType);
+            this.upFiles(file, securityModel.getGuid(), "", fileType);
         }
     }
 

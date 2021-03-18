@@ -2,6 +2,7 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("securityChang")
+@Transactional
 public class SecurityChangController extends BaseController{
 
     @Autowired
@@ -51,7 +53,7 @@ public class SecurityChangController extends BaseController{
     public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        securityService.updateStatus("finish", df.format(new Date()), "*" , securityChangModel.getSecurityGuid()); // 最终审批
+        securityService.updateStatus("unFinish", df.format(new Date()), "*" , securityChangModel.getSecurityGuid()); // 最终审批
 
         securityChangModel.setStatus("unSubmit");
         securityChangModel.setCurrentTenderGuid(securityChangModel.getTenderGuid());

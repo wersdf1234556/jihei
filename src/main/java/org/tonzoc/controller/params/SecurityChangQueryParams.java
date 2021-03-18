@@ -14,8 +14,6 @@ public class SecurityChangQueryParams {
     private String tenderManage;
     @Operator(value = "eq", field = "currentTenderGuid")
     private String currentTenderGuid;
-    @Operator(value = "eq", field = "ccPersonGuid")
-    private String ccPersonGuid;
     @Operator(value = "eq", field = "createPersonName")
     private String createPersonName;
     @Operator(value = "eq", field = "approvalPersonName")
@@ -61,14 +59,6 @@ public class SecurityChangQueryParams {
 
     public void setCurrentTenderGuid(String currentTenderGuid) {
         this.currentTenderGuid = currentTenderGuid;
-    }
-
-    public String getCcPersonGuid() {
-        return ccPersonGuid;
-    }
-
-    public void setCcPersonGuid(String ccPersonGuid) {
-        this.ccPersonGuid = ccPersonGuid;
     }
 
     public String getCreatePersonName() {

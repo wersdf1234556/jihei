@@ -2,6 +2,7 @@ package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("qualityTraceability")
+@Transactional
 public class QualityTraceabilityController extends BaseController {
 
     @Autowired

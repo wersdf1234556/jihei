@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 @Table(value = "securityChangs")
 public class SecurityChangModel extends BaseModel{
@@ -32,6 +29,13 @@ public class SecurityChangModel extends BaseModel{
     private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
+
+    @JoinColumn(value = "describe", type = SecurityModel.class, leftColumn = "securityGuid", rightColumn = "guid")
+    private String securityName;  // 问题名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;  // 标段名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
+    private String currentTenderName;  // 当前审核标段
 
     public SecurityChangModel() {
     }
@@ -124,6 +128,30 @@ public class SecurityChangModel extends BaseModel{
         this.approvalPersonName = approvalPersonName;
     }
 
+    public String getSecurityName() {
+        return securityName;
+    }
+
+    public void setSecurityName(String securityName) {
+        this.securityName = securityName;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
+
+    public String getCurrentTenderName() {
+        return currentTenderName;
+    }
+
+    public void setCurrentTenderName(String currentTenderName) {
+        this.currentTenderName = currentTenderName;
+    }
+
     @Override
     public String toString() {
         return "SecurityChangModel{" +
@@ -138,6 +166,9 @@ public class SecurityChangModel extends BaseModel{
                 ", approvalTime='" + approvalTime + '\'' +
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
+                ", securityName='" + securityName + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", currentTenderName='" + currentTenderName + '\'' +
                 '}';
     }
 }
