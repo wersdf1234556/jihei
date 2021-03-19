@@ -21,11 +21,16 @@ public class ProjectSurveyModel extends BaseModel{
     private String projectGuid;
     @Column(value = "industryCategoryGuid")
     private String industryCategoryGuid;
+    @Column(value = "managementPowerGuid")
+    private String managementPowerGuid;
 
     @JoinColumn(value = "name", type = ProjectModel.class, leftColumn = "projectGuid", rightColumn = "guid")
     private String projectName;  // 项目名称
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName;  // 权属名称
+    @JoinColumn(value = "name", type = ManagementPowerModel.class, leftColumn = "managementPowerGuid", rightColumn = "guid")
+    private String managementPowerName;
+
 
     public ProjectSurveyModel() {
     }
@@ -102,6 +107,22 @@ public class ProjectSurveyModel extends BaseModel{
         this.industryCategoryName = industryCategoryName;
     }
 
+    public String getManagementPowerGuid() {
+        return managementPowerGuid;
+    }
+
+    public void setManagementPowerGuid(String managementPowerGuid) {
+        this.managementPowerGuid = managementPowerGuid;
+    }
+
+    public String getManagementPowerName() {
+        return managementPowerName;
+    }
+
+    public void setManagementPowerName(String managementPowerName) {
+        this.managementPowerName = managementPowerName;
+    }
+
     @Override
     public String toString() {
         return "ProjectSurveyModel{" +
@@ -112,8 +133,10 @@ public class ProjectSurveyModel extends BaseModel{
                 ", sortId=" + sortId +
                 ", projectGuid='" + projectGuid + '\'' +
                 ", industryCategoryGuid='" + industryCategoryGuid + '\'' +
+                ", managementPowerGuid='" + managementPowerGuid + '\'' +
                 ", projectName='" + projectName + '\'' +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
+                ", managementPowerName='" + managementPowerName + '\'' +
                 '}';
     }
 }

@@ -132,7 +132,6 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     // 安全统计
     @Override
     public List<ReturnModel> securityStatics() {
-        System.out.println("222");
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);   // 设置小数最多两位
         numberFormat.setMinimumFractionDigits(2);   // 设置小数最少两位

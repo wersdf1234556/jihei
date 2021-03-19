@@ -14,6 +14,8 @@ public class ProjectSurveyQueryParams {
     private String projectGuid;
     @Operator(value = "eq", field = "industryCategoryGuid")
     private String industryCategoryGuid;
+    @Operator(value = "eq", field = "managementPowerGuid")
+    private String managementPowerGuid;
 
     public String getGuid() {
         return guid;
@@ -53,5 +55,13 @@ public class ProjectSurveyQueryParams {
 
     public void setIndustryCategoryGuid(String industryCategoryGuid) {
         this.industryCategoryGuid = industryCategoryGuid;
+    }
+
+    public String getManagementPowerGuid() {
+        return managementPowerGuid;
+    }
+
+    public void setManagementPowerGuid(String managementPowerGuid) {
+        this.managementPowerGuid = managementPowerGuid;
     }
 }
