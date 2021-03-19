@@ -7,8 +7,6 @@ public class BuildingSafetyQueryParams {
     private String guid;
     @Operator(value = "like", field = "name")
     private String name;
-    @Operator(value = "eq", field = "tenderGuid")
-    private String tenderGuid;
 
     public String getGuid() {
         return guid;
@@ -26,11 +24,4 @@ public class BuildingSafetyQueryParams {
         this.name = name;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
-    }
-
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
-    }
 }

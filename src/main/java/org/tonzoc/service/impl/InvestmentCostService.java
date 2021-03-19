@@ -2,13 +2,16 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.mapper.BuildingSafetyDetailMapper;
 import org.tonzoc.mapper.InvestmentCostMapper;
+import org.tonzoc.model.BuildingSafetyDetailModel;
 import org.tonzoc.model.BuildingSafetyModel;
 import org.tonzoc.model.InvestmentCostModel;
 import org.tonzoc.model.InvestmentSituationModel;
 import org.tonzoc.model.support.CostByTpeModel;
 import org.tonzoc.model.support.CostModel;
 import org.tonzoc.model.support.TypeModel;
+import org.tonzoc.service.IBuildingSafetyDetailService;
 import org.tonzoc.service.IBuildingSafetyService;
 import org.tonzoc.service.IInvestmentCostService;
 import org.tonzoc.service.IInvestmentSituationService;
@@ -31,6 +34,11 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
     private InvestmentCostMapper investmentCostMapper;
     @Autowired
     private IBuildingSafetyService buildingSafetyService;
+    @Autowired
+    private IBuildingSafetyDetailService buildingSafetyDetailService;
+    @Autowired
+    private BuildingSafetyDetailMapper detailMapper;
+
 
     //进度统计左上角投资总额
     public CostModel statCost(){
@@ -93,8 +101,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         for (InvestmentCostModel costModel:costModels){
             if(costModel.getName().contains("建安费")){
                 List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
-                BigDecimal buildSafety = buildingSafetyService.list(sqlQueryParams1).stream()
-                        .map(BuildingSafetyModel::getBalance)
+                BigDecimal buildSafety = buildingSafetyDetailService.list(sqlQueryParams1).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 BigDecimal percent = buildSafety.divide(costModel.getBalance(), 2, BigDecimal.ROUND_HALF_UP);
                 CostByTpeModel costByTpeModel = new CostByTpeModel(costModel.getName(),costModel.getBalance(),buildSafety,percent);
@@ -106,10 +114,75 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         return list;
     }
 
+    //左下角建安费分项统计
+    //按总体：往年、今年 flag=0
+    //按年度：今年、本月 flag=1
+    //按月份：本月、本日 flag=2
+    public List<CostByTpeModel> statByBuildSafety(Integer flag){
+        List<CostByTpeModel> list = new ArrayList<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-hh");
+        String date= formatter.format( new Date());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
+        String month=format.format( new Date());
+        String year = month.substring(0,month.indexOf("-"));
+        String pastDate = year+"-01-01";
+        BigDecimal totalBalance=BigDecimal.ZERO;
+        BigDecimal situationBalance=BigDecimal.ZERO;
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<BuildingSafetyModel> safetys = buildingSafetyService.list(sqlQueryParams).stream().sorted(Comparator.comparing(BuildingSafetyModel::getSortId)).collect(Collectors.toList());
+        for (BuildingSafetyModel buildingSafetyModel:safetys){
+            CostByTpeModel costByTpeModel = new CostByTpeModel();
+            costByTpeModel.setName(buildingSafetyModel.getName());
+            if (flag==0){
+                //往年
+                totalBalance = buildingSafetyDetailService.listByLtDate(pastDate,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+                //本年
+                situationBalance = buildingSafetyDetailService.listByLikeDate(year,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            }else if (flag==1){
+                //本年
+                totalBalance=buildingSafetyDetailService.listByLikeDate(year,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+                //本月
+                situationBalance=buildingSafetyDetailService.listByLikeDate(month,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            }else if (flag==2){
+                //本月
+                totalBalance=buildingSafetyDetailService.listByLikeDate(month,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+                //本日
+                situationBalance=buildingSafetyDetailService.listByLikeDate(date,buildingSafetyModel.getGuid()).stream()
+                        .map(BuildingSafetyDetailModel::getBalance)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+            }
+            //百分比
+            BigDecimal percent=BigDecimal.ZERO;
+            if (situationBalance.compareTo(BigDecimal.ZERO)>0){
+                percent = situationBalance.divide(totalBalance, 2, BigDecimal.ROUND_HALF_UP);
+            }
+
+            costByTpeModel.setTotalBalance(totalBalance);
+            costByTpeModel.setSituationBalance(situationBalance);
+            costByTpeModel.setPercentNum(percent);
+            list.add(costByTpeModel);
+        }
+        return list;
+
+
+
+    }
+
     //右侧按标段统计总产值和累计产值
-//    public List<CostByTpeModel> statByTender(){
-//
-//    }
-
-
+    public List<CostByTpeModel> statByTender(){
+        List<CostByTpeModel> statByTender = detailMapper.statByTender();
+        return statByTender;
+    }
 }

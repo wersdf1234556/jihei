@@ -11,4 +11,6 @@ public interface IInvestmentCostService extends IBaseService<InvestmentCostModel
     CostModel statCost();
     List<TypeModel> statByEachItem();
     List<CostByTpeModel> statBySituation();
+    List<CostByTpeModel> statByBuildSafety(Integer flag);
+    List<CostByTpeModel> statByTender();
 }

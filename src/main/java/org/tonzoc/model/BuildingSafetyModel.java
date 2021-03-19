@@ -4,7 +4,7 @@ import org.tonzoc.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
-//建安费表
+//建安费各项表
 @Table("buildingSafety")
 public class BuildingSafetyModel extends BaseModel{
 
@@ -14,17 +14,11 @@ public class BuildingSafetyModel extends BaseModel{
     private String guid;
     @Column(value = "name")
     private String name; // 名称
-    @Column(value = "tenderGuid")
-    private String tenderGuid;
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName; //标段
-    @Column(value = "date")
-    private String date;
-    @Column(value = "balance")
-    private BigDecimal balance;
     @Column(value = "createdAt")
     @NotInsertColumn
     private Date createdAt;
+    @Column(value = "sortId")
+    private Integer sortId;
 
     public String getGuid() {
         return guid;
@@ -42,29 +36,6 @@ public class BuildingSafetyModel extends BaseModel{
         this.name = name;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
-    }
-
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
-    }
-
-    public String getTenderName() {
-        return tenderName;
-    }
-
-    public void setTenderName(String tenderName) {
-        this.tenderName = tenderName;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public Date getCreatedAt() {
         return createdAt;
@@ -74,11 +45,11 @@ public class BuildingSafetyModel extends BaseModel{
         this.createdAt = createdAt;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public Integer getSortId() {
+        return sortId;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 }

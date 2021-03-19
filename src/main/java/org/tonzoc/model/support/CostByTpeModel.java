@@ -7,13 +7,16 @@ public class CostByTpeModel {
     private String name;
     private BigDecimal totalBalance;
     private BigDecimal situationBalance;
-    private BigDecimal percent;
+    private BigDecimal percentNum;
 
-    public CostByTpeModel(String name, BigDecimal totalBalance, BigDecimal situationBalance, BigDecimal percent) {
+    public CostByTpeModel(String name, BigDecimal totalBalance, BigDecimal situationBalance, BigDecimal percentNum) {
         this.name = name;
         this.totalBalance = totalBalance;
         this.situationBalance = situationBalance;
-        this.percent = percent;
+        this.percentNum = percentNum;
+    }
+
+    public CostByTpeModel() {
     }
     //    public String getGuid() {
 //        return guid;
@@ -47,21 +50,21 @@ public class CostByTpeModel {
         this.situationBalance = situationBalance;
     }
 
-    public BigDecimal getPercent() {
-        return percent;
+    public BigDecimal getPercentNum() {
+        return percentNum;
     }
 
-    public void setPercent(BigDecimal percent) {
-        this.percent = percent;
+    public void setPercentNum(BigDecimal percentNum) {
+        this.percentNum = percentNum;
     }
 
     @Override
     public String toString() {
         return "CostByTpeModel{" +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", totalBalance=" + totalBalance +
                 ", situationBalance=" + situationBalance +
-                ", percent=" + percent +
+                ", percentNum=" + percentNum +
                 '}';
     }
 }

@@ -77,4 +77,15 @@ public class InvestmentCostController extends BaseController{
         return investmentCostService.statBySituation();
     }
 
+    //左下角建安费分项统计
+    @GetMapping(value = "statByBuildSafety")
+    public List<CostByTpeModel> statByBuildSafety(Integer flag){
+        return investmentCostService.statByBuildSafety(flag);
+    }
+    //右侧按标段统计总产值和累计产值
+    @GetMapping(value = "statByTender")
+    public List<CostByTpeModel> statByTender(){
+        return investmentCostService.statByTender();
+    }
+
 }
