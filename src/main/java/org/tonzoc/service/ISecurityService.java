@@ -12,8 +12,8 @@ import java.util.Map;
 
 public interface ISecurityService extends IBaseService<SecurityModel> {
 
-    // 处理时间
-    SecurityModel updateTime(SecurityModel securityModel) throws ParseException;
+    // 添加一条安全信息
+    void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType);
 
     // 上传安全的文件
     Map<String, String> upFile(MultipartFile file, String securityGuid, String securityChangGuid, Integer fileType);
@@ -22,7 +22,7 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType);
 
     // 修改状态
-    void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid);
+    void updateStatus(String status, String approvalTime, String guid);
 
     // 安全统计
     List<ReturnModel> securityStatics();
@@ -31,19 +31,13 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     List<SecurityModel> unsafeSelect();
 
     // 提交
-    void submit(String securityGuid, String currentTenderGuid);
-
-    // 多条提交
-    void batchApproval(String securityGuid, String currentTenderGuid, Integer flag);
+    void submit(String securityGuid);
 
     // 修改时询问是否能修改
-    void updateStack(SecurityModel securityGuid, UserModel userModel) throws Exception;
+    void updateStack(SecurityModel securityGuid) throws Exception;
 
     // 删除一条
-    void removeStack(String guid, UserModel userModel) throws Exception;
-
-    // 循环删除
-    void batchRemoveStack(String guids, UserModel userModel) throws Exception;
+    void removeStack(String guid) throws Exception;
 
     // 判断当前分数是否超过10天改状态
     void updateIsEffect() throws ParseException;

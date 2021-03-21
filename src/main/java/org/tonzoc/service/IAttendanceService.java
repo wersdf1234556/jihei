@@ -12,6 +12,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
 //    void insertStack(AttendanceModel attendanceModel) throws Exception;
 
+    void insertGateData(AttendanceModel attendanceModel);
     List<Object> statAttendanceData(String date, Integer flag);
     List<AttDateStatModel> statByMonth(String date);
 

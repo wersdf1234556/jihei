@@ -298,7 +298,14 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             }
         }
         this.remove(guid);
-        attachmentService.deleteFile(guid);
+        List<SqlQueryParam> list = new ArrayList<>();
+        list.add(new SqlQueryParam("qualityTraceabilityGuid", guid, "eq"));
+        List<AttachmentModel> list1 = attachmentService.list(list);
+        if (list != null) {
+            for (AttachmentModel li :list1) {
+                attachmentService.deleteFile(li.getGuid());
+            }
+        }
     }
 
     // 循环删除
@@ -311,8 +318,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         String[] split = guids.split(",");//以逗号分割
         for (String primaryKey:split){
 
-            removeStack(primaryKey, userModel);
-            attachmentService.deleteFile(guids);
+            this.removeStack(primaryKey, userModel);
         }
     }
 }

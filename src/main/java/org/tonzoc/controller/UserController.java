@@ -135,4 +135,11 @@ public class UserController extends BaseController {
     public List<TenderModel> listTendersByUserId(String userGuid) throws Exception{
         return userService.listTendersByUserId(userGuid);
     }
+
+    // 查询上一级
+    @GetMapping(value = "getNextSupervisor")
+    public String getNextSupervisor(String tenderGuid, String accounType){
+
+        return userService.getNextSupervisor(tenderGuid, accounType);
+    }
 }

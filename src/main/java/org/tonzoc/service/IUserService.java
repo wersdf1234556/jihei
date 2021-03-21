@@ -15,4 +15,7 @@ public interface IUserService extends IBaseService<UserModel> {
     void updateStack(UserModel userModel);
 
     List<TenderModel> listTendersByUserId(String userGuid) throws Exception;
+
+     // 查询上一级
+     String getNextSupervisor(String tenderGuid, String accounType);
 }

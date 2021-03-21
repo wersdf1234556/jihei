@@ -3,6 +3,7 @@ package org.tonzoc.service.impl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.common.ApprovalHelper;
 import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.UserModel;
@@ -21,6 +22,9 @@ public class UserService extends BaseService<UserModel> implements IUserService 
     private ITenderService tenderService;
     @Autowired
     private IRedisAuthService redisAuthService;
+
+    @Autowired
+    private ApprovalHelper approvalHelper;
 
     public List<UserModel> listByUser(String guid){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -76,5 +80,11 @@ public class UserService extends BaseService<UserModel> implements IUserService 
             tenderModels.add(tenderService.get(tenderGuid));
         }
         return tenderModels;
+    }
+
+    // 查询上一级
+    public String getNextSupervisor(String tenderGuid, String accounType){
+
+       return approvalHelper.getNextSupervisor(tenderGuid, accounType);
     }
 }

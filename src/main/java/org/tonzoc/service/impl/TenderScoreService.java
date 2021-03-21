@@ -7,6 +7,7 @@ import org.tonzoc.mapper.TenderScoreMapper;
 import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.service.ITenderScoreService;
 
+
 @Service
 @Transactional
 public class TenderScoreService extends BaseService<TenderScoreModel> implements ITenderScoreService {
@@ -14,13 +15,12 @@ public class TenderScoreService extends BaseService<TenderScoreModel> implements
     @Autowired
     private TenderScoreMapper tenderScoreMapper;
 
+    // 添加分数
+    public void add (String tenderGuid, Integer scores){
 
-
-
-    // 查询十天内的分数
-    public TenderScoreModel selectScore(){
-
-        return null;
+        TenderScoreModel tenderScoreModel = new TenderScoreModel();
+        tenderScoreModel.setScores(scores);
+        tenderScoreModel.setTenderGuid(tenderGuid);
+        this.save(tenderScoreModel);
     }
-
 }

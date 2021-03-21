@@ -58,6 +58,11 @@ public class AttendanceController extends BaseController {
         attendanceService.removeMany(guids);
     }
 
+    @PostMapping(value = "insertGateData")
+    public void insertGateData(@RequestBody  @Valid AttendanceModel attendanceModel){
+        attendanceService.insertGateData(attendanceModel);
+    }
+
 //    @GetMapping(value = "statAttendanceData")
 //    public List<Object> statAttendanceData(String date,Integer flag){
 //        return attendanceService.statAttendanceData(date,flag);

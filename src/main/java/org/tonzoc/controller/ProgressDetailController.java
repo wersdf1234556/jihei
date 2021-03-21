@@ -28,19 +28,13 @@ public class ProgressDetailController extends BaseController {
     private IRedisAuthService redisAuthService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams,String accounType, String flag)
+    public PageResponse list(PageQueryParams pageQueryParams, ProgressDetailQueryParams progressDetailQueryParams,String accounType)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<ProgressDetailModel> page = parsePage(pageQueryParams);
-        // 监理
+        //监理
         if (accounType.equals("2")){
-            if ("0".equals(flag)) { // flag = 0 施工单位查到未提交，监理查不到
-                progressDetailQueryParams.setStatus("submitted,unFinish,finish");
-            }
-        }else if (accounType.equals("0")){
-            if ("1".equals(flag)) {
-                progressDetailQueryParams.setStatus("submitted,unFinish,finish");
-            }
+            progressDetailQueryParams.setStatus("submitted,finish");
         }
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(progressDetailQueryParams);

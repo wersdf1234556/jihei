@@ -55,18 +55,4 @@ public class SecurityRuleController extends BaseController {
     public void removeMany(String guids) throws Exception {
         securityRuleService.removeMany(guids);
     }
-
-    // 考核项积分情况
-    @GetMapping(value = "selectByDocument")
-    public List<SecurityRuleModel> selectByDocument(){
-
-        return securityRuleService.selectByDocument();
-    }
-
-    // 积分变化情况
-    @GetMapping(value = "selectChang")
-    public List<ReturnModel> selectChang(){
-
-        return securityRuleService.selectChang();
-    }
 }

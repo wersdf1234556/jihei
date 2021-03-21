@@ -8,12 +8,8 @@ import org.tonzoc.common.ApprovalHelper;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
-import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotMatchException;
-import org.tonzoc.mapper.AttachmentSecurityMapper;
-import org.tonzoc.mapper.SecurityChangMapper;
-import org.tonzoc.mapper.SecurityMapper;
-import org.tonzoc.mapper.TenderScoreMapper;
+import org.tonzoc.mapper.*;
 import org.tonzoc.model.*;
 import org.tonzoc.service.*;
 
@@ -54,17 +50,26 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     @Autowired
     private FileHelper fileHelper;
 
-    // 处理时间
-    @Override
-    public SecurityModel updateTime(SecurityModel securityModel) throws ParseException {
+    @Autowired
+    private ApprovalHelper approvalHelper;
 
-        /*if (!securityModel.getCreateDate().equals("") && securityModel.getCreateDate() != null) {
+    // 添加一条安全信息
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType) {
 
-           securityMapper.updateTime( TimeHelper.stringToDate(securityModel.getCreateDate()), securityModel.getGuid());
+        securityModel.setStatus("unSubmit");
+        String approvalTenderGuid = approvalHelper.getNextSupervisor(securityModel.getChangTenderGuid(), accounType);
+        securityModel.setApprovalTenderGuid(approvalTenderGuid);
+        this.save(securityModel);
+
+        TenderScoreModel tenderScoreModel = new TenderScoreModel();
+        tenderScoreModel.setSecurityGuid(securityModel.getGuid());
+        tenderScoreModel.setScores(securityModel.getDefaultScore());
+        tenderScoreModel.setTenderGuid(securityModel.getChangTenderGuid());
+        tenderScoreService.save(tenderScoreModel);
+
+        if (file != null) {
+            this.upFiles(file, securityModel.getGuid(), "", fileType);
         }
-        securityModel.setSortId(0);
-        securityModel.setCreateDate("");*/
-        return securityModel;
     }
 
     // 上传安全文件
@@ -75,7 +80,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         intelliSiteProperties.setFileUrl("/安全/");
 
         // 获取的实际时间
-        String[] str = fileHelper.fileUpload(file, new SimpleDateFormat("yyyy-MM-dd").format(new Date()),  "");
+        String[] str = fileHelper.fileUpload(file, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), "");
 
         AttachmentSecurityModel attachmentSecurityModel = new AttachmentSecurityModel();
         attachmentSecurityModel.setUrl(str[0]);
@@ -99,7 +104,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 上传多条安全的文件
     @Override
-    public void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType){
+    public void upFiles(MultipartFile[] file, String securityGuid, String securityChangGuid, Integer fileType) {
         if (file.length > 0) {
             intelliSiteProperties.setFileUrl("/安全/");
             List<AttachmentSecurityModel> list = new ArrayList<>();
@@ -124,9 +129,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 修改状态
     @Override
-    public void updateStatus(String status, String approvalTime, String currentTenderGuid, String guid){
+    public void updateStatus(String status, String approvalTime, String guid) {
 
-        securityMapper.updateStatus(status, approvalTime, currentTenderGuid, guid);
+        securityMapper.updateStatus(status, approvalTime, guid);
     }
 
     // 安全统计
@@ -144,33 +149,33 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         ReturnModel returnModel1 = new ReturnModel();
         returnModel1.setName("已整改");
-        returnModel1.setNumber(securityMapper.countStatus("1"));
+        returnModel1.setNumber(securityMapper.countStatus("finish") + securityMapper.countStatus("unFinish"));
 
         ReturnModel returnModel2 = new ReturnModel();
         returnModel2.setName("未整改");
-        returnModel2.setNumber(securityMapper.countStatus("0"));
+        returnModel2.setNumber(securityMapper.countStatus("submitted") + securityMapper.countStatus("unSubmitted"));
 
         ReturnModel returnModel3 = new ReturnModel();
         returnModel3.setName("合格数");
-        returnModel3.setNumber(securityChangMapper.countStatus("1"));
+        returnModel3.setNumber(securityMapper.countStatus("finish"));
 
         ReturnModel returnModel4 = new ReturnModel();
         returnModel4.setName("不合格数");
-        returnModel4.setNumber(securityChangMapper.countStatus("2"));
+        returnModel4.setNumber(securityMapper.countStatus("unFinish"));
         if (returnModel4.getNumber() > 0 || returnModel4.getNumber() > 0) {
-            String result = numberFormat.format((1 - ((double)returnModel3.getNumber()  / (double) returnModel1.getNumber())) * 100);
+            String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel1.getNumber())) * 100);
             returnModel4.setProportion(result + "%");
-        }else{
+        } else {
             returnModel4.setProportion("0%");
         }
 
         ReturnModel returnModel5 = new ReturnModel();
         returnModel5.setName("整改通过率");
-        returnModel5.setNumber(securityMapper.countStatus("1"));
+        returnModel5.setNumber(returnModel3.getNumber());
         if (returnModel3.getNumber() > 0) {
-            String result = numberFormat.format(((double)returnModel3.getNumber()  / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
+            String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
             returnModel5.setProportion(result + "%");
-        }else{
+        } else {
             returnModel5.setProportion("0%");
         }
 
@@ -193,102 +198,60 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     //提交
     @Override
-    public void submit(String securityGuid, String currentTenderGuid){
+    public void submit(String securityGuid) {
         SecurityModel securityModel = this.get(securityGuid);
         String approvalTime = "";
-        if (securityModel.getStatus().equals("unSubmitted")){
+        if (securityModel.getStatus().equals("unSubmitted")) {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
-        securityMapper.updateStatus("submitted", approvalTime, currentTenderGuid, securityGuid);
-    }
-
-    // 多条提交
-    @Override
-    public void batchApproval(String securityGuid, String currentTenderGuid, Integer flag) {
-        String[] split = securityGuid.split(","); // 以逗号分割
-        for (String primaryKey:split){
-            if (flag == 0) {// 提交
-
-                this.submit(primaryKey, currentTenderGuid);
-            }
-        }
+        securityMapper.updateStatusAndTender("submitted", approvalTime, securityGuid);
     }
 
     // 修改时询问是否能修改
     @Override
-    public void updateStack(SecurityModel securityModel, UserModel userModel) throws Exception {
+    public void updateStack(SecurityModel securityModel) throws Exception {
 
         SecurityModel securityModel1 = this.get(securityModel.getGuid());
-        //监理未提交时，施工单位不能添加新表；
-        //且管理员可随时能改；
-        //监理提交后，监理可改
-        //结束审批后，监理不可改
-        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
+        // 监理未提交时，施工单位看不见;
+        // 监理提交后，不可改
 
-            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+        if (!"unSubmit".equals(securityModel1.getStatus())) {
 
-                throw new NotMatchException("您无法修改");
-            }
-            if(securityModel1.getStatus().equals("finish")){
-
-                throw new NotMatchException("该数据已结束审批，无法修改");
-            }
+            throw new NotMatchException("当前状态无法修改");
         }
     }
 
     // 删除一条
     @Override
-    public void removeStack(String guid, UserModel userModel) throws Exception{
+    public void removeStack(String guid) throws Exception {
 
         SecurityModel securityModel1 = this.get(guid);
-        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
 
-            if (!userModel.getTenderGuid().equals(securityModel1.getTenderGuid()) && securityModel1.getStatus().equals("unSubmit")){
+        if (!"unSubmit".equals(securityModel1.getStatus())) {
 
-                throw new NotMatchException("您无法删除"); // 施工单位不能删除
-            }
-            if(securityModel1.getStatus().equals("finish")){
-
-                throw new NotMatchException("该数据已结束审批，无法删除");
-            }
+            throw new NotMatchException("当前状态无法删除");
         }
+
         this.remove(guid);
-    }
-
-    // 循环删除
-    @Override
-    public void batchRemoveStack(String guids, UserModel userModel) throws Exception{
-        if (guids == null){
-
-            throw new NotFoundException("未删除");
-        }
-        String[] split = guids.split(",");// 以逗号分割
-        for (String primaryKey:split){
-
-            removeStack(primaryKey, userModel);
-        }
     }
 
     // 判断当前分数超过10天改状态
     public void updateIsEffect() throws ParseException {
-        List<ReturnModel> list = tenderScoreMapper.allScores();
-        for (ReturnModel li: list) {
+        List<SecurityModel> list = tenderScoreMapper.securityByIsEffect();
+        for (SecurityModel li: list) {
 
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -10);
-            long start = calendar.getTime().getTime(); //十天前的时间
+            long start = calendar.getTime().getTime(); // 十天前的时间
             long end = new Date().getTime(); // 当前时间
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            long createDate = sdf.parse(li.getProportion()).getTime(); // 创建时间
+            long createDate = TimeHelper.stringToDate(li.getApprovalTime()).getTime(); // 创建时间
 
-            if(start < createDate && createDate < end) {
+            if(start > createDate || createDate > end) { // 改变状态
 
-            }else { //改变状态
-
-                tenderScoreMapper.updateScore("2" , li.getName());
+                tenderScoreMapper.updateScore("2" , li.getGuid());
             }
         }
     }

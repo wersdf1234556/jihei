@@ -20,6 +20,8 @@ public class ProgressTotalDataModel extends BaseModel{
     private String progressName; //进度名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
+    @Column(value = "flag")
+    private Integer flag;//0：总计划    1：年计划   2：月计划
 
     public String getGuid() {
         return guid;
@@ -69,6 +71,14 @@ public class ProgressTotalDataModel extends BaseModel{
         this.tenderName = tenderName;
     }
 
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "ProgressTotalDataModel{" +
@@ -78,6 +88,7 @@ public class ProgressTotalDataModel extends BaseModel{
                 ", totalNum=" + totalNum +
                 ", progressName='" + progressName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
+                ", flag=" + flag +
                 '}';
     }
 }

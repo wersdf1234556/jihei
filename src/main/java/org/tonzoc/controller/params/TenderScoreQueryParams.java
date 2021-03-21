@@ -12,6 +12,10 @@ public class TenderScoreQueryParams {
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+
+    @Operator(value = "eq", field = "securityGuid")
+    private String securityGuid;
+
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
 
@@ -45,5 +49,13 @@ public class TenderScoreQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getSecurityGuid() {
+        return securityGuid;
+    }
+
+    public void setSecurityGuid(String securityGuid) {
+        this.securityGuid = securityGuid;
     }
 }

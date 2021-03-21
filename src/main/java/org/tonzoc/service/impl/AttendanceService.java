@@ -45,6 +45,26 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         return list;
     }
 
+    //添加闸机数据
+    public void insertGateData(AttendanceModel attendanceModel){
+        if (attendanceModel.getIdCard()!=null){
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("idCard", attendanceModel.getIdCard(), "eq"));
+            List<PersonModel> personModels = personService.list(sqlQueryParams) ;
+            if (personModels.size()!=0){
+                String personGuid = personModels.get(0).getGuid();
+                attendanceModel.setPersonGuid(personGuid);
+                attendanceModel.setSign(0);
+                attendanceModel.setLat("");
+                attendanceModel.setLng("");
+                if (attendanceModel.getTemperature().compareTo("37.3")>0){
+                    attendanceModel.setStatus(1);
+                }
+                save(attendanceModel);
+            }
+        }
+    }
+
 
     //限制每天只能打一次卡
 //    public void insertStack(AttendanceModel attendanceModel) throws Exception {

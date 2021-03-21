@@ -36,7 +36,7 @@ public class TypeModel {
     @Override
     public String toString() {
         return "TypeModel{" +
-                "typeId='" + typeId + '\'' +
+                "typeName='" + typeName + '\'' +
                 ", typeCount='" + typeCount + '\'' +
                 '}';
     }
