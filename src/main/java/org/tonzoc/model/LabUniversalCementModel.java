@@ -248,19 +248,11 @@ public class LabUniversalCementModel extends BaseModel {
     }
 
     @JsonProperty(value = "time_process")
-    public void setTimeProcess(String[] timeProcess) {
-        this.timeProcess = JSON.toJSONString(timeProcess);
-    }
-
-    @JsonProperty(value = "force_process")
-    public void setForceProcess(String[] forceProcess) {
-        this.forceProcess = JSON.toJSONString(forceProcess);
-    }
-
     public void setTimeProcess(String timeProcess) {
         this.timeProcess = timeProcess;
     }
 
+    @JsonProperty(value = "force_process")
     public void setForceProcess(String forceProcess) {
         this.forceProcess = forceProcess;
     }

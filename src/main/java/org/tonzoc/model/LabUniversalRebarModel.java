@@ -373,28 +373,16 @@ public class LabUniversalRebarModel extends BaseModel {
     }
 
     @JsonProperty(value = "time_process")
-    public void setTimeProcess(String[] timeProcess) {
-        this.timeProcess = JSON.toJSONString(timeProcess);
-    }
-
-    @JsonProperty(value = "displacement_process")
-    public void setDisplacementProcess(String[] displacementProcess) {
-        this.displacementProcess = JSON.toJSONString(displacementProcess);
-    }
-
-    @JsonProperty(value = "force_process")
-    public void setForceProcess(String[] forceProcess) {
-        this.forceProcess = JSON.toJSONString(forceProcess);
-    }
-
     public void setTimeProcess(String timeProcess) {
         this.timeProcess = timeProcess;
     }
 
+    @JsonProperty(value = "displacement_process")
     public void setDisplacementProcess(String displacementProcess) {
         this.displacementProcess = displacementProcess;
     }
 
+    @JsonProperty(value = "force_process")
     public void setForceProcess(String forceProcess) {
         this.forceProcess = forceProcess;
     }
