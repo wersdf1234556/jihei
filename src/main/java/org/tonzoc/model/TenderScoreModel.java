@@ -18,6 +18,8 @@ public class TenderScoreModel extends BaseModel {
     private Integer sortId;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "securityGuid")
+    private String securityGuid;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -26,6 +28,8 @@ public class TenderScoreModel extends BaseModel {
     private String tenderName;  // 标段单位名称
     @JoinColumn(value = "organization", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderOrganization;  // 标段单位名称
+    @JoinColumn(value = "name", type = SecurityModel.class, leftColumn = "securityGuid", rightColumn = "guid")
+    private String securityName;  // 安全问题名称
 
     public TenderScoreModel() {
     }
@@ -78,6 +82,22 @@ public class TenderScoreModel extends BaseModel {
         this.tenderOrganization = tenderOrganization;
     }
 
+    public String getSecurityGuid() {
+        return securityGuid;
+    }
+
+    public void setSecurityGuid(String securityGuid) {
+        this.securityGuid = securityGuid;
+    }
+
+    public String getSecurityName() {
+        return securityName;
+    }
+
+    public void setSecurityName(String securityName) {
+        this.securityName = securityName;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -93,9 +113,11 @@ public class TenderScoreModel extends BaseModel {
                 ", scores=" + scores +
                 ", sortId=" + sortId +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", securityGuid='" + securityGuid + '\'' +
                 ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", tenderOrganization='" + tenderOrganization + '\'' +
+                ", securityName='" + securityName + '\'' +
                 '}';
     }
 }

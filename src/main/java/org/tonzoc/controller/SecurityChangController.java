@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.PageQueryParams;
-import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.SecurityChangQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
@@ -20,8 +19,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -60,14 +57,9 @@ public class SecurityChangController extends BaseController{
     }
 
     @PostMapping
-    public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws ParseException {
+    public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType, String accounType) throws Exception {
 
-        securityChangModel.setStatus("unSubmit");
-        securityChangModel.setCurrentTenderGuid(securityChangModel.getTenderGuid());
-        this.securityChangService.save(securityChangModel);
-        if (file != null) {
-            securityService.upFiles(file, "", securityChangModel.getGuid(), fileType);
-        }
+        securityChangService.add(securityChangModel, file, fileType, accounType);
     }
 
     @PutMapping(value = "{guid}")
@@ -85,13 +77,6 @@ public class SecurityChangController extends BaseController{
         this.securityChangService.removeStack(guid, userModel);
     }
 
-    @PostMapping(value = "removeMany")
-    public void removeMany(String guids) throws Exception {
-
-        UserModel userModel = redisAuthService.getCurrentUser();
-        this.securityChangService.batchRemoveStack(guids, userModel);
-    }
-
     // 提交
     @PostMapping(value = "submit")
     public void submit(String securityChangGuid){
@@ -101,15 +86,8 @@ public class SecurityChangController extends BaseController{
 
     // 审批
     @PostMapping(value = "approval")
-    public void approval(String securityChangGuid, Integer flag) {
+    public void approval(String securityChangGuid, Integer flag, String approvalScore) {
 
-        securityChangService.approval(securityChangGuid, flag);
-    }
-
-    // 批量审批
-    @PostMapping(value = "batchApproval")
-    public void batchApproval(String securityChangGuid, Integer flag) {
-
-        securityChangService.batchApproval(securityChangGuid, flag);
+        securityChangService.approval(securityChangGuid, flag, approvalScore);
     }
 }

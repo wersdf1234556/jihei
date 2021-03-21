@@ -1,7 +1,6 @@
 package org.tonzoc.controller;
 
 import com.github.pagehelper.Page;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
-import org.tonzoc.model.TenderScoreModel;
 import org.tonzoc.model.UserModel;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISecurityService;
@@ -22,7 +20,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +38,7 @@ public class SecurityController extends BaseController {
     private ITenderScoreService tenderScoreService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams,String accounType, String flag)
+    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams, String accounType, String flag)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<SecurityModel> page = parsePage(pageQueryParams);
@@ -62,42 +59,22 @@ public class SecurityController extends BaseController {
     }
 
     @PostMapping
-    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType) throws ParseException {
 
-        securityModel.setStatus("unSubmit");
-        securityModel.setCurrentTenderGuid(securityModel.getTenderGuid());
-
-        securityService.save(securityModel);
-
-        TenderScoreModel tenderScoreModel = new TenderScoreModel();
-        tenderScoreModel.setTenderGuid(securityModel.getCurrentTenderGuid());
-        tenderScoreModel.setScores(securityModel.getScore());
-        tenderScoreService.save(tenderScoreModel);
-        if (file != null) {
-            this.upFiles(file, securityModel.getGuid(), "", fileType);
-        }
+        securityService.add(securityModel, file, fileType, accounType);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid SecurityModel securityModel) throws Exception {
 
-        UserModel userModel = redisAuthService.getCurrentUser();
-        securityService.updateStack(securityModel, userModel);
+        securityService.updateStack(securityModel);  // 判断状态是否能修改
         this.securityService.update(securityModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        UserModel userModel = redisAuthService.getCurrentUser();
-        this.securityService.removeStack(guid, userModel);
-    }
-
-    @PostMapping(value = "removeMany")
-    public void removeMany(String guids) throws Exception {
-
-        UserModel userModel = redisAuthService.getCurrentUser();
-        this.securityService.batchRemoveStack(guids, userModel);
+        this.securityService.removeStack(guid);
     }
 
     // 上传安全文件
@@ -113,13 +90,6 @@ public class SecurityController extends BaseController {
 
         securityService.upFiles(file, securityGuid, securityChangGuid, fileType);
     }
-
-    /*// 添加多条并修改分数
-    @PostMapping(value = "adds")
-    public void adds(List<SecurityModel> list) {
-
-        securityService.adds(list);
-    }*/
 
     // 安全统计
     @GetMapping(value = "securityStatics")
@@ -137,21 +107,14 @@ public class SecurityController extends BaseController {
 
     // 提交
     @PostMapping(value = "submit")
-    public void submit(String securityGuid, String currentTenderGuid){
+    public void submit(String securityGuid){
 
-        securityService.submit(securityGuid, currentTenderGuid);
-    }
-
-    // 批量提交
-    @PostMapping(value = "batchApproval")
-    public void batchApproval(String securityGuid, String currentTenderGuid, Integer flag) {
-
-        securityService.batchApproval(securityGuid, currentTenderGuid, flag);
+        securityService.submit(securityGuid);
     }
 
     // 判断当前分数超过10天改状态
     @GetMapping(value = "updateIsEffect")
-    public void updateIsEffect(String oldDate, String guid) throws ParseException {
+    public void updateIsEffect() throws ParseException {
 
         securityService.updateIsEffect();
     }

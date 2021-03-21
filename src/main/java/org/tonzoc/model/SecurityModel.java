@@ -12,42 +12,46 @@ public class SecurityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "tenderGuid")
-    private String tenderGuid; // 标段表guid
+    @Column(value = "inspectTenderGuid")
+    private String inspectTenderGuid; // 下单标段
+    @Column(value = "changTenderGuid")
+    private String changTenderGuid; // 整改标段
     @Column(value = "describe")
     private String describe; // 问题描述
     @Column(value = "securityRuleGuid")
-    private String securityRuleGuid; // 分数规则表guid
-    @Column(value = "score")
-    private Integer score; // 分数
+    private String securityRuleGuid; // 分数规则
+    @Column(value = "defaultScore")
+    private Integer defaultScore; // 默认分数
     @Column(value = "limitTime")
-    private String limitTime; // 限制时间
-    @Column(value = "createPersonName")
-    private String createPersonName; // 创建人名称
+    private String limitTime; // 截止时间
     @Column(value = "ccPersonGuid")
     private String ccPersonGuid; // 抄送人的guid
-    @Column(value = "status")
-    private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
+    @Column(value = "approvalTenderGuid")
+    private String approvalTenderGuid; // 审批标段
     @Column(value = "approvalTime")
     private String approvalTime; // 审批时间
-    @Column(value = "currentTenderGuid")
-    private String currentTenderGuid; // 当前审批标段
+    @Column(value = "approvalScore")
+    private Integer approvalScore; // 最终分数
+    @Column(value = "status")
+    private String status;  // 当前审批状态 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
 
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName;  // 标段名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "inspectTenderGuid", rightColumn = "guid")
+    private String inspectTenderName;  // 下单标段名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "changTenderGuid", rightColumn = "guid")
+    private String changTenderName;  // 整改标段名称
     @JoinColumn(value = "name", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
-    private String securityRuleName;  // 分数规则名称
+    private String securityRuleName;  // 分数规则
+    @JoinColumn(value = "defaultScore", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
+    private Integer SecurityRuleDefaultScore;  // 默认分数
     @JoinColumn(value = "rules", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
     private String securityRule;  // 分数规则说明
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
-    private String currentTenderName;  // 当前审批标段名称
-    @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "ccPersonGuid", rightColumn = "guid")
-    private String ccPersonName;  // 抄送人员名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "approvalTenderGuid", rightColumn = "guid")
+    private String approvalTenderName;  // 审批标段名称
 
     public SecurityModel() {
     }
@@ -60,28 +64,28 @@ public class SecurityModel extends BaseModel {
         this.guid = guid;
     }
 
+    public String getInspectTenderGuid() {
+        return inspectTenderGuid;
+    }
+
+    public void setInspectTenderGuid(String inspectTenderGuid) {
+        this.inspectTenderGuid = inspectTenderGuid;
+    }
+
+    public String getChangTenderGuid() {
+        return changTenderGuid;
+    }
+
+    public void setChangTenderGuid(String changTenderGuid) {
+        this.changTenderGuid = changTenderGuid;
+    }
+
     public String getDescribe() {
         return describe;
     }
 
     public void setDescribe(String describe) {
         this.describe = describe;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public String getTenderGuid() {
-        return tenderGuid;
-    }
-
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
     }
 
     public String getSecurityRuleGuid() {
@@ -92,60 +96,12 @@ public class SecurityModel extends BaseModel {
         this.securityRuleGuid = securityRuleGuid;
     }
 
-    public String getCcPersonGuid() {
-        return ccPersonGuid;
+    public Integer getDefaultScore() {
+        return defaultScore;
     }
 
-    public void setCcPersonGuid(String ccPersonGuid) {
-        this.ccPersonGuid = ccPersonGuid;
-    }
-
-    public Integer getSortId() {
-        return sortId;
-    }
-
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getTenderName() {
-        return tenderName;
-    }
-
-    public void setTenderName(String tenderName) {
-        this.tenderName = tenderName;
-    }
-
-    public String getSecurityRuleName() {
-        return securityRuleName;
-    }
-
-    public void setSecurityRuleName(String securityRuleName) {
-        this.securityRuleName = securityRuleName;
-    }
-
-    public String getSecurityRule() {
-        return securityRule;
-    }
-
-    public void setSecurityRule(String securityRule) {
-        this.securityRule = securityRule;
-    }
-
-    public String getCcPersonName() {
-        return ccPersonName;
-    }
-
-    public void setCcPersonName(String ccPersonName) {
-        this.ccPersonName = ccPersonName;
+    public void setDefaultScore(Integer defaultScore) {
+        this.defaultScore = defaultScore;
     }
 
     public String getLimitTime() {
@@ -156,12 +112,20 @@ public class SecurityModel extends BaseModel {
         this.limitTime = limitTime;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getCcPersonGuid() {
+        return ccPersonGuid;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void setCcPersonGuid(String ccPersonGuid) {
+        this.ccPersonGuid = ccPersonGuid;
+    }
+
+    public String getApprovalTenderGuid() {
+        return approvalTenderGuid;
+    }
+
+    public void setApprovalTenderGuid(String approvalTenderGuid) {
+        this.approvalTenderGuid = approvalTenderGuid;
     }
 
     public String getApprovalTime() {
@@ -172,52 +136,109 @@ public class SecurityModel extends BaseModel {
         this.approvalTime = approvalTime;
     }
 
-    public String getCurrentTenderGuid() {
-        return currentTenderGuid;
+    public Integer getApprovalScore() {
+        return approvalScore;
     }
 
-    public void setCurrentTenderGuid(String currentTenderGuid) {
-        this.currentTenderGuid = currentTenderGuid;
+    public void setApprovalScore(Integer approvalScore) {
+        this.approvalScore = approvalScore;
     }
 
-    public String getCreatePersonName() {
-        return createPersonName;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCreatePersonName(String createPersonName) {
-        this.createPersonName = createPersonName;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getCurrentTenderName() {
-        return currentTenderName;
+    public Integer getSortId() {
+        return sortId;
     }
 
-    public void setCurrentTenderName(String currentTenderName) {
-        this.currentTenderName = currentTenderName;
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getInspectTenderName() {
+        return inspectTenderName;
+    }
+
+    public void setInspectTenderName(String inspectTenderName) {
+        this.inspectTenderName = inspectTenderName;
+    }
+
+    public String getChangTenderName() {
+        return changTenderName;
+    }
+
+    public void setChangTenderName(String changTenderName) {
+        this.changTenderName = changTenderName;
+    }
+
+    public String getSecurityRuleName() {
+        return securityRuleName;
+    }
+
+    public void setSecurityRuleName(String securityRuleName) {
+        this.securityRuleName = securityRuleName;
+    }
+
+    public Integer getSecurityRuleDefaultScore() {
+        return SecurityRuleDefaultScore;
+    }
+
+    public void setSecurityRuleDefaultScore(Integer securityRuleDefaultScore) {
+        SecurityRuleDefaultScore = securityRuleDefaultScore;
+    }
+
+    public String getSecurityRule() {
+        return securityRule;
+    }
+
+    public void setSecurityRule(String securityRule) {
+        this.securityRule = securityRule;
+    }
+
+    public String getApprovalTenderName() {
+        return approvalTenderName;
+    }
+
+    public void setApprovalTenderName(String approvalTenderName) {
+        this.approvalTenderName = approvalTenderName;
+    }
 
     @Override
     public String toString() {
         return "SecurityModel{" +
                 "guid='" + guid + '\'' +
-                ", tenderGuid='" + tenderGuid + '\'' +
+                ", inspectTenderGuid='" + inspectTenderGuid + '\'' +
+                ", changTenderGuid='" + changTenderGuid + '\'' +
                 ", describe='" + describe + '\'' +
                 ", securityRuleGuid='" + securityRuleGuid + '\'' +
-                ", score=" + score +
+                ", defaultScore=" + defaultScore +
                 ", limitTime='" + limitTime + '\'' +
-                ", createPersonName='" + createPersonName + '\'' +
                 ", ccPersonGuid='" + ccPersonGuid + '\'' +
-                ", status='" + status + '\'' +
+                ", approvalTenderGuid='" + approvalTenderGuid + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +
-                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", approvalScore=" + approvalScore +
+                ", status='" + status + '\'' +
                 ", sortId=" + sortId +
                 ", createdAt=" + createdAt +
-                ", tenderName='" + tenderName + '\'' +
+                ", inspectTenderName='" + inspectTenderName + '\'' +
+                ", changTenderName='" + changTenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +
+                ", SecurityRuleDefaultScore=" + SecurityRuleDefaultScore +
                 ", securityRule='" + securityRule + '\'' +
-                ", currentTenderName='" + currentTenderName + '\'' +
-                ", ccPersonName='" + ccPersonName + '\'' +
+                ", approvalTenderName='" + approvalTenderName + '\'' +
                 '}';
     }
 }

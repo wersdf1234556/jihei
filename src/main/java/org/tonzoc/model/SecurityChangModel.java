@@ -2,6 +2,8 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
+import java.util.Date;
+
 @Table(value = "securityChangs")
 public class SecurityChangModel extends BaseModel{
 
@@ -11,31 +13,28 @@ public class SecurityChangModel extends BaseModel{
     private String guid;
     @Column(value = "securityGuid")
     private String securityGuid;
+    @Column(value = "changTenderGuid")
+    private String changTenderGuid; // 整改标段
     @Column(value = "chang")
     private String chang; // 整改描述
-    @Column(value = "changTime")
-    private String changTime; // 整改时间
-    @Column(value = "tenderGuid")
-    private String tenderGuid; // 整改创建标段
-    @Column(value = "createPersonName")
-    private String createPersonName; // 创建人名称
-    @Column(value = "approvalPersonName")
-    private String approvalPersonName; // 审批人名称
-    @Column(value = "currentTenderGuid")
-    private String currentTenderGuid;  // 当前审核标段guid
+    @Column(value = "approvalTenderGuid")
+    private String approvalTenderGuid; // 审批人标段
     @Column(value = "approvalTime")
     private String approvalTime; // 审核时间
     @Column(value = "status")
     private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private Date createdAt;
 
     @JoinColumn(value = "describe", type = SecurityModel.class, leftColumn = "securityGuid", rightColumn = "guid")
     private String securityName;  // 问题名称
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName;  // 标段名称
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
-    private String currentTenderName;  // 当前审核标段
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "changTenderGuid", rightColumn = "guid")
+    private String tenderName;  // 整改标段名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "approvalTenderGuid", rightColumn = "guid")
+    private String approvalTenderName;  // 审批标段名称
 
     public SecurityChangModel() {
     }
@@ -48,6 +47,22 @@ public class SecurityChangModel extends BaseModel{
         this.guid = guid;
     }
 
+    public String getSecurityGuid() {
+        return securityGuid;
+    }
+
+    public void setSecurityGuid(String securityGuid) {
+        this.securityGuid = securityGuid;
+    }
+
+    public String getChangTenderGuid() {
+        return changTenderGuid;
+    }
+
+    public void setChangTenderGuid(String changTenderGuid) {
+        this.changTenderGuid = changTenderGuid;
+    }
+
     public String getChang() {
         return chang;
     }
@@ -56,28 +71,12 @@ public class SecurityChangModel extends BaseModel{
         this.chang = chang;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
+    public String getApprovalTenderGuid() {
+        return approvalTenderGuid;
     }
 
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
-    }
-
-    public String getChangTime() {
-        return changTime;
-    }
-
-    public void setChangTime(String changTime) {
-        this.changTime = changTime;
-    }
-
-    public String getCurrentTenderGuid() {
-        return currentTenderGuid;
-    }
-
-    public void setCurrentTenderGuid(String currentTenderGuid) {
-        this.currentTenderGuid = currentTenderGuid;
+    public void setApprovalTenderGuid(String approvalTenderGuid) {
+        this.approvalTenderGuid = approvalTenderGuid;
     }
 
     public String getApprovalTime() {
@@ -104,28 +103,12 @@ public class SecurityChangModel extends BaseModel{
         this.sortId = sortId;
     }
 
-    public String getSecurityGuid() {
-        return securityGuid;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setSecurityGuid(String securityGuid) {
-        this.securityGuid = securityGuid;
-    }
-
-    public String getCreatePersonName() {
-        return createPersonName;
-    }
-
-    public void setCreatePersonName(String createPersonName) {
-        this.createPersonName = createPersonName;
-    }
-
-    public String getApprovalPersonName() {
-        return approvalPersonName;
-    }
-
-    public void setApprovalPersonName(String approvalPersonName) {
-        this.approvalPersonName = approvalPersonName;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getSecurityName() {
@@ -144,12 +127,12 @@ public class SecurityChangModel extends BaseModel{
         this.tenderName = tenderName;
     }
 
-    public String getCurrentTenderName() {
-        return currentTenderName;
+    public String getApprovalTenderName() {
+        return approvalTenderName;
     }
 
-    public void setCurrentTenderName(String currentTenderName) {
-        this.currentTenderName = currentTenderName;
+    public void setApprovalTenderName(String approvalTenderName) {
+        this.approvalTenderName = approvalTenderName;
     }
 
     @Override
@@ -157,18 +140,16 @@ public class SecurityChangModel extends BaseModel{
         return "SecurityChangModel{" +
                 "guid='" + guid + '\'' +
                 ", securityGuid='" + securityGuid + '\'' +
+                ", changTenderGuid='" + changTenderGuid + '\'' +
                 ", chang='" + chang + '\'' +
-                ", changTime='" + changTime + '\'' +
-                ", tenderGuid='" + tenderGuid + '\'' +
-                ", createPersonName='" + createPersonName + '\'' +
-                ", approvalPersonName='" + approvalPersonName + '\'' +
-                ", currentTenderGuid='" + currentTenderGuid + '\'' +
+                ", approvalTenderGuid='" + approvalTenderGuid + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
+                ", createdAt=" + createdAt +
                 ", securityName='" + securityName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
-                ", currentTenderName='" + currentTenderName + '\'' +
+                ", approvalTenderName='" + approvalTenderName + '\'' +
                 '}';
     }
 }
