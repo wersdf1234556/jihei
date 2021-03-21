@@ -51,7 +51,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
     public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType, String accounType) throws Exception {
 
         SecurityModel securityModel = securityService.get(securityChangModel.getSecurityGuid());
-        if (!"submit".equals(securityModel.getStatus())){
+        if (!"unFinish".equals(securityModel.getStatus())){
 
             throw new Exception("当前状态无法添加");
         }
@@ -116,9 +116,10 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
         SecurityChangModel securityChangModel1 = this.get(securityChangModel.getGuid());
         // 施工方未提交时，监理不可改;
-        // 施工方提交后，施工方不可改;
+        // 施工方提交后，施工方可以改;
+        // 监理审批后，施工方不可改;
 
-        if (!"unSubmit".equals(securityChangModel1.getStatus())){
+        if ("noFinish".equals(securityChangModel1.getStatus()) || "finish".equals(securityChangModel1.getStatus())){
 
             throw new NotMatchException("当前状态无法修改");
         }
