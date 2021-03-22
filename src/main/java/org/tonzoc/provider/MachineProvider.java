@@ -21,7 +21,7 @@ public class MachineProvider {
     // 查询机械概况
     public String selectMachineCategoryNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select machineCategories.name, count(machines.guid) number from machineCategories ");
+        StringBuilder stringBuilder = new StringBuilder("select machineCategories.name, count(machines.guid) number, machineCategories.guid proportion from machineCategories ");
         if ("".equals(tenderGuid) || tenderGuid == null) {
             stringBuilder.append(" LEFT JOIN machines on machineCategories.guid = machines.machineCategoryGuid");
         }else {
@@ -29,7 +29,7 @@ public class MachineProvider {
                     " where machines.tenderGuid = '" + tenderGuid + "') machines on machineCategories.guid = machines.machineCategoryGuid");
         }
 
-        stringBuilder.append(" GROUP BY machineCategories.name");
+        stringBuilder.append(" GROUP BY machineCategories.name, machineCategories.guid");
 
         return stringBuilder.toString();
     }
