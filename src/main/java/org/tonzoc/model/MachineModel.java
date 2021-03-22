@@ -42,6 +42,8 @@ public class MachineModel extends BaseModel {
     private String machineCategoryGuid; // 类别的guid
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "HGPSID")
+    private String HGPSID;
 
     @JoinColumn(value = "name", type = MachineTypeModel.class, leftColumn = "machineTypeGuid", rightColumn = "guid")
     private String typeName;
@@ -213,6 +215,14 @@ public class MachineModel extends BaseModel {
         this.tenderName = tenderName;
     }
 
+    public String getHGPSID() {
+        return HGPSID;
+    }
+
+    public void setHGPSID(String HGPSID) {
+        this.HGPSID = HGPSID;
+    }
+
     @Override
     public String toString() {
         return "MachineModel{" +
@@ -233,6 +243,7 @@ public class MachineModel extends BaseModel {
                 ", machineTypeGuid='" + machineTypeGuid + '\'' +
                 ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
+                ", HGPSID='" + HGPSID + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
