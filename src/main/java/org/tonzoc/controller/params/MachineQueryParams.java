@@ -8,6 +8,8 @@ public class MachineQueryParams {
     private String guid;
     @Operator(value = "eq", field = "machineKey")
     private String machineKey; // 机械编号
+    @Operator(value = "like", field = "name")
+    private String name;
     @Operator(value = "eq", field = "machineTypeGuid")
     private String machineTypeGuid;
     @Operator(value = "eq", field = "machineCategoryGuid")
@@ -16,6 +18,8 @@ public class MachineQueryParams {
     private String tenderGuid;
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
+    @Operator(value = "eq", field = "HGPSID")
+    private String HGPSID;
 
     public String getGuid() {
         return guid;
@@ -31,6 +35,14 @@ public class MachineQueryParams {
 
     public void setMachineKey(String machineKey) {
         this.machineKey = machineKey;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMachineTypeGuid() {
@@ -63,5 +75,13 @@ public class MachineQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getHGPSID() {
+        return HGPSID;
+    }
+
+    public void setHGPSID(String HGPSID) {
+        this.HGPSID = HGPSID;
     }
 }

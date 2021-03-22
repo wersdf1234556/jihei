@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 // 机械GPS表
 @Table("HangZhouGPS")
@@ -22,7 +19,7 @@ public class HangZhouGPSModel extends BaseModel {
     @Column(value = "HGPSE")
     private String HGPSE;
     @Column(value = "HSpeed")
-    private String HSpeed;
+    private String HSpeed; // 获取定位时间
     @Column(value = "HDate")
     private String HDate;
     @Column(value = "IsParsed")
@@ -35,6 +32,9 @@ public class HangZhouGPSModel extends BaseModel {
     private String BaiduLng;
     @Column(value = "BaiduLat")
     private String BaiduLat;
+
+    @JoinColumn(value = "name", type = MachineModel.class, leftColumn = "HGPSID", rightColumn = "HGPSID")
+    private String machineName;
 
     public HangZhouGPSModel() {
     }
@@ -133,5 +133,13 @@ public class HangZhouGPSModel extends BaseModel {
 
     public void setBaiduLat(String baiduLat) {
         BaiduLat = baiduLat;
+    }
+
+    public String getMachineName() {
+        return machineName;
+    }
+
+    public void setMachineName(String machineName) {
+        this.machineName = machineName;
     }
 }
