@@ -8,6 +8,8 @@ import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.support.ReturnListModel;
+import org.tonzoc.service.IMachineCategoryService;
 import org.tonzoc.service.IMachineService;
 
 import java.text.NumberFormat;
@@ -21,6 +23,9 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
     @Autowired
     private TenderMapper tenderMapper;
+
+    @Autowired
+    private IMachineCategoryService machineCategoryService;
 
     @Autowired
     private TenderService tenderService;
@@ -100,8 +105,14 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
     // 按照机械类别查询机械类型
     @Override
-    public List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid){
+    public List<ReturnListModel> machineTypeAndNumber(String machineCategoryGuid){
 
-        return machineMapper.machineTypeAndNumber(machineCategoryGuid);
+        List<ReturnListModel> list = new ArrayList<>();
+        ReturnListModel returnListModel = new ReturnListModel();
+        returnListModel.setName(machineCategoryService.get(machineCategoryGuid).getName());
+        returnListModel.setList(machineMapper.machineTypeAndNumber(machineCategoryGuid));
+        list.add(returnListModel);
+
+        return list;
     }
 }

@@ -4,8 +4,10 @@ import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.support.ReturnListModel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IMachineService extends IBaseService<MachineModel> {
 
@@ -25,5 +27,5 @@ public interface IMachineService extends IBaseService<MachineModel> {
     List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid);
 
     // 按照机械类别查询机械类型
-    List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid);
+    List<ReturnListModel> machineTypeAndNumber(String machineCategoryGuid);
 }

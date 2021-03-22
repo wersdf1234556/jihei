@@ -10,6 +10,7 @@ import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.support.ReturnListModel;
 import org.tonzoc.service.IMachineService;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -17,6 +18,7 @@ import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("machine")
@@ -87,7 +89,7 @@ public class MachineController extends BaseController {
 
     // 按照机械类别查询机械类型
     @GetMapping(value = "machineTypeAndNumber")
-    public List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid){
+    public List<ReturnListModel> machineTypeAndNumber(String machineCategoryGuid){
 
         return machineService.machineTypeAndNumber(machineCategoryGuid);
     }
