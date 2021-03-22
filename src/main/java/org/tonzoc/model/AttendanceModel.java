@@ -1,6 +1,7 @@
 package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
+import org.tonzoc.mapper.PersonNucleicInfoMapper;
 
 import java.util.Date;
 
@@ -19,10 +20,28 @@ public class AttendanceModel extends BaseModel{
     private String address;  //登录地点
     @JoinColumn(value = "tenderGuid", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String tenderGuid;
+    @JoinColumn(value = "personTypeGuid", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String personTypeGuid;
+    @JoinColumn(value = "categoryGuid", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String categoryGuid;
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName;
     @JoinColumn(value = "idCard", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String idCard;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "personsTenderGuidtenderGuidTable.tenderGuid", rightColumn = "tendersNametenderNameTable.guid")
+    private String tenderName;
+    @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personsTenderGuidtenderGuidTable.personTypeGuid", rightColumn = "personTypesNametypeNameTable.guid")
+    private String typeName;
+    @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "personsTenderGuidtenderGuidTable.categoryGuid", rightColumn = "personCategoryNamecategoryNameTable.guid")
+    private String categoryName;
+    @JoinColumn(value = "isRisk", type = PersonNucleicInfoModel.class, leftColumn = "personNucleicInfoIsRiskisRiskTable.personGuid", rightColumn = "personsTenderGuidtenderGuidTable.guid")
+    private Integer isRisk;
+    @JoinColumn(value = "mobile", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String mobile;
+    @JoinColumn(value = "nativePlace", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String nativePlace;
+    @JoinColumn(value = "enterAreaTime", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String enterAreaTime;
     @Column(value = "temperature")
     private String temperature;
     @Column(value = "lng")
@@ -48,6 +67,22 @@ public class AttendanceModel extends BaseModel{
 
     public void setGuid(String guid) {
         this.guid = guid;
+    }
+
+    public String getPersonTypeGuid() {
+        return personTypeGuid;
+    }
+
+    public void setPersonTypeGuid(String personTypeGuid) {
+        this.personTypeGuid = personTypeGuid;
+    }
+
+    public String getCategoryGuid() {
+        return categoryGuid;
+    }
+
+    public void setCategoryGuid(String categoryGuid) {
+        this.categoryGuid = categoryGuid;
     }
 
     public String getPersonGuid() {
@@ -171,6 +206,62 @@ public class AttendanceModel extends BaseModel{
         this.sign = sign;
     }
 
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getNativePlace() {
+        return nativePlace;
+    }
+
+    public void setNativePlace(String nativePlace) {
+        this.nativePlace = nativePlace;
+    }
+
+    public String getEnterAreaTime() {
+        return enterAreaTime;
+    }
+
+    public void setEnterAreaTime(String enterAreaTime) {
+        this.enterAreaTime = enterAreaTime;
+    }
+
+    public Integer getIsRisk() {
+        return isRisk;
+    }
+
+    public void setIsRisk(Integer isRisk) {
+        this.isRisk = isRisk;
+    }
+
     @Override
     public String toString() {
         return "AttendanceModel{" +
@@ -181,6 +272,12 @@ public class AttendanceModel extends BaseModel{
                 ", tenderGuid='" + tenderGuid + '\'' +
                 ", personName='" + personName + '\'' +
                 ", idCard='" + idCard + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", nativePlace='" + nativePlace + '\'' +
+                ", enterAreaTime='" + enterAreaTime + '\'' +
                 ", temperature='" + temperature + '\'' +
                 ", lng='" + lng + '\'' +
                 ", lat='" + lat + '\'' +

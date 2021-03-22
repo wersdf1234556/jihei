@@ -105,9 +105,14 @@ public abstract class BaseProvider {
             String tableName = joinColumn.type().getAnnotation(Table.class).value();
             String tableAlias = tableName + StringUtils.capitalize(joinColumn.value()) + item.getName() + "Table";
             // String tableAlias = tableName + StringUtils.capitalize(joinColumn.value()) + "Table";
+            if (joinColumn.leftColumn().contains(".")&&joinColumn.rightColumn().contains(".")){
+                sql.LEFT_OUTER_JOIN(tableName + " " + tableAlias + " ON "
+                        + joinColumn.leftColumn() + " = " + joinColumn.rightColumn());
+            }else {
+                sql.LEFT_OUTER_JOIN(tableName + " " + tableAlias + " ON " + "mainTable" + "."
+                        + joinColumn.leftColumn() + " = " + tableAlias + "." + joinColumn.rightColumn());
+            }
 
-            sql.LEFT_OUTER_JOIN(tableName + " " + tableAlias + " ON " + "mainTable" + "."
-                    + joinColumn.leftColumn() + " = " + tableAlias + "." + joinColumn.rightColumn());
         }
         return sql;
     }

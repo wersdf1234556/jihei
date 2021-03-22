@@ -23,6 +23,8 @@ public class AttendanceQueryParams {
     private String categoryGuid;//人员类别（大类别）
     @Operator(value = "eq", field = "personsTenderGuidtenderGuidTable.personTypeGuid")
     private String personTypeGuid;//人员工种
+    @Operator(value = "eq", field = "personNucleicInfoIsRiskisRiskTable.isRisk")
+    private String isRisk;
 
     public String getGuid() {
         return guid;
@@ -102,5 +104,13 @@ public class AttendanceQueryParams {
 
     public void setPersonTypeGuid(String personTypeGuid) {
         this.personTypeGuid = personTypeGuid;
+    }
+
+    public String getIsRisk() {
+        return isRisk;
+    }
+
+    public void setIsRisk(String isRisk) {
+        this.isRisk = isRisk;
     }
 }
