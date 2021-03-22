@@ -60,4 +60,7 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // 循环删除
     void batchRemoveStack(String guids, UserModel userModel) throws Exception;
+
+    // 标段和文件数量
+    List<ReturnModel> tenderAndNumber(Integer typeId);
 }

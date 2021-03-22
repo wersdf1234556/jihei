@@ -174,9 +174,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         returnModel5.setNumber(returnModel3.getNumber());
         if (returnModel3.getNumber() > 0) {
             String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
-            returnModel5.setProportion(result + "%");
+            returnModel5.setProportion(result + "");
         } else {
-            returnModel5.setProportion("0%");
+            returnModel5.setProportion("0");
         }
 
         list.add(returnModel);

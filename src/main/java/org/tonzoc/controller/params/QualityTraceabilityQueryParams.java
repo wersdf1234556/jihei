@@ -12,6 +12,7 @@ public class QualityTraceabilityQueryParams {
 
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+
     @Operator(value = "or", field = "tenderGuid")
     private String tenderManage;
 
@@ -32,6 +33,9 @@ public class QualityTraceabilityQueryParams {
 
     @Operator(value = "or", field = "status")
     private String status;
+
+    @Operator(value = "eq", field = "subTypeGuid")
+    private String subTypeGuid;
 
 
     public String getGuid() {
@@ -112,5 +116,13 @@ public class QualityTraceabilityQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getSubTypeGuid() {
+        return subTypeGuid;
+    }
+
+    public void setSubTypeGuid(String subTypeGuid) {
+        this.subTypeGuid = subTypeGuid;
     }
 }

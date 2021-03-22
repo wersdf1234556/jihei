@@ -175,4 +175,11 @@ public class QualityTraceabilityController extends BaseController {
 
         qualityTraceabilityService.batchApproval(qualityTraceabilityGuid, flag);
     }
+
+    // 标段和类型数量
+    @GetMapping(value = "tenderAndNumber")
+    public List<ReturnModel> tenderAndNumber(Integer typeId){
+
+        return qualityTraceabilityService.tenderAndNumber(typeId);
+    }
 }

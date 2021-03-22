@@ -37,6 +37,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String currentTenderGuid; // 当前审批标段
     @Column(value = "approvalTime")
     private String approvalTime; // 审批时间
+    @Column(value = "subTypeGuid")
+    private String subTypeGuid; // 类型
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -47,6 +49,8 @@ public class QualityTraceabilityModel extends BaseModel {
     private String typeName;  // 文件名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
     private String currentTenderName;  // 审批标段名称
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
+    private String subTypeName;  // 类型名称
 
     public QualityTraceabilityModel() {
     }
@@ -196,6 +200,22 @@ public class QualityTraceabilityModel extends BaseModel {
         this.currentTenderName = currentTenderName;
     }
 
+    public String getSubTypeGuid() {
+        return subTypeGuid;
+    }
+
+    public void setSubTypeGuid(String subTypeGuid) {
+        this.subTypeGuid = subTypeGuid;
+    }
+
+    public String getSubTypeName() {
+        return subTypeName;
+    }
+
+    public void setSubTypeName(String subTypeName) {
+        this.subTypeName = subTypeName;
+    }
+
     @Override
     public String toString() {
         return "QualityTraceabilityModel{" +
@@ -213,10 +233,12 @@ public class QualityTraceabilityModel extends BaseModel {
                 ", status='" + status + '\'' +
                 ", currentTenderGuid='" + currentTenderGuid + '\'' +
                 ", approvalTime='" + approvalTime + '\'' +
+                ", subTypeGuid='" + subTypeGuid + '\'' +
                 ", createdAt=" + createdAt +
                 ", tenderName='" + tenderName + '\'' +
                 ", typeName='" + typeName + '\'' +
                 ", currentTenderName='" + currentTenderName + '\'' +
+                ", subTypeName='" + subTypeName + '\'' +
                 '}';
     }
 }

@@ -321,4 +321,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             this.removeStack(primaryKey, userModel);
         }
     }
+
+    // 标段和类型数量
+    @Override
+    public List<ReturnModel> tenderAndNumber(Integer typeId){
+
+        return qualityTraceabilityMapper.tenderAndNumber(typeId);
+    }
 }

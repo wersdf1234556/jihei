@@ -16,15 +16,6 @@ public class SubTypeQueryParams {
     @Operator(value = "eq", field = "typeId")
     private Integer typeId;
 
-    @Operator(value = "eq", field = "paragraph")
-    private String paragraph; // 段落
-
-    @Operator(value = "eq", field = "parts")
-    private String parts; // 部位
-
-    @Operator(value = "eq", field = "major")
-    private String major;
-
     public String getGuid() {
         return guid;
     }
@@ -55,29 +46,5 @@ public class SubTypeQueryParams {
 
     public void setTypeId(Integer typeId) {
         this.typeId = typeId;
-    }
-
-    public String getParagraph() {
-        return paragraph;
-    }
-
-    public void setParagraph(String paragraph) {
-        this.paragraph = paragraph;
-    }
-
-    public String getParts() {
-        return parts;
-    }
-
-    public void setParts(String parts) {
-        this.parts = parts;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
     }
 }
