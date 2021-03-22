@@ -93,9 +93,9 @@ public class SecurityController extends BaseController {
 
     // 安全统计
     @GetMapping(value = "securityStatics")
-    public List<ReturnModel> securityStatics() {
+    public List<ReturnModel> securityStatics(String date) {
 
-        return securityService.securityStatics();
+        return securityService.securityStatics(date);
     }
 
     // 安全隐患排查

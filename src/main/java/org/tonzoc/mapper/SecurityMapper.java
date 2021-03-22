@@ -26,9 +26,18 @@ public interface SecurityMapper extends BaseMapper<SecurityModel> {
     @Select("select count(guid) from securitys")
     Integer count();
 
+    // 按照年份查询总数
+    @Select("select count(guid) from securitys where createdAt like '%${date}%'")
+    Integer countByDate(@Param("date") String date);
+
     // 按照状态查数量
     @Select("select ISNULL(count(guid), 0) from securitys where status = #{status}")
     Integer countStatus(@Param("status")String status);
+
+    // 按照状态和年份查数量
+    @Select("select ISNULL(count(guid), 0) from securitys where status = #{status} and createdAt like '%${date}%'")
+    Integer countStatusByDate(@Param("status")String status,
+                              @Param("date") String date);
 
     // 安全整治排查
     @Select("select *, tenders.name tenderName from securitys LEFT JOIN tenders on securitys.tenderGuid = tenders.guid " +

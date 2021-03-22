@@ -136,7 +136,7 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
     // 安全统计
     @Override
-    public List<ReturnModel> securityStatics() {
+    public List<ReturnModel> securityStatics(String date) {
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);   // 设置小数最多两位
         numberFormat.setMinimumFractionDigits(2);   // 设置小数最少两位
@@ -145,40 +145,49 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         ReturnModel returnModel = new ReturnModel();
         returnModel.setName("下单数量");
-        returnModel.setNumber(securityMapper.count());
-
         ReturnModel returnModel1 = new ReturnModel();
         returnModel1.setName("已整改");
-        returnModel1.setNumber(securityMapper.countStatus("finish") + securityMapper.countStatus("unFinish"));
-
         ReturnModel returnModel2 = new ReturnModel();
         returnModel2.setName("未整改");
-        returnModel2.setNumber(securityMapper.countStatus("submitted") + securityMapper.countStatus("unSubmitted"));
-
         ReturnModel returnModel3 = new ReturnModel();
         returnModel3.setName("合格数");
-        returnModel3.setNumber(securityMapper.countStatus("finish"));
-
         ReturnModel returnModel4 = new ReturnModel();
         returnModel4.setName("不合格数");
-        returnModel4.setNumber(securityMapper.countStatus("unFinish"));
-        if (returnModel4.getNumber() > 0 || returnModel4.getNumber() > 0) {
-            String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel1.getNumber())) * 100);
-            returnModel4.setProportion(result + "%");
-        } else {
-            returnModel4.setProportion("0%");
-        }
-
         ReturnModel returnModel5 = new ReturnModel();
-        returnModel5.setName("整改通过率");
-        returnModel5.setNumber(returnModel3.getNumber());
-        if (returnModel3.getNumber() > 0) {
-            String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
-            returnModel5.setProportion(result + "");
-        } else {
-            returnModel5.setProportion("0");
+        returnModel5.setName("合格率");
+
+        if (date == null || "".equals(date) || "全部".equals(date)) {
+
+            returnModel.setNumber(securityMapper.count());
+            returnModel1.setNumber(securityMapper.countStatus("finish") + securityMapper.countStatus("unFinish"));
+            returnModel2.setNumber(securityMapper.countStatus("submitted") + securityMapper.countStatus("unSubmitted"));
+            returnModel3.setNumber(securityMapper.countStatus("finish"));
+            returnModel4.setNumber(securityMapper.countStatus("unFinish"));
+        }else {
+
+            returnModel.setNumber(securityMapper.countByDate(date));
+            returnModel1.setNumber(securityMapper.countStatusByDate("finish", date) + securityMapper.countStatusByDate("unFinish", date));
+            returnModel2.setNumber(securityMapper.countStatusByDate("submitted", date) + securityMapper.countStatusByDate("unSubmitted", date));
+            returnModel3.setNumber(securityMapper.countStatusByDate("finish", date));
+            returnModel4.setNumber(securityMapper.countStatusByDate("unFinish", date));
         }
 
+        if (returnModel1.getNumber() > 0) {
+            String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel1.getNumber())) * 100);
+            returnModel4.setProportion(result + "");
+        } else {
+            returnModel4.setProportion("0");
+        }
+
+        if (returnModel1.getNumber() > 0) {
+            String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
+            returnModel3.setProportion(result + "");
+        } else {
+            returnModel3.setProportion("0");
+        }
+
+        returnModel5.setNumber(returnModel3.getNumber());
+        returnModel5.setProportion(returnModel3.getProportion());
         list.add(returnModel);
         list.add(returnModel3);
         list.add(returnModel1);

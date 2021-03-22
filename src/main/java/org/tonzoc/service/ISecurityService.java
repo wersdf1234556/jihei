@@ -25,7 +25,7 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     void updateStatus(String status, String approvalTime, String guid);
 
     // 安全统计
-    List<ReturnModel> securityStatics();
+    List<ReturnModel> securityStatics(String date);
 
     // 安全隐患排查
     List<SecurityModel> unsafeSelect();
