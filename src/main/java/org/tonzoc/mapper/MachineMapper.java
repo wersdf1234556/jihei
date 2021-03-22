@@ -1,6 +1,7 @@
 package org.tonzoc.mapper;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
@@ -27,4 +28,11 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
     List<ReturnModel> allImportantMachine(@Param(value = "tenderGuid") String tenderGuid);
 
     // 查询机械的最新坐标
+
+    // 按照机械类别查询机械类型
+    @Select("select machineTypes.name, count(machines.guid) number from machineTypes " +
+            "LEFT JOIN (select * from machines where machineCategoryGuid = #{machineCategoryGuid}) machines " +
+            "on machineTypes.guid = machines.machineTypeGuid " +
+            "GROUP BY machineTypes.name")
+    List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid);
 }

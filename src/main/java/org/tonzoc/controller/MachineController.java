@@ -11,6 +11,7 @@ import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.service.IMachineService;
+import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
@@ -23,6 +24,9 @@ public class MachineController extends BaseController {
 
     @Autowired
     private IMachineService machineService;
+
+    @Autowired
+    private IMachineTypeService machineTypeService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, MachineQueryParams machineQueryParams)
@@ -38,6 +42,9 @@ public class MachineController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid MachineModel mechanicsModel) {
+        String machineCategoryGuid = machineTypeService.get(mechanicsModel.getMachineTypeGuid()).getMachineCategoryGuid();
+        mechanicsModel.setMachineCategoryGuid(machineCategoryGuid);
+
         this.machineService.save(mechanicsModel);
     }
 
@@ -76,5 +83,12 @@ public class MachineController extends BaseController {
     public List<TenderModel> allImportantMachine(){
 
         return machineService.allImportantMachine();
+    }
+
+    // 按照机械类别查询机械类型
+    @GetMapping(value = "machineTypeAndNumber")
+    public List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid){
+
+        return machineService.machineTypeAndNumber(machineCategoryGuid);
     }
 }

@@ -23,4 +23,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
 
     // 机械GPS位置
     List<MachineGpsRecordModel> mechanicalPosition(String tenderGuid);
+
+    // 按照机械类别查询机械类型
+    List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid);
 }

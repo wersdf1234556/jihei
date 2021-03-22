@@ -97,4 +97,11 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
         return null;
     }
+
+    // 按照机械类别查询机械类型
+    @Override
+    public List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid){
+
+        return machineMapper.machineTypeAndNumber(machineCategoryGuid);
+    }
 }

@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 // 机械类型表
 @Table("machineTypes")
@@ -18,6 +15,11 @@ public class MachineTypeModel extends BaseModel{
     private Integer sortId;
     @Column(value = "highlight")
     private Integer highlight; // 是否重点展示
+    @Column(value = "machineCategoryGuid")
+    private String machineCategoryGuid; // 机械类别guid
+
+    @JoinColumn(value = "name", type = MachineCategoryModel.class, leftColumn = "machineCategoryGuid", rightColumn = "guid")
+    private String machineCategoryName;  // 机械类别名称
 
     public MachineTypeModel() {
     }
@@ -54,6 +56,22 @@ public class MachineTypeModel extends BaseModel{
         this.highlight = highlight;
     }
 
+    public String getMachineCategoryGuid() {
+        return machineCategoryGuid;
+    }
+
+    public void setMachineCategoryGuid(String machineCategoryGuid) {
+        this.machineCategoryGuid = machineCategoryGuid;
+    }
+
+    public String getMachineCategoryName() {
+        return machineCategoryName;
+    }
+
+    public void setMachineCategoryName(String machineCategoryName) {
+        this.machineCategoryName = machineCategoryName;
+    }
+
     @Override
     public String toString() {
         return "MachineTypeModel{" +
@@ -61,6 +79,8 @@ public class MachineTypeModel extends BaseModel{
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
                 ", highlight=" + highlight +
+                ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
+                ", machineCategoryName='" + machineCategoryName + '\'' +
                 '}';
     }
 }
