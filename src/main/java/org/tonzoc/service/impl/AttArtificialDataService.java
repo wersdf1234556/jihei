@@ -3,21 +3,18 @@ package org.tonzoc.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.mapper.AttArtificialDataMapper;
-import org.tonzoc.model.AttArtificialDataModel;
-import org.tonzoc.model.PersonTypeModel;
-import org.tonzoc.model.TenderModel;
+import org.tonzoc.model.*;
 import org.tonzoc.model.support.AttStatTenderModel;
 import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.model.support.StatTotalModel;
 import org.tonzoc.service.IAttArtificialDataService;
+import org.tonzoc.service.IPersonCategoryService;
 import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.service.ITenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("attArtificialDataService")
@@ -29,6 +26,9 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
     private IPersonTypeService personTypeService;
     @Autowired
     private AttArtificialDataMapper attArtificialDataMapper;
+    @Autowired
+    private IPersonCategoryService personCategoryService;
+
 
     public List<AttendanceStatModel> statAllByCategoryGuid(String categoryGuid){
         List<AttendanceStatModel> stats = attArtificialDataMapper.statAtt(categoryGuid);
@@ -51,6 +51,37 @@ public class AttArtificialDataService extends BaseService<AttArtificialDataModel
         statTotalModel.setNoAttNum(noAttNum.toString());
         statTotalModel.setPercent(percent.toString());
         return statTotalModel;
+    }
+
+    public List<StatTotalModel> statAllCategory(String date) {
+        List<StatTotalModel> list = new ArrayList<>();
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
+        for (PersonCategoryModel personCategoryModel:personCategoryModels){
+
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("categoryGuid",personCategoryModel.getGuid(),"eq"));
+            List<AttArtificialDataModel> attArtificialDataModels = this.list(sqlQueryParams1);
+            Integer total=attArtificialDataModels.stream().mapToInt(AttArtificialDataModel::getPersonNum).sum();
+            Integer attNum=attArtificialDataModels.stream().mapToInt(AttArtificialDataModel::getAttNum).sum();
+            Integer noAttNum = total-attNum;
+            Object percent="0.0";
+            if (total!=0){
+                percent=(float) attNum / total * 100;
+            }
+            StatTotalModel statTotalModel = new StatTotalModel();
+            statTotalModel.setName(personCategoryModel.getName());
+            statTotalModel.setTotal(total.toString());
+            statTotalModel.setAttNum(attNum.toString());
+            statTotalModel.setNoAttNum(noAttNum.toString());
+            statTotalModel.setPercent(percent.toString());
+            list.add(statTotalModel);
+        }
+        return list;
     }
 
 

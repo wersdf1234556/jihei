@@ -63,6 +63,11 @@ public class AttArtificialDataController extends BaseController {
         return attArtificialDataService.statAll(categoryGuid);
     }
 
+    @GetMapping(value = "statAllCategory")
+    public List<StatTotalModel> statAllCategory(String date){
+        return attArtificialDataService.statAllCategory(date);
+    }
+
 //    @GetMapping(value = "statByTender")
 //    public List<Object> statByTender(String categoryGuid){
 //        return attArtificialDataService.statByTender(categoryGuid);
