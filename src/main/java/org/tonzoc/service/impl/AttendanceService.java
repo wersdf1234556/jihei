@@ -13,6 +13,7 @@ import org.tonzoc.model.support.*;
 import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -318,5 +319,38 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         }
         return list;
 
+    }
+
+    //安全模块左下角安全员打卡统计
+    public List<AttendanceStatModel> statBySecurity(String date){
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        List<AttendanceStatModel> list = new ArrayList<>();
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("flag","1","eq"));
+        List<PersonTypeModel> personTypeModels = personTypeService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());;
+        BigDecimal percent=new BigDecimal(0.00).setScale(2,BigDecimal.ROUND_HALF_UP);
+        for (PersonTypeModel typeModel:personTypeModels){
+            AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
+            attendanceStatModel.setTypeName(typeModel.getName());
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("personTypeGuid",typeModel.getGuid(),"eq"));
+            List<PersonModel> personModels = personService.list(sqlQueryParams1);
+            attendanceStatModel.setTotal(String.valueOf(personModels.size()));
+            List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
+            sqlQueryParams2.add(new SqlQueryParam("attTime",date,"like"));
+            sqlQueryParams2.add(new SqlQueryParam("personsTenderGuidtenderGuidTable.personTypeGuid",typeModel.getGuid(),"eq"));
+            List<AttendanceModel> attendanceModels = list(sqlQueryParams2);
+            attendanceStatModel.setAttNum(String.valueOf(attendanceModels.size()));
+            if (personModels.size()!=0){
+                percent = new BigDecimal((float)attendanceModels.size()/personModels.size()*100).setScale(2,BigDecimal.ROUND_HALF_UP);
+            }
+
+            attendanceStatModel.setPercent(percent+"%");
+            list.add(attendanceStatModel);
+        }
+        return list;
     }
 }

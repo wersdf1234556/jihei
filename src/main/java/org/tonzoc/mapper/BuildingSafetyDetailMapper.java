@@ -9,9 +9,10 @@ import java.util.List;
 @Component
 public interface BuildingSafetyDetailMapper extends BaseMapper<BuildingSafetyDetailModel>  {
 
-    @Select("SELECT a.name,ISNULL(a.totalBalance, 0) totalBalance,ISNULL(a.situationBalance, 0) situationBalance, " +
-            "ISNULL((CONVERT(DECIMAL(38,2),situationBalance)/CONVERT(DECIMAL(38,2),totalBalance)),0) percentNum " +
-            "from (SELECT t.guid,t.name,SUM(t.balance) totalBalance,SUM(bd.balance) situationBalance, " +
+    @Select("SELECT a.name,ROUND(ISNULL(a.totalBalance, 0)/100000000, 2) totalBalance,ROUND(ISNULL(a.situationBalance, 0)/100000000,2) situationBalance, " +
+            "(CASE WHEN totalBalance>0 then ISNULL((CONVERT(DECIMAL(38,2),situationBalance)/CONVERT(DECIMAL(38,2),totalBalance)),0)*100  " +
+            "ELSE 0 end) percentNum " +
+            "from (SELECT t.guid,t.name,SUM(t.balance) totalBalance,SUM(bd.balance) situationBalance," +
             "t.sortId " +
             "FROM tenders t LEFT JOIN buildingSafetyDetails bd on bd.tenderGuid = t.guid " +
             "where t.name LIKE 'A%' or t.name LIKE 'B%' " +

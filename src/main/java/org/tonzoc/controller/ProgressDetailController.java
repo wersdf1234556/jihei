@@ -68,8 +68,8 @@ public class ProgressDetailController extends BaseController {
     }
 
     @GetMapping(value = "statCurrentMonth")
-    public List<ProgressStatModel> statCurrentMonth(String tender,String date){
-        return progressDetailService.statCurrentMonth(tender,date);
+    public List<ProgressStatModel> statCurrentMonth(String tender,String date,Integer flag){
+        return progressDetailService.statCurrentMonth(tender,date,flag);
     }
 
     //提交

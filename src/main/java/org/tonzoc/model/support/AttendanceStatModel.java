@@ -5,6 +5,7 @@ public class AttendanceStatModel {
     private String typeName;
     private String total;
     private String attNum;
+    private String percent;
 
     public String getTypeName() {
         return typeName;
@@ -28,5 +29,13 @@ public class AttendanceStatModel {
 
     public void setAttNum(String attNum) {
         this.attNum = attNum;
+    }
+
+    public String getPercent() {
+        return percent;
+    }
+
+    public void setPercent(String percent) {
+        this.percent = percent;
     }
 }

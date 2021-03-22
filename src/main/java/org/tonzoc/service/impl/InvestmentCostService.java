@@ -68,8 +68,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                 .map(InvestmentSituationModel::getBalance)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         //完成率
-        String percent = accumulated.divide(cost, 2, BigDecimal.ROUND_HALF_UP).toString();
-        CostModel costModel = new CostModel(cost,accumulated,currentYearCost,currentMonthCost,percent);
+        String percent = accumulated.divide(cost, 2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100)).toString();
+        CostModel costModel = new CostModel(cost.divide(BigDecimal.valueOf(100000000)),accumulated.divide(BigDecimal.valueOf(100000000)),currentYearCost.divide(BigDecimal.valueOf(100000000)),currentMonthCost.divide(BigDecimal.valueOf(100000000)),percent);
         return costModel;
     }
 
@@ -85,7 +85,7 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         for (InvestmentCostModel investmentCostModel:costModels){
             TypeModel typeModel = new TypeModel();
             typeModel.setTypeName(investmentCostModel.getName());
-            String percent = investmentCostModel.getBalance().divide(cost, 2, BigDecimal.ROUND_HALF_UP).toString();
+            String percent = investmentCostModel.getBalance().divide(cost, 2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100)).toString();
             typeModel.setTypeCount(percent);
             list.add(typeModel);
         }
@@ -104,8 +104,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                 BigDecimal buildSafety = buildingSafetyDetailService.list(sqlQueryParams1).stream()
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
-                BigDecimal percent = buildSafety.divide(costModel.getBalance(), 2, BigDecimal.ROUND_HALF_UP);
-                CostByTpeModel costByTpeModel = new CostByTpeModel(costModel.getName(),costModel.getBalance(),buildSafety,percent);
+                BigDecimal percent = buildSafety.divide(costModel.getBalance().multiply(BigDecimal.valueOf(100)), 2, BigDecimal.ROUND_HALF_UP);
+                CostByTpeModel costByTpeModel = new CostByTpeModel(costModel.getName(),costModel.getBalance(),buildSafety,percent+"%");
                 list.add(costByTpeModel);
             }
         }
@@ -168,10 +168,10 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
             if (situationBalance.compareTo(BigDecimal.ZERO)>0){
                 percent = situationBalance.divide(totalBalance, 2, BigDecimal.ROUND_HALF_UP);
             }
-
+            //.divide(BigDecimal.valueOf(100000000))
             costByTpeModel.setTotalBalance(totalBalance);
             costByTpeModel.setSituationBalance(situationBalance);
-            costByTpeModel.setPercentNum(percent);
+            costByTpeModel.setPercentNum(percent+"%");
             list.add(costByTpeModel);
         }
         return list;

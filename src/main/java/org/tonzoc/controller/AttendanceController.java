@@ -30,7 +30,6 @@ public class AttendanceController extends BaseController {
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, AttendanceQueryParams attendanceQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        System.out.println(pageQueryParams.getOrder());
         Page<AttendanceModel> page = parsePage(pageQueryParams);
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(attendanceQueryParams);
         List list = attendanceService.list(sqlQueryParams);
@@ -99,9 +98,16 @@ public class AttendanceController extends BaseController {
     public List<AttendanceStatModel> countPersonByCity(){
         return attendanceService.countPersonByCity();
     }
+
     //疫情左上角按风险等级统计人数
     @GetMapping(value = "countByRisk")
     public List<AttendanceStatModel> countByRisk(){
         return attendanceService.countByRisk();
+    }
+
+    //安全模块左下角安全员打卡统计
+    @GetMapping(value = "statBySecurity")
+    public List<AttendanceStatModel> statBySecurity(String date){
+        return attendanceService.statBySecurity(date);
     }
 }

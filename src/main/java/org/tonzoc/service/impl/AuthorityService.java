@@ -38,7 +38,7 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
 
         // 获取用户所有的权限
         List<AuthorityModel> authorityModels = new ArrayList<>();
-
+        System.out.println("进来了吧");
         for (UserModel userModel : userModels) {
             // 获取当前role对应的权限
             List<RoleAuthorityModel> roleAuthorityModels = roleAuthorityService.listByRole(userModel.getRoleGuid());
@@ -67,8 +67,8 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
         List<AuthorityModel> authorityModels = new ArrayList<>();
 
         List<AuthorityModel> allAuthorityModels = null;
+        System.out.println("userGuid="+userGuid);
         if (StringUtils.isEmpty(userGuid)) {
-
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             UserModel userModel = redisAuthService.getCurrentUser();
             if (userModel.getFlag()==0){
@@ -78,7 +78,6 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
             page.setOrderByOnly(true);
             allAuthorityModels = this.list(sqlQueryParams);
         } else {
-
             allAuthorityModels = this.listByUser(userGuid).stream().sorted(Comparator.comparing(AuthorityModel::getSortId)).collect(Collectors.toList());
         }
 

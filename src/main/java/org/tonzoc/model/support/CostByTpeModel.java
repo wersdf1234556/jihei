@@ -7,9 +7,9 @@ public class CostByTpeModel {
     private String name;
     private BigDecimal totalBalance;
     private BigDecimal situationBalance;
-    private BigDecimal percentNum;
+    private String percentNum;
 
-    public CostByTpeModel(String name, BigDecimal totalBalance, BigDecimal situationBalance, BigDecimal percentNum) {
+    public CostByTpeModel(String name, BigDecimal totalBalance, BigDecimal situationBalance, String percentNum) {
         this.name = name;
         this.totalBalance = totalBalance;
         this.situationBalance = situationBalance;
@@ -50,11 +50,11 @@ public class CostByTpeModel {
         this.situationBalance = situationBalance;
     }
 
-    public BigDecimal getPercentNum() {
+    public String getPercentNum() {
         return percentNum;
     }
 
-    public void setPercentNum(BigDecimal percentNum) {
+    public void setPercentNum(String percentNum) {
         this.percentNum = percentNum;
     }
 
