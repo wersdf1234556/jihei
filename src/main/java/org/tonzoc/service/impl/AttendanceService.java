@@ -94,13 +94,47 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
         Integer attNum=list.size();
         Integer noAttNum = total-attNum;
-        Object percent=(float) attNum / total * 100;
+        Object percent="0.0";
+        if (total!=0){
+            percent=(float) attNum / total * 100;
+        }
         StatTotalModel statTotalModel = new StatTotalModel();
         statTotalModel.setTotal(total.toString());
         statTotalModel.setAttNum(attNum.toString());
         statTotalModel.setNoAttNum(noAttNum.toString());
         statTotalModel.setPercent(percent.toString());
         return statTotalModel;
+    }
+    //真实打卡数据统计（左上角）：将5大类别都列出来
+    public List<StatTotalModel> statAllCategory(String date) {
+        List<StatTotalModel> list = new ArrayList<>();
+        if (date==null||date.isEmpty()){
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date= formatter.format( new Date());
+        }
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
+        for (PersonCategoryModel personCategoryModel:personCategoryModels){
+            List<AttendanceModel> attendanceModels = attendanceMapper.listAttByCategory(personCategoryModel.getGuid(),date);
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("categoryGuid",personCategoryModel.getGuid(),"eq"));
+            List<PersonModel> personModels = personService.list(sqlQueryParams1);
+            Integer total=personModels.size();
+            Integer attNum=attendanceModels.size();
+            Integer noAttNum = total-attNum;
+            Object percent="0.0";
+            if (total!=0){
+                percent=(float) attNum / total * 100;
+            }
+            StatTotalModel statTotalModel = new StatTotalModel();
+            statTotalModel.setName(personCategoryModel.getName());
+            statTotalModel.setTotal(total.toString());
+            statTotalModel.setAttNum(attNum.toString());
+            statTotalModel.setNoAttNum(noAttNum.toString());
+            statTotalModel.setPercent(percent.toString());
+            list.add(statTotalModel);
+        }
+        return list;
     }
 
     //人员左下角按人员类别统计打卡

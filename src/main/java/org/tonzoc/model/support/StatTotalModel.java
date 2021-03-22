@@ -1,6 +1,7 @@
 package org.tonzoc.model.support;
 
 public class StatTotalModel {
+    private String name;
     private String total;
     private String attNum;
     private String noAttNum;
@@ -36,5 +37,13 @@ public class StatTotalModel {
 
     public void setNoAttNum(String noAttNum) {
         this.noAttNum = noAttNum;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

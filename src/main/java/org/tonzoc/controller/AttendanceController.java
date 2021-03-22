@@ -88,6 +88,11 @@ public class AttendanceController extends BaseController {
     public StatTotalModel statAll(String categoryGuid, String date){
         return attendanceService.statAll(categoryGuid,date);
     }
+
+    @GetMapping(value = "statAllCategory")
+    public List<StatTotalModel> statAllCategory(String date){
+        return attendanceService.statAllCategory(date);
+    }
     //人员左下角按categoryGuid统计personType人员考勤
     @GetMapping(value = "statByPersonCategory")
     public List<AttendanceStatModel> statByPersonCategory(String categoryGuid,String date){
