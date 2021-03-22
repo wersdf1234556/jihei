@@ -49,7 +49,7 @@ public class QualityTraceabilityModel extends BaseModel {
     private String typeName;  // 文件名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "currentTenderGuid", rightColumn = "guid")
     private String currentTenderName;  // 审批标段名称
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = SubTypeModel.class, leftColumn = "subTypeGuid", rightColumn = "guid")
     private String subTypeName;  // 类型名称
 
     public QualityTraceabilityModel() {
