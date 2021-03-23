@@ -10,8 +10,8 @@ public class MachineQueryParams {
     private String machineKey; // 机械编号
     @Operator(value = "like", field = "name")
     private String name;
-    @Operator(value = "eq", field = "tenderMachineTypeGuid")
-    private String  tenderMachineTypeGuid;
+    @Operator(value = "eq", field = "machineTypeGuid")
+    private String  machineTypeGuid;
     @Operator(value = "eq", field = "machineCategoryGuid")
     private String machineCategoryGuid;
     @Operator(value = "eq", field = "tenderGuid")
@@ -45,12 +45,12 @@ public class MachineQueryParams {
         this.name = name;
     }
 
-    public String getTenderMachineTypeGuid() {
-        return tenderMachineTypeGuid;
+    public String getMachineTypeGuid() {
+        return machineTypeGuid;
     }
 
-    public void setTenderMachineTypeGuid(String tenderMachineTypeGuid) {
-        this.tenderMachineTypeGuid = tenderMachineTypeGuid;
+    public void setMachineTypeGuid(String machineTypeGuid) {
+        this.machineTypeGuid = machineTypeGuid;
     }
 
     public String getMachineCategoryGuid() {

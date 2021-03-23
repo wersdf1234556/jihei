@@ -13,6 +13,8 @@ public class TenderMachineTypeModel extends BaseModel {
     private String tenderGuid;
     @Column(value = "machineTypeGuid")
     private String machineTypeGuid;
+    @Column(value = "name")
+    private String name;
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -70,5 +72,13 @@ public class TenderMachineTypeModel extends BaseModel {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
