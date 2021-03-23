@@ -6,10 +6,10 @@ public class MachineGpsRecordQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "machineGuid")
-    private String machineGuid;
-    @Operator(value = "eq", field = "current")
-    private Integer current;
+    @Operator(value = "eq", field = "HGPSID")
+    private String HGPSID;
+    @Operator(value = "like", field = "HSpeed")
+    private String HSpeed;
 
     public String getGuid() {
         return guid;
@@ -19,19 +19,19 @@ public class MachineGpsRecordQueryParams {
         this.guid = guid;
     }
 
-    public String getMachineGuid() {
-        return machineGuid;
+    public String getHGPSID() {
+        return HGPSID;
     }
 
-    public void setMachineGuid(String machineGuid) {
-        this.machineGuid = machineGuid;
+    public void setHGPSID(String HGPSID) {
+        this.HGPSID = HGPSID;
     }
 
-    public Integer getCurrent() {
-        return current;
+    public String getHSpeed() {
+        return HSpeed;
     }
 
-    public void setCurrent(Integer current) {
-        this.current = current;
+    public void setHSpeed(String HSpeed) {
+        this.HSpeed = HSpeed;
     }
 }

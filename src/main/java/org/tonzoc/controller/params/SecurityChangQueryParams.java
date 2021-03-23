@@ -8,6 +8,8 @@ public class SecurityChangQueryParams {
     private String guid;
     @Operator(value = "like", field = "chang")
     private String chang;
+    @Operator(value = "eq", field = "securityGuid")
+    private String securityGuid;
     @Operator(value = "eq", field = "changTenderGuid")
     private String changTenderGuid;
     @Operator(value = "or", field = "changTenderGuid")
@@ -63,5 +65,13 @@ public class SecurityChangQueryParams {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getSecurityGuid() {
+        return securityGuid;
+    }
+
+    public void setSecurityGuid(String securityGuid) {
+        this.securityGuid = securityGuid;
     }
 }

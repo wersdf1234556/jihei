@@ -79,7 +79,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
             approvalTime = df.format(new Date());
         }
 
-        securityChangMapper.updateStatus("submitted", approvalTime, securityChangGuid);
+        securityChangMapper.updateStatus("unFinish", approvalTime, securityChangGuid);
         securityService.updateStatus("unFinish", df.format(new Date()), securityChangModel.getSecurityGuid()); // 整改完毕
     }
 
