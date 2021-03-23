@@ -57,9 +57,9 @@ public class SecurityChangController extends BaseController{
     }
 
     @PostMapping
-    public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType, String accounType) throws Exception {
+    public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType) throws Exception {
 
-        securityChangService.add(securityChangModel, file, fileType, accounType);
+        securityChangService.add(securityChangModel, file, fileType, "0");
     }
 
     @PutMapping(value = "{guid}")

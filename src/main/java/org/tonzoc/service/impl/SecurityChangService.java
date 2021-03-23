@@ -51,7 +51,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
     public void add(SecurityChangModel securityChangModel, MultipartFile[] file, Integer fileType, String accounType) throws Exception {
 
         SecurityModel securityModel = securityService.get(securityChangModel.getSecurityGuid());
-        if (!"unFinish".equals(securityModel.getStatus())){
+        if (!"submitted".equals(securityModel.getStatus())){
 
             throw new Exception("当前状态无法添加");
         }
@@ -74,7 +74,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
         String approvalTime = "";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        if (securityChangModel.getStatus().equals("unSubmitted")){
+        if (securityChangModel.getStatus().equals("unSubmit")){
 
             approvalTime = df.format(new Date());
         }
@@ -104,7 +104,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
         }else if (flag == 2){ // 修改该条状态为已结束, 不合格
             // 修改该条状态为已结束, 不合格
             status = "noFinish";
-            securityService.updateStatus("submit", df.format(new Date()), securityChangModel.getSecurityGuid()); // 安全表最终审批
+            securityService.updateStatus("submitted", df.format(new Date()), securityChangModel.getSecurityGuid()); // 安全表最终审批
         }
 
         securityChangMapper.updateStatus(status, df.format(new Date()), securityChangGuid);

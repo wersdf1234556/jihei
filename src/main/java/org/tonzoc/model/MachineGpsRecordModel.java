@@ -2,26 +2,38 @@ package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
 
-// 机械GPS表
-@Table("machineGpsRecords")
-public class MachineGpsRecordModel extends BaseModel{
+// 机械GPS存储历史表
+@Table("MachineGpsRecordModels")
+public class MachineGpsRecordModel extends BaseModel {
 
-    @PrimaryKey
     @NotInsertColumn
+    @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "lat")
-    private String lat; // 纬度
-    @Column(value = "lnt")
-    private String lnt; // 经度
-    @Column(value = "sortId")
-    private Integer sortId;
-    @Column(value = "machineGuid")
-    private String machineGuid;
-    @Column(value = "latest")
-    private Integer latest; // 最新的
+    @Column(value = "HType")
+    private String HType;
+    @Column(value = "HGPSID")
+    private String HGPSID;
+    @Column(value = "HGPSN")
+    private String HGPSN;
+    @Column(value = "HGPSE")
+    private String HGPSE;
+    @Column(value = "HSpeed")
+    private String HSpeed; // 获取定位时间
+    @Column(value = "HDate")
+    private String HDate;
+    @Column(value = "IsParsed")
+    private Integer IsParsed;
+    @Column(value = "RefinedLng")
+    private String RefinedLng;
+    @Column(value = "RefinedLat")
+    private String RefinedLat;
+    @Column(value = "BaiduLng")
+    private String BaiduLng;
+    @Column(value = "BaiduLat")
+    private String BaiduLat;
 
-    @JoinColumn(value = "name", type = MachineModel.class, leftColumn = "machineGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = MachineModel.class, leftColumn = "HGPSID", rightColumn = "HGPSID")
     private String machineName;
 
     public MachineGpsRecordModel() {
@@ -35,36 +47,92 @@ public class MachineGpsRecordModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getLat() {
-        return lat;
+    public String getHType() {
+        return HType;
     }
 
-    public void setLat(String lat) {
-        this.lat = lat;
+    public void setHType(String HType) {
+        this.HType = HType;
     }
 
-    public String getLnt() {
-        return lnt;
+    public String getHGPSID() {
+        return HGPSID;
     }
 
-    public void setLnt(String lnt) {
-        this.lnt = lnt;
+    public void setHGPSID(String HGPSID) {
+        this.HGPSID = HGPSID;
     }
 
-    public Integer getSortId() {
-        return sortId;
+    public String getHGPSN() {
+        return HGPSN;
     }
 
-    public void setSortId(Integer sortId) {
-        this.sortId = sortId;
+    public void setHGPSN(String HGPSN) {
+        this.HGPSN = HGPSN;
     }
 
-    public String getMachineGuid() {
-        return machineGuid;
+    public String getHGPSE() {
+        return HGPSE;
     }
 
-    public void setMachineGuid(String machineGuid) {
-        this.machineGuid = machineGuid;
+    public void setHGPSE(String HGPSE) {
+        this.HGPSE = HGPSE;
+    }
+
+    public String getHSpeed() {
+        return HSpeed;
+    }
+
+    public void setHSpeed(String HSpeed) {
+        this.HSpeed = HSpeed;
+    }
+
+    public String getHDate() {
+        return HDate;
+    }
+
+    public void setHDate(String HDate) {
+        this.HDate = HDate;
+    }
+
+    public Integer getIsParsed() {
+        return IsParsed;
+    }
+
+    public void setIsParsed(Integer isParsed) {
+        IsParsed = isParsed;
+    }
+
+    public String getRefinedLng() {
+        return RefinedLng;
+    }
+
+    public void setRefinedLng(String refinedLng) {
+        RefinedLng = refinedLng;
+    }
+
+    public String getRefinedLat() {
+        return RefinedLat;
+    }
+
+    public void setRefinedLat(String refinedLat) {
+        RefinedLat = refinedLat;
+    }
+
+    public String getBaiduLng() {
+        return BaiduLng;
+    }
+
+    public void setBaiduLng(String baiduLng) {
+        BaiduLng = baiduLng;
+    }
+
+    public String getBaiduLat() {
+        return BaiduLat;
+    }
+
+    public void setBaiduLat(String baiduLat) {
+        BaiduLat = baiduLat;
     }
 
     public String getMachineName() {
@@ -73,26 +141,5 @@ public class MachineGpsRecordModel extends BaseModel{
 
     public void setMachineName(String machineName) {
         this.machineName = machineName;
-    }
-
-    public Integer getLatest() {
-        return latest;
-    }
-
-    public void setLatest(Integer latest) {
-        this.latest = latest;
-    }
-
-    @Override
-    public String toString() {
-        return "MachineGpsRecordModel{" +
-                "guid='" + guid + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lnt='" + lnt + '\'' +
-                ", sortId=" + sortId +
-                ", machineGuid='" + machineGuid + '\'' +
-                ", latest=" + latest +
-                ", machineName='" + machineName + '\'' +
-                '}';
     }
 }
