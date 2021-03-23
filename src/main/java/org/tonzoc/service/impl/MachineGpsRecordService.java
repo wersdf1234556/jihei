@@ -27,7 +27,7 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
     private IHangZhouGPSService hangZhouGPSService;
 
     // 添加GPS进数据中
-    public void add(HangZhouGPSModel hangZhouGPSModel){
+    public void add(){
 
         List<MachineGpsRecordModel> list1 = new ArrayList<>();
         String hDate = TimeHelper.dateToString(new Date());
