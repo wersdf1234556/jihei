@@ -8,16 +8,12 @@ public class SecurityChangQueryParams {
     private String guid;
     @Operator(value = "like", field = "chang")
     private String chang;
-    @Operator(value = "eq", field = "tenderGuid")
-    private String tenderGuid;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "eq", field = "changTenderGuid")
+    private String changTenderGuid;
+    @Operator(value = "or", field = "changTenderGuid")
     private String tenderManage;
-    @Operator(value = "eq", field = "currentTenderGuid")
-    private String currentTenderGuid;
-    @Operator(value = "eq", field = "createPersonName")
-    private String createPersonName;
-    @Operator(value = "eq", field = "approvalPersonName")
-    private String approvalPersonName;
+    @Operator(value = "eq", field = "approvalTenderGuid")
+    private String approvalTenderGuid;
     @Operator(value = "or", field = "status")
     private String status;
 
@@ -37,12 +33,12 @@ public class SecurityChangQueryParams {
         this.chang = chang;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
+    public String getChangTenderGuid() {
+        return changTenderGuid;
     }
 
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
+    public void setChangTenderGuid(String changTenderGuid) {
+        this.changTenderGuid = changTenderGuid;
     }
 
     public String getTenderManage() {
@@ -53,28 +49,12 @@ public class SecurityChangQueryParams {
         this.tenderManage = tenderManage;
     }
 
-    public String getCurrentTenderGuid() {
-        return currentTenderGuid;
+    public String getApprovalTenderGuid() {
+        return approvalTenderGuid;
     }
 
-    public void setCurrentTenderGuid(String currentTenderGuid) {
-        this.currentTenderGuid = currentTenderGuid;
-    }
-
-    public String getCreatePersonName() {
-        return createPersonName;
-    }
-
-    public void setCreatePersonName(String createPersonName) {
-        this.createPersonName = createPersonName;
-    }
-
-    public String getApprovalPersonName() {
-        return approvalPersonName;
-    }
-
-    public void setApprovalPersonName(String approvalPersonName) {
-        this.approvalPersonName = approvalPersonName;
+    public void setApprovalTenderGuid(String approvalTenderGuid) {
+        this.approvalTenderGuid = approvalTenderGuid;
     }
 
     public String getStatus() {

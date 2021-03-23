@@ -26,7 +26,7 @@ public class ApprovalHelper {
     // 查询上级标段
     public String getNextSupervisor(String tenderGuid, String accounType){
         String allNextTenderGuids = "";
-        List<String> tenderGuids = userMapper.listByTenderManage(tenderGuid);
+        List<String> tenderGuids = userMapper.listByTenderManageAndAccounType(tenderGuid, accounType);
         if(tenderGuids.size() != 0) {
 
             allNextTenderGuids = String.join(",", tenderGuids);

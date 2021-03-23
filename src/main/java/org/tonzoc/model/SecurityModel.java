@@ -12,8 +12,8 @@ public class SecurityModel extends BaseModel {
     @PrimaryKey
     @Column(value = "guid")
     private String guid;
-    @Column(value = "inspectTenderGuid")
-    private String inspectTenderGuid; // 下单标段
+    @Column(value = "createPersonName")
+    private String createPersonName; // 下单人名称
     @Column(value = "changTenderGuid")
     private String changTenderGuid; // 整改标段
     @Column(value = "describe")
@@ -40,8 +40,6 @@ public class SecurityModel extends BaseModel {
     @Column(value = "createdAt")
     private Date createdAt;
 
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "inspectTenderGuid", rightColumn = "guid")
-    private String inspectTenderName;  // 下单标段名称
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "changTenderGuid", rightColumn = "guid")
     private String changTenderName;  // 整改标段名称
     @JoinColumn(value = "name", type = SecurityRuleModel.class, leftColumn = "securityRuleGuid", rightColumn = "guid")
@@ -62,14 +60,6 @@ public class SecurityModel extends BaseModel {
 
     public void setGuid(String guid) {
         this.guid = guid;
-    }
-
-    public String getInspectTenderGuid() {
-        return inspectTenderGuid;
-    }
-
-    public void setInspectTenderGuid(String inspectTenderGuid) {
-        this.inspectTenderGuid = inspectTenderGuid;
     }
 
     public String getChangTenderGuid() {
@@ -168,14 +158,6 @@ public class SecurityModel extends BaseModel {
         this.createdAt = createdAt;
     }
 
-    public String getInspectTenderName() {
-        return inspectTenderName;
-    }
-
-    public void setInspectTenderName(String inspectTenderName) {
-        this.inspectTenderName = inspectTenderName;
-    }
-
     public String getChangTenderName() {
         return changTenderName;
     }
@@ -200,6 +182,14 @@ public class SecurityModel extends BaseModel {
         SecurityRuleDefaultScore = securityRuleDefaultScore;
     }
 
+    public String getCreatePersonName() {
+        return createPersonName;
+    }
+
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
+    }
+
     public String getSecurityRule() {
         return securityRule;
     }
@@ -220,7 +210,7 @@ public class SecurityModel extends BaseModel {
     public String toString() {
         return "SecurityModel{" +
                 "guid='" + guid + '\'' +
-                ", inspectTenderGuid='" + inspectTenderGuid + '\'' +
+                ", createPersonName='" + createPersonName + '\'' +
                 ", changTenderGuid='" + changTenderGuid + '\'' +
                 ", describe='" + describe + '\'' +
                 ", securityRuleGuid='" + securityRuleGuid + '\'' +
@@ -233,7 +223,6 @@ public class SecurityModel extends BaseModel {
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
                 ", createdAt=" + createdAt +
-                ", inspectTenderName='" + inspectTenderName + '\'' +
                 ", changTenderName='" + changTenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +
                 ", SecurityRuleDefaultScore=" + SecurityRuleDefaultScore +

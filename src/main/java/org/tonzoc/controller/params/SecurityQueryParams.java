@@ -6,20 +6,18 @@ public class SecurityQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
+    @Operator(value = "eq", field = "createPersonName")
+    private String createPersonName;
     @Operator(value = "like", field = "describe")
     private String describe;
-    @Operator(value = "eq", field = "tenderGuid")
-    private String tenderGuid;
-    @Operator(value = "or", field = "tenderGuid")
+    @Operator(value = "or", field = "changTenderGuid")
     private String tenderManage;
     @Operator(value = "eq", field = "securityRuleGuid")
     private String securityRuleGuid;
-    @Operator(value = "eq", field = "currentTenderGuid")
-    private String currentTenderGuid;
+    @Operator(value = "eq", field = "approvalTenderGuid")
+    private String approvalTenderGuid;
     @Operator(value = "eq", field = "ccPersonGuid")
     private String ccPersonGuid;
-    @Operator(value = "eq", field = "createPersonName")
-    private String createPersonName;
     @Operator(value = "or", field = "status")
     private String status;
 
@@ -39,12 +37,12 @@ public class SecurityQueryParams {
         this.describe = describe;
     }
 
-    public String getTenderGuid() {
-        return tenderGuid;
+    public String getTenderManage() {
+        return tenderManage;
     }
 
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
+    public void setTenderManage(String tenderManage) {
+        this.tenderManage = tenderManage;
     }
 
     public String getSecurityRuleGuid() {
@@ -55,20 +53,12 @@ public class SecurityQueryParams {
         this.securityRuleGuid = securityRuleGuid;
     }
 
-    public String getCurrentTenderGuid() {
-        return currentTenderGuid;
+    public String getApprovalTenderGuid() {
+        return approvalTenderGuid;
     }
 
-    public void setCurrentTenderGuid(String currentTenderGuid) {
-        this.currentTenderGuid = currentTenderGuid;
-    }
-
-    public String getCreatePersonName() {
-        return createPersonName;
-    }
-
-    public void setCreatePersonName(String createPersonName) {
-        this.createPersonName = createPersonName;
+    public void setApprovalTenderGuid(String approvalTenderGuid) {
+        this.approvalTenderGuid = approvalTenderGuid;
     }
 
     public String getCcPersonGuid() {
@@ -87,11 +77,11 @@ public class SecurityQueryParams {
         this.status = status;
     }
 
-    public String getTenderManage() {
-        return tenderManage;
+    public String getCreatePersonName() {
+        return createPersonName;
     }
 
-    public void setTenderManage(String tenderManage) {
-        this.tenderManage = tenderManage;
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
     }
 }

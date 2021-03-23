@@ -59,9 +59,9 @@ public class SecurityController extends BaseController {
     }
 
     @PostMapping
-    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType) throws ParseException {
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
-        securityService.add(securityModel, file, fileType, accounType);
+        securityService.add(securityModel, file, fileType, "2");
     }
 
     @PutMapping(value = "{guid}")
