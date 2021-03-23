@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.tonzoc.service.ISecurityService;
 
 import java.text.ParseException;
+import java.util.Date;
 
 // 定时
 @Configuration
@@ -14,9 +15,10 @@ public class TimingHelper {
     @Autowired
     private ISecurityService securityService;
 
-    @Scheduled(cron = "0 0 */1 * * ?")
+    @Scheduled(cron = "0 0 0 */1 * ?")
     public void list () throws ParseException {
 
+        System.out.println(new Date() + "当前时间");
         securityService.updateIsEffect();
     }
 }
