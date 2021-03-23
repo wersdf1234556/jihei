@@ -9,6 +9,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.SecurityQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.mapper.TenderScoreMapper;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.SecurityModel;
 import org.tonzoc.model.UserModel;
@@ -36,6 +37,9 @@ public class SecurityController extends BaseController {
 
     @Autowired
     private ITenderScoreService tenderScoreService;
+
+    @Autowired
+    private TenderScoreMapper tenderScoreMapper;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams, String accounType, String flag)
@@ -75,6 +79,8 @@ public class SecurityController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
         this.securityService.removeStack(guid);
+        String tenderScoreGuid = tenderScoreMapper.guid(guid);
+        tenderScoreService.remove(tenderScoreGuid);
     }
 
     // 上传安全文件

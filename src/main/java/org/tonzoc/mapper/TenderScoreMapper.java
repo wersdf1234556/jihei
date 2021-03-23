@@ -26,4 +26,5 @@ public interface TenderScoreMapper extends BaseMapper<TenderScoreModel>{
 
     @Select("select guid from tenderScores where securityGuid = #{securityGuid}")
     String guid (String securityGuid);
+
 }

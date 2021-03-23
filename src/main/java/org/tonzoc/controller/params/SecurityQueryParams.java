@@ -1,5 +1,6 @@
 package org.tonzoc.controller.params;
 
+import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.Operator;
 
 public class SecurityQueryParams {
@@ -20,6 +21,8 @@ public class SecurityQueryParams {
     private String ccPersonGuid;
     @Operator(value = "or", field = "status")
     private String status;
+    @Operator(value = "eq", field = "changTenderGuid")
+    private String changTenderGuid;
 
     public String getGuid() {
         return guid;
@@ -83,5 +86,13 @@ public class SecurityQueryParams {
 
     public void setCreatePersonName(String createPersonName) {
         this.createPersonName = createPersonName;
+    }
+
+    public String getChangTenderGuid() {
+        return changTenderGuid;
+    }
+
+    public void setChangTenderGuid(String changTenderGuid) {
+        this.changTenderGuid = changTenderGuid;
     }
 }
