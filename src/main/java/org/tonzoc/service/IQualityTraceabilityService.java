@@ -3,6 +3,7 @@ package org.tonzoc.service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.model.*;
+import org.tonzoc.model.support.ReturnQtbModel;
 
 import java.text.ParseException;
 import java.util.List;
@@ -63,4 +64,7 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // 标段和文件数量
     List<ReturnModel> tenderAndNumber(Integer typeId);
+
+    // 标段和文件数量的另一种格式
+    List<ReturnQtbModel> tenderAndNumbers(String tenderName);
 }

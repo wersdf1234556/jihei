@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.model.ReturnModel;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,10 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
     @Select("select tenders.name, count(qualityTraceabilitys.guid) number, tenders.guid proportion from (select * from tenders where tenders.name like '%A%' or tenders.name like '%B%' ) tenders " +
             "LEFT JOIN (select * from qualityTraceabilitys where typeId = #{typeId}) qualityTraceabilitys on tenders.guid = qualityTraceabilitys.tenderGuid " +
             "GROUP BY tenders.name, tenders.guid, tenders.sortId ORDER BY tenders.sortId")
-    List<ReturnModel> tenderAndNumber(Integer typeId);
+    List<ReturnModel> tenderAndNumber(@Param(value = "typeId") Integer typeId);
+
+    @Select("select count(qualityTraceabilitys.guid) from qualityTraceabilitys where tenderGuid = #{tenderGuid} and typeId = #{typeId}")
+    Integer countByTenderByType(@Param(value = "tenderGuid") String tenderGuid,
+                                @Param(value = "typeId") Integer typeId);
 
 }

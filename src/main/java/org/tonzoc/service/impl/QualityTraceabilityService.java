@@ -17,6 +17,7 @@ import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.mapper.TenderMapper;
 import org.tonzoc.model.*;
+import org.tonzoc.model.support.ReturnQtbModel;
 import org.tonzoc.service.*;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -327,5 +328,26 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     public List<ReturnModel> tenderAndNumber(Integer typeId){
 
         return qualityTraceabilityMapper.tenderAndNumber(typeId);
+    }
+
+    // 标段和文件数量的另一种格式
+    public List<ReturnQtbModel> tenderAndNumbers(String tenderName){
+        List<ReturnQtbModel> list = new LinkedList<>();
+        List<TenderModel> list1 = tenderMapper.listLikeTender(tenderName);
+
+        for (TenderModel li: list1) {
+
+            ReturnQtbModel returnQtbModel = new ReturnQtbModel();
+            returnQtbModel.setName(li.getName());
+            returnQtbModel.setYuan(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 1) + "");
+            returnQtbModel.setBan(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 2) + "");
+            returnQtbModel.setShi(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 3) + "");
+            returnQtbModel.setYin(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 4) + "");
+            returnQtbModel.setXian(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 5) + "");
+
+            list.add(returnQtbModel);
+        }
+
+        return list;
     }
 }

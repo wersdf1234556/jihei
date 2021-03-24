@@ -12,6 +12,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.*;
+import org.tonzoc.model.support.ReturnQtbModel;
 import org.tonzoc.service.IQualityTraceabilityService;
 import org.tonzoc.service.IRedisAuthService;
 import org.tonzoc.service.ISubTypeService;
@@ -181,5 +182,12 @@ public class QualityTraceabilityController extends BaseController {
     public List<ReturnModel> tenderAndNumber(Integer typeId){
 
         return qualityTraceabilityService.tenderAndNumber(typeId);
+    }
+
+    // 标段和文件数量的另一种格式
+    @GetMapping(value = "tenderAndNumbers")
+    public List<ReturnQtbModel> tenderAndNumbers(String tenderName){
+
+        return qualityTraceabilityService.tenderAndNumbers(tenderName);
     }
 }
