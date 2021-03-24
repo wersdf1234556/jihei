@@ -37,16 +37,16 @@ public class MachineModel extends BaseModel {
     @Column(value = "sortId")
     private Integer sortId; // 排序
     @Column(value = " tenderMachineTypeGuid")
-    private String  machineTypeGuid; // 类型的guid
-    @Column(value = "machineTypeGuid")
+    private String  tenderMachineTypeGuid; // 标段关联类型表的guid
+    @Column(value = "tenderMachineTypeGuid")
     private String machineCategoryGuid; // 类别的guid
     @Column(value = "tenderGuid")
     private String tenderGuid;
     @Column(value = "HGPSID")
     private String HGPSID;
 
-    @JoinColumn(value = "name", type = MachineTypeModel.class, leftColumn = "machineTypeGuid", rightColumn = "guid")
-    private String machineTypeName;
+    @JoinColumn(value = "name", type = TenderMachineTypeModel.class, leftColumn = "tenderMachineTypeGuid", rightColumn = "guid")
+    private String tenderMachineTypeName;
     @JoinColumn(value = "name", type = MachineCategoryModel.class, leftColumn = "machineCategoryGuid", rightColumn = "guid")
     private String categoryName;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
@@ -183,20 +183,20 @@ public class MachineModel extends BaseModel {
         this.tenderGuid = tenderGuid;
     }
 
-    public String getMachineTypeGuid() {
-        return machineTypeGuid;
+    public String getTenderMachineTypeGuid() {
+        return tenderMachineTypeGuid;
     }
 
-    public void setMachineTypeGuid(String machineTypeGuid) {
-        this.machineTypeGuid = machineTypeGuid;
+    public void setTenderMachineTypeGuid(String tenderMachineTypeGuid) {
+        this.tenderMachineTypeGuid = tenderMachineTypeGuid;
     }
 
-    public String getMachineTypeName() {
-        return machineTypeName;
+    public String getTenderMachineTypeName() {
+        return tenderMachineTypeName;
     }
 
-    public void setMachineTypeName(String machineTypeName) {
-        this.machineTypeName = machineTypeName;
+    public void setTenderMachineTypeName(String tenderMachineTypeName) {
+        this.tenderMachineTypeName = tenderMachineTypeName;
     }
 
     public String getCategoryName() {
@@ -240,11 +240,11 @@ public class MachineModel extends BaseModel {
                 ", factoryDate='" + factoryDate + '\'' +
                 ", age='" + age + '\'' +
                 ", sortId=" + sortId +
-                ", machineTypeGuid='" + machineTypeGuid + '\'' +
+                ", tenderMachineTypeGuid='" + tenderMachineTypeGuid + '\'' +
                 ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
                 ", HGPSID='" + HGPSID + '\'' +
-                ", machineTypeName='" + machineTypeName + '\'' +
+                ", tenderMachineTypeName='" + tenderMachineTypeName + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
                 '}';

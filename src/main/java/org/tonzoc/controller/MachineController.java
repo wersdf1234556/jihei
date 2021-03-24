@@ -48,8 +48,8 @@ public class MachineController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid MachineModel mechanicsModel) {
-       // String machineTypeGuid = tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineTypeGuid();
-        String machineCategoryGuid = machineTypeService.get(mechanicsModel.getMachineTypeGuid()).getMachineCategoryGuid();
+        String machineTypeGuid = tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineTypeGuid();
+        String machineCategoryGuid = machineTypeService.get(machineTypeGuid).getMachineCategoryGuid();
         mechanicsModel.setMachineCategoryGuid(machineCategoryGuid);
 
         this.machineService.save(mechanicsModel);
