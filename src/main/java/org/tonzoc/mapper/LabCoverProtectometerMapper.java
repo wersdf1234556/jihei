@@ -11,16 +11,16 @@ import java.util.List;
 @Component
 public interface LabCoverProtectometerMapper extends BaseMapper<LabCoverProtectometerModel> {
     @Select("select tenders.guid                     as tenderGuid,\n" +
-            "       tenders.name as tenderName,\n" +
-            "       isnull(LabCoverProtectometers.num, 0) as num\n" +
-            "from tenders\n" +
-            "         left join labTenders\n" +
+            "       tenders.name                     as tenderName,\n" +
+            "       isnull(labCoverProtectometers.num, 0) as num\n" +
+            "from labTenders\n" +
+            "         left join tenders\n" +
             "                   on tenders.guid = labTenders.tenderGuid\n" +
             "         left join\n" +
             "     (select sectionId, count(1) as num\n" +
-            "      from LabCoverProtectometers\n" +
-            "      group by sectionId) as LabCoverProtectometers\n" +
-            "     on labTenders.mappingTenderGuid = LabCoverProtectometers.sectionId\n" +
+            "      from labCoverProtectometers\n" +
+            "      group by sectionId) as labCoverProtectometers\n" +
+            "     on labTenders.mappingTenderGuid = labCoverProtectometers.sectionId\n" +
             "order by tenders.sortId")
     List<LabStatModel> listStatistics ();
 }

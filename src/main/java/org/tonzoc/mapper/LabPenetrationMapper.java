@@ -10,10 +10,10 @@ import java.util.List;
 @Component
 public interface LabPenetrationMapper extends BaseMapper<LabPenetrationModel> {
     @Select("select tenders.guid                     as tenderGuid,\n" +
-            "       tenders.name as tenderName,\n" +
+            "       tenders.name                     as tenderName,\n" +
             "       isnull(labPenetrations.num, 0) as num\n" +
-            "from tenders\n" +
-            "         left join labTenders\n" +
+            "from labTenders\n" +
+            "         left join tenders\n" +
             "                   on tenders.guid = labTenders.tenderGuid\n" +
             "         left join\n" +
             "     (select sectionId, count(1) as num\n" +

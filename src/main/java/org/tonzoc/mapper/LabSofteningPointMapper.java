@@ -11,16 +11,16 @@ import java.util.List;
 @Component
 public interface LabSofteningPointMapper extends BaseMapper<LabSofteningPointModel> {
     @Select("select tenders.guid                     as tenderGuid,\n" +
-            "       tenders.name as tenderName,\n" +
-            "       isnull(labSofteningPoints.num, 0) as num\n" +
-            "from tenders\n" +
-            "         left join labTenders\n" +
+            "       tenders.name                     as tenderName,\n" +
+            "       isnull(labSofteningPoint.num, 0) as num\n" +
+            "from labTenders\n" +
+            "         left join tenders\n" +
             "                   on tenders.guid = labTenders.tenderGuid\n" +
             "         left join\n" +
             "     (select sectionId, count(1) as num\n" +
-            "      from labSofteningPoints\n" +
-            "      group by sectionId) as labSofteningPoints\n" +
-            "     on labTenders.mappingTenderGuid = labSofteningPoints.sectionId\n" +
+            "      from labSofteningPoint\n" +
+            "      group by sectionId) as labSofteningPoint\n" +
+            "     on labTenders.mappingTenderGuid = labSofteningPoint.sectionId\n" +
             "order by tenders.sortId")
     List<LabStatModel> listStatistics ();
 }
