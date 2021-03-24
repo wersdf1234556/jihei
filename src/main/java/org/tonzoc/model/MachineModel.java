@@ -38,7 +38,7 @@ public class MachineModel extends BaseModel {
     private Integer sortId; // 排序
     @Column(value = " tenderMachineTypeGuid")
     private String  tenderMachineTypeGuid; // 标段关联类型表的guid
-    @Column(value = "tenderMachineTypeGuid")
+    @Column(value = "machineCategoryGuid")
     private String machineCategoryGuid; // 类别的guid
     @Column(value = "tenderGuid")
     private String tenderGuid;
