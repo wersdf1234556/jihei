@@ -21,7 +21,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     @Autowired
     private IndustryCategoryService industryCategoryService;
 
-    // 公用项目建设情况
+    // 公用项目建设情况的比例
     public List<ReturnProjectModel> publicTypeThree(List<ReturnProjectModel> list, String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid,Integer isImportant){
 
         int n = 0;
@@ -56,7 +56,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return list;
     }
 
-    // 项目建设情况
+    // 项目建设情况   按照状态统计总投资
     public List<ReturnProjectModel> typeThree(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         List<ReturnProjectModel> list = projectMapper.sumWinning(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
@@ -75,13 +75,13 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return this.publicTypeThree(list, industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
     }
 
-    // 数量
+    // 数量  按照状态统计数量
     public List<ReturnProjectModel> typeFour(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         return projectMapper.countStatus(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
     }
 
-    // 项目投资情况
+    // 项目投资情况  按照状态统计总投资和完成投资
     public List<ReturnProjectModel> typeSeven(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         List<ReturnProjectModel> list = projectMapper.sumProjectStates(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
@@ -100,7 +100,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         return list;
     }
 
-    // 投资完成率
+    // 投资完成率  完成投资/总投资
     public List<ReturnProjectModel> typeFive(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         List<ReturnProjectModel> list = projectMapper.sumProject(industryCategoryGuid, managementPowerGuid, buildLevelGuid, isImportant);
@@ -128,7 +128,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
     }
 
 
-    // 开工率
+    // 开工率 开工数、不开工数、统计
     public List<ReturnProjectModel> typeSix(String industryCategoryGuid, String managementPowerGuid, String buildLevelGuid, Integer isImportant){
 
         List<ReturnProjectModel> list = new ArrayList<>();

@@ -22,6 +22,8 @@ public class ProjectQueryParams {
     private String isStart;
     @Operator(value = "eq", field = "hasMap")
     private Integer hasMap;
+    @Operator(value = "eq", field = "isImportantCount")
+    private Integer isImportantCount;
 
     public String getGuid() {
         return guid;
@@ -93,5 +95,13 @@ public class ProjectQueryParams {
 
     public void setHasMap(Integer hasMap) {
         this.hasMap = hasMap;
+    }
+
+    public Integer getIsImportantCount() {
+        return isImportantCount;
+    }
+
+    public void setIsImportantCount(Integer isImportantCount) {
+        this.isImportantCount = isImportantCount;
     }
 }

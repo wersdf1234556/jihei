@@ -8,6 +8,8 @@ public class ReturnProjectModel {
     private String amountOne; // 金额1
     private String amountOnes; // 亿元1
     private String proportion; // 比例
+    private String proportions; // 比例亿元
+    private Integer sortId;
 
     public Integer getSortId() {
         return sortId;
@@ -16,9 +18,6 @@ public class ReturnProjectModel {
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
     }
-
-    private String proportions; // 比例亿元
-    private Integer sortId;
 
     public ReturnProjectModel() {
     }

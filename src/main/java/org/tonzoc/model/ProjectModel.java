@@ -63,6 +63,8 @@ public class ProjectModel extends BaseModel {
     private Integer hasMap;
     @Column(value = "mapCode")
     private String mapCode;
+    @Column(value = "isImportantCount")
+    private Integer isImportantCount;
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName; //行业类别名称
@@ -300,6 +302,30 @@ public class ProjectModel extends BaseModel {
         this.isStart = isStart;
     }
 
+    public Integer getIsImportantCount() {
+        return isImportantCount;
+    }
+
+    public void setIsImportantCount(Integer isImportantCount) {
+        this.isImportantCount = isImportantCount;
+    }
+
+    public Integer getHasMap() {
+        return hasMap;
+    }
+
+    public void setHasMap(Integer hasMap) {
+        this.hasMap = hasMap;
+    }
+
+    public String getMapCode() {
+        return mapCode;
+    }
+
+    public void setMapCode(String mapCode) {
+        this.mapCode = mapCode;
+    }
+
     @Override
     public String toString() {
         return "ProjectModel{" +
@@ -329,27 +355,11 @@ public class ProjectModel extends BaseModel {
                 ", isStart='" + isStart + '\'' +
                 ", hasMap=" + hasMap +
                 ", mapCode='" + mapCode + '\'' +
+                ", isImportantCount=" + isImportantCount +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
                 ", managementPowerName='" + managementPowerName + '\'' +
                 ", buildLevelName='" + buildLevelName + '\'' +
                 ", projectStateName='" + projectStateName + '\'' +
                 '}';
     }
-
-    public Integer getHasMap() {
-        return hasMap;
-    }
-
-    public void setHasMap(Integer hasMap) {
-        this.hasMap = hasMap;
-    }
-
-    public String getMapCode() {
-        return mapCode;
-    }
-
-    public void setMapCode(String mapCode) {
-        this.mapCode = mapCode;
-    }
-
 }

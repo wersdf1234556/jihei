@@ -11,16 +11,20 @@ import java.util.List;
 
 public interface ProjectMapper extends BaseMapper<ProjectModel> {
 
-    @Select("select count(guid) from projects where isImportant = 1")
+    // 百大总数
+    @Select("select count(guid) from projects where isImportant = 1 and isImportantCount = 0 ")
     Integer hundredCount();
 
-    @Select("select count(guid) from projects where isImportant = 1 and industryCategoryGuid = #{industryCategoryGuid}")
+    // 百大（铁路、公路、机场、水运）总数
+    @Select("select count(guid) from projects where isImportant = 1 and isImportantCount = 0 and industryCategoryGuid = #{industryCategoryGuid}")
     Integer hundredIndustryCount(@Param(value = "industryCategoryGuid") String industryCategoryGuid);
 
-    @Select("select count(guid) from projects where isImportant = 1 and isStart = 1")
+    // 百大开工数
+    @Select("select count(guid) from projects where isImportant = 1 and isImportantCount = 0 and isStart = 1")
     Integer hundredCountAndStart();
 
-    @Select("select count(guid) from projects where isImportant = 1 and isStart = 1 and industryCategoryGuid = #{industryCategoryGuid}")
+    // 百大（铁路、公路、机场、水运） 开工数
+    @Select("select count(guid) from projects where isImportant = 1 and isImportantCount = 0 and isStart = 1 and industryCategoryGuid = #{industryCategoryGuid}")
     Integer hundredIndustryCountAndStart(@Param(value = "industryCategoryGuid") String industryCategoryGuid);
 
     // 项目数量

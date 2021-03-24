@@ -12,7 +12,7 @@ public class ProjectProvider {
 
         StringBuilder stringBuilder = new StringBuilder("select count(guid) from projects");
         if (isImportant != null && isImportant == 1) {
-            stringBuilder.append(" where isImportant = " + isImportant);
+            stringBuilder.append(" where isImportant = " + isImportant + " and isImportantCount = 0");
         }else{
             stringBuilder.append(" where 1 = 1");
         }
@@ -41,7 +41,7 @@ public class ProjectProvider {
 
         StringBuilder stringBuilder = new StringBuilder("select count(guid) from projects where isStart = 1");
         if (isImportant != null && isImportant == 1) {
-            stringBuilder.append(" and projects.isImportant = 1");
+            stringBuilder.append(" and projects.isImportant = 1 and projects.isImportantCount = 0");
         }
 
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {

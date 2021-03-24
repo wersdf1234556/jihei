@@ -189,9 +189,9 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         returnModel5.setNumber(returnModel3.getNumber());
         returnModel5.setProportion(returnModel3.getProportion());
         list.add(returnModel);
-        list.add(returnModel3);
         list.add(returnModel1);
         list.add(returnModel2);
+        list.add(returnModel3);
         list.add(returnModel4);
         list.add(returnModel5);
 

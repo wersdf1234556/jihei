@@ -88,9 +88,9 @@ public class ProjectController extends BaseController {
 
     // 百大项目
     @GetMapping(value = "hundredOne")
-    public List<ReturnProjectModel> hundredOne(String projectStateGuid){
+    public List<ReturnProjectModel> hundredOne(String industryCategoryGuid){
 
-        return projectService.hundredOne(projectStateGuid);
+        return projectService.hundredOne(industryCategoryGuid);
     }
 
     // 项目情况
