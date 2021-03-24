@@ -37,12 +37,13 @@ public class MachineProvider {
     // 查询重点机械
     public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from machineTypes");
+        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from machineTypes" +
+                " LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid ");
         if ("".equals(tenderGuid) || tenderGuid == null) {
-            stringBuilder.append(" LEFT JOIN machines on machineTypes.guid = machines.machineTypeGuid");
+            stringBuilder.append(" LEFT JOIN machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
         }else {
-            stringBuilder.append(" LEFT JOIN (select machines.guid, machines.machineTypeGuid from machines" +
-                    " where machines.tenderGuid = '" + tenderGuid + "') machines on machineTypes.guid = machines.machineTypeGuid");
+            stringBuilder.append(" LEFT JOIN (select machines.guid, machines.tenderMachineTypeGuid from machines" +
+                    " where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
         }
 
         stringBuilder.append(" where machineTypes.highlight = 1 GROUP BY machineTypes.name");
@@ -53,12 +54,11 @@ public class MachineProvider {
     // 查询全部机械
     public String allImportantMachine(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from " +
+        StringBuilder stringBuilder = new StringBuilder("select tenderMachineTypes.name, count(machines.guid) number from " +
                 "(select * from tenderMachineTypes where tenderGuid = '" + tenderGuid + "') tenderMachineTypes " +
-                "LEFT JOIN machineTypes on tenderMachineTypes.machineTypeGuid = machineTypes.guid " +
-                "LEFT JOIN (select machines.guid, machines.machineTypeGuid from machines " +
-                "where machines.tenderGuid = '" + tenderGuid + "') machines on machineTypes.guid = machines.machineTypeGuid " +
-                "GROUP BY machineTypes.name");
+                "LEFT JOIN (select machines.guid, machines.tenderMachineTypeGuid from machines " +
+                "where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid " +
+                "GROUP BY tenderMachineTypes.name");
 
         return stringBuilder.toString();
     }
