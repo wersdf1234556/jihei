@@ -6,6 +6,7 @@ import org.tonzoc.model.PersonModel;
 import java.util.List;
 
 public interface IPersonService extends IBaseService<PersonModel> {
+    List<String> listAreaCode();
     List<PersonModel> listByTenderName(String tenderName);
 
     PersonModel login(String sign,String password,Integer flag) throws Exception;

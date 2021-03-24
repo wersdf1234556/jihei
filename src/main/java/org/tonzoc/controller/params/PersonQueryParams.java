@@ -18,6 +18,37 @@ public class PersonQueryParams {
     private String personTypeGuid;
     @Operator(value = "eq", field = "idCard")
     private String idCard;
+    @Operator(value = "eq", field = "guid")
+    private String isRisk; //是否从风险区回来
+    @Operator(value = "eq", field = "departurePlaceCode")
+    private String departurePlaceCode;
+    @Operator(value = "eq", field = "result")
+    private String result; //0：阴性 1：阳性
+
+
+    public String getIsRisk() {
+        return isRisk;
+    }
+
+    public void setIsRisk(String isRisk) {
+        this.isRisk = isRisk;
+    }
+
+    public String getDeparturePlaceCode() {
+        return departurePlaceCode;
+    }
+
+    public void setDeparturePlaceCode(String departurePlaceCode) {
+        this.departurePlaceCode = departurePlaceCode;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
 
 
     public String getGuid() {

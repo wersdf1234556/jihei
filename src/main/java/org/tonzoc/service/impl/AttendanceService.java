@@ -34,8 +34,6 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     private PersonMapper personMapper;
     @Autowired
     private IAreaDataService areaDataService;
-    @Autowired
-    private IPersonNucleicInfoService personNucleicInfoService;
 
     public List<AttendanceModel> listBySignAndDate(String sign,String createdAt){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -222,14 +220,24 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         }
         System.out.println(date);
         List<AttendanceStatModel> list = new ArrayList<>();
-        String[] strings = {"A","B","S","Z"};
+        String[] strings = {"项目办","A","B","S","Z"};
         for (String tenderType : strings){
             AttendanceStatModel statModel = new AttendanceStatModel();
+            if (tenderType.equals("项目办")){
+                tenderType="Y";
+                statModel.setTypeName("项目办");
+            }else {
+                statModel.setTypeName(tenderType+"标");
+            }
             Integer attNum = attendanceMapper.countByTenderType(date,tenderType);
             Integer total = personService.listByTenderName(tenderType).size();
-            statModel.setTypeName(tenderType+"标");
+            BigDecimal percent = BigDecimal.valueOf(0.00).setScale(2,BigDecimal.ROUND_HALF_UP);
+            if (!total.equals(0)){
+                percent=new BigDecimal((float)attNum/total*100).setScale(2,BigDecimal.ROUND_HALF_UP);
+            }
             statModel.setAttNum(attNum.toString());
             statModel.setTotal(total.toString());
+            statModel.setPercent(percent.toString());
             list.add(statModel);
         }
 
@@ -312,11 +320,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     //统计各市人数情况
     public List<AttendanceStatModel> countPersonByCity(){
         List<AttendanceStatModel> list = new ArrayList<>();
-        List<String> listAreaCodes = personNucleicInfoService.listAreaCode();
+        List<String> listAreaCodes = personService.listAreaCode();
         for (String areaCode:listAreaCodes){
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             sqlQueryParams.add(new SqlQueryParam("departurePlaceCode",areaCode,"eq"));
-            List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams);
+            List<PersonModel> personNucleicInfoModels = personService.list(sqlQueryParams);
             AreaDataModel areaDataModel = areaDataService.listByCode(areaCode).get(0);
             AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
             attendanceStatModel.setTotal(String.valueOf(personNucleicInfoModels.size()));
@@ -328,26 +336,25 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
     public List<AttendanceStatModel> countByRisk(){
         List<AttendanceStatModel> list = new ArrayList<>();
-        AttendanceStatModel totalModel = new AttendanceStatModel();
-        totalModel.setTypeName("总人数");
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        List<PersonNucleicInfoModel> total = personNucleicInfoService.list(sqlQueryParams);
-        totalModel.setTotal(String.valueOf(total.size()));
-        list.add(totalModel);
+        List<PersonModel> total = personService.list(sqlQueryParams);
         String isRisks[] = {"0","1","2"};
         for (String isRisk:isRisks){
             List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
             sqlQueryParams1.add(new SqlQueryParam("isRisk",isRisk,"eq"));
-            List<PersonNucleicInfoModel> personNucleicInfoModels = personNucleicInfoService.list(sqlQueryParams1);
+            List<PersonModel> personModels = personService.list(sqlQueryParams1);
             AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
-            attendanceStatModel.setTotal(String.valueOf(personNucleicInfoModels.size()));
+            attendanceStatModel.setTotal(String.valueOf(personModels.size()));
             if (isRisk.equals("0")){
-                attendanceStatModel.setTypeName("低风险地区");
+                attendanceStatModel.setTypeName("低风险");
+
             }else if (isRisk.equals("1")){
-                attendanceStatModel.setTypeName("中风险地区");
+                attendanceStatModel.setTypeName("中风险");
             }else if (isRisk.equals("2")){
-                attendanceStatModel.setTypeName("高风险地区");
+                attendanceStatModel.setTypeName("高风险");
             }
+            BigDecimal percent = BigDecimal.valueOf(personModels.size()).divide(BigDecimal.valueOf(total.size())).multiply(BigDecimal.valueOf(100)).setScale(2,BigDecimal.ROUND_HALF_UP);
+            attendanceStatModel.setPercent(String.valueOf(percent));
 
             list.add(attendanceStatModel);
         }
@@ -382,7 +389,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 percent = new BigDecimal((float)attendanceModels.size()/personModels.size()*100).setScale(2,BigDecimal.ROUND_HALF_UP);
             }
 
-            attendanceStatModel.setPercent(percent+"%");
+            attendanceStatModel.setPercent(String.valueOf(percent));
             list.add(attendanceStatModel);
         }
         return list;

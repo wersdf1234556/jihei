@@ -8,7 +8,7 @@ import org.tonzoc.model.support.CostByTpeModel;
 import java.util.List;
 @Component
 public interface InvestmentCostMapper extends BaseMapper<InvestmentCostModel> {
-    @Select("SELECT a.name,ISNULL(a.totalBalance, 0) totalBalance,ISNULL(a.situationBalance, 0) situationBalance, " +
+    @Select("SELECT a.name,ROUND(ISNULL(a.totalBalance, 0)/100000000, 2) totalBalance,ROUND(ISNULL(a.situationBalance, 0)/100000000,2) situationBalance, " +
             "(CASE WHEN totalBalance>0 then CAST (ISNULL((CONVERT(DECIMAL(38,2),situationBalance)/CONVERT(DECIMAL(38,2),totalBalance))*100,0) as NUMERIC(38,2))  " +
             "ELSE 0 end) percentNum " +
             " from (SELECT ic.guid,ic.name,SUM(ic.balance) totalBalance,SUM(ins.balance) situationBalance, " +

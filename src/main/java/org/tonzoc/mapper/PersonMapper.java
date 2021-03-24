@@ -13,5 +13,9 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
             "where t.name like '${tenderName}%'")
     List<PersonModel> listByTenderName(@Param(value = "tenderName") String tenderName);
 
+    //获取所有人员的areaCode
+    @Select("SELECT DISTINCT departurePlaceCode from persons")
+    List<String> listAreaCode();
+
 
 }

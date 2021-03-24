@@ -30,6 +30,10 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     @Autowired
     private FileHelper fileHelper;
 
+    public List<String> listAreaCode(){
+        return personMapper.listAreaCode();
+    }
+
     public PersonModel listBySign(String sign,Integer flag) throws Exception {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         if (flag==0){//用身份证号登陆

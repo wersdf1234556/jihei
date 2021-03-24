@@ -1,7 +1,6 @@
 package org.tonzoc.model;
 
 import org.tonzoc.annotation.*;
-import org.tonzoc.mapper.PersonNucleicInfoMapper;
 
 import java.util.Date;
 
@@ -34,7 +33,7 @@ public class AttendanceModel extends BaseModel{
     private String typeName;
     @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "personsTenderGuidtenderGuidTable.categoryGuid", rightColumn = "personCategoryNamecategoryNameTable.guid")
     private String categoryName;
-    @JoinColumn(value = "isRisk", type = PersonNucleicInfoModel.class, leftColumn = "personNucleicInfoIsRiskisRiskTable.personGuid", rightColumn = "personsTenderGuidtenderGuidTable.guid")
+    @JoinColumn(value = "isRisk", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private Integer isRisk;
     @JoinColumn(value = "mobile", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String mobile;
@@ -57,9 +56,9 @@ public class AttendanceModel extends BaseModel{
     @Column(value = "attTime")
     private String attTime; //打卡时间
     @Column(value = "inOutStatus")
-    private Integer inOutStatus;//0：进  1：出
+    private Integer inOutStatus; //0：进  1：出
     @Column(value = "sign")
-    private Integer sign;//0：闸机   1：手机端
+    private Integer sign;  //0：闸机   1：手机端
 
     public String getGuid() {
         return guid;

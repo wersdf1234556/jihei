@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.InvestmentCostModel;
+import org.tonzoc.model.support.BuildSafetyStatModel;
 import org.tonzoc.model.support.CostByTpeModel;
 import org.tonzoc.model.support.CostModel;
 import org.tonzoc.model.support.TypeModel;
@@ -79,7 +80,7 @@ public class InvestmentCostController extends BaseController{
 
     //左下角建安费分项统计
     @GetMapping(value = "statByBuildSafety")
-    public List<CostByTpeModel> statByBuildSafety(Integer flag){
+    public List<BuildSafetyStatModel> statByBuildSafety(Integer flag){
         return investmentCostService.statByBuildSafety(flag);
     }
     //右侧按标段统计总产值和累计产值

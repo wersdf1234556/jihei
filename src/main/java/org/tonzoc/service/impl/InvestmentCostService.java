@@ -8,6 +8,7 @@ import org.tonzoc.model.BuildingSafetyDetailModel;
 import org.tonzoc.model.BuildingSafetyModel;
 import org.tonzoc.model.InvestmentCostModel;
 import org.tonzoc.model.InvestmentSituationModel;
+import org.tonzoc.model.support.BuildSafetyStatModel;
 import org.tonzoc.model.support.CostByTpeModel;
 import org.tonzoc.model.support.CostModel;
 import org.tonzoc.model.support.TypeModel;
@@ -104,8 +105,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                 BigDecimal buildSafety = buildingSafetyDetailService.list(sqlQueryParams1).stream()
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
-                BigDecimal percent = buildSafety.divide(costModel.getBalance().multiply(BigDecimal.valueOf(100)), 2, BigDecimal.ROUND_HALF_UP);
-                CostByTpeModel costByTpeModel = new CostByTpeModel(costModel.getName(),costModel.getBalance(),buildSafety,percent+"%");
+                BigDecimal percent = buildSafety.divide(costModel.getBalance(), 2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+                CostByTpeModel costByTpeModel = new CostByTpeModel(costModel.getName(),costModel.getBalance().divide(BigDecimal.valueOf(100000000)).setScale(2, BigDecimal.ROUND_HALF_UP),buildSafety.divide(BigDecimal.valueOf(100000000)).setScale(2, BigDecimal.ROUND_HALF_UP),String.valueOf(percent));
                 list.add(costByTpeModel);
             }
         }
@@ -118,8 +119,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
     //按总体：往年、今年 flag=0
     //按年度：今年、本月 flag=1
     //按月份：本月、本日 flag=2
-    public List<CostByTpeModel> statByBuildSafety(Integer flag){
-        List<CostByTpeModel> list = new ArrayList<>();
+    public List<BuildSafetyStatModel> statByBuildSafety(Integer flag){
+        List<BuildSafetyStatModel> list = new ArrayList<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-hh");
         String date= formatter.format( new Date());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
@@ -131,8 +132,8 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<BuildingSafetyModel> safetys = buildingSafetyService.list(sqlQueryParams).stream().sorted(Comparator.comparing(BuildingSafetyModel::getSortId)).collect(Collectors.toList());
         for (BuildingSafetyModel buildingSafetyModel:safetys){
-            CostByTpeModel costByTpeModel = new CostByTpeModel();
-            costByTpeModel.setName(buildingSafetyModel.getName());
+            BuildSafetyStatModel buildSafetyStatModel = new BuildSafetyStatModel();
+            buildSafetyStatModel.setName(buildingSafetyModel.getName());
             if (flag==0){
                 //往年
                 totalBalance = buildingSafetyDetailService.listByLtDate(pastDate,buildingSafetyModel.getGuid()).stream()
@@ -142,7 +143,6 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                 situationBalance = buildingSafetyDetailService.listByLikeDate(year,buildingSafetyModel.getGuid()).stream()
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
-
             }else if (flag==1){
                 //本年
                 totalBalance=buildingSafetyDetailService.listByLikeDate(year,buildingSafetyModel.getGuid()).stream()
@@ -152,7 +152,6 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                 situationBalance=buildingSafetyDetailService.listByLikeDate(month,buildingSafetyModel.getGuid()).stream()
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
-
             }else if (flag==2){
                 //本月
                 totalBalance=buildingSafetyDetailService.listByLikeDate(month,buildingSafetyModel.getGuid()).stream()
@@ -163,16 +162,22 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }
+            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+            sqlQueryParams1.add(new SqlQueryParam("flag","1","eq"));
+            BigDecimal cost= list(sqlQueryParams1).stream()
+                    .map(InvestmentCostModel::getBalance)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
             //百分比
-            BigDecimal percent=BigDecimal.ZERO;
-            if (situationBalance.compareTo(BigDecimal.ZERO)>0){
-                percent = situationBalance.divide(totalBalance, 2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal percentOne=BigDecimal.valueOf((float)0.00);
+            BigDecimal percentTwo=BigDecimal.valueOf((float)0.00);
+            if (cost.compareTo(BigDecimal.ZERO)>0){
+                percentOne=totalBalance.divide(cost).setScale(2,BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+                percentTwo=situationBalance.divide(cost).setScale(2,BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
             }
             //.divide(BigDecimal.valueOf(100000000))
-            costByTpeModel.setTotalBalance(totalBalance);
-            costByTpeModel.setSituationBalance(situationBalance);
-            costByTpeModel.setPercentNum(percent+"%");
-            list.add(costByTpeModel);
+            buildSafetyStatModel.setPercentOne(String.valueOf(percentOne));
+            buildSafetyStatModel.setPercentTwo(String.valueOf(percentTwo));
+            list.add(buildSafetyStatModel);
         }
         return list;
 
