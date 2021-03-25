@@ -229,7 +229,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         QualityTraceabilityModel qualityTraceabilityModel = get(qualityTraceabilityGuid);
 
         String supervisorGuid = approvalHelper.getNextTender(qualityTraceabilityModel.getTenderGuid());
-        String status = "";
+        String status = "submitted";
         String currentTenderGuid = "";
         if (flag == 1){
             //修改该条状态为已结束
@@ -238,7 +238,6 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }else if (flag == 2){
             if (qualityTraceabilityModel.getCurrentTenderGuid().equals("*") && qualityTraceabilityModel.getStatus().equals("finish")){
 
-                status = "submitted";
                 currentTenderGuid = supervisorGuid;
             }
         }
