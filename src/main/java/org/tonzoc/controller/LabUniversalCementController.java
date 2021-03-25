@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabUniversalCementModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabUniversalCementService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -43,4 +44,8 @@ public class LabUniversalCementController extends BaseController {
         //        this.labUniversalCementService.save(labUniversalCementModel);
     }
 
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labUniversalCementService.listStatistics();
+    }
 }

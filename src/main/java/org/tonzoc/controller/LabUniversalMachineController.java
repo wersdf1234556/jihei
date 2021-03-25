@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabUniversalMachineModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabUniversalMachineService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -43,4 +44,8 @@ public class LabUniversalMachineController extends BaseController {
         //        this.labUniversalMachineService.save(labUniversalMachineModel);
     }
 
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labUniversalMachineService.listStatistics();
+    }
 }

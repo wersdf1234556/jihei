@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabDuctilityModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabDuctilityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -43,4 +44,8 @@ public class LabDuctilityController extends BaseController {
         //        this.labDuctilityService.save(labDuctilityModel);
     }
 
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labDuctilityService.listStatistics();
+    }
 }

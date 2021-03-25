@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabPmsTesterModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsTesterService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -41,6 +42,11 @@ public class LabPmsTesterController extends BaseController {
         labPmsTesterService.save(labPmsTesterModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsTesterService.save(labPmsTesterModel);
+    }
+
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labPmsTesterService.listStatistics();
     }
 
 }

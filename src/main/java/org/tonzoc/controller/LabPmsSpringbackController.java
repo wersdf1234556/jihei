@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabPmsSpringbackModel;
+import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsSpringbackService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -41,6 +42,11 @@ public class LabPmsSpringbackController extends BaseController {
         labPmsSpringbackService.save(labPmsSpringbackModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsSpringbackService.save(labPmsSpringbackModel);
+    }
+
+    @GetMapping(value = "statistics")
+    public List<LabStatModel> listStatistics() {
+        return labPmsSpringbackService.listStatistics();
     }
 
 }
