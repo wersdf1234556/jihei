@@ -211,9 +211,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     public void submit(String qualityTraceabilityGuid){
         QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
         String nextTenderGuids = approvalHelper.getNextTender(qualityTraceabilityModel.getCurrentTenderGuid());
-
+        System.out.println("nextTenderGuids="+nextTenderGuids);
         String approvalTime = "";
-        if (qualityTraceabilityModel.getStatus().equals("unSubmitted")){
+        if (qualityTraceabilityModel.getStatus().equals("unSubmit")){
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
