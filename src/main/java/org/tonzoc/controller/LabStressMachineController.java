@@ -49,8 +49,8 @@ public class LabStressMachineController extends BaseController {
     }
 
     @GetMapping(value = "statistics")
-    public List<LabStatModel> listStatistics() {
-        return labStressMachineService.listStatistics();
+    public List<LabStatModel> listStatistics(String equipmentType) {
+        return labStressMachineService.listStatistics(equipmentType);
     }
 
 }

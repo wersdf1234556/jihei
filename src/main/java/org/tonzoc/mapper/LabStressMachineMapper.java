@@ -1,5 +1,6 @@
 package org.tonzoc.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.LabStressMachineModel;
@@ -18,9 +19,10 @@ public interface LabStressMachineMapper extends BaseMapper<LabStressMachineModel
             "                   on tenders.guid = labTenders.tenderGuid\n" +
             "         left join\n" +
             "     (select sectionId, count(1) as num\n" +
-            "      from labStressMachines\n" +
+            "      from (select sectionId from labStressMachines where equipmentType = '${equipmentType}') as labStressMachines\n" +
             "      group by sectionId) as labStressMachines\n" +
             "     on labTenders.mappingTenderGuid = labStressMachines.sectionId\n" +
+            "     " +
             "order by tenders.sortId")
-    List<LabStatModel> listStatistics ();
+    List<LabStatModel> listStatistics (@Param("equipmentType") String equipmentType);
 }

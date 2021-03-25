@@ -15,7 +15,7 @@ public class LabStressMachineService extends BaseService<LabStressMachineModel> 
     @Autowired
     private LabStressMachineMapper labStressMachineMapper;
 
-    public List<LabStatModel> listStatistics() {
-        return labStressMachineMapper.listStatistics();
+    public List<LabStatModel> listStatistics(String equipmentType) {
+        return labStressMachineMapper.listStatistics(equipmentType);
     }
 }

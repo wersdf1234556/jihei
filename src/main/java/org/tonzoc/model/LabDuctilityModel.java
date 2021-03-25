@@ -64,6 +64,8 @@ public class LabDuctilityModel extends BaseModel {
     private String result;
     @Column(value = "otherInformation")
     private String otherInformation;
+    @Column(value = "sectionId")
+    private String sectionId;
 
     public LabDuctilityModel() {
     }
@@ -372,5 +374,14 @@ public class LabDuctilityModel extends BaseModel {
     @JsonProperty(value = "other_information")
     public void setOtherInformation(String otherInformation) {
         this.otherInformation = otherInformation;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 }

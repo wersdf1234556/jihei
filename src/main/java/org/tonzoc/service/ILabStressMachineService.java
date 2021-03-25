@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ILabStressMachineService extends IBaseService<LabStressMachineModel> {
 
-    List<LabStatModel> listStatistics();
+    List<LabStatModel> listStatistics(String equipmentType);
 }

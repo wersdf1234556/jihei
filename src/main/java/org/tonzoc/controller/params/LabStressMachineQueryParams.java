@@ -16,6 +16,9 @@ public class LabStressMachineQueryParams {
     @Operator(value = "eq", field = "sectionId")
     private String sectionId;
 
+    @Operator(value = "eq", field = "equipmentType")
+    private String equipmentType;
+
     public LabStressMachineQueryParams() {
 
     }
@@ -51,5 +54,13 @@ public class LabStressMachineQueryParams {
 
     public void setSectionId(String sectionId) {
         this.sectionId = sectionId;
+    }
+
+    public String getEquipmentType() {
+        return equipmentType;
+    }
+
+    public void setEquipmentType(String equipmentType) {
+        this.equipmentType = equipmentType;
     }
 }
