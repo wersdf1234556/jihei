@@ -58,6 +58,8 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 attendanceModel.setLng("");
                 if (attendanceModel.getTemperature().compareTo("37.3")>0){
                     attendanceModel.setStatus(1);
+                } else{
+                    attendanceModel.setStatus(0);
                 }
                 save(attendanceModel);
             }
