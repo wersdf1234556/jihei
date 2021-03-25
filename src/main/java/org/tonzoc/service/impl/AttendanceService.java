@@ -45,25 +45,32 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     }
 
     //添加闸机数据
-    public void insertGateData(AttendanceModel attendanceModel){
-        if (attendanceModel.getIdCard()!=null){
-            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-            sqlQueryParams.add(new SqlQueryParam("idCard", attendanceModel.getIdCard(), "eq"));
-            List<PersonModel> personModels = personService.list(sqlQueryParams) ;
-            if (personModels.size()!=0){
-                String personGuid = personModels.get(0).getGuid();
-                attendanceModel.setPersonGuid(personGuid);
-                attendanceModel.setSign(0);
-                attendanceModel.setLat("");
-                attendanceModel.setLng("");
-                if (attendanceModel.getTemperature().compareTo("37.3")>0){
-                    attendanceModel.setStatus(1);
-                } else{
-                    attendanceModel.setStatus(0);
+    public Integer insertGateData(AttendanceModel attendanceModel){
+        try{
+            if (attendanceModel.getIdCard()!=null){
+                List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+                sqlQueryParams.add(new SqlQueryParam("idCard", attendanceModel.getIdCard(), "eq"));
+                List<PersonModel> personModels = personService.list(sqlQueryParams) ;
+                if (personModels.size()!=0){
+                    String personGuid = personModels.get(0).getGuid();
+                    attendanceModel.setPersonGuid(personGuid);
+                    attendanceModel.setSign(0);
+                    attendanceModel.setLat("");
+                    attendanceModel.setLng("");
+                    if (attendanceModel.getTemperature().compareTo("37.3")>0){
+                        attendanceModel.setStatus(1);
+                    } else{
+                        attendanceModel.setStatus(0);
+                    }
+                    save(attendanceModel);
+                    return 0;
                 }
-                save(attendanceModel);
             }
+            return 1;
+        }catch (Exception e){
+            return 1;
         }
+
     }
 
 

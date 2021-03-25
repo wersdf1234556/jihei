@@ -182,6 +182,9 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         progressDetailModel.setApprovalTime("");
         progressDetailModel.setCurrentTenderGuid(progressDetailModel.getTenderGuid());
         progressDetailModel.setStatus("unSubmit");
+//        if (progressDetailModel){
+//
+//        }
         save(progressDetailModel);
     }
 

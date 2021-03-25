@@ -58,8 +58,8 @@ public class AttendanceController extends BaseController {
     }
 
     @PostMapping(value = "insertGateData")
-    public void insertGateData(@RequestBody  @Valid AttendanceModel attendanceModel){
-        attendanceService.insertGateData(attendanceModel);
+    public Integer insertGateData(@RequestBody  @Valid AttendanceModel attendanceModel){
+        return attendanceService.insertGateData(attendanceModel);
     }
 
 //    @GetMapping(value = "statAttendanceData")

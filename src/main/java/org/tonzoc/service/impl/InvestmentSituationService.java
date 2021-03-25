@@ -6,4 +6,5 @@ import org.tonzoc.service.IInvestmentSituationService;
 
 @Service("investmentSituationService")
 public class InvestmentSituationService extends BaseService<InvestmentSituationModel> implements IInvestmentSituationService {
+
 }

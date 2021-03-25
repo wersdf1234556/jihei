@@ -163,17 +163,23 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }
             List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
-            sqlQueryParams1.add(new SqlQueryParam("flag","1","eq"));
-            BigDecimal cost= list(sqlQueryParams1).stream()
-                    .map(InvestmentCostModel::getBalance)
+            sqlQueryParams1.add(new SqlQueryParam("name",buildingSafetyModel.getName(),"eq"));
+            BigDecimal cost= buildingSafetyService.list(sqlQueryParams1).stream()
+                    .map(BuildingSafetyModel::getBalance)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             //百分比
             BigDecimal percentOne=BigDecimal.valueOf((float)0.00);
             BigDecimal percentTwo=BigDecimal.valueOf((float)0.00);
             if (cost.compareTo(BigDecimal.ZERO)>0){
-                percentOne=totalBalance.divide(cost).setScale(2,BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
-                percentTwo=situationBalance.divide(cost).setScale(2,BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+                //.setScale(2,BigDecimal.ROUND_HALF_UP)
+                percentOne=totalBalance.divide(cost,2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
+                percentTwo=situationBalance.divide(cost,2, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
             }
+            System.out.println("cost="+cost);
+            System.out.println("totalBalance="+totalBalance);
+            System.out.println("situationBalance="+situationBalance);
+            System.out.println("percentOne="+percentOne);
+            System.out.println("percentTwo="+percentTwo);
             //.divide(BigDecimal.valueOf(100000000))
             buildSafetyStatModel.setPercentOne(String.valueOf(percentOne));
             buildSafetyStatModel.setPercentTwo(String.valueOf(percentTwo));

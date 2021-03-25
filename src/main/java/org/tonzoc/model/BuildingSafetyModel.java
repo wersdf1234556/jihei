@@ -17,6 +17,10 @@ public class BuildingSafetyModel extends BaseModel{
     @Column(value = "createdAt")
     @NotInsertColumn
     private Date createdAt;
+
+    @Column(value = "balance")
+    private BigDecimal balance;
+
     @Column(value = "sortId")
     private Integer sortId;
 
@@ -51,5 +55,13 @@ public class BuildingSafetyModel extends BaseModel{
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
