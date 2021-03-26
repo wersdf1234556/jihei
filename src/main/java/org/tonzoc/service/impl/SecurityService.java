@@ -61,12 +61,6 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         securityModel.setApprovalTenderGuid(approvalTenderGuid);
         this.save(securityModel);
 
-        TenderScoreModel tenderScoreModel = new TenderScoreModel();
-        tenderScoreModel.setSecurityGuid(securityModel.getGuid());
-        tenderScoreModel.setScores(securityModel.getDefaultScore());
-        tenderScoreModel.setTenderGuid(securityModel.getChangTenderGuid());
-        tenderScoreService.save(tenderScoreModel);
-
         if (file != null) {
             this.upFiles(file, securityModel.getGuid(), "", fileType);
         }
@@ -210,11 +204,18 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     public void submit(String securityGuid) {
         SecurityModel securityModel = this.get(securityGuid);
         String approvalTime = "";
-        if (securityModel.getStatus().equals("unSubmitted")) {
+        if (securityModel.getStatus().equals("unSubmit")) {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
         }
+
+        TenderScoreModel tenderScoreModel = new TenderScoreModel();
+        tenderScoreModel.setSecurityGuid(securityModel.getGuid());
+        tenderScoreModel.setScores(securityModel.getDefaultScore());
+        tenderScoreModel.setTenderGuid(securityModel.getChangTenderGuid());
+        tenderScoreService.save(tenderScoreModel);
+
         securityMapper.updateStatusAndTender("submitted", approvalTime, securityGuid);
     }
 
