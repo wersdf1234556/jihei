@@ -13,7 +13,7 @@ public class LabMarshallStabilityQueryParams {
     @Operator(value = "like", field = "sectionName")
     private String tenderName;
 
-    @Operator(value = "eq", field = "secctionId")
+    @Operator(value = "eq", field = "sectionId")
     private String sectionId;
 
     public String getSectionId() {
