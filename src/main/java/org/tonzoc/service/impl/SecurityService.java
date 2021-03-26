@@ -278,9 +278,4 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         return list1;
     }
-
-    // 标段查询除了未提交的数据
-    public List<SecurityModel> listByTender(String tenderGuid){
-
-    }
 }
