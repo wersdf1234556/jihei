@@ -152,16 +152,16 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
 
         if (date == null || "".equals(date) || "全部".equals(date)) {
 
-            returnModel.setNumber(securityMapper.count());
+            returnModel.setNumber(securityMapper.count() - securityMapper.countStatus("unSubmit"));
             returnModel1.setNumber(securityMapper.countStatus("finish") + securityMapper.countStatus("unFinish"));
-            returnModel2.setNumber(securityMapper.countStatus("submitted") + securityMapper.countStatus("unSubmitted"));
+            returnModel2.setNumber(securityMapper.countStatus("submitted"));
             returnModel3.setNumber(securityMapper.countStatus("finish"));
             returnModel4.setNumber(securityMapper.countStatus("unFinish"));
         }else {
 
-            returnModel.setNumber(securityMapper.countByDate(date));
+            returnModel.setNumber(securityMapper.countByDate(date) - securityMapper.countStatusByDate("unSubmit", date));
             returnModel1.setNumber(securityMapper.countStatusByDate("finish", date) + securityMapper.countStatusByDate("unFinish", date));
-            returnModel2.setNumber(securityMapper.countStatusByDate("submitted", date) + securityMapper.countStatusByDate("unSubmitted", date));
+            returnModel2.setNumber(securityMapper.countStatusByDate("submitted", date));
             returnModel3.setNumber(securityMapper.countStatusByDate("finish", date));
             returnModel4.setNumber(securityMapper.countStatusByDate("unFinish", date));
         }
@@ -277,5 +277,10 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         }
 
         return list1;
+    }
+
+    // 标段查询除了未提交的数据
+    public List<SecurityModel> listByTender(String tenderGuid){
+
     }
 }

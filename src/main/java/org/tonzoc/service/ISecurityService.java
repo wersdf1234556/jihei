@@ -45,4 +45,7 @@ public interface ISecurityService extends IBaseService<SecurityModel> {
     // 查询分数
     List<ReturnModel> selectScore() throws ParseException;
 
+    // 标段查询除了未提交的数据
+    List<SecurityModel> listByTender(String tenderGuid);
+
 }
