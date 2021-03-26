@@ -3,7 +3,7 @@ package org.tonzoc.model;
 import org.tonzoc.annotation.*;
 
 // 机械GPS存储历史表
-@Table("MachineGpsRecordModels")
+@Table("MachineGpsRecords")
 public class MachineGpsRecordModel extends BaseModel {
 
     @NotInsertColumn

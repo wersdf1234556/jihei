@@ -53,4 +53,11 @@ public class MachineGpsRecordController extends BaseController{
     public void removeMany(String guids) throws Exception {
         machineGpsRecordService.removeMany(guids);
     }
+
+    // 添加GPS进数据中
+    @PostMapping(value = "add")
+    public void add(){
+
+        machineGpsRecordService.add();
+    }
 }

@@ -41,6 +41,10 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
             machineGpsRecordModel.setHSpeed(li.getHSpeed());
             machineGpsRecordModel.setHDate(li.getHDate());
             machineGpsRecordModel.setIsParsed(li.getIsParsed());
+            machineGpsRecordModel.setRefinedLng("");
+            machineGpsRecordModel.setRefinedLat("");
+            machineGpsRecordModel.setBaiduLng("");
+            machineGpsRecordModel.setBaiduLat("");
 
             if (list1.size() == 1000) {
 
@@ -49,7 +53,6 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
             }else{
 
                 list1.add(machineGpsRecordModel);
-                System.out.println("好使么");
                 // hangZhouGPSService.remove(li.getGuid());
             }
         }
