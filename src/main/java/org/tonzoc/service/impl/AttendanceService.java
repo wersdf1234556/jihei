@@ -159,7 +159,9 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
             sqlQueryParams2.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
             sqlQueryParams2.add(new SqlQueryParam("personTypeGuid",personType.getGuid(),"eq"));
-            List<PersonModel> enterNum = personService.list(sqlQueryParams2);
+            List<PersonModel> enterNum = personService.list(sqlQueryParams2)
+                    .stream()
+                    .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PersonModel::getIdCard))), ArrayList::new));
             AttendanceStatModel statModel = new AttendanceStatModel();
             statModel.setTypeName(personType.getName());
             statModel.setTotal(String.valueOf(total));
@@ -212,7 +214,9 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             }
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             sqlQueryParams.add(new SqlQueryParam("enterAreaTime", date+"-"+day, "like"));
-            List<PersonModel> personModels = personService.list(sqlQueryParams);
+            List<PersonModel> personModels = personService.list(sqlQueryParams)
+                    .stream()
+                    .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PersonModel::getIdCard))), ArrayList::new));
             AttDateStatModel findMaxAndMinTemp = attendanceMapper.findMaxAndMinTemp(date+"-"+day);
             AttDateStatModel attDateStatModel = new AttDateStatModel();
             attDateStatModel.setDate(String.valueOf(i));
