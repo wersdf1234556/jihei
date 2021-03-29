@@ -19,11 +19,11 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
 
     @Select("SELECT mainTable.guid,p.idCard,mainTable.attTime,mainTable.address FROM attendances mainTable " +
             "LEFT JOIN persons p on mainTable.personGuid=p.guid LEFT JOIN personTypes py on p.personTypeGuid = py.guid " +
-            "WHERE (py.guid= #{personTypeGuid} AND Convert(varchar,mainTable.attTime,120) LIKE '%${attTime}%') ")
-    List<AttendanceModel> listByTypeAndDate(@Param(value = "personTypeGuid") String personTypeGuid, @Param(value = "attTime") String attTime);
+            "WHERE (py.guid= #{personTypeGuid} AND Convert(varchar,mainTable.createdAt,120) LIKE '%${createdAt}%') ")
+    List<AttendanceModel> listByTypeAndDate(@Param(value = "personTypeGuid") String personTypeGuid, @Param(value = "createdAt") String createdAt);
 
-    @Select("SELECT max(temperature) maxTemp,MIN(temperature) minTemp from attendances where Convert(varchar,createdAt,120) LIKE '%${createdAt}%'")
-    AttDateStatModel findMaxAndMinTemp(@Param(value = "createdAt") String createdAt);
+    @Select("SELECT max(temperature) maxTemp,MIN(temperature) minTemp from attendances where Convert(varchar,attTime,120) LIKE '%${attTime}%'")
+    AttDateStatModel findMaxAndMinTemp(@Param(value = "attTime") String attTime);
 
     @Select("SELECT count(DISTINCT(a.personGuid)) attNum from attendances a LEFT JOIN persons p on a.personGuid=p.guid " +
             "LEFT JOIN tenders t on p.tenderGuid=t.guid " +
