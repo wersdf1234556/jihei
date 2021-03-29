@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotOneResultFoundException;
+import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.AttendanceMapper;
 import org.tonzoc.mapper.PersonMapper;
 import org.tonzoc.model.*;
@@ -414,5 +415,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             list.add(attendanceStatModel);
         }
         return list;
+    }
+
+    // 预警信息
+    public List<AttendanceModel> warningInformation(){
+
+        return attendanceMapper.warningInformation();
     }
 }

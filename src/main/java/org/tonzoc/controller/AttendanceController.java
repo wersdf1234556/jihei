@@ -115,4 +115,11 @@ public class AttendanceController extends BaseController {
     public List<AttendanceStatModel> statBySecurity(String date){
         return attendanceService.statBySecurity(date);
     }
+
+    // 预警信息
+    @GetMapping(value = "warningInformation")
+    public List<AttendanceModel> warningInformation(){
+
+        return attendanceService.warningInformation();
+    }
 }

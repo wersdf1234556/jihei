@@ -28,4 +28,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
     List<AttendanceStatModel> countPersonByCity();
     List<AttendanceStatModel> countByRisk();
     List<AttendanceStatModel> statBySecurity(String date);
+
+    // 预警信息
+    List<AttendanceModel> warningInformation();
 }
