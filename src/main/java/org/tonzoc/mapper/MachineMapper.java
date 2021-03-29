@@ -30,7 +30,7 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
     // 查询机械的最新坐标
 
     // 按照机械类别查询机械类型
-    @Select("select machineTypes.name, count(machines.guid) number from machineTypes " +
+    @Select("select machineTypes.name, count(machines.guid) number from (select * from machineTypes where machineCategoryGuid = #{machineCategoryGuid}) machineTypes " +
             "LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid " +
             "LEFT JOIN (select * from machines where machineCategoryGuid = #{machineCategoryGuid}) machines " +
             "on tenderMachineTypes.guid = machines.tenderMachineTypeGuid " +

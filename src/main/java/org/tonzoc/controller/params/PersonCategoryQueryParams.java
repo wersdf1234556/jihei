@@ -12,6 +12,9 @@ public class PersonCategoryQueryParams {
     @Operator(value = "eq", field = "flag")
     private String flag;
 
+    @Operator(value = "eq", field = "display")
+    private String display;
+
     public String getName() {
         return name;
     }
@@ -34,5 +37,13 @@ public class PersonCategoryQueryParams {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 }

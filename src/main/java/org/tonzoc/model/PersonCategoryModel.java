@@ -19,6 +19,8 @@ public class PersonCategoryModel extends BaseModel {
     private Integer flag;
     @Column(value = "colour")
     private String colour; //颜色
+    @Column(value = "display")
+    private String display;
 
     public String getGuid() {
         return guid;
@@ -58,5 +60,13 @@ public class PersonCategoryModel extends BaseModel {
 
     public void setColour(String colour) {
         this.colour = colour;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 }
