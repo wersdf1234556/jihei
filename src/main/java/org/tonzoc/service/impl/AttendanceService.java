@@ -97,9 +97,12 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         List<AttendanceModel> list = attendanceMapper.listAttByCategory(categoryGuid,date);
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
-        List<PersonModel> personModels = personService.list(sqlQueryParams);
-        Integer total=personModels.size();
-
+        List<PersonModel> enterNum = personService.list(sqlQueryParams)
+                .stream()
+                .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PersonModel::getIdCard))), ArrayList::new));
+        Integer total = personTypeService.list(sqlQueryParams).stream()
+                .map(PersonTypeModel::getPersonCount)
+                .reduce(0, Integer::sum);
         Integer attNum=list.size();
         Integer noAttNum = total-attNum;
         Object percent="0.0";
@@ -108,11 +111,13 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         }
         StatTotalModel statTotalModel = new StatTotalModel();
         statTotalModel.setTotal(total.toString());
+        statTotalModel.setEnterNum(String.valueOf(enterNum.size()));
         statTotalModel.setAttNum(attNum.toString());
         statTotalModel.setNoAttNum(noAttNum.toString());
         statTotalModel.setPercent(percent.toString());
         return statTotalModel;
     }
+
     //真实打卡数据统计（左上角）：将5大类别都列出来
     public List<StatTotalModel> statAllCategory(String date) {
         List<StatTotalModel> list = new ArrayList<>();
@@ -121,13 +126,18 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             date= formatter.format( new Date());
         }
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("display","0","eq"));
         List<PersonCategoryModel> personCategoryModels = personCategoryService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonCategoryModel::getSortId)).collect(Collectors.toList());
         for (PersonCategoryModel personCategoryModel:personCategoryModels){
             List<AttendanceModel> attendanceModels = attendanceMapper.listAttByCategory(personCategoryModel.getGuid(),date);
             List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
             sqlQueryParams1.add(new SqlQueryParam("categoryGuid",personCategoryModel.getGuid(),"eq"));
-            List<PersonModel> personModels = personService.list(sqlQueryParams1);
-            Integer total=personModels.size();
+            List<PersonModel> enterNum = personService.list(sqlQueryParams1)
+                    .stream()
+                    .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PersonModel::getIdCard))), ArrayList::new));
+            Integer total = personTypeService.list(sqlQueryParams1).stream()
+                    .map(PersonTypeModel::getPersonCount)
+                    .reduce(0, Integer::sum);
             Integer attNum=attendanceModels.size();
             Integer noAttNum = total-attNum;
             Object percent="0.0";
@@ -138,6 +148,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             statTotalModel.setName(personCategoryModel.getName());
             statTotalModel.setTotal(total.toString());
             statTotalModel.setAttNum(attNum.toString());
+            statTotalModel.setEnterNum(String.valueOf(enterNum.size()));
             statTotalModel.setNoAttNum(noAttNum.toString());
             statTotalModel.setPercent(percent.toString());
             list.add(statTotalModel);

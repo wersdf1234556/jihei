@@ -3,6 +3,7 @@ package org.tonzoc.model.support;
 public class StatTotalModel {
     private String name;
     private String total;
+    private String enterNum;
     private String attNum;
     private String noAttNum;
     private String percent;
@@ -45,5 +46,13 @@ public class StatTotalModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEnterNum() {
+        return enterNum;
+    }
+
+    public void setEnterNum(String enterNum) {
+        this.enterNum = enterNum;
     }
 }
