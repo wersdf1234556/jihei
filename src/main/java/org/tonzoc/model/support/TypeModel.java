@@ -5,6 +5,7 @@ public class TypeModel {
     private String typeId;
     private String typeName;
     private String typeCount;
+    private String typeBalance;
 
     public TypeModel() {
     }
@@ -33,11 +34,21 @@ public class TypeModel {
         this.typeCount = typeCount;
     }
 
+    public String getTypeBalance() {
+        return typeBalance;
+    }
+
+    public void setTypeBalance(String typeBalance) {
+        this.typeBalance = typeBalance;
+    }
+
     @Override
     public String toString() {
         return "TypeModel{" +
-                "typeName='" + typeName + '\'' +
+                "typeId='" + typeId + '\'' +
+                ", typeName='" + typeName + '\'' +
                 ", typeCount='" + typeCount + '\'' +
+                ", typeBalance='" + typeBalance + '\'' +
                 '}';
     }
 }
