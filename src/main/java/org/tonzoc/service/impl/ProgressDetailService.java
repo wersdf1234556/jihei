@@ -42,15 +42,6 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         List<ProgressDetailModel> list = this.list(sqlQueryParams);
         return list;
     }
-    //获取当前年月
-    public String getMonth(){
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date todayDate = calendar.getTime();
-        DateFormat df = new SimpleDateFormat("yyyy-MM");
-        //本月
-        String date = df.format(todayDate);
-        return date;
-    }
 
     public List<ProgressStatModel> statCurrentMonth(String tender,String date,Integer flag){
         /**
@@ -63,12 +54,13 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
          */
         List<ProgressStatModel> list = new ArrayList<>();
         if (date==null||date.isEmpty()){
-            date = getMonth();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            date = formatter.format( new Date());
         }
-        String year = date.substring(0,date.indexOf("-"));
+        System.out.println("date="+date);
+        String month= date.substring(0,date.lastIndexOf("-"));
+        String year = month.substring(0,date.indexOf("-"));
         String pastDate = year+"-01-01";
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-hh");
-        String day= formatter.format( new Date());
 
         //1、查询所有名称
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -78,14 +70,13 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
         }if (tender.contains("B")||tender.contains("b")){
             sign=1;
         }
-        System.out.println(sign);
         sqlQueryParams.add(new SqlQueryParam("flag", sign.toString(), "eq"));
         List<ProgressNameModel> progressNameModels = progressNameService.list(sqlQueryParams);
         progressNameModels=progressNameModels.stream().sorted(Comparator.comparing(ProgressNameModel::getSortId)).collect(Collectors.toList());
         System.out.println(progressNameModels.toString());
         for (ProgressNameModel progressNameModel:progressNameModels){
-            ArrayList<String> dates = new ArrayList<String>();
-            dates.add(date);
+//            ArrayList<String> dates = new ArrayList<String>();
+//            dates.add(month);
             List<ProgressDetailModel> progressDetailModelList = new ArrayList<>();
             BigDecimal currentMonthNum=BigDecimal.ZERO;
             BigDecimal cumulantNum=BigDecimal.ZERO;
@@ -97,55 +88,48 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本年
-                progressDetailModelList=progressDetailMapper.listByProgressNameLteDate(tender,date,progressNameModel.getGuid());
-                dates.clear();
-                dates.add(year);
+                progressDetailModelList=progressDetailMapper.listByProgressNameLikeDate(tender,year,progressNameModel.getGuid());
                 currentMonthNum = progressDetailModelList
                         .stream()
-                        .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }else if (flag==1) {
                 //本年
-                progressDetailModelList=progressDetailMapper.listByProgressNameLteDate(tender,date,progressNameModel.getGuid());
-                dates.clear();
-                dates.add(year);
+                progressDetailModelList=progressDetailMapper.listByProgressNameLikeDate(tender,year,progressNameModel.getGuid());
                 cumulantNum = progressDetailModelList
                         .stream()
-                        .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本月
-                dates.clear();
-                dates.add(date);
+                progressDetailModelList=progressDetailMapper.listByProgressNameLikeDate(tender,month,progressNameModel.getGuid());
                 currentMonthNum = progressDetailModelList
                         .stream()
-                        .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }else if (flag==2) {
+                progressDetailModelList=progressDetailMapper.listByProgressNameLikeDate(tender,month,progressNameModel.getGuid());
                 //本月
                 cumulantNum = progressDetailModelList
                         .stream()
-                        .filter((ProgressDetailModel p)->dates.contains(p.getDate()))
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本日
-                progressDetailModelList=progressDetailMapper.listByCreatedAt(tender,day,progressNameModel.getGuid());
+                progressDetailModelList=progressDetailMapper.listByProgressNameLikeDate(tender,date,progressNameModel.getGuid());
                 currentMonthNum = progressDetailModelList
                         .stream()
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }
 
-            System.out.println(progressNameModel.getName());
-            System.out.println(date);
-            System.out.println(cumulantNum);
-            System.out.println(currentMonthNum);
-            System.out.println(progressNameModel.getName());
+//            System.out.println(progressNameModel.getName());
+//            System.out.println(date);
+//            System.out.println(cumulantNum);
+//            System.out.println(currentMonthNum);
+//            System.out.println(progressNameModel.getName());
             BigDecimal totalNum=progressTotalDataService.listByTenderAndProgressName(tender,progressNameModel.getGuid()).stream()
                     .map(ProgressTotalDataModel::getTotalNum)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
+//            System.out.println("totalNum="+totalNum);
             BigDecimal currentMonthPercent=BigDecimal.ZERO;
             BigDecimal cumulantPercent=BigDecimal.ZERO;
             if (currentMonthNum.compareTo(BigDecimal.ZERO)==0){
