@@ -167,14 +167,14 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
         }
 
         if (returnModel1.getNumber() > 0) {
-            String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel1.getNumber())) * 100);
+            String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel.getNumber())) * 100);
             returnModel4.setProportion(result + "");
         } else {
             returnModel4.setProportion("0");
         }
 
         if (returnModel1.getNumber() > 0) {
-            String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel1.getNumber()) * 100); // 合格数除已整改
+            String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel.getNumber()) * 100); // 合格数除下单总数
             returnModel3.setProportion(result + "");
         } else {
             returnModel3.setProportion("0");
