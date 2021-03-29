@@ -60,13 +60,13 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
 
 
     // 预警信息
-    @Select("select top 50 persons.name as personName, tenders.name as tenderName, attendances.personGuid, attendances.attTime, attendances.temperature, attendances.address" +
-            " from attendances inner join (select personGuid, max(attTime) as attTime from attendances" +
-            " where CONVERT(varchar(10), attTime, 23) = CONVERT(varchar(10), getdate(), 23)" +
-            " group by personGuid) attendances1 on attendances.personGuid = attendances1.personGuid and attendances.attTime = attendances1.attTime" +
-            " inner join persons on persons.guid = attendances.personGuid" +
-            " inner join tenders on persons.tenderguid = tenders.guid" +
-            " order by tenders.name, attTime")
+    @Select("select  top 50 persons.name,tenders.name, attendances.personGuid,attendances.attTime,attendances.temperature,attendances.address from attendances inner join ( " +
+            " select personGuid,max(attTime) as attTime,max(temperature) as temperature from attendances where CONVERT(varchar(10), attTime, 23)=CONVERT(varchar(10), getdate(), 23) " +
+            " group by personGuid) attendances1 on attendances.personGuid=attendances1.personGuid and  attendances.attTime=attendances1.attTime " +
+            " and  attendances.temperature=attendances1.temperature " +
+            " inner join persons on persons.guid=attendances.personGuid " +
+            " inner join tenders on persons.tenderguid=tenders.guid " +
+            " order by tenders.name,attTime")
     List<AttendanceModel> warningInformation();
 
 
