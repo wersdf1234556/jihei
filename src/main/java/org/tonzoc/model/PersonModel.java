@@ -69,8 +69,6 @@ public class PersonModel extends BaseModel{
     @Column(value = "testingAddress")
     private String testingAddress;
 
-
-
     public String getGuid() {
         return guid;
     }

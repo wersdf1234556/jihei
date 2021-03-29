@@ -23,7 +23,7 @@ public class AttendanceQueryParams {
     private String categoryGuid;//人员类别（大类别）
     @Operator(value = "eq", field = "personsTenderGuidtenderGuidTable.personTypeGuid")
     private String personTypeGuid;//人员工种
-    @Operator(value = "eq", field = "personNucleicInfoIsRiskisRiskTable.isRisk")
+    @Operator(value = "eq", field = "personsTenderGuidtenderGuidTable.isRisk")
     private String isRisk;
 
     public String getGuid() {
