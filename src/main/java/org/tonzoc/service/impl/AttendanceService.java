@@ -155,15 +155,23 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
         List<PersonTypeModel> personTypeModels = personTypeService.list(sqlQueryParams).stream().sorted(Comparator.comparing(PersonTypeModel::getSortId)).collect(Collectors.toList());
         for (PersonTypeModel personType :personTypeModels){
-            List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
-            sqlQueryParams1.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
-            sqlQueryParams1.add(new SqlQueryParam("personTypeGuid",personType.getGuid(),"eq"));
-            List<PersonModel> personModels = personService.list(sqlQueryParams1);
+            Integer total = personTypeService.get(personType.getGuid()).getPersonCount();
+            List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
+            sqlQueryParams2.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
+            sqlQueryParams2.add(new SqlQueryParam("personTypeGuid",personType.getGuid(),"eq"));
+            List<PersonModel> enterNum = personService.list(sqlQueryParams2);
             AttendanceStatModel statModel = new AttendanceStatModel();
-            statModel.setTotal(String.valueOf(personModels.size()));
             statModel.setTypeName(personType.getName());
-            List<AttendanceModel> attendanceModels = attendanceMapper.listAttByType(personType.getGuid(),date);
-            statModel.setAttNum(String.valueOf(attendanceModels.size()));
+            statModel.setTotal(String.valueOf(total));
+            statModel.setEnterNum(String.valueOf(enterNum.size()));
+            List<AttendanceModel> attNum = attendanceMapper.listAttByType(personType.getGuid(),date);
+            statModel.setAttNum(String.valueOf(attNum.size()));
+            BigDecimal percent = BigDecimal.valueOf(0.00).setScale(2,BigDecimal.ROUND_HALF_UP);
+            if (total!=0){
+                percent=new BigDecimal((float)(attNum.size())/total*100).setScale(2,BigDecimal.ROUND_HALF_UP);
+            }
+            statModel.setPercent(String.valueOf(percent));
+
             list.add(statModel);
         }
         return list;
@@ -203,12 +211,12 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 day=String.valueOf(i);
             }
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-            sqlQueryParams.add(new SqlQueryParam("createdAt", date+"-"+day, "dateLike"));
-            List<AttendanceModel> attendanceModels = list(sqlQueryParams).stream().sorted(Comparator.comparing(AttendanceModel::getCreatedAt)).collect(Collectors.toList());
+            sqlQueryParams.add(new SqlQueryParam("enterAreaTime", date+"-"+day, "like"));
+            List<PersonModel> personModels = personService.list(sqlQueryParams);
             AttDateStatModel findMaxAndMinTemp = attendanceMapper.findMaxAndMinTemp(date+"-"+day);
             AttDateStatModel attDateStatModel = new AttDateStatModel();
             attDateStatModel.setDate(String.valueOf(i));
-            attDateStatModel.setAttNum(String.valueOf(attendanceModels.size()));
+            attDateStatModel.setEnterNum(String.valueOf(personModels.size()));
             if (findMaxAndMinTemp==null){
                 attDateStatModel.setMaxTemp("0");
                 attDateStatModel.setMinTemp("0");

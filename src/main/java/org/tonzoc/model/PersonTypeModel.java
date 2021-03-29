@@ -22,6 +22,8 @@ public class PersonTypeModel extends BaseModel{
     private String colour; //颜色
     @Column(value = "number")
     private Integer number;
+    @Column(value = "personCount")
+    private Integer personCount;
 
     public String getGuid() {
         return guid;
@@ -80,16 +82,25 @@ public class PersonTypeModel extends BaseModel{
         this.number = number;
     }
 
+    public Integer getPersonCount() {
+        return personCount;
+    }
+
+    public void setPersonCount(Integer personCount) {
+        this.personCount = personCount;
+    }
+
     @Override
     public String toString() {
         return "PersonTypeModel{" +
                 "guid='" + guid + '\'' +
                 ", name='" + name + '\'' +
                 ", sortId=" + sortId +
-                ", colour='" + colour + '\'' +
                 ", categoryGuid='" + categoryGuid + '\'' +
                 ", categoryName='" + categoryName + '\'' +
+                ", colour='" + colour + '\'' +
                 ", number=" + number +
+                ", personCount=" + personCount +
                 '}';
     }
 }

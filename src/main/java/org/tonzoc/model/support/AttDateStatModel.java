@@ -3,7 +3,7 @@ package org.tonzoc.model.support;
 public class AttDateStatModel {
 
     private String date;
-    private String attNum;
+    private String enterNum;
     private String maxTemp;
     private String minTemp;
 
@@ -15,12 +15,12 @@ public class AttDateStatModel {
         this.date = date;
     }
 
-    public String getAttNum() {
-        return attNum;
+    public String getEnterNum() {
+        return enterNum;
     }
 
-    public void setAttNum(String attNum) {
-        this.attNum = attNum;
+    public void setEnterNum(String enterNum) {
+        this.enterNum = enterNum;
     }
 
     public String getMaxTemp() {

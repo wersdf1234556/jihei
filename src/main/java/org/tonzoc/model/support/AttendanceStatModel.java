@@ -3,9 +3,10 @@ package org.tonzoc.model.support;
 public class AttendanceStatModel {
 
     private String typeName;
-    private String total;
-    private String attNum;
-    private String percent;
+    private String total;  //总数
+    private String enterNum;// 进场数
+    private String attNum;//考勤数
+    private String percent; //进场占总人数百分比
 
     public String getTypeName() {
         return typeName;
@@ -29,6 +30,14 @@ public class AttendanceStatModel {
 
     public void setAttNum(String attNum) {
         this.attNum = attNum;
+    }
+
+    public String getEnterNum() {
+        return enterNum;
+    }
+
+    public void setEnterNum(String enterNum) {
+        this.enterNum = enterNum;
     }
 
     public String getPercent() {
