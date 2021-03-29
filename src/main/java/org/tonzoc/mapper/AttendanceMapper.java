@@ -17,10 +17,10 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             "WHERE (mainTable.personGuid = #{personGuid} AND Convert(varchar,createdAt,120) LIKE '%${createdAt}%') ")
     List<AttendanceModel> listBySignAndDate(@Param(value = "personGuid") String personGuid, @Param(value = "createdAt") String createdAt);
 
-    @Select("SELECT mainTable.guid,p.idCard,mainTable.createdAt,mainTable.address FROM attendances mainTable " +
+    @Select("SELECT mainTable.guid,p.idCard,mainTable.attTime,mainTable.address FROM attendances mainTable " +
             "LEFT JOIN persons p on mainTable.personGuid=p.guid LEFT JOIN personTypes py on p.personTypeGuid = py.guid " +
-            "WHERE (py.guid= #{personTypeGuid} AND Convert(varchar,mainTable.createdAt,120) LIKE '%${createdAt}%') ")
-    List<AttendanceModel> listByTypeAndDate(@Param(value = "personTypeGuid") String personTypeGuid, @Param(value = "createdAt") String createdAt);
+            "WHERE (py.guid= #{personTypeGuid} AND Convert(varchar,mainTable.attTime,120) LIKE '%${attTime}%') ")
+    List<AttendanceModel> listByTypeAndDate(@Param(value = "personTypeGuid") String personTypeGuid, @Param(value = "attTime") String attTime);
 
     @Select("SELECT max(temperature) maxTemp,MIN(temperature) minTemp from attendances where Convert(varchar,createdAt,120) LIKE '%${createdAt}%'")
     AttDateStatModel findMaxAndMinTemp(@Param(value = "createdAt") String createdAt);
