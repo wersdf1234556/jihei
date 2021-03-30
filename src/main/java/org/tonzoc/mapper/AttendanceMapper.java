@@ -66,7 +66,7 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " group by personGuid) attendances1 on attendances.personGuid = attendances1.personGuid and attendances.attTime = attendances1.attTime" +
             " inner join persons on persons.guid = attendances.personGuid" +
             " inner join tenders on persons.tenderguid = tenders.guid" +
-            " order by tenders.name, attTime")
+            " order by tenders.name, attTime desc")
     List<AttendanceModel> warningInformation();
 
 
