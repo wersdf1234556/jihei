@@ -44,6 +44,10 @@ public class MachineModel extends BaseModel {
     private String tenderGuid;
     @Column(value = "HGPSID")
     private String HGPSID;
+    @Column(value = "lng")
+    private String lng;
+    @Column(value = "lat")
+    private String lat;
 
     @JoinColumn(value = "name", type = TenderMachineTypeModel.class, leftColumn = "tenderMachineTypeGuid", rightColumn = "guid")
     private String tenderMachineTypeName;
@@ -223,6 +227,22 @@ public class MachineModel extends BaseModel {
         this.HGPSID = HGPSID;
     }
 
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
     @Override
     public String toString() {
         return "MachineModel{" +
@@ -244,6 +264,8 @@ public class MachineModel extends BaseModel {
                 ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
                 ", tenderGuid='" + tenderGuid + '\'' +
                 ", HGPSID='" + HGPSID + '\'' +
+                ", lng='" + lng + '\'' +
+                ", lat='" + lat + '\'' +
                 ", tenderMachineTypeName='" + tenderMachineTypeName + '\'' +
                 ", categoryName='" + categoryName + '\'' +
                 ", tenderName='" + tenderName + '\'' +

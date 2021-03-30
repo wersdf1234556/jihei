@@ -20,6 +20,10 @@ public class MachineQueryParams {
     private String tenderManage;
     @Operator(value = "eq", field = "HGPSID")
     private String HGPSID;
+    @Operator(value = "eq", field = "lng")
+    private String lng;
+    @Operator(value = "eq", field = "lat")
+    private String lat;
 
     public String getGuid() {
         return guid;
@@ -83,5 +87,21 @@ public class MachineQueryParams {
 
     public void setHGPSID(String HGPSID) {
         this.HGPSID = HGPSID;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
     }
 }
