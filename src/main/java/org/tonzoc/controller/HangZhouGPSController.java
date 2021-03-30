@@ -60,8 +60,8 @@ public class HangZhouGPSController extends BaseController {
 
     // 查询轨迹
     @GetMapping(value = "trajectory")
-    public List<HangZhouGPSModel> trajectory(String hDate){
+    public List<HangZhouGPSModel> trajectory(String hGPSID, String startDate, String endDate){
 
-       return hangZhouGPSService.trajectory(hDate);
+       return hangZhouGPSService.trajectory(hGPSID, startDate, endDate);
     }
 }

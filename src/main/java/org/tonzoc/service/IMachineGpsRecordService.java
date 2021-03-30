@@ -10,5 +10,5 @@ public interface IMachineGpsRecordService extends IBaseService<MachineGpsRecordM
     void add();
 
     // 查询轨迹
-    List<MachineGpsRecordModel> trajectory(String hDate);
+    List<MachineGpsRecordModel> trajectory(String hGPSID, String startDate, String endDate);
 }

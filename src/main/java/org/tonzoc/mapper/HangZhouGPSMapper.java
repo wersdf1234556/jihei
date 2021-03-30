@@ -12,6 +12,8 @@ public interface HangZhouGPSMapper extends BaseMapper<HangZhouGPSModel> {
     List<HangZhouGPSModel> history(@Param(value = "hDate") String hDate);
 
     // 查询轨迹
-    @Select("select * from HangZhouGPS where HDate like '%${hDate}%'")
-    List<HangZhouGPSModel> trajectory(@Param(value = "hDate") String hDate);
+    @Select("select * from HangZhouGPS where hGPSID = #{hGPSID} and HDate >= #{startDate} and HDate <= #{endDate}")
+    List<HangZhouGPSModel> trajectory(@Param(value = "hGPSID") String hGPSID,
+                                      @Param(value = "startDate") String startDate,
+                                      @Param(value = "endDate") String endDate);
 }

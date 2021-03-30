@@ -16,8 +16,8 @@ public class HangZhouGPSService extends BaseService<HangZhouGPSModel> implements
 
     // 查询轨迹
     @Override
-    public List<HangZhouGPSModel> trajectory(String hDate){
+    public List<HangZhouGPSModel> trajectory(String hGPSID, String startDate, String endDate){
 
-        return hangZhouGPSMapper.trajectory(hDate);
+        return hangZhouGPSMapper.trajectory(hGPSID, startDate, endDate);
     }
 }

@@ -65,8 +65,8 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
 
     // 查询轨迹
     @Override
-    public List<MachineGpsRecordModel> trajectory(String hDate){
+    public List<MachineGpsRecordModel> trajectory(String hGPSID, String startDate, String endDate){
 
-        return machineGpsRecordMapper.trajectory(hDate);
+        return machineGpsRecordMapper.trajectory(hGPSID, startDate, endDate);
     }
 }

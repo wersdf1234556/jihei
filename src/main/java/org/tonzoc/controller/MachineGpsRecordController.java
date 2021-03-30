@@ -64,8 +64,8 @@ public class MachineGpsRecordController extends BaseController{
 
     // 查询轨迹
     @GetMapping(value = "trajectory")
-    public List<MachineGpsRecordModel> trajectory(String hDate){
+    public List<MachineGpsRecordModel> trajectory(String hGPSID, String startDate, String endDate){
 
-        return machineGpsRecordService.trajectory(hDate);
+        return machineGpsRecordService.trajectory(hGPSID, startDate, endDate);
     }
 }

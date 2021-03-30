@@ -12,6 +12,8 @@ public interface MachineGpsRecordMapper extends BaseMapper<MachineGpsRecordModel
     @Select("select max(latest) from machineGpsRecords")
     Integer latestGps();
 
-    @Select("select * from machineGpsRecords where HDate like '%${hDate}%'")
-    List<MachineGpsRecordModel> trajectory(@Param(value = "hDate") String hDate);
+    @Select("select * from machineGpsRecords where hGPSID = #{hGPSID} and HDate >= #{startDate} and HDate <= #{endDate}")
+    List<MachineGpsRecordModel> trajectory(@Param(value = "hGPSID") String hGPSID,
+                                           @Param(value = "startDate") String startDate,
+                                           @Param(value = "endDate") String endDate);
 }

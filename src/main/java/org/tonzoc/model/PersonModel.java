@@ -67,8 +67,6 @@ public class PersonModel extends BaseModel{
     private String typeName; //工种
     @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
     private String categoryName; //类别
-    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceCode", rightColumn = "code")
-    private String departurePlace; //出发地
 
     public String getGuid() {
         return guid;
@@ -204,14 +202,6 @@ public class PersonModel extends BaseModel{
 
     public void setDeparturePlaceCode(String departurePlaceCode) {
         this.departurePlaceCode = departurePlaceCode;
-    }
-
-    public String getDeparturePlace() {
-        return departurePlace;
-    }
-
-    public void setDeparturePlace(String departurePlace) {
-        this.departurePlace = departurePlace;
     }
 
     public String getRemark() {
