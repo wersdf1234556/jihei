@@ -34,10 +34,10 @@ public class MachineProvider {
         return stringBuilder.toString();
     }
 
-    // 查询重点机械
+    // 查询重点机械数量
     public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, count(machines.guid) number from machineTypes" +
+        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, machineTypes.guid proportion, count(machines.guid) number from machineTypes" +
                 " LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid ");
         if ("".equals(tenderGuid) || tenderGuid == null) {
             stringBuilder.append(" LEFT JOIN machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
@@ -46,7 +46,7 @@ public class MachineProvider {
                     " where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
         }
 
-        stringBuilder.append(" where machineTypes.highlight = 1 GROUP BY machineTypes.name");
+        stringBuilder.append(" where machineTypes.highlight = 1 GROUP BY machineTypes.name, machineTypes.guid");
 
         return stringBuilder.toString();
     }
@@ -60,6 +60,19 @@ public class MachineProvider {
                 "where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid " +
                 "GROUP BY tenderMachineTypes.name");
 
+        return stringBuilder.toString();
+    }
+
+    // 查询重点机械
+    public String importantByMachineType(@Param(value = "machineTypeGuid") String machineTypeGuid) {
+
+        StringBuilder stringBuilder = new StringBuilder("select machines.* from machines LEFT JOIN tenderMachineTypes on machines.tenderMachineTypeGuid = tenderMachineTypes.guid " +
+                " LEFT JOIN machineTypes on tenderMachineTypes.machineTypeGuid = machineTypes.guid where machineTypes.highlight = 1");
+        if (machineTypeGuid != null && !"".equals(machineTypeGuid)) {
+
+            stringBuilder.append(" and machineTypeGuid + '" + machineTypeGuid + "'");
+
+        }
         return stringBuilder.toString();
     }
 }

@@ -14,18 +14,12 @@ public class PersonModel extends BaseModel{
     private String tenderGuid; //标段
     @Column(value = "personTypeGuid")
     private String personTypeGuid; //工种guid
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
-    private String tenderName; //标段
-    @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
-    private String typeName; //工种
     @Column(value = "idCard")
     private String idCard;
     @Column(value = "password")
     private String password; //手机端密码，明文
     @Column(value = "categoryGuid")
     private String categoryGuid; //类别
-    @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
-    private String categoryName; //类别
     @Column(value = "mobile")
     private String mobile; //手机号
     @Column(value = "enterAreaTime")
@@ -40,8 +34,6 @@ public class PersonModel extends BaseModel{
     private String photo; //人员照片
     @Column(value = "departurePlaceCode")
     private String departurePlaceCode; //出发地code
-    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceCode", rightColumn = "code")
-    private String departurePlace; //出发地
     @Column(value = "remark")
     private String remark;//补充地址信息
     @Column(value = "isRisk")
@@ -68,6 +60,15 @@ public class PersonModel extends BaseModel{
     private String testingOrgan;
     @Column(value = "testingAddress")
     private String testingAddress;
+
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName; //标段
+    @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
+    private String typeName; //工种
+    @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
+    private String categoryName; //类别
+    @JoinColumn(value = "name", type = AreaDataModel.class, leftColumn = "departurePlaceCode", rightColumn = "code")
+    private String departurePlace; //出发地
 
     public String getGuid() {
         return guid;

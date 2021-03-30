@@ -98,4 +98,11 @@ public class MachineController extends BaseController {
 
         return machineService.machineTypeAndNumber(machineCategoryGuid);
     }
+
+    // 查询重点机械
+    @GetMapping(value = "importantByMachineType")
+    public List<MachineModel> importantByMachineType(String machineTypeGuid){
+
+        return machineService.importantByMachineType(machineTypeGuid);
+    }
 }

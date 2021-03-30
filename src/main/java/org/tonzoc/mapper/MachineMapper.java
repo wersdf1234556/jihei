@@ -27,8 +27,6 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
     @SelectProvider(type = MachineProvider.class, method = "allImportantMachine")
     List<ReturnModel> allImportantMachine(@Param(value = "tenderGuid") String tenderGuid);
 
-    // 查询机械的最新坐标
-
     // 按照机械类别查询机械类型
     @Select("select machineTypes.name, count(machines.guid) number from (select * from machineTypes where machineCategoryGuid = #{machineCategoryGuid}) machineTypes " +
             "LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid " +
@@ -36,4 +34,8 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
             "on tenderMachineTypes.guid = machines.tenderMachineTypeGuid " +
             "GROUP BY machineTypes.name")
     List<ReturnModel> machineTypeAndNumber(String machineCategoryGuid);
+
+    // 查询重点机械
+    @SelectProvider(type = MachineProvider.class, method = "importantByMachineType")
+    List<MachineModel> importantByMachineType(@Param(value = "machineTypeGuid") String machineTypeGuid);
 }

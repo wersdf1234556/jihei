@@ -28,4 +28,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
 
     // 按照机械类别查询机械类型
     List<ReturnListModel> machineTypeAndNumber(String machineCategoryGuid);
+
+    // 查询重点机械
+    List<MachineModel> importantByMachineType(String machineTypeGuid);
 }

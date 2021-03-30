@@ -77,10 +77,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
     @Override
     public List<ReturnModel> importantMachine(String tenderGuid) {
 
-        List<ReturnModel> list = machineMapper.selectMachineTypeNumber(tenderGuid);
-        Integer allNumber = machineMapper.allNumber(tenderGuid);
-
-        return this.machinePublic(allNumber, list);
+        return machineMapper.selectMachineTypeNumber(tenderGuid);
     }
 
     // 全标段的重点机械
@@ -114,5 +111,12 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         list.add(returnListModel);
 
         return list;
+    }
+
+    // 查询重点机械
+    @Override
+    public List<MachineModel> importantByMachineType(String machineTypeGuid){
+
+        return machineMapper.importantByMachineType(machineTypeGuid);
     }
 }
