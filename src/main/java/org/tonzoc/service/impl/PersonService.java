@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.ApprovalHelper;
+import org.tonzoc.common.ExcelPersonHelper;
 import org.tonzoc.common.FileHelper;
 import org.tonzoc.configuration.IntelliSiteProperties;
 import org.tonzoc.exception.NotFoundException;
@@ -29,6 +30,9 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     private IntelliSiteProperties intelliSiteProperties;
     @Autowired
     private FileHelper fileHelper;
+
+    @Autowired
+    private ExcelPersonHelper excelPersonHelper;
 
     public List<String> listAreaCode(){
         return personMapper.listAreaCode();
@@ -135,5 +139,11 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
         intelliSiteProperties.setFileUrl("/");
     }
 
+    // 模板导入
+    @Override
+    public void addPerson(MultipartFile file) throws Exception {
+
+        excelPersonHelper.excel(file);
+    }
 
 }

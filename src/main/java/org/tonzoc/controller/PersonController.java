@@ -69,4 +69,12 @@ public class PersonController extends BaseController {
     public void upFile(String guid, MultipartFile file, Integer flag) {
         personService.upFile(guid,file,flag);
     }
+
+
+    // 模板导入
+    @PostMapping(value = "addPerson")
+    public void addPerson(MultipartFile file) throws Exception {
+
+        personService.addPerson(file);
+    }
 }

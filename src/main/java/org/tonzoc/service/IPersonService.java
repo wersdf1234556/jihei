@@ -14,4 +14,7 @@ public interface IPersonService extends IBaseService<PersonModel> {
     void insertStack(PersonModel personModel) throws Exception;
     void updateStack(PersonModel personModel) throws Exception;
     void upFile(String guid, MultipartFile file, Integer flag);
+
+    // 模板导入
+    void addPerson(MultipartFile file) throws Exception;
 }

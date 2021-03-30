@@ -61,6 +61,12 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private ApprovalHelper approvalHelper;
 
+    // 添加
+    @Override
+    public void add(){
+
+    }
+
     // 查询字符串转时间
     @Override
     public List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list) {

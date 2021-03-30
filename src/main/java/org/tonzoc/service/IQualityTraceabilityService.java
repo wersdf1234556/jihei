@@ -11,6 +11,9 @@ import java.util.Map;
 
 public interface IQualityTraceabilityService extends IBaseService<QualityTraceabilityModel> {
 
+    // 添加
+    void add();
+
     // 查询字符串转时间
     List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list);
 

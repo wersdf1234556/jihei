@@ -17,5 +17,7 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
     @Select("SELECT DISTINCT departurePlaceCode from persons")
     List<String> listAreaCode();
 
+    @Select("select count(guid) from persons where idCard = #{idCard}")
+    Integer countByIdCard(@Param(value = "idCard") String idCard);
 
 }
