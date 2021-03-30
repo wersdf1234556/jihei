@@ -57,4 +57,11 @@ public class HangZhouGPSController extends BaseController {
 
         hangZhouGPSService.removeMany(guids);
     }
+
+    // 查询轨迹
+    @GetMapping(value = "trajectory")
+    public List<HangZhouGPSModel> trajectory(String hDate){
+
+       return hangZhouGPSService.trajectory(hDate);
+    }
 }

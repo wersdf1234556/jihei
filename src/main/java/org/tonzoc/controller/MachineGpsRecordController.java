@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.MachineGpsRecordQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.HangZhouGPSModel;
 import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.service.IMachineGpsRecordService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -59,5 +60,12 @@ public class MachineGpsRecordController extends BaseController{
     public void add(){
 
         machineGpsRecordService.add();
+    }
+
+    // 查询轨迹
+    @GetMapping(value = "trajectory")
+    public List<MachineGpsRecordModel> trajectory(String hDate){
+
+        return machineGpsRecordService.trajectory(hDate);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.tonzoc.common.TimeHelper;
 import org.tonzoc.mapper.HangZhouGPSMapper;
 import org.tonzoc.mapper.MachineCategoryMapper;
+import org.tonzoc.mapper.MachineGpsRecordMapper;
 import org.tonzoc.model.HangZhouGPSModel;
 import org.tonzoc.model.MachineGpsRecordModel;
 import org.tonzoc.service.IHangZhouGPSService;
@@ -18,7 +19,7 @@ import java.util.List;
 public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> implements IMachineGpsRecordService {
 
     @Autowired
-    private MachineCategoryMapper machineCategoryMapper;
+    private MachineGpsRecordMapper machineGpsRecordMapper;
 
     @Autowired
     private HangZhouGPSMapper hangZhouGPSMapper;
@@ -27,6 +28,7 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
     private IHangZhouGPSService hangZhouGPSService;
 
     // 添加GPS进数据中
+    @Override
     public void add(){
 
         List<MachineGpsRecordModel> list1 = new ArrayList<>();
@@ -58,5 +60,13 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
         }
 
         this.saveMany(list1);
+    }
+
+
+    // 查询轨迹
+    @Override
+    public List<MachineGpsRecordModel> trajectory(String hDate){
+
+        return machineGpsRecordMapper.trajectory(hDate);
     }
 }
