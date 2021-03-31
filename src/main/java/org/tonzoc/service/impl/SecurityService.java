@@ -166,18 +166,18 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
             returnModel4.setNumber(securityMapper.countStatusByDate("unFinish", date));
         }
 
-        if (returnModel1.getNumber() > 0) {
+        if (returnModel.getNumber() > 0) {
             String result = numberFormat.format((1 - ((double) returnModel3.getNumber() / (double) returnModel.getNumber())) * 100);
             returnModel4.setProportion(result + "");
         } else {
             returnModel4.setProportion("0");
         }
 
-        if (returnModel1.getNumber() > 0) {
+        if (returnModel.getNumber() > 0) {
             String result = numberFormat.format(((double) returnModel3.getNumber() / (double) returnModel.getNumber()) * 100); // 合格数除下单总数
             returnModel3.setProportion(result + "");
         } else {
-            returnModel3.setProportion("0");
+            returnModel3.setProportion("100");
         }
 
         returnModel5.setNumber(returnModel3.getNumber());
