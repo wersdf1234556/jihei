@@ -18,14 +18,17 @@ public class ProgressWeatherModel extends BaseModel {
     private String dayTemp;
     @Column(value = "nightTemp")
     private String nightTemp;
+    @Column(value = "warningType")
+    private Integer warningType;
 
-    public ProgressWeatherModel(String guid, String date, String weather, String balance, String dayTemp, String nightTemp) {
+    public ProgressWeatherModel(String guid, String date, String weather, String balance, String dayTemp, String nightTemp, Integer warningType) {
         this.guid = guid;
         this.date = date;
         this.weather = weather;
         this.balance = balance;
         this.dayTemp = dayTemp;
         this.nightTemp = nightTemp;
+        this.warningType = warningType;
     }
 
     public String getGuid() {
@@ -76,6 +79,14 @@ public class ProgressWeatherModel extends BaseModel {
         this.nightTemp = nightTemp;
     }
 
+    public Integer getWarningType() {
+        return warningType;
+    }
+
+    public void setWarningType(Integer warningType) {
+        this.warningType = warningType;
+    }
+
     @Override
     public String toString() {
         return "ProgressWeatherModel{" +
@@ -85,6 +96,7 @@ public class ProgressWeatherModel extends BaseModel {
                 ", balance='" + balance + '\'' +
                 ", dayTemp='" + dayTemp + '\'' +
                 ", nightTemp='" + nightTemp + '\'' +
+                ", warningType=" + warningType +
                 '}';
     }
 }
