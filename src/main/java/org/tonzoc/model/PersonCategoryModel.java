@@ -21,6 +21,8 @@ public class PersonCategoryModel extends BaseModel {
     private String colour; //颜色
     @Column(value = "display")
     private String display;
+    @Column(value = "formattedName")
+    private String formattedName;
 
     public String getGuid() {
         return guid;
@@ -68,5 +70,13 @@ public class PersonCategoryModel extends BaseModel {
 
     public void setDisplay(String display) {
         this.display = display;
+    }
+
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
     }
 }
