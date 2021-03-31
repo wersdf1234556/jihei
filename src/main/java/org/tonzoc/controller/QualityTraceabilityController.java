@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.common.FileHelper;
-import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.QualityTraceabilityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -20,8 +19,6 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +64,7 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws ParseException {
+    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
 
 
         this.qualityTraceabilityService.add(qualityTraceabilityModel, accounType);
