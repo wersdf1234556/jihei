@@ -12,7 +12,7 @@ import java.util.Map;
 public interface IQualityTraceabilityService extends IBaseService<QualityTraceabilityModel> {
 
     // 添加
-    void add(QualityTraceabilityModel qualityTraceabilityModel)throws ParseException;
+    void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception;
 
     // 查询字符串转时间
     List<QualityTraceabilityModel> selected(List<QualityTraceabilityModel> list);
@@ -51,10 +51,10 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     void submit(String qualityTraceabilityGuid);
 
     // 审批
-    void approval(String qualityTraceabilityGuid, Integer flag);
+    void approval(String qualityTraceabilityGuid, Integer flag, String currentTenderGuid);
 
     // 多条提交或审批
-    void batchApproval(String qualityTraceabilityGuid, Integer flag);
+    void batchApproval(String qualityTraceabilityGuid, Integer flag, String currentTenderGuid);
 
     // 修改时询问是否能修改
     void updateStack(QualityTraceabilityModel qualityTraceabilityModel, UserModel userModel) throws Exception;

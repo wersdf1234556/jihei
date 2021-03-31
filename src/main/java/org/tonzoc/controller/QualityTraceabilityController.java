@@ -67,10 +67,10 @@ public class QualityTraceabilityController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
+    public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws ParseException {
 
 
-        this.qualityTraceabilityService.add(qualityTraceabilityModel);
+        this.qualityTraceabilityService.add(qualityTraceabilityModel, accounType);
     }
 
     @PutMapping(value = "{guid}")
@@ -155,16 +155,16 @@ public class QualityTraceabilityController extends BaseController {
 
     // 审批
     @PostMapping(value = "approval")
-    public void approval(String qualityTraceabilityGuid, Integer flag) {
+    public void approval(String qualityTraceabilityGuid, Integer flag, String currentTenderGuid) {
 
-        qualityTraceabilityService.approval(qualityTraceabilityGuid, flag);
+        qualityTraceabilityService.approval(qualityTraceabilityGuid, flag, currentTenderGuid);
     }
 
     // 批量审批
     @PostMapping(value = "batchApproval")
-    public void batchApproval(String qualityTraceabilityGuid, Integer flag) {
+    public void batchApproval(String qualityTraceabilityGuid, Integer flag, String currentTenderGuid) {
 
-        qualityTraceabilityService.batchApproval(qualityTraceabilityGuid, flag);
+        qualityTraceabilityService.batchApproval(qualityTraceabilityGuid, flag, currentTenderGuid);
     }
 
     // 标段和类型数量

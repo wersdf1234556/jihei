@@ -63,7 +63,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 添加
     @Override
-    public void add(QualityTraceabilityModel qualityTraceabilityModel)throws ParseException{
+    public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
         String guid = fileHelper.newGUID();
         qualityTraceabilityModel.setGuid(guid);
         Map<String, String> map = this.qrcode(guid);
@@ -73,8 +73,24 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
         }
 
-        qualityTraceabilityModel.setStatus("unSubmit");
-        qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
+        if ("".equals(accounType) || accounType == null || accounType == "0") {
+
+            qualityTraceabilityModel.setStatus("unSubmit");
+            qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
+
+        }else if (accounType == "2") {
+
+            qualityTraceabilityModel.setStatus("finish");
+            qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "2"));
+
+        }else if (accounType == "3") {
+            qualityTraceabilityModel.setStatus("finish");
+            qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "3"));
+
+        }else {
+
+            throw new Exception("不能添加");
+        }
 
         this.save(qualityTraceabilityModel);
     }
@@ -224,12 +240,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         return false;
     }
 
-    //提交
+    // 提交
     @Override
     public void submit(String qualityTraceabilityGuid){
         QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
-        String nextTenderGuids = approvalHelper.getNextTender(qualityTraceabilityModel.getCurrentTenderGuid());
-        System.out.println("nextTenderGuids="+nextTenderGuids);
+        String nextTenderGuids = approvalHelper.getNextSupervisor(qualityTraceabilityModel.getCurrentTenderGuid(), "2");
         String approvalTime = "";
         if (qualityTraceabilityModel.getStatus().equals("unSubmit")){
 
@@ -240,24 +255,19 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         qualityTraceabilityMapper.updateStatus("submitted", approvalTime, nextTenderGuids, qualityTraceabilityGuid);
     }
 
-    //审批
+    // 审批
     @Override
-    public void approval(String qualityTraceabilityGuid, Integer flag) {
+    public void approval(String qualityTraceabilityGuid, Integer flag, String currentTenderGuid) {
 
         QualityTraceabilityModel qualityTraceabilityModel = get(qualityTraceabilityGuid);
 
-        String supervisorGuid = approvalHelper.getNextTender(qualityTraceabilityModel.getTenderGuid());
-        String status = "submitted";
-        String currentTenderGuid = "";
+        String status = "";
         if (flag == 1){
             //修改该条状态为已结束
             status = "finish";
-            currentTenderGuid = "*";
-        }else if (flag == 2){
-            if (qualityTraceabilityModel.getCurrentTenderGuid().equals("*") && qualityTraceabilityModel.getStatus().equals("finish")){
+        }else if (flag == 2 && qualityTraceabilityModel.getStatus().equals("finish")){
 
-                currentTenderGuid = supervisorGuid;
-            }
+            status = "submitted";
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -266,7 +276,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 多条提交或审批
     @Override
-    public void batchApproval(String qualityTraceabilityModels, Integer flag) {
+    public void batchApproval(String qualityTraceabilityModels, Integer flag, String currentTenderGuid) {
         String[] split = qualityTraceabilityModels.split(",");//以逗号分割
         for (String primaryKey:split){
             if (flag == 0){ // 提交
@@ -274,7 +284,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
                 this.submit(primaryKey);
             }else if (flag == 1 || flag == 2){
 
-                this.approval(primaryKey, flag);
+                this.approval(primaryKey, flag, currentTenderGuid);
             }
         }
     }

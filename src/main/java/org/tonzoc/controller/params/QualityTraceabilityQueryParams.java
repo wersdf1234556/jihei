@@ -7,6 +7,9 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "guid")
     private String guid;
 
+    @Operator(value = "eq", field = "name")
+    private String name;
+
     @Operator(value = "eq", field = "currentTime")
     private String currentDate;
 
@@ -124,5 +127,13 @@ public class QualityTraceabilityQueryParams {
 
     public void setSubTypeGuid(String subTypeGuid) {
         this.subTypeGuid = subTypeGuid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

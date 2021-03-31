@@ -23,7 +23,7 @@ public class ApprovalHelper {
         return allNextTenderGuids;
     }
 
-    // 查询上级标段
+    // 查询上级监理或者试验
     public String getNextSupervisor(String tenderGuid, String accounType){
         String allNextTenderGuids = "";
         List<String> tenderGuids = userMapper.listByTenderManageAndAccounType(tenderGuid, accounType);
