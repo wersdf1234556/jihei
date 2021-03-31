@@ -17,6 +17,8 @@ public class TenderMachineTypeModel extends BaseModel {
     private String name;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "defaultNum")
+    private String defaultNum;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -80,5 +82,13 @@ public class TenderMachineTypeModel extends BaseModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDefaultNum() {
+        return defaultNum;
+    }
+
+    public void setDefaultNum(String defaultNum) {
+        this.defaultNum = defaultNum;
     }
 }

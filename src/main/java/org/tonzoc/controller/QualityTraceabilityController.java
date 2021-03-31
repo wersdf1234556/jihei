@@ -69,18 +69,8 @@ public class QualityTraceabilityController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel) throws ParseException {
 
-        String guid = fileHelper.newGUID();
-        qualityTraceabilityModel.setGuid(guid);
-        Map<String, String> map = this.qrcode(guid);
-        qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
-        if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
-            qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
-        }
-
-        qualityTraceabilityModel.setStatus("unSubmit");
-        qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
-        this.qualityTraceabilityService.save(qualityTraceabilityModel);
+        this.qualityTraceabilityService.add(qualityTraceabilityModel);
     }
 
     @PutMapping(value = "{guid}")

@@ -7,7 +7,8 @@ import java.util.List;
 public class ReturnListModel {
 
     private String name;
-    private List<ReturnModel> list;
+    private List<ReturnModel> listReturn;
+    private List<ReturnMachineModel> listMachine;
 
     public ReturnListModel() {
     }
@@ -20,19 +21,28 @@ public class ReturnListModel {
         this.name = name;
     }
 
-    public List<ReturnModel> getList() {
-        return list;
+    public List<ReturnModel> getListReturn() {
+        return listReturn;
     }
 
-    public void setList(List<ReturnModel> list) {
-        this.list = list;
+    public void setListReturn(List<ReturnModel> listReturn) {
+        this.listReturn = listReturn;
+    }
+
+    public List<ReturnMachineModel> getListMachine() {
+        return listMachine;
+    }
+
+    public void setListMachine(List<ReturnMachineModel> listMachine) {
+        this.listMachine = listMachine;
     }
 
     @Override
     public String toString() {
         return "ReturnListModel{" +
                 "name='" + name + '\'' +
-                ", list=" + list +
+                ", listReturn=" + listReturn +
+                ", listMachine=" + listMachine +
                 '}';
     }
 }

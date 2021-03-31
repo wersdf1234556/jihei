@@ -11,6 +11,7 @@ import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.support.ReturnListModel;
+import org.tonzoc.model.support.ReturnMachineModel;
 import org.tonzoc.service.IMachineService;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.service.ITenderMachineTypeService;
@@ -80,7 +81,7 @@ public class MachineController extends BaseController {
 
     // 重点机械
     @GetMapping(value = "importantMachine")
-    public List<ReturnModel> importantMachine (String tenderGuid) {
+    public List<ReturnMachineModel> importantMachine (String tenderGuid) {
 
         return machineService.importantMachine(tenderGuid);
     }

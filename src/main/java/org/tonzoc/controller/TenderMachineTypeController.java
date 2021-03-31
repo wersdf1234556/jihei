@@ -7,6 +7,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.TenderMachineTypeQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.MachineTypeModel;
 import org.tonzoc.model.TenderMachineTypeModel;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.service.ITenderMachineTypeService;
@@ -40,7 +41,10 @@ public class TenderMachineTypeController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid TenderMachineTypeModel tenderMachineTypeModel) {
-        // tenderMachineTypeModel.setName(machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid()).getName());
+        MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
+        tenderMachineTypeModel.setName(machineTypeModel.getName());
+        tenderMachineTypeModel.setSortId(machineTypeModel.getSortId());
+
         this.tenderMachineTypeService.save(tenderMachineTypeModel);
     }
 

@@ -5,6 +5,7 @@ import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.support.ReturnListModel;
+import org.tonzoc.model.support.ReturnMachineModel;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
     List<ReturnModel> machineSurvey(String tenderGuid);
 
     // 重点机械
-    List<ReturnModel> importantMachine(String tenderGuid);
+    List<ReturnMachineModel> importantMachine(String tenderGuid);
 
     // 全标段的重点机械
     List<TenderModel> allImportantMachine();

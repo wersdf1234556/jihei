@@ -63,8 +63,20 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 添加
     @Override
-    public void add(){
+    public void add(QualityTraceabilityModel qualityTraceabilityModel)throws ParseException{
+        String guid = fileHelper.newGUID();
+        qualityTraceabilityModel.setGuid(guid);
+        Map<String, String> map = this.qrcode(guid);
+        qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
+        if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
+            qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
+        }
+
+        qualityTraceabilityModel.setStatus("unSubmit");
+        qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
+
+        this.save(qualityTraceabilityModel);
     }
 
     // 查询字符串转时间

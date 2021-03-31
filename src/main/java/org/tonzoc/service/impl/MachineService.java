@@ -9,6 +9,7 @@ import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.TenderModel;
 import org.tonzoc.model.support.ReturnListModel;
+import org.tonzoc.model.support.ReturnMachineModel;
 import org.tonzoc.service.IMachineCategoryService;
 import org.tonzoc.service.IMachineService;
 
@@ -75,7 +76,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
     // 重点机械
     @Override
-    public List<ReturnModel> importantMachine(String tenderGuid) {
+    public List<ReturnMachineModel> importantMachine(String tenderGuid) {
 
         return machineMapper.selectMachineTypeNumber(tenderGuid);
     }
@@ -88,7 +89,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
         for (TenderModel li:list1) {
 
-            li.setList(machineMapper.allImportantMachine(li.getGuid()));
+            li.setListMachine(machineMapper.allImportantMachine(li.getGuid()));
         }
         return list1;
     }
@@ -107,7 +108,7 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
         List<ReturnListModel> list = new ArrayList<>();
         ReturnListModel returnListModel = new ReturnListModel();
         returnListModel.setName(machineCategoryService.get(machineCategoryGuid).getName());
-        returnListModel.setList(machineMapper.machineTypeAndNumber(machineCategoryGuid));
+        returnListModel.setListMachine(machineMapper.machineTypeAndNumber(machineCategoryGuid));
         list.add(returnListModel);
 
         return list;

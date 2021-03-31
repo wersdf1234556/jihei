@@ -4,6 +4,7 @@ import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
+import org.tonzoc.model.support.ReturnMachineModel;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,7 +29,8 @@ public class TenderModel extends BaseModel {
     @Column(value = "organization")
     private String organization; // 单位名称
 
-    private List<ReturnModel> list; //返回值用
+    private List<ReturnModel> list; // 质量使用
+    private List<ReturnMachineModel> listMachine; //机械返回值用
 
     public TenderModel() {
     }
@@ -89,6 +91,14 @@ public class TenderModel extends BaseModel {
         this.organization = organization;
     }
 
+    public List<ReturnMachineModel> getListMachine() {
+        return listMachine;
+    }
+
+    public void setListMachine(List<ReturnMachineModel> listMachine) {
+        this.listMachine = listMachine;
+    }
+
     public List<ReturnModel> getList() {
         return list;
     }
@@ -96,7 +106,6 @@ public class TenderModel extends BaseModel {
     public void setList(List<ReturnModel> list) {
         this.list = list;
     }
-
 
     @Override
     public String toString() {
@@ -109,6 +118,7 @@ public class TenderModel extends BaseModel {
                 ", scale=" + scale +
                 ", organization='" + organization + '\'' +
                 ", list=" + list +
+                ", listMachine=" + listMachine +
                 '}';
     }
 }
