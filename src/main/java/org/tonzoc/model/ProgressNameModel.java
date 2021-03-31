@@ -20,6 +20,8 @@ public class ProgressNameModel extends BaseModel{
     private Integer sortId;
     @Column(value = "flag")
     private Integer flag;
+    @Column(value = "formattedName")
+    private String formattedName;
 
     public String getGuid() {
         return guid;
@@ -59,5 +61,13 @@ public class ProgressNameModel extends BaseModel{
 
     public void setFlag(Integer flag) {
         this.flag = flag;
+    }
+
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
     }
 }

@@ -39,4 +39,13 @@ public class BuildSafetyStatModel {
     public void setPercentTwo(String percentTwo) {
         this.percentTwo = percentTwo;
     }
+
+    @Override
+    public String toString() {
+        return "BuildSafetyStatModel{" +
+                "name='" + name + '\'' +
+                ", percentOne='" + percentOne + '\'' +
+                ", percentTwo='" + percentTwo + '\'' +
+                '}';
+    }
 }

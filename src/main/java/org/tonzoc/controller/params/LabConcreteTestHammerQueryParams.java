@@ -3,10 +3,10 @@ package org.tonzoc.controller.params;
 import org.tonzoc.annotation.Operator;
 
 public class LabConcreteTestHammerQueryParams {
-    @Operator(value = "gte", field = "testDate")
+    @Operator(value = "gte", field = "detectionTime")
     private String startDate;
 
-    @Operator(value = "lte", field = "testDate")
+    @Operator(value = "lte", field = "detectionTime")
     private String endDate;
 
     @Operator(value = "like", field = "sectionName")

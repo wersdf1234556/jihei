@@ -153,7 +153,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
 
             ProgressStatModel progressStatModel = new ProgressStatModel();
             progressStatModel.setProgressNameGuid(progressNameModel.getGuid());
-            progressStatModel.setProgressName(progressNameModel.getName());
+            progressStatModel.setProgressName(progressNameModel.getFormattedName());
             progressStatModel.setCurrentMonthNum(currentMonthNum.toString());
             progressStatModel.setCurrentMonthPercent(currentMonthPercent.toString());
             progressStatModel.setCumulantNum(cumulantNum.toString());
