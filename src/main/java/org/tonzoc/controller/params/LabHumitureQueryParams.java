@@ -3,10 +3,10 @@ package org.tonzoc.controller.params;
 import org.tonzoc.annotation.Operator;
 
 public class LabHumitureQueryParams {
-    @Operator(value = "gte", field = "testDate")
+    @Operator(value = "gte", field = "dataCreationTime")
     private String startDate;
 
-    @Operator(value = "lte", field = "testDate")
+    @Operator(value = "lte", field = "dataCreationTime")
     private String endDate;
 
     @Operator(value = "like", field = "sectionName")

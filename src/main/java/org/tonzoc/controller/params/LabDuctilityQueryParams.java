@@ -3,10 +3,10 @@ package org.tonzoc.controller.params;
 import org.tonzoc.annotation.Operator;
 
 public class LabDuctilityQueryParams {
-    @Operator(value = "gte", field = "dateCreationTime")
+    @Operator(value = "gte", field = "testDate")
     private String startDate;
 
-    @Operator(value = "lte", field = "dateCreationTime")
+    @Operator(value = "lte", field = "testDate")
     private String endDate;
 
     @Operator(value = "like", field = "sectionName")

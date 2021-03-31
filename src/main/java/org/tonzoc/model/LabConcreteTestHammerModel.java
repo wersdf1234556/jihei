@@ -134,7 +134,7 @@ public class LabConcreteTestHammerModel extends BaseModel {
         this.componentNumber = componentNumber;
     }
 
-    @JsonProperty(value = "detectionTime")
+    @JsonProperty(value = "detection_time")
     public void setDetectionTime(String detectionTime) {
         this.detectionTime = detectionTime;
     }
