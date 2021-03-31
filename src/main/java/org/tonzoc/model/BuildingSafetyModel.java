@@ -17,6 +17,8 @@ public class BuildingSafetyModel extends BaseModel{
     @Column(value = "createdAt")
     @NotInsertColumn
     private Date createdAt;
+    @Column(value = "formattedName")
+    private String formattedName;
 
     @Column(value = "balance")
     private BigDecimal balance;
@@ -63,5 +65,13 @@ public class BuildingSafetyModel extends BaseModel{
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
     }
 }

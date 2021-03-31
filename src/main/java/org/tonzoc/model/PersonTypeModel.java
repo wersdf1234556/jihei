@@ -24,6 +24,8 @@ public class PersonTypeModel extends BaseModel{
     private Integer number;
     @Column(value = "personCount")
     private Integer personCount;
+    @Column(value = "formattedName")
+    private String formattedName;
 
     public String getGuid() {
         return guid;
@@ -88,6 +90,14 @@ public class PersonTypeModel extends BaseModel{
 
     public void setPersonCount(Integer personCount) {
         this.personCount = personCount;
+    }
+
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
     }
 
     @Override
