@@ -134,7 +134,7 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         List<BuildingSafetyModel> safetys = buildingSafetyService.list(sqlQueryParams).stream().sorted(Comparator.comparing(BuildingSafetyModel::getSortId)).collect(Collectors.toList());
         for (BuildingSafetyModel buildingSafetyModel : safetys) {
             BuildSafetyStatModel buildSafetyStatModel = new BuildSafetyStatModel();
-            buildSafetyStatModel.setName(buildingSafetyModel.getName());
+            buildSafetyStatModel.setName(buildingSafetyModel.getFormattedName());
             if (flag == 0) {
                 //往年
                 totalBalance = buildingSafetyDetailService.listByLtDate(pastDate, buildingSafetyModel.getGuid()).stream()
