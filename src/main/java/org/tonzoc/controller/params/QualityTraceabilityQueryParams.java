@@ -40,6 +40,8 @@ public class QualityTraceabilityQueryParams {
     @Operator(value = "eq", field = "subTypeGuid")
     private String subTypeGuid;
 
+    @Operator(value = "eq", field = "currentTenderGuid")
+    private String currentTenderGuid;
 
     public String getGuid() {
         return guid;
@@ -135,5 +137,13 @@ public class QualityTraceabilityQueryParams {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCurrentTenderGuid() {
+        return currentTenderGuid;
+    }
+
+    public void setCurrentTenderGuid(String currentTenderGuid) {
+        this.currentTenderGuid = currentTenderGuid;
     }
 }

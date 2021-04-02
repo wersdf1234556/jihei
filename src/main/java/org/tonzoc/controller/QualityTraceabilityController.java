@@ -39,7 +39,7 @@ public class QualityTraceabilityController extends BaseController {
     private IRedisAuthService redisAuthService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams qualityTraceabilityQueryParams,String accounType, String flag)
+    public PageResponse list(PageQueryParams pageQueryParams, QualityTraceabilityQueryParams qualityTraceabilityQueryParams, String accounType, String flag, String currentTenderGuid)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         pageQueryParams.setOrder("currentTime");
@@ -50,9 +50,15 @@ public class QualityTraceabilityController extends BaseController {
         if (accounType != null) {
             if (accounType.equals("2") && "0".equals(flag)){
                 // flag = 0 施工单位查到未提交，监理查不到
-                qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
-            }else if (accounType.equals("0") && "1".equals(flag)){
-                qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
+                if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams)){
+                    qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
+                }
+                qualityTraceabilityQueryParams.setCurrentTenderGuid(currentTenderGuid);
+            }else if (accounType.equals("5") && "0".equals(flag)) {
+                if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams)){
+                    qualityTraceabilityQueryParams.setStatus("unFinish,finish");
+                }
+                qualityTraceabilityQueryParams.setCurrentTenderGuid(currentTenderGuid);
             }
         }
 
@@ -65,7 +71,6 @@ public class QualityTraceabilityController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
-
 
         this.qualityTraceabilityService.add(qualityTraceabilityModel, accounType);
     }
@@ -171,10 +176,17 @@ public class QualityTraceabilityController extends BaseController {
         return qualityTraceabilityService.tenderAndNumber(typeId);
     }
 
-    // 标段和文件数量的另一种格式
+    // A B标段和文件数量的另一种格式
     @GetMapping(value = "tenderAndNumbers")
     public List<ReturnQtbModel> tenderAndNumbers(String tenderName){
 
         return qualityTraceabilityService.tenderAndNumbers(tenderName);
+    }
+
+    // Z S标段和文件数量的另一种格式
+    @GetMapping(value = "currentTenderAndNumbers")
+    public List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName){
+
+        return qualityTraceabilityService.currentTenderAndNumbers(currentTenderName);
     }
 }

@@ -68,6 +68,9 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
     // 标段和文件数量
     List<ReturnModel> tenderAndNumber(Integer typeId);
 
-    // 标段和文件数量的另一种格式
+    // A B标段和文件数量的另一种格式
     List<ReturnQtbModel> tenderAndNumbers(String tenderName);
+
+    // Z S标段和文件数量的另一种格式
+    List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName);
 }
