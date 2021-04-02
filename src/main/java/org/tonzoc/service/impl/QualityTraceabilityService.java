@@ -389,7 +389,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
             ReturnQtbModel returnQtbModel = new ReturnQtbModel();
             returnQtbModel.setName(li.getName());
-            returnQtbModel.setXian(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 5) + "");
+            returnQtbModel.setXian(qualityTraceabilityMapper.countByCurrentTenderByType(li.getGuid(), 5) + "");
 
             list.add(returnQtbModel);
         }
