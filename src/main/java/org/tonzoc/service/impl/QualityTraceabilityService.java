@@ -73,7 +73,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
         }
 
-        if ("".equals(accounType) || accounType == null ||  "0".equals(accounType)) {
+        if ("".equals(accounType) || accounType == null || "0".equals(accounType)) {
 
             qualityTraceabilityModel.setStatus("unSubmit");
             qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
@@ -86,7 +86,6 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }else if ("5".equals(accounType)) {
             qualityTraceabilityModel.setStatus("finish");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "5"));
-
         }else {
 
             throw new Exception("不能添加");
@@ -390,7 +389,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
             ReturnQtbModel returnQtbModel = new ReturnQtbModel();
             returnQtbModel.setName(li.getName());
-            returnQtbModel.setShi(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 3) + "");
+            returnQtbModel.setXian(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 5) + "");
 
             list.add(returnQtbModel);
         }

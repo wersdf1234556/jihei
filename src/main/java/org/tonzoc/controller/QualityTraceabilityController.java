@@ -45,18 +45,18 @@ public class QualityTraceabilityController extends BaseController {
         pageQueryParams.setOrder("currentTime");
         pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
-        String flag0 = "submitted,unFinish,finish";
+        String flag0 = "submitted,finish";
         // 监理
         if (accounType != null) {
             if (accounType.equals("2") && "0".equals(flag)){
                 // flag = 0 施工单位查到未提交，监理查不到
                 if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams.getStatus())){
-                    qualityTraceabilityQueryParams.setStatus("submitted,unFinish,finish");
+                    qualityTraceabilityQueryParams.setStatus(flag0);
                 }
                 qualityTraceabilityQueryParams.setCurrentTenderGuid(currentTenderGuid);
             }else if (accounType.equals("5") && "0".equals(flag)) {
                 if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams.getStatus())){
-                    qualityTraceabilityQueryParams.setStatus("unFinish,finish");
+                    qualityTraceabilityQueryParams.setStatus(flag0);
                 }
                 qualityTraceabilityQueryParams.setCurrentTenderGuid(currentTenderGuid);
             }

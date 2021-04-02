@@ -2,6 +2,7 @@ package org.tonzoc.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.support.ReturnPersonModel;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface IPersonService extends IBaseService<PersonModel> {
     void upFile(String guid, MultipartFile file, Integer flag);
 
     // 模板导入
-    void addPerson(MultipartFile file) throws Exception;
+    List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception;
 }

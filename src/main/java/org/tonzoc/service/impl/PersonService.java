@@ -13,6 +13,7 @@ import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.mapper.PersonMapper;
 import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.support.ReturnPersonModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IPersonService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -110,13 +111,14 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
         update(personModel);
     }
 
-    public void upFile(String guid,MultipartFile file,Integer flag) {
-        String url="/人员/";
-        if (flag==0){//人员照片
-            url=url+"人员照片/";
-        }else if (flag==1){//证书照片
-            url=url+"证书照片/";
+    public void upFile(String guid, MultipartFile file, Integer flag) {
+        String url = "/人员/";
+        if (flag == 0){//人员照片
+            url = url + "人员照片/";
+        }else if (flag == 1){//证书照片
+            url = url + "证书照片/";
         }
+
         intelliSiteProperties.setFileUrl(url);
         String[] str = fileHelper.fileUpload(file, "", "");
         String uuid = fileHelper.newGUID();
@@ -129,10 +131,17 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
         attachmentService.save(attachmentModel);
         PersonModel personModel = get(guid);
-        if (flag==0){
-            personModel.setPhoto(str[0]);
-        }else if (flag==1){
-            personModel.setCertificatePic(str[0]);
+
+        if (flag == 0){
+            if (personModel.getPhoto() != null && !"".equals(personModel.getPhoto())) {
+                attachmentService.deleteFile(personModel.getPhoto());
+            }
+            personModel.setPhoto(attachmentModel.getGuid());
+        }else if (flag == 1){
+            if (personModel.getCertificatePic() != null && !"".equals(personModel.getCertificatePic())) {
+                attachmentService.deleteFile(personModel.getCertificatePic());
+            }
+            personModel.setCertificatePic(attachmentModel.getGuid());
         }
         update(personModel);
 
@@ -141,9 +150,9 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
     // 模板导入
     @Override
-    public void addPerson(MultipartFile file) throws Exception {
+    public List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception {
 
-        excelPersonHelper.excel(file);
+       return excelPersonHelper.excel(file);
     }
 
 }
