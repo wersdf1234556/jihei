@@ -67,6 +67,10 @@ public class PersonModel extends BaseModel{
     private String typeName; //工种
     @JoinColumn(value = "name", type = PersonCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
     private String categoryName; //类别
+    @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "photo", rightColumn = "guid")
+    private String photoName; //人员照片名称
+    @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "certificatePic", rightColumn = "guid")
+    private String certificatePicName; //证书照片名称
 
     public String getGuid() {
         return guid;
@@ -306,5 +310,21 @@ public class PersonModel extends BaseModel{
 
     public void setTestingAddress(String testingAddress) {
         this.testingAddress = testingAddress;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
+
+    public String getCertificatePicName() {
+        return certificatePicName;
+    }
+
+    public void setCertificatePicName(String certificatePicName) {
+        this.certificatePicName = certificatePicName;
     }
 }

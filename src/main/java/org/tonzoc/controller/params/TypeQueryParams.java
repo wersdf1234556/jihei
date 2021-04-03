@@ -10,6 +10,9 @@ public class TypeQueryParams {
     @Operator(value = "like", field = "name")
     private String name;
 
+    @Operator(value = "or", field = "id")
+    private Integer id;
+
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
 
@@ -35,5 +38,13 @@ public class TypeQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

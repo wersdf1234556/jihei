@@ -73,20 +73,19 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
         }
 
-        if ("".equals(accounType) || accounType == null || accounType == "0") {
+        if ("".equals(accounType) || accounType == null || "0".equals(accounType)) {
 
             qualityTraceabilityModel.setStatus("unSubmit");
             qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
 
-        }else if (accounType == "2") {
+        }else if ("2".equals(accounType)) {
 
             qualityTraceabilityModel.setStatus("finish");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "2"));
 
-        }else if (accounType == "3") {
+        }else if ("5".equals(accounType)) {
             qualityTraceabilityModel.setStatus("finish");
-            qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "3"));
-
+            qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "5"));
         }else {
 
             throw new Exception("不能添加");
@@ -358,6 +357,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     // 标段和文件数量的另一种格式
+    @Override
     public List<ReturnQtbModel> tenderAndNumbers(String tenderName){
         List<ReturnQtbModel> list = new LinkedList<>();
         List<TenderModel> list1 = tenderMapper.listLikeTender(tenderName);
@@ -371,6 +371,25 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             returnQtbModel.setShi(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 3) + "");
             returnQtbModel.setYin(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 4) + "");
             returnQtbModel.setXian(qualityTraceabilityMapper.countByTenderByType(li.getGuid(), 5) + "");
+
+            list.add(returnQtbModel);
+        }
+
+        return list;
+    }
+
+    // Z S标段和文件数量的另一种格式
+    @Override
+    public List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName){
+
+        List<ReturnQtbModel> list = new LinkedList<>();
+        List<TenderModel> list1 = tenderMapper.listLikeTender(currentTenderName);
+
+        for (TenderModel li: list1) {
+
+            ReturnQtbModel returnQtbModel = new ReturnQtbModel();
+            returnQtbModel.setName(li.getName());
+            returnQtbModel.setXian(qualityTraceabilityMapper.countByCurrentTenderByType(li.getGuid(), 5) + "");
 
             list.add(returnQtbModel);
         }

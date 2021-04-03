@@ -11,14 +11,13 @@ import org.tonzoc.mapper.PersonTypeMapper;
 import org.tonzoc.mapper.TenderMapper;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.PersonTypeModel;
+import org.tonzoc.model.support.ReturnPersonModel;
 import org.tonzoc.service.IPersonService;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ExcelPersonHelper {
@@ -35,11 +34,12 @@ public class ExcelPersonHelper {
     @Autowired
     private PersonTypeMapper personTypeMapper;
 
-    public void excel(MultipartFile file) throws Exception {
+    public List<ReturnPersonModel> excel(MultipartFile file) throws Exception {
 
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."), fileName.length());
         Workbook wb = null;
+        List<ReturnPersonModel> list1 = new ArrayList<>();
 
         if ("xlsx".equals(suffix)) {
             wb = new HSSFWorkbook(file.getInputStream());
@@ -67,13 +67,10 @@ public class ExcelPersonHelper {
                             personModel.setPersonTypeGuid(personTypeModel.getGuid()); // 人员类型
                             personModel.setCategoryGuid(personTypeModel.getCategoryGuid()); // 人员类别
                             personModel.setIdCard(idCard); // 身份证号
-                            Cell cell4 = row.getCell(4); // 联系电话
-                            cell4.setCellType(CellType.STRING);
-                            String mobile = cell4.getStringCellValue();
-                            personModel.setMobile(mobile);
+                            personModel.setMobile(row.getCell(4).getStringCellValue()); // 联系电话
                             Date date = row.getCell(5).getDateCellValue(); // 进场时间
-                            DateFormat formater1 = new SimpleDateFormat("yyyy-MM-dd");
-                            personModel.setEnterAreaTime(formater1.format(date));
+                            DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+                            personModel.setEnterAreaTime(formater.format(date));
                             personModel.setNativePlace(row.getCell(6).getStringCellValue()); // 籍贯
                             personModel.setDeparturePlaceCode(row.getCell(7).getStringCellValue()); // 出发地
                             String isRisk = row.getCell(8).getStringCellValue(); // 是否途经中高风险地区
@@ -85,20 +82,24 @@ public class ExcelPersonHelper {
                                 personModel.setIsRisk(2);
                             }
                             personModel.setVehicle(row.getCell(9).getStringCellValue()); // 到达工地方式
-                            personModel.setTravelTime(row.getCell(10).getStringCellValue()); // 乘车时间
+                            Date date1 = row.getCell(10).getDateCellValue();
+                            DateFormat formater1 = new SimpleDateFormat("yyyy-MM-dd");
+                            personModel.setTravelTime(formater1.format(date1)); // 乘车时间
                             personModel.setTrainNumber(row.getCell(11).getStringCellValue()); // 车号或车次
                             personModel.setSamplingOrgan(row.getCell(12).getStringCellValue()); // 采样单位
-                            personModel.setSamplingTime(row.getCell(13).getStringCellValue()); // 采样时间
+                            Date date2 = row.getCell(13).getDateCellValue();
+                            DateFormat formater2 = new SimpleDateFormat("yyyy-MM-dd");
+                            personModel.setReportTime(formater2.format(date2)); // 采样时间
                             Cell cell14 = row.getCell(14); // 条码号
                             cell14.setCellType(CellType.STRING);
-                            String barCode = cell4.getStringCellValue();
+                            String barCode = cell14.getStringCellValue();
                             personModel.setBarCode(barCode);
                             String sampleType = row.getCell(15).getStringCellValue(); // 样本类型
                             if ("咽拭子".equals(sampleType)) {
                                 personModel.setSampleType(0);
                             }else if("鼻拭子".equals(sampleType)) {
                                 personModel.setSampleType(1);
-                            }else if("鼻拭子".equals(sampleType)){
+                            }else if("肛拭子".equals(sampleType)){
                                 personModel.setSampleType(3);
                             }
                             String result = row.getCell(16).getStringCellValue(); // 检测结果
@@ -107,9 +108,9 @@ public class ExcelPersonHelper {
                             }else if("阳性".equals(result)) {
                                 personModel.setResult(1);
                             }
-                            Date d = row.getCell(17).getDateCellValue();
-                            DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-                            personModel.setReportTime(formater.format(d)); // 报告时间
+                            Date date3 = row.getCell(17).getDateCellValue();
+                            DateFormat formater3 = new SimpleDateFormat("yyyy-MM-dd");
+                            personModel.setReportTime(formater3.format(date3)); // 报告时间
                             personModel.setTestingOrgan(row.getCell(18).getStringCellValue()); // 检测机构
                             personModel.setTestingAddress(row.getCell(19).getStringCellValue()); // 检测机构地址
                             personModel.setRemark(row.getCell(20).getStringCellValue()); // 地址补全
@@ -123,6 +124,12 @@ public class ExcelPersonHelper {
                                 personService.saveMany(list);
                                 list.clear();
                             }
+                        }else {
+                            ReturnPersonModel returnPersonModel = new ReturnPersonModel();
+                            returnPersonModel.setName(row.getCell(0).getStringCellValue());
+                            returnPersonModel.setIdCard(idCard);
+                            list1.add(returnPersonModel);
+                            return list1;
                         }
                     }catch (Exception e){
                         throw new IOException("请检查录入的数据");
@@ -133,5 +140,6 @@ public class ExcelPersonHelper {
                 personService.saveMany(list);
             }
         }
+        return list1;
     }
 }

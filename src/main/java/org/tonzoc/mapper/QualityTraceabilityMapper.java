@@ -49,12 +49,18 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
                       @Param(value = "guid") String guid);
 
     @Select("select tenders.name, count(qualityTraceabilitys.guid) number, tenders.guid proportion from (select * from tenders where tenders.name like '%A%' or tenders.name like '%B%' ) tenders " +
-            "LEFT JOIN (select * from qualityTraceabilitys where typeId = #{typeId}) qualityTraceabilitys on tenders.guid = qualityTraceabilitys.tenderGuid " +
+            "LEFT JOIN (select * from qualityTraceabilitys where typeId = #{typeId} and status = 'finish') qualityTraceabilitys on tenders.guid = qualityTraceabilitys.tenderGuid " +
             "GROUP BY tenders.name, tenders.guid, tenders.sortId ORDER BY tenders.sortId")
     List<ReturnModel> tenderAndNumber(@Param(value = "typeId") Integer typeId);
 
+    // A B统计
     @Select("select count(qualityTraceabilitys.guid) from qualityTraceabilitys where tenderGuid = #{tenderGuid} and typeId = #{typeId}")
     Integer countByTenderByType(@Param(value = "tenderGuid") String tenderGuid,
                                 @Param(value = "typeId") Integer typeId);
+
+    // Z S统计
+    @Select("select count(qualityTraceabilitys.guid) from qualityTraceabilitys where currentTenderGuid = #{currentTenderGuid} and typeId = #{typeId}")
+    Integer countByCurrentTenderByType(@Param(value = "currentTenderGuid") String currentTenderGuid,
+                                       @Param(value = "typeId") Integer typeId);
 
 }

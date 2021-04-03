@@ -9,6 +9,7 @@ import org.tonzoc.controller.params.PersonQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.support.ReturnPersonModel;
 import org.tonzoc.service.IPersonService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -73,8 +74,8 @@ public class PersonController extends BaseController {
 
     // 模板导入
     @PostMapping(value = "addPerson")
-    public void addPerson(MultipartFile file) throws Exception {
+    public List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception {
 
-        personService.addPerson(file);
+       return personService.addPerson(file);
     }
 }
