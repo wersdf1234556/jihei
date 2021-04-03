@@ -34,6 +34,8 @@ public class CameraModel extends BaseModel {
     private String typeName; //类型
     @JoinColumn(value = "name", type = CameraPurposeModel.class, leftColumn = "purposeGuid", rightColumn = "guid")
     private String purposeName; //用途
+    @Column(value = "imageUrl")
+    private String imageUrl;
 
     public String getGuid() {
         return guid;
@@ -146,5 +148,13 @@ public class CameraModel extends BaseModel {
 
     public void setPurposeName(String purposeName) {
         this.purposeName = purposeName;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
