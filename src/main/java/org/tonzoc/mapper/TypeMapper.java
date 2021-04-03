@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TypeMapper extends BaseMapper<TypeModel> {
 
-    @Select("select * from types where id in (1,2,3,4)")
+    @Select("select * from types as MainTable where id in (1,2,3,4)")
     List<TypeModel> listById();
 }
