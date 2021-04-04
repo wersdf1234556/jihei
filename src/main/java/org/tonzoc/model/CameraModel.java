@@ -36,6 +36,11 @@ public class CameraModel extends BaseModel {
     private String purposeName; //用途
     @Column(value = "imageUrl")
     private String imageUrl;
+    @Column(value = "operator")
+    private String operator; // 操作人
+    @NotInsertColumn
+    @Column(value = "updatedAt")
+    private String updatedAt; // 修改时间
 
     public String getGuid() {
         return guid;
@@ -156,5 +161,21 @@ public class CameraModel extends BaseModel {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

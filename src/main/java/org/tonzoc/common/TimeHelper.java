@@ -1,9 +1,12 @@
 package org.tonzoc.common;
 
+import org.springframework.stereotype.Component;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Component
 public class TimeHelper {
     /*
      * 将时间转换为时间戳

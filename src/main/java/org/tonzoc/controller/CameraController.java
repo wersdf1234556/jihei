@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.controller.params.CameraQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -13,6 +14,9 @@ import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -59,7 +63,9 @@ public class CameraController extends BaseController {
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid CameraModel cameraModel) {
+    public void update(@RequestBody @Valid CameraModel cameraModel) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        cameraModel.setUpdatedAt(simpleDateFormat.format(new Date()));
         this.cameraService.update(cameraModel);
     }
 

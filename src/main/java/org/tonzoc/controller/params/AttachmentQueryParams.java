@@ -11,6 +11,7 @@ public class AttachmentQueryParams {
 
     @Operator(value = "like", field = "name")
     private String name;
+
     @Operator(value = "like", field = "name")
     private String url;
 
