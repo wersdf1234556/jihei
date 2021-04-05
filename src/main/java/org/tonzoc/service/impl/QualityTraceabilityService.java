@@ -273,7 +273,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             status = "submitted";
         }
 
-        if ("".equals(currentTenderGuid)) {
+        if (currentTenderGuid == null || "".equals(currentTenderGuid)) {
             currentTenderGuid = userMapper.tenderByName(qualityTraceabilityModel.getOperator());
         }
 
