@@ -89,7 +89,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
         SecurityChangModel securityChangModel = get(securityChangGuid);
 
-        String status = "submitted";
+        String status = "";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         if (flag == 1){
             // 修改该条状态为已结束, 合格

@@ -19,6 +19,9 @@ public class TenderMachineTypeQueryParams {
     @Operator(value = "like", field = "name")
     private String name;
 
+    @Operator(value = "eq", field = "machineCategoryGuid")
+    private String machineCategoryGuid;
+
     public String getGuid() {
         return guid;
     }
@@ -57,5 +60,13 @@ public class TenderMachineTypeQueryParams {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMachineCategoryGuid() {
+        return machineCategoryGuid;
+    }
+
+    public void setMachineCategoryGuid(String machineCategoryGuid) {
+        this.machineCategoryGuid = machineCategoryGuid;
     }
 }

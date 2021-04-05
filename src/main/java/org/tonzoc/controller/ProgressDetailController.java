@@ -34,7 +34,9 @@ public class ProgressDetailController extends BaseController {
         Page<ProgressDetailModel> page = parsePage(pageQueryParams);
         //监理
         if (accounType.equals("2")){
-            progressDetailQueryParams.setStatus("submitted,finish");
+            if (progressDetailQueryParams.getStatus() == null || "".equals(progressDetailQueryParams)) {
+                progressDetailQueryParams.setStatus("submitted,finish");
+            }
         }
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(progressDetailQueryParams);

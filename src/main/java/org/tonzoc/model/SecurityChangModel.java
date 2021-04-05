@@ -25,6 +25,8 @@ public class SecurityChangModel extends BaseModel{
     private String status; // 当前审批状态 unSubmit 未提交 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "createPersonName")
+    private String createPersonName; // 创建人
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -135,6 +137,14 @@ public class SecurityChangModel extends BaseModel{
         this.approvalTenderName = approvalTenderName;
     }
 
+    public String getCreatePersonName() {
+        return createPersonName;
+    }
+
+    public void setCreatePersonName(String createPersonName) {
+        this.createPersonName = createPersonName;
+    }
+
     @Override
     public String toString() {
         return "SecurityChangModel{" +
@@ -146,6 +156,7 @@ public class SecurityChangModel extends BaseModel{
                 ", approvalTime='" + approvalTime + '\'' +
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
+                ", createPersonName='" + createPersonName + '\'' +
                 ", createdAt=" + createdAt +
                 ", securityName='" + securityName + '\'' +
                 ", tenderName='" + tenderName + '\'' +

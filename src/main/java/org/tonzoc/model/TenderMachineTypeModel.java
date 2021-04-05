@@ -19,11 +19,15 @@ public class TenderMachineTypeModel extends BaseModel {
     private Integer sortId;
     @Column(value = "defaultNum")
     private String defaultNum;
+    @Column(value = "machineCategoryGuid")
+    private String machineCategoryGuid;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
     @JoinColumn(value = "name", type = MachineTypeModel.class, leftColumn = "machineTypeGuid", rightColumn = "guid")
-    private String MachineTypeName;  // 标段名称
+    private String MachineTypeName;  // 机械类型名称
+    @JoinColumn(value = "name", type = MachineCategoryModel.class, leftColumn = "machineCategoryGuid", rightColumn = "guid")
+    private String machineCategoryName;  // 机械类别名称
 
     public TenderMachineTypeModel() {
     }
@@ -90,5 +94,13 @@ public class TenderMachineTypeModel extends BaseModel {
 
     public void setDefaultNum(String defaultNum) {
         this.defaultNum = defaultNum;
+    }
+
+    public String getMachineCategoryGuid() {
+        return machineCategoryGuid;
+    }
+
+    public void setMachineCategoryGuid(String machineCategoryGuid) {
+        this.machineCategoryGuid = machineCategoryGuid;
     }
 }

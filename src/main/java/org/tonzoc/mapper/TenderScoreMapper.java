@@ -25,6 +25,6 @@ public interface TenderScoreMapper extends BaseMapper<TenderScoreModel>{
     List<SecurityModel> securityByIsEffect();
 
     @Select("select guid from tenderScores where securityGuid = #{securityGuid}")
-    String guid (String securityGuid);
+    String guid (@Param(value = "securityGuid") String securityGuid);
 
 }

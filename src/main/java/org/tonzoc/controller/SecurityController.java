@@ -51,7 +51,7 @@ public class SecurityController extends BaseController {
         if (accounType != null) {
             if (accounType.equals("2")){
                 securityQueryParams.setStatus("unSubmit,submitted,unFinish,finish");
-            }else if (accounType.equals("0")){
+            }else if (accounType.equals("0") || "3".equals(accounType) || "4".equals(accounType)){
                 securityQueryParams.setStatus("submitted,unFinish,finish");
             }
         }
@@ -112,7 +112,7 @@ public class SecurityController extends BaseController {
 
     // 提交
     @PostMapping(value = "submit")
-    public void submit(String securityGuid){
+    public void submit(String securityGuid) {
 
         securityService.submit(securityGuid);
     }

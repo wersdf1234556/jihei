@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.MachineTypeModel;
 import org.tonzoc.model.TenderMachineTypeModel;
+import org.tonzoc.service.IMachineCategoryService;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.service.ITenderMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -27,6 +28,9 @@ public class TenderMachineTypeController extends BaseController {
     @Autowired
     private IMachineTypeService machineTypeService;
 
+    @Autowired
+    private IMachineCategoryService machineCategoryService;
+
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, TenderMachineTypeQueryParams tenderMachineTypeQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -44,6 +48,7 @@ public class TenderMachineTypeController extends BaseController {
         MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
         tenderMachineTypeModel.setName(machineTypeModel.getName());
         tenderMachineTypeModel.setSortId(machineTypeModel.getSortId());
+        tenderMachineTypeModel.setMachineCategoryGuid(machineTypeModel.getMachineCategoryGuid());
 
         this.tenderMachineTypeService.save(tenderMachineTypeModel);
     }

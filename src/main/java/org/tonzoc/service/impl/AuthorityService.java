@@ -67,11 +67,10 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
         List<AuthorityModel> authorityModels = new ArrayList<>();
 
         List<AuthorityModel> allAuthorityModels = null;
-        System.out.println("userGuid="+userGuid);
         if (StringUtils.isEmpty(userGuid)) {
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             UserModel userModel = redisAuthService.getCurrentUser();
-            if (userModel.getFlag()==0){
+            if (userModel.getFlag() == 0){
                 sqlQueryParams.add(new SqlQueryParam("flag", "0", "eq"));
             }
             Page page = PageHelper.startPage(1, 0, "mainTable.sortId asc");
@@ -79,6 +78,7 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
             allAuthorityModels = this.list(sqlQueryParams);
         } else {
             allAuthorityModels = this.listByUser(userGuid).stream().sorted(Comparator.comparing(AuthorityModel::getSortId)).collect(Collectors.toList());
+
         }
 
         HashMap<String, AuthorityModel> authorityModelMap = new HashMap<>();
@@ -87,8 +87,6 @@ public class AuthorityService extends BaseService<AuthorityModel> implements IAu
             Iterator<AuthorityModel> iterator = allAuthorityModels.iterator();
             while (iterator.hasNext()) {
                 AuthorityModel authorityModel = iterator.next();
-
-                System.out.println(authorityModel);
 
                 if (authorityModel.getParentId().equals("")) {
                     authorityModelMap.put(authorityModel.getGuid(), authorityModel);

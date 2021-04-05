@@ -6,7 +6,7 @@ public class PersonQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "like", field = "guid")
+    @Operator(value = "like", field = "name")
     private String name;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
@@ -16,10 +16,10 @@ public class PersonQueryParams {
     private String categoryGuid;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
-    @Operator(value = "eq", field = "idCard")
+    @Operator(value = "like", field = "idCard")
     private String idCard;
-    @Operator(value = "eq", field = "guid")
-    private String isRisk; //是否从风险区回来
+    @Operator(value = "eq", field = "isRisk")
+    private String isRisk; // 风险地区
     @Operator(value = "eq", field = "departurePlaceCode")
     private String departurePlaceCode;
     @Operator(value = "eq", field = "result")

@@ -46,15 +46,10 @@ public class QualityTraceabilityController extends BaseController {
         pageQueryParams.setSort(" desc, mainTable.sortId asc");
         Page<QualityTraceabilityModel> page = parsePage(pageQueryParams);
         String flag0 = "submitted,finish";
-        // 监理
+        // 监理,试验,项目办,领导
         if (accounType != null) {
-            if (accounType.equals("2") && "0".equals(flag)){
+            if (!"1".equals(accounType) && "0".equals(flag)){
                 // flag = 0 施工单位查到未提交，监理查不到
-                if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams.getStatus())){
-                    qualityTraceabilityQueryParams.setStatus(flag0);
-                }
-                qualityTraceabilityQueryParams.setCurrentTenderGuid(currentTenderGuid);
-            }else if (accounType.equals("5") && "0".equals(flag)) {
                 if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams.getStatus())){
                     qualityTraceabilityQueryParams.setStatus(flag0);
                 }

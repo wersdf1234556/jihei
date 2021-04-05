@@ -80,11 +80,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
         }else if ("2".equals(accounType)) {
 
-            qualityTraceabilityModel.setStatus("finish");
+            qualityTraceabilityModel.setStatus("submitted");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "2"));
 
         }else if ("5".equals(accounType)) {
-            qualityTraceabilityModel.setStatus("finish");
+            qualityTraceabilityModel.setStatus("submitted");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "5"));
         }else {
 
@@ -264,7 +264,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         if (flag == 1){
             //修改该条状态为已结束
             status = "finish";
-        }else if (flag == 2 && qualityTraceabilityModel.getStatus().equals("finish")){
+        }else if (flag == 2){
 
             status = "submitted";
         }

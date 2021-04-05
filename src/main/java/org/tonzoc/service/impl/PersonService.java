@@ -15,7 +15,9 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.support.ReturnPersonModel;
 import org.tonzoc.service.IAttachmentService;
+import org.tonzoc.service.IPersonCategoryService;
 import org.tonzoc.service.IPersonService;
+import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.util.ArrayList;
@@ -33,13 +35,16 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     private FileHelper fileHelper;
 
     @Autowired
+    private IPersonTypeService personTypeService;
+
+    @Autowired
     private ExcelPersonHelper excelPersonHelper;
 
     public List<String> listAreaCode(){
         return personMapper.listAreaCode();
     }
 
-    public PersonModel listBySign(String sign,Integer flag) throws Exception {
+    public PersonModel listBySign(String sign, Integer flag) throws Exception {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         if (flag==0){//用身份证号登陆
             sqlQueryParams.add(new SqlQueryParam("idCard", sign, "eq"));
@@ -95,6 +100,7 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
             throw new NotOneResultFoundException("该人员已存在，请检查手机号是否正确");
         }
         personModel.setPassword("123456");
+        personModel.setCategoryGuid(personTypeService.get(personModel.getPersonTypeGuid()).getCategoryGuid());
         save(personModel);
     }
 
