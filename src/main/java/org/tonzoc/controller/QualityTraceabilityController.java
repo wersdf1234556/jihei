@@ -48,7 +48,7 @@ public class QualityTraceabilityController extends BaseController {
         String flag0 = "submitted,finish";
         // 监理,试验,项目办,领导
         if (accounType != null) {
-            if (!"1".equals(accounType) && "0".equals(flag)){
+            if (!"0".equals(accounType) && "0".equals(flag)){
                 // flag = 0 施工单位查到未提交，监理查不到
                 if (qualityTraceabilityQueryParams.getStatus() == null || "".equals(qualityTraceabilityQueryParams.getStatus())){
                     qualityTraceabilityQueryParams.setStatus(flag0);

@@ -16,6 +16,7 @@ import org.tonzoc.exception.NotMatchException;
 import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.QualityTraceabilityMapper;
 import org.tonzoc.mapper.TenderMapper;
+import org.tonzoc.mapper.UserMapper;
 import org.tonzoc.model.*;
 import org.tonzoc.model.support.ReturnQtbModel;
 import org.tonzoc.service.*;
@@ -60,6 +61,9 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     @Autowired
     private ApprovalHelper approvalHelper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     // 添加
     @Override
@@ -267,6 +271,10 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }else if (flag == 2){
 
             status = "submitted";
+        }
+
+        if ("".equals(currentTenderGuid)) {
+            currentTenderGuid = userMapper.tenderByName(qualityTraceabilityModel.getOperator());
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式

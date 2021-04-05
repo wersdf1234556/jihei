@@ -18,4 +18,7 @@ public interface UserMapper extends BaseMapper<UserModel> {
     @Select("SELECT DISTINCT tenderGuid FROM users where tenderManage != tenderGuid and tenderManage like '%${tenderManage}%' and accounType = #{accounType}")
     List<String> listByTenderManageAndAccounType(@Param(value = "tenderManage") String tenderManage,
                                                  @Param(value = "accounType") String AccounType);
+
+    @Select("select tenderGuid from users where name = #{name}")
+    String tenderByName(@Param(value = "name") String name);
 }

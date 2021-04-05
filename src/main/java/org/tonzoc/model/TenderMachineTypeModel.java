@@ -103,4 +103,12 @@ public class TenderMachineTypeModel extends BaseModel {
     public void setMachineCategoryGuid(String machineCategoryGuid) {
         this.machineCategoryGuid = machineCategoryGuid;
     }
+
+    public String getMachineCategoryName() {
+        return machineCategoryName;
+    }
+
+    public void setMachineCategoryName(String machineCategoryName) {
+        this.machineCategoryName = machineCategoryName;
+    }
 }
