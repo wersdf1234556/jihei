@@ -16,6 +16,9 @@ public class MachineTypeQueryParams {
     @Operator(value = "eq", field = "highlight")
     private Integer highlight; // 是否重点展示
 
+    @Operator(value = "eq", field = "machineCategoryGuid")
+    private String machineCategoryGuid;
+
     public String getGuid() {
         return guid;
     }
@@ -46,5 +49,13 @@ public class MachineTypeQueryParams {
 
     public void setHighlight(Integer highlight) {
         this.highlight = highlight;
+    }
+
+    public String getMachineCategoryGuid() {
+        return machineCategoryGuid;
+    }
+
+    public void setMachineCategoryGuid(String machineCategoryGuid) {
+        this.machineCategoryGuid = machineCategoryGuid;
     }
 }
