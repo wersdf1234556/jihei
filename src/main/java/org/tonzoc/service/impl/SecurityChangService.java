@@ -85,12 +85,17 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     //审批
     @Override
-    public void approval(String securityChangGuid, Integer flag, String approvalScore) {
+    public void approval(String securityChangGuid, Integer flag, String approvalScore) throws Exception {
 
         SecurityChangModel securityChangModel = get(securityChangGuid);
+        if (securityChangModel.getIsLatest() == 1) {
+
+            throw new Exception("当前不能审批");
+        }
 
         String status = "";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        securityChangModel.setIsLatest(1);
         if (flag == 1){
             // 修改该条状态为已结束, 合格
             status = "finish";

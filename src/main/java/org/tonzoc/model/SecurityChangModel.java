@@ -27,6 +27,8 @@ public class SecurityChangModel extends BaseModel{
     private Integer sortId;
     @Column(value = "createPersonName")
     private String createPersonName; // 创建人
+    @Column(value = "isLatest")
+    private Integer isLatest;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -145,6 +147,14 @@ public class SecurityChangModel extends BaseModel{
         this.createPersonName = createPersonName;
     }
 
+    public Integer getIsLatest() {
+        return isLatest;
+    }
+
+    public void setIsLatest(Integer isLatest) {
+        this.isLatest = isLatest;
+    }
+
     @Override
     public String toString() {
         return "SecurityChangModel{" +
@@ -157,6 +167,7 @@ public class SecurityChangModel extends BaseModel{
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
                 ", createPersonName='" + createPersonName + '\'' +
+                ", isLatest=" + isLatest +
                 ", createdAt=" + createdAt +
                 ", securityName='" + securityName + '\'' +
                 ", tenderName='" + tenderName + '\'' +
