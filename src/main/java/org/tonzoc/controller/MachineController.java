@@ -106,4 +106,11 @@ public class MachineController extends BaseController {
 
         return machineService.importantByMachineType(machineTypeGuid);
     }
+
+    // 主界面机械概况
+    @GetMapping(value = "machineMainSurvey")
+    public List<ReturnModel> machineMainSurvey(String tenderGuid){
+
+        return machineService.machineMainSurvey(tenderGuid);
+    }
 }

@@ -18,6 +18,9 @@ public interface IMachineService extends IBaseService<MachineModel> {
     // 机械概况
     List<ReturnModel> machineSurvey(String tenderGuid);
 
+    // 主界面机械概况
+    List<ReturnModel> machineMainSurvey(String tenderGuid);
+
     // 重点机械
     List<ReturnMachineModel> importantMachine(String tenderGuid);
 

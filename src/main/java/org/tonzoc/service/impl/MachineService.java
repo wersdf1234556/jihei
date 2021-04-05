@@ -68,10 +68,19 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
     @Override
     public List<ReturnModel> machineSurvey(String tenderGuid) {
 
-        /*List<ReturnModel> list = machineMapper.selectMachineCategoryNumber(tenderGuid);
-        Integer allNumber = machineMapper.allNumber(tenderGuid);*/
-
         return machineMapper.selectMachineCategoryNumber(tenderGuid);
+    }
+
+    // 主界面机械概况
+    @Override
+    public List<ReturnModel> machineMainSurvey(String tenderGuid){
+
+        List<ReturnModel> list = this.machineSurvey(tenderGuid);
+        for (ReturnModel li: list) {
+
+        }
+
+        return list;
     }
 
     // 重点机械
