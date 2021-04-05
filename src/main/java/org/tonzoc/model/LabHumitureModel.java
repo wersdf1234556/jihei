@@ -27,6 +27,16 @@ public class LabHumitureModel extends BaseModel {
     private String dataCreationTime;
     @Column(value = "sensorName")
     private String sensorName;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabHumitureModel() {
     }

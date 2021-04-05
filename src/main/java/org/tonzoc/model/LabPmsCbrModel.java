@@ -67,6 +67,16 @@ public class LabPmsCbrModel extends BaseModel {
     private String displacement3;
     @Column(value = "result")
     private String result;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabPmsCbrModel() {
     }

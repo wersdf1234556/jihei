@@ -95,6 +95,16 @@ public class LabUniversalMachineModel extends BaseModel {
     private String timeProcess;
     @Column(value = "forceProcess")
     private String forceProcess;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabUniversalMachineModel() {
     }

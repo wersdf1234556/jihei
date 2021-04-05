@@ -61,6 +61,16 @@ public class LabConcreteTestHammerModel extends BaseModel {
     private String equipmentName;
     @Column(value = "entrustNumber")
     private String entrustNumber;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabConcreteTestHammerModel() {
     }

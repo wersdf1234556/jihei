@@ -60,6 +60,16 @@ public class LabStressMachineModel extends BaseModel {
     private String originProcessStress;
     @Column(value = "equipmentType")
     private String equipmentType;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabStressMachineModel() {
     }

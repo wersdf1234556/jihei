@@ -69,6 +69,16 @@ public class LabPmsTesterModel extends BaseModel {
     private String sectionId;
     @Column(value = "sectionName")
     private String sectionName;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabPmsTesterModel() {
     }

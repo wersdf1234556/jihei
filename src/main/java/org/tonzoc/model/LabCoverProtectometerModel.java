@@ -69,6 +69,16 @@ public class LabCoverProtectometerModel extends BaseModel {
     private String sectionName;
     @Column(value = "equipmentName")
     private String equipmentName;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabCoverProtectometerModel() {
     }

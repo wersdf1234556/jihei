@@ -77,6 +77,16 @@ public class LabPmsSpringbackModel extends BaseModel {
     private String reboundModulus;
     @Column(value = "result")
     private String result;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabPmsSpringbackModel() {
     }

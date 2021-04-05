@@ -65,6 +65,16 @@ public class LabSofteningPointModel extends BaseModel {
     private String otherInformation;
     @Column(value = "sectionId")
     private String sectionId;
+    @Column(value = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public LabSofteningPointModel() {
     }
