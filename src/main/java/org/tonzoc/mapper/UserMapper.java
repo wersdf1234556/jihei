@@ -19,6 +19,6 @@ public interface UserMapper extends BaseMapper<UserModel> {
     List<String> listByTenderManageAndAccounType(@Param(value = "tenderManage") String tenderManage,
                                                  @Param(value = "accounType") String AccounType);
 
-    @Select("select tenderGuid from users where name = #{name}")
+    @Select("select tenderGuid from users where staffName = #{name}")
     String tenderByName(@Param(value = "name") String name);
 }

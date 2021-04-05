@@ -274,7 +274,8 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }
 
         if (currentTenderGuid == null || "".equals(currentTenderGuid)) {
-            currentTenderGuid = userMapper.tenderByName(qualityTraceabilityModel.getOperator());
+
+            currentTenderGuid = qualityTraceabilityModel.getCurrentTenderGuid();
         }
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
