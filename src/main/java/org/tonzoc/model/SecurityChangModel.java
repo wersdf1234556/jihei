@@ -27,8 +27,8 @@ public class SecurityChangModel extends BaseModel{
     private Integer sortId;
     @Column(value = "createPersonName")
     private String createPersonName; // 创建人
-    @Column(value = "isLatest")
-    private Integer isLatest;
+    @Column(value = "approvalPersonName")
+    private String approvalPersonName; // 审批人
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -147,12 +147,12 @@ public class SecurityChangModel extends BaseModel{
         this.createPersonName = createPersonName;
     }
 
-    public Integer getIsLatest() {
-        return isLatest;
+    public String getApprovalPersonName() {
+        return approvalPersonName;
     }
 
-    public void setIsLatest(Integer isLatest) {
-        this.isLatest = isLatest;
+    public void setApprovalPersonName(String approvalPersonName) {
+        this.approvalPersonName = approvalPersonName;
     }
 
     @Override
@@ -167,7 +167,7 @@ public class SecurityChangModel extends BaseModel{
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
                 ", createPersonName='" + createPersonName + '\'' +
-                ", isLatest=" + isLatest +
+                ", approvalPersonName='" + approvalPersonName + '\'' +
                 ", createdAt=" + createdAt +
                 ", securityName='" + securityName + '\'' +
                 ", tenderName='" + tenderName + '\'' +

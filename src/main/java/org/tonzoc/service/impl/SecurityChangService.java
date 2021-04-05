@@ -85,17 +85,17 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
 
     //审批
     @Override
-    public void approval(String securityChangGuid, Integer flag, String approvalScore) throws Exception {
+    public void approval(String securityChangGuid, Integer flag, String approvalScore, String approvalPersonName) throws Exception {
 
         SecurityChangModel securityChangModel = get(securityChangGuid);
-        if (securityChangModel.getIsLatest() == 1) {
+        Integer count = securityChangMapper.latest(securityChangModel.getSecurityGuid(), securityChangModel.getCreatedAt());
+        if (count > 0) {
 
             throw new Exception("当前不能审批");
         }
 
         String status = "";
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        securityChangModel.setIsLatest(1);
         if (flag == 1){
             // 修改该条状态为已结束, 合格
             status = "finish";
@@ -112,7 +112,7 @@ public class SecurityChangService extends BaseService<SecurityChangModel> implem
             securityService.updateStatus("submitted", df.format(new Date()), securityChangModel.getSecurityGuid()); // 安全表最终审批
         }
 
-        securityChangMapper.updateStatus(status, df.format(new Date()), securityChangGuid);
+        securityChangMapper.updateStatusAndPerson(status, df.format(new Date()), approvalPersonName, securityChangGuid);
     }
 
     // 修改时询问是否能修改

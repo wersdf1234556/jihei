@@ -14,7 +14,7 @@ public interface ISecurityChangService extends IBaseService<SecurityChangModel>{
     void submit(String securityChangModel);
 
     // 审批
-    void approval(String securityChangGuid, Integer flag, String approvalScore) throws Exception;
+    void approval(String securityChangGuid, Integer flag, String approvalScore, String approvalPersonName) throws Exception;
 
     // 修改时询问是否能修改
     void updateStack(SecurityChangModel securityChangModel, UserModel userModel) throws Exception;

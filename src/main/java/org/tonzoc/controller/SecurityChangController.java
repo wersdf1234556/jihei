@@ -86,8 +86,8 @@ public class SecurityChangController extends BaseController{
 
     // 审批
     @PostMapping(value = "approval")
-    public void approval(String securityChangGuid, Integer flag, String approvalScore) throws Exception {
+    public void approval(String securityChangGuid, Integer flag, String approvalScore, String approvalPersonName) throws Exception {
 
-        securityChangService.approval(securityChangGuid, flag, approvalScore);
+        securityChangService.approval(securityChangGuid, flag, approvalScore, approvalPersonName);
     }
 }
