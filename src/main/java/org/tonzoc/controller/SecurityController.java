@@ -49,9 +49,10 @@ public class SecurityController extends BaseController {
 
         // 监理
         if (accounType != null) {
-            if (accounType.equals("2")){
+            if ("1".equals(accounType) || "2".equals(accounType) || "3".equals(accounType) || "4".equals(accounType)){
                 securityQueryParams.setStatus("unSubmit,submitted,unFinish,finish");
-            }else if (accounType.equals("0") || "3".equals(accounType) || "4".equals(accounType)){
+
+            } else if ("0".equals(accounType)){
                 securityQueryParams.setStatus("submitted,unFinish,finish");
             }
         }
@@ -64,13 +65,13 @@ public class SecurityController extends BaseController {
     @PostMapping
     public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) throws ParseException {
 
-        securityService.add(securityModel, file, fileType, "2");
+        securityService.add(securityModel, file, fileType);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid SecurityModel securityModel) throws Exception {
 
-        securityService.updateStack(securityModel);  // 判断状态是否能修改
+        securityService.updateStack(securityModel); // 判断状态是否能修改
         this.securityService.update(securityModel);
     }
 

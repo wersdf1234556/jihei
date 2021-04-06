@@ -105,13 +105,25 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     }
 
     public void updateStack(PersonModel personModel) throws Exception {
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("idCard", personModel.getIdCard(), "eq"));
-        sqlQueryParams.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
-        List<PersonModel> list = this.list(sqlQueryParams);
-        if (list.size()>0){
-            throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
+        if (personModel.getIdCard() != null || !"".equals(personModel)){
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("idCard", personModel.getIdCard(), "eq"));
+            sqlQueryParams.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
+            List<PersonModel> list = this.list(sqlQueryParams);
+            if (list.size()>0){
+                throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
+            }
         }
+        if (personModel.getPhoto() != null) {
+            List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
+            sqlQueryParams2.add(new SqlQueryParam("mobile", personModel.getMobile(), "eq"));
+            sqlQueryParams2.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
+            List<PersonModel> list2 = this.list(sqlQueryParams2);
+            if (list2.size()>0){
+                throw new NotOneResultFoundException("该人员已存在，请检查手机号是否正确");
+            }
+        }
+
         //不修改密码
         personModel.setPassword(null);
         update(personModel);

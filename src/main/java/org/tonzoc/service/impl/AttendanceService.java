@@ -55,10 +55,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 if (personModels.size()!=0){
                     String personGuid = personModels.get(0).getGuid();
                     attendanceModel.setPersonGuid(personGuid);
-                    attendanceModel.setSign(0);
-                    attendanceModel.setLat("");
-                    attendanceModel.setLng("");
-                    if (attendanceModel.getTemperature().compareTo("37.3")>0){
+                    if (new BigDecimal(attendanceModel.getTemperature()).compareTo(new BigDecimal("37.3")) == 1){ // 大于37.3
                         attendanceModel.setStatus(1);
                     } else{
                         attendanceModel.setStatus(0);

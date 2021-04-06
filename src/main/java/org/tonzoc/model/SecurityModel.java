@@ -36,6 +36,8 @@ public class SecurityModel extends BaseModel {
     private String status;  // 当前审批状态 submitted 已提交 finish 已审批
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "accounType")
+    private String accounType;
     @NotInsertColumn
     @Column(value = "createdAt")
     private Date createdAt;
@@ -206,6 +208,14 @@ public class SecurityModel extends BaseModel {
         this.approvalTenderName = approvalTenderName;
     }
 
+    public String getAccounType() {
+        return accounType;
+    }
+
+    public void setAccounType(String accounType) {
+        this.accounType = accounType;
+    }
+
     @Override
     public String toString() {
         return "SecurityModel{" +
@@ -222,6 +232,7 @@ public class SecurityModel extends BaseModel {
                 ", approvalScore=" + approvalScore +
                 ", status='" + status + '\'' +
                 ", sortId=" + sortId +
+                ", accounType='" + accounType + '\'' +
                 ", createdAt=" + createdAt +
                 ", changTenderName='" + changTenderName + '\'' +
                 ", securityRuleName='" + securityRuleName + '\'' +

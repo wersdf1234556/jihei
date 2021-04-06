@@ -2,6 +2,8 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
+import javax.validation.Valid;
+
 public class PersonQueryParams {
 
     @Operator(value = "eq", field = "guid")
@@ -24,6 +26,8 @@ public class PersonQueryParams {
     private String departurePlaceCode;
     @Operator(value = "eq", field = "result")
     private String result; //0：阴性 1：阳性
+    @Operator(value = "eq", field = "mobile")
+    private String mobile; // 手机号
 
 
     public String getIsRisk() {
@@ -105,5 +109,13 @@ public class PersonQueryParams {
 
     public void setCategoryGuid(String categoryGuid) {
         this.categoryGuid = categoryGuid;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
