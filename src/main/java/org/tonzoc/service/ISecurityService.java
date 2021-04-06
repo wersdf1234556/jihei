@@ -13,7 +13,7 @@ import java.util.Map;
 public interface ISecurityService extends IBaseService<SecurityModel> {
 
     // 添加一条安全信息
-    void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType);
+    void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType);
 
     // 上传安全的文件
     Map<String, String> upFile(MultipartFile file, String securityGuid, String securityChangGuid, Integer fileType);

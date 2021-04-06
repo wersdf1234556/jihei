@@ -54,10 +54,10 @@ public class SecurityService extends BaseService<SecurityModel> implements ISecu
     private ApprovalHelper approvalHelper;
 
     // 添加一条安全信息
-    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType, String accounType) {
+    public void add(SecurityModel securityModel, MultipartFile[] file, Integer fileType) {
 
         securityModel.setStatus("unSubmit");
-        String approvalTenderGuid = approvalHelper.getNextSupervisor(securityModel.getChangTenderGuid(), accounType);
+        String approvalTenderGuid = approvalHelper.getNextSupervisor(securityModel.getChangTenderGuid(), "2");
         securityModel.setApprovalTenderGuid(approvalTenderGuid);
         this.save(securityModel);
 

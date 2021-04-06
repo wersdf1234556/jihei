@@ -23,6 +23,8 @@ public class SecurityQueryParams {
     private String status;
     @Operator(value = "eq", field = "changTenderGuid")
     private String changTenderGuid;
+    @Operator(value = "eq", field = "accounType")
+    private String accounType;
 
     public String getGuid() {
         return guid;
@@ -94,5 +96,13 @@ public class SecurityQueryParams {
 
     public void setChangTenderGuid(String changTenderGuid) {
         this.changTenderGuid = changTenderGuid;
+    }
+
+    public String getAccounType() {
+        return accounType;
+    }
+
+    public void setAccounType(String accounType) {
+        this.accounType = accounType;
     }
 }
