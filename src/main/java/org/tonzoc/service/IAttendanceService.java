@@ -1,10 +1,8 @@
 package org.tonzoc.service;
 
 import org.tonzoc.model.AttendanceModel;
-import org.tonzoc.model.support.AttDateStatModel;
-import org.tonzoc.model.support.AttendanceStatModel;
-import org.tonzoc.model.support.PersonLocationDataModel;
-import org.tonzoc.model.support.StatTotalModel;
+import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.support.*;
 
 import java.util.List;
 
@@ -31,4 +29,13 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
     // 预警信息
     List<AttendanceModel> warningInformation();
+
+    // 测温情况
+    List<ReturnMachineModel> temperature();
+
+    // 统计超温的测温人数
+    List<String> temperatureNumber();
+
+    // 超温的人员
+    List<PersonModel> temperaturePerson();
 }
