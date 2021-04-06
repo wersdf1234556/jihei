@@ -37,7 +37,7 @@ public class MachineProvider {
     // 查询重点机械数量
     public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, machineTypes.guid proportion, count(machines.guid) number, count(tenderMachineTypes.defaultNum) numberTotal from machineTypes" +
+        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, machineTypes.guid proportion, count(machines.guid) number, sum(tenderMachineTypes.defaultNum) numberTotal from machineTypes" +
                 " LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid ");
         if ("".equals(tenderGuid) || tenderGuid == null) {
             stringBuilder.append(" LEFT JOIN machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");

@@ -88,6 +88,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "2"));
 
         }else if ("5".equals(accounType)) {
+
             qualityTraceabilityModel.setStatus("submitted");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "5"));
         }else {
