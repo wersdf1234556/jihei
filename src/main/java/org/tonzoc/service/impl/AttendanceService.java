@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.common.TimeHelper;
 import org.tonzoc.exception.NotFoundException;
 import org.tonzoc.exception.NotOneResultFoundException;
 import org.tonzoc.mapper.AttachmentMapper;
@@ -429,5 +430,31 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     public List<AttendanceModel> warningInformation(){
 
         return attendanceMapper.warningInformation();
+    }
+
+    // 测温情况
+    public List<ReturnMachineModel> temperature(){
+
+        return attendanceMapper.temperature();
+    }
+
+    // 统计超温的测温人数
+    public List<String> temperatureNumber(){
+
+        return attendanceMapper.temperatureNumber(TimeHelper.dateToString(new Date()));
+    }
+
+    // 超温的人员
+    public List<PersonModel> temperaturePerson(){
+
+        List<String> list = this.temperatureNumber();
+        List<PersonModel> list1 = new ArrayList<>();
+        if (list.size() > 0) {
+            for (String li: list) {
+                list1.add(personService.get(li));
+            }
+        }
+
+        return list1;
     }
 }

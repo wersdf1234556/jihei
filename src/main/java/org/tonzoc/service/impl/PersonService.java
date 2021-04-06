@@ -25,12 +25,16 @@ import java.util.List;
 
 @Service("personService")
 public class PersonService extends BaseService<PersonModel> implements IPersonService {
+
     @Autowired
     private PersonMapper personMapper;
+
     @Autowired
     private IAttachmentService attachmentService;
+
     @Autowired
     private IntelliSiteProperties intelliSiteProperties;
+
     @Autowired
     private FileHelper fileHelper;
 
@@ -110,16 +114,16 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
             sqlQueryParams.add(new SqlQueryParam("idCard", personModel.getIdCard(), "eq"));
             sqlQueryParams.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
             List<PersonModel> list = this.list(sqlQueryParams);
-            if (list.size()>0){
+            if (list.size() > 0){
                 throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
             }
         }
-        if (personModel.getPhoto() != null) {
+        if (personModel.getPhoto() != null || !"".equals(personModel)) {
             List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
             sqlQueryParams2.add(new SqlQueryParam("mobile", personModel.getMobile(), "eq"));
             sqlQueryParams2.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
             List<PersonModel> list2 = this.list(sqlQueryParams2);
-            if (list2.size()>0){
+            if (list2.size() > 0){
                 throw new NotOneResultFoundException("该人员已存在，请检查手机号是否正确");
             }
         }

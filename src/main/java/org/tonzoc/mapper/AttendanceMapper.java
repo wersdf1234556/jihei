@@ -8,6 +8,7 @@ import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.support.AttDateStatModel;
 import org.tonzoc.model.support.AttendanceStatModel;
 import org.tonzoc.model.support.PersonLocationDataModel;
+import org.tonzoc.model.support.ReturnMachineModel;
 
 import java.util.List;
 @Component
@@ -60,7 +61,7 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
 
 
     // 预警信息
-    @Select("select top 50 persons.name as personName, tenders.name as tenderName, attendances.personGuid, attendances.attTime, attendances.temperature, attendances.address" +
+    @Select("select distinct top 50 persons.name as personName, tenders.name as tenderName, attendances.personGuid, attendances.attTime, attendances.temperature, attendances.address" +
             " from attendances inner join (select personGuid, max(attTime) as attTime from attendances" +
             " where CONVERT(varchar(10), attTime, 23) = CONVERT(varchar(10), getdate(), 23)" +
             " group by personGuid) attendances1 on attendances.personGuid = attendances1.personGuid and attendances.attTime = attendances1.attTime" +
@@ -69,8 +70,20 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " order by tenders.name, attTime desc")
     List<AttendanceModel> warningInformation();
 
+    // 测温情况
+    @Select("select name,sum(rencount) as rencount,sum(cewenrencount) as cewenrencount from (" +
+            " select tenders.name,count(*) as rencount,0 as cewenrencount from persons" +
+            " inner join tenders on persons.tenderguid=tenders.guid" +
+            " group by  tenders.name" +
+            " union all" +
+            " select tenders.name,0 as rencount,count(*) as cewenrencount from persons" +
+            " inner join tenders on persons.tenderguid = tenders.guid" +
+            " inner join (select personGuid from attendances where CONVERT(varchar(10), attTime, 23) =CONVERT(varchar(100), GETDATE(), 23) group by personGuid) attendances on attendances.personGuid=persons.guid" +
+            " group by  tenders.name) persons group by name")
+    List<ReturnMachineModel> temperature();
+
+    // 统计超温的测温人数
+    @Select("select distinct personGuid from attendances where attTime like '%${attTime}%' and status = 1")
+    List<String> temperatureNumber(@Param(value = "attTime") String attTime);
 
 }
-
-
-

@@ -9,10 +9,8 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttendanceModel;
-import org.tonzoc.model.support.AttDateStatModel;
-import org.tonzoc.model.support.AttendanceStatModel;
-import org.tonzoc.model.support.PersonLocationDataModel;
-import org.tonzoc.model.support.StatTotalModel;
+import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.support.*;
 import org.tonzoc.service.IAttendanceService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -58,7 +56,7 @@ public class AttendanceController extends BaseController {
     }
 
     @PostMapping(value = "insertGateData")
-    public Integer insertGateData(@RequestBody  @Valid AttendanceModel attendanceModel){
+    public Integer insertGateData(@RequestBody @Valid AttendanceModel attendanceModel){
         return attendanceService.insertGateData(attendanceModel);
     }
 
@@ -121,5 +119,26 @@ public class AttendanceController extends BaseController {
     public List<AttendanceModel> warningInformation(){
 
         return attendanceService.warningInformation();
+    }
+
+    // 测温情况
+    @GetMapping(value = "temperature")
+    public List<ReturnMachineModel> temperature(){
+
+        return attendanceService.temperature();
+    }
+
+    // 统计超温的测温人数
+    @GetMapping(value = "temperatureNumber")
+    public List<String> temperatureNumber(){
+
+        return attendanceService.temperatureNumber();
+    }
+
+    // 超温的人员
+    @GetMapping(value = "temperaturePerson")
+    public List<PersonModel> temperaturePerson(){
+
+        return attendanceService.temperaturePerson();
     }
 }
