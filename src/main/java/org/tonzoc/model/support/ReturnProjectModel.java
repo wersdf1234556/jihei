@@ -9,6 +9,8 @@ public class ReturnProjectModel {
     private String amountOnes; // 亿元1
     private String proportion; // 比例
     private String proportions; // 比例亿元
+    private String currentYearPlanAmount;
+    private String currentYearStatAmount;
     private Integer sortId;
 
     public Integer getSortId() {
@@ -78,6 +80,22 @@ public class ReturnProjectModel {
         this.proportions = proportions;
     }
 
+    public String getCurrentYearPlanAmount() {
+        return currentYearPlanAmount;
+    }
+
+    public void setCurrentYearPlanAmount(String currentYearPlanAmount) {
+        this.currentYearPlanAmount = currentYearPlanAmount;
+    }
+
+    public String getCurrentYearStatAmount() {
+        return currentYearStatAmount;
+    }
+
+    public void setCurrentYearStatAmount(String currentYearStatAmount) {
+        this.currentYearStatAmount = currentYearStatAmount;
+    }
+
     @Override
     public String toString() {
         return "ReturnProjectModel{" +
@@ -88,6 +106,8 @@ public class ReturnProjectModel {
                 ", amountOnes='" + amountOnes + '\'' +
                 ", proportion='" + proportion + '\'' +
                 ", proportions='" + proportions + '\'' +
+                ", currentYearPlanAmount='" + currentYearPlanAmount + '\'' +
+                ", currentYearStatAmount='" + currentYearStatAmount + '\'' +
                 ", sortId=" + sortId +
                 '}';
     }

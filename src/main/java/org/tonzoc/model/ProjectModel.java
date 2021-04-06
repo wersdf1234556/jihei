@@ -65,6 +65,10 @@ public class ProjectModel extends BaseModel {
     private String mapCode;
     @Column(value = "isImportantCount")
     private Integer isImportantCount;
+    @Column(value = "currentYearPlanAmount")
+    private BigDecimal currentYearPlanAmount;
+    @Column(value = "currentYearStatAmount")
+    private BigDecimal currentYearStatAmount;
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName; //行业类别名称
@@ -326,6 +330,22 @@ public class ProjectModel extends BaseModel {
         this.mapCode = mapCode;
     }
 
+    public BigDecimal getCurrentYearPlanAmount() {
+        return currentYearPlanAmount;
+    }
+
+    public void setCurrentYearPlanAmount(BigDecimal currentYearPlanAmount) {
+        this.currentYearPlanAmount = currentYearPlanAmount;
+    }
+
+    public BigDecimal getCurrentYearStatAmount() {
+        return currentYearStatAmount;
+    }
+
+    public void setCurrentYearStatAmount(BigDecimal currentYearStatAmount) {
+        this.currentYearStatAmount = currentYearStatAmount;
+    }
+
     @Override
     public String toString() {
         return "ProjectModel{" +
@@ -356,6 +376,8 @@ public class ProjectModel extends BaseModel {
                 ", hasMap=" + hasMap +
                 ", mapCode='" + mapCode + '\'' +
                 ", isImportantCount=" + isImportantCount +
+                ", currentYearPlanAmount='" + currentYearPlanAmount + '\'' +
+                ", currentYearStatAmount='" + currentYearStatAmount + '\'' +
                 ", industryCategoryName='" + industryCategoryName + '\'' +
                 ", managementPowerName='" + managementPowerName + '\'' +
                 ", buildLevelName='" + buildLevelName + '\'' +

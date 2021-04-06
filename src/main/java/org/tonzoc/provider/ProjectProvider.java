@@ -134,7 +134,7 @@ public class ProjectProvider {
                              @Param(value = "buildLevelGuid") String buildLevelGuid,
                              @Param(value = "isImportant") Integer isImportant) {
 
-        StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projects");
+        StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne, ISNULL(sum(projects.currentYearPlanAmount), 0) as currentYearPlanAmount, ISNULL(sum(projects.currentYearStatAmount), 0) currentYearStatAmount from projects");
         if (isImportant != null && isImportant == 1) {
             stringBuilder.append(" where isImportant = " + isImportant);
         }else{
@@ -163,7 +163,7 @@ public class ProjectProvider {
                                    @Param(value = "buildLevelGuid") String buildLevelGuid,
                                    @Param(value = "isImportant") Integer isImportant) {
 
-        StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne from projectStates");
+        StringBuilder stringBuilder = new StringBuilder("select ISNULL(sum(projects.winningAmount), 0) amount, ISNULL(sum(projects.completeAmount), 0) amountOne, ISNULL(sum(projects.currentYearPlanAmount), 0) as currentYearPlanAmount, ISNULL(sum(projects.currentYearStatAmount), 0) as currentYearStatAmount from projectStates");
         if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
             if (isImportant != null && isImportant == 1) {
                 stringBuilder.append(" LEFT JOIN (select * from projects where projects.isImportant = 1) projects on projectStates.guid = projects.projectStateGuid ");

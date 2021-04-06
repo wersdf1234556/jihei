@@ -95,6 +95,9 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
             li.setAmountOne(new BigDecimal(li.getAmountOne()).setScale(0, BigDecimal.ROUND_HALF_UP) + "");
             li.setAmountOnes(this.company(new BigDecimal(li.getAmountOne())));
+
+            li.setCurrentYearPlanAmount(this.company(new BigDecimal(li.getCurrentYearPlanAmount())));
+            li.setCurrentYearStatAmount(this.company(new BigDecimal(li.getCurrentYearStatAmount())));
         }
 
         return list;
@@ -113,6 +116,9 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
 
             li.setAmountOne(new BigDecimal(li.getAmountOne()).setScale(0, BigDecimal.ROUND_HALF_UP) + ""); // 完
             li.setAmountOnes(this.company(new BigDecimal(li.getAmountOne())));
+
+            li.setCurrentYearPlanAmount(this.company(new BigDecimal(li.getCurrentYearPlanAmount())));
+            li.setCurrentYearStatAmount(this.company(new BigDecimal(li.getCurrentYearStatAmount())));
 
             if (new BigDecimal(li.getAmount()).compareTo(new BigDecimal(0)) == 1) {
                 String s = (new BigDecimal(li.getAmountOne()).divide(new BigDecimal(li.getAmount()), 3, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100)).toString();
