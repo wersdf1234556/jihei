@@ -17,6 +17,8 @@ public class MachineTypeModel extends BaseModel{
     private Integer highlight; // 是否重点展示
     @Column(value = "machineCategoryGuid")
     private String machineCategoryGuid; // 机械类别guid
+    @Column(value = "formattedName")
+    private String formattedName; // 机械名称分割
 
     @JoinColumn(value = "name", type = MachineCategoryModel.class, leftColumn = "machineCategoryGuid", rightColumn = "guid")
     private String machineCategoryName;  // 机械类别名称
@@ -72,6 +74,14 @@ public class MachineTypeModel extends BaseModel{
         this.machineCategoryName = machineCategoryName;
     }
 
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
+    }
+
     @Override
     public String toString() {
         return "MachineTypeModel{" +
@@ -80,6 +90,7 @@ public class MachineTypeModel extends BaseModel{
                 ", sortId=" + sortId +
                 ", highlight=" + highlight +
                 ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
+                ", formattedName='" + formattedName + '\'' +
                 ", machineCategoryName='" + machineCategoryName + '\'' +
                 '}';
     }

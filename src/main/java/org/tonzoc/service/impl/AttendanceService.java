@@ -433,7 +433,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     }
 
     // 测温情况
-    public List<ReturnMachineModel> temperature(){
+    public List<ReturnPersonModel> temperature(){
 
         return attendanceMapper.temperature();
     }

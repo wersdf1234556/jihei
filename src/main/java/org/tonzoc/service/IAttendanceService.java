@@ -31,7 +31,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
     List<AttendanceModel> warningInformation();
 
     // 测温情况
-    List<ReturnMachineModel> temperature();
+    List<ReturnPersonModel> temperature();
 
     // 统计超温的测温人的guid
     List<String> temperaturePersonGuid();

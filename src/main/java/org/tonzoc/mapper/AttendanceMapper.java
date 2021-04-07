@@ -5,10 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.AttendanceModel;
-import org.tonzoc.model.support.AttDateStatModel;
-import org.tonzoc.model.support.AttendanceStatModel;
-import org.tonzoc.model.support.PersonLocationDataModel;
-import org.tonzoc.model.support.ReturnMachineModel;
+import org.tonzoc.model.support.*;
 
 import java.util.List;
 @Component
@@ -80,7 +77,7 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " inner join tenders on persons.tenderguid = tenders.guid" +
             " inner join (select personGuid from attendances where CONVERT(varchar(10), attTime, 23) =CONVERT(varchar(100), GETDATE(), 23) group by personGuid) attendances on attendances.personGuid=persons.guid" +
             " group by  tenders.name) persons group by name")
-    List<ReturnMachineModel> temperature();
+    List<ReturnPersonModel> temperature();
 
     // 统计超温的测温人数
     @Select("select distinct personGuid from attendances where attTime like '%${attTime}%' and status = 1")

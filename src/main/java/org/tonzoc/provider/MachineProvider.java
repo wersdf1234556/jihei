@@ -54,11 +54,11 @@ public class MachineProvider {
     // 查询全部机械
     public String allImportantMachine(@Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder("select tenderMachineTypes.name, tenderMachineTypes.defaultNum numberTotal, count(machines.guid) number from " +
+        StringBuilder stringBuilder = new StringBuilder("select tenderMachineTypes.formattedName name, tenderMachineTypes.defaultNum numberTotal, count(machines.guid) number from " +
                 "(select * from tenderMachineTypes where tenderGuid = '" + tenderGuid + "') tenderMachineTypes " +
                 "LEFT JOIN (select machines.guid, machines.tenderMachineTypeGuid from machines " +
                 "where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid " +
-                "GROUP BY tenderMachineTypes.name, tenderMachineTypes.defaultNum");
+                "GROUP BY tenderMachineTypes.formattedName, tenderMachineTypes.defaultNum");
 
         return stringBuilder.toString();
     }

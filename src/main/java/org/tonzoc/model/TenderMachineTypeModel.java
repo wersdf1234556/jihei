@@ -21,6 +21,8 @@ public class TenderMachineTypeModel extends BaseModel {
     private String defaultNum;
     @Column(value = "machineCategoryGuid")
     private String machineCategoryGuid;
+    @Column(value = "formattedName")
+    private String formattedName; // 机械名称分割
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;  // 标段名称
@@ -110,5 +112,30 @@ public class TenderMachineTypeModel extends BaseModel {
 
     public void setMachineCategoryName(String machineCategoryName) {
         this.machineCategoryName = machineCategoryName;
+    }
+
+    public String getFormattedName() {
+        return formattedName;
+    }
+
+    public void setFormattedName(String formattedName) {
+        this.formattedName = formattedName;
+    }
+
+    @Override
+    public String toString() {
+        return "TenderMachineTypeModel{" +
+                "guid='" + guid + '\'' +
+                ", tenderGuid='" + tenderGuid + '\'' +
+                ", machineTypeGuid='" + machineTypeGuid + '\'' +
+                ", name='" + name + '\'' +
+                ", sortId=" + sortId +
+                ", defaultNum='" + defaultNum + '\'' +
+                ", machineCategoryGuid='" + machineCategoryGuid + '\'' +
+                ", formattedName='" + formattedName + '\'' +
+                ", tenderName='" + tenderName + '\'' +
+                ", MachineTypeName='" + MachineTypeName + '\'' +
+                ", machineCategoryName='" + machineCategoryName + '\'' +
+                '}';
     }
 }

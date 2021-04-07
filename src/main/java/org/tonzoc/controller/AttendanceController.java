@@ -123,7 +123,7 @@ public class AttendanceController extends BaseController {
 
     // 测温情况
     @GetMapping(value = "temperature")
-    public List<ReturnMachineModel> temperature(){
+    public List<ReturnPersonModel> temperature(){
 
         return attendanceService.temperature();
     }
