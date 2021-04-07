@@ -41,6 +41,20 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
                        @Param("buildLevelGuid") String buildLevelGuid,
                        @Param("isImportant") Integer isImportant);
 
+    // 项目数量
+    @SelectProvider(type = ProjectProvider.class, method = "countRecover")
+    Integer countRecover (@Param("industryCategoryGuid") String industryCategoryGuid,
+                   @Param("managementPowerGuid") String managementPowerGuid,
+                   @Param("buildLevelGuid") String buildLevelGuid,
+                   @Param("isImportant") Integer isImportant);
+
+    // 续建项目数量
+    @SelectProvider(type = ProjectProvider.class, method = "countStarted")
+    Integer countStarted(@Param("industryCategoryGuid") String industryCategoryGuid,
+                       @Param("managementPowerGuid") String managementPowerGuid,
+                       @Param("buildLevelGuid") String buildLevelGuid,
+                       @Param("isImportant") Integer isImportant);
+
     // 总额的和
     @SelectProvider(type = ProjectProvider.class, method = "sumWinning")
     List<ReturnProjectModel> sumWinning(@Param("industryCategoryGuid") String industryCategoryGuid,
