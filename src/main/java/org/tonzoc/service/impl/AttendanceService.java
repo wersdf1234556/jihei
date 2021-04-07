@@ -438,16 +438,22 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         return attendanceMapper.temperature();
     }
 
-    // 统计超温的测温人数
-    public List<String> temperatureNumber(){
+    // 统计超温的测温人的guid
+    public List<String> temperaturePersonGuid(){
 
         return attendanceMapper.temperatureNumber(TimeHelper.dateToString(new Date()));
+    }
+
+    // 统计超温的测温人数
+    public String temperatureNumber(){
+
+        return this.temperaturePersonGuid().size() + "";
     }
 
     // 超温的人员
     public List<PersonModel> temperaturePerson(){
 
-        List<String> list = this.temperatureNumber();
+        List<String> list = this.temperaturePersonGuid();
         List<PersonModel> list1 = new ArrayList<>();
         if (list.size() > 0) {
             for (String li: list) {

@@ -130,7 +130,7 @@ public class AttendanceController extends BaseController {
 
     // 统计超温的测温人数
     @GetMapping(value = "temperatureNumber")
-    public List<String> temperatureNumber(){
+    public String temperatureNumber(){
 
         return attendanceService.temperatureNumber();
     }
