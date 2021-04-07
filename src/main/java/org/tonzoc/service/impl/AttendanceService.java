@@ -1,13 +1,8 @@
 package org.tonzoc.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tonzoc.common.TimeHelper;
-import org.tonzoc.exception.NotFoundException;
-import org.tonzoc.exception.NotOneResultFoundException;
-import org.tonzoc.mapper.AttachmentMapper;
 import org.tonzoc.mapper.AttendanceMapper;
 import org.tonzoc.mapper.PersonMapper;
 import org.tonzoc.model.*;
@@ -48,17 +43,23 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
     //添加闸机数据
     public Integer insertGateData(AttendanceModel attendanceModel){
-        try{
-            if (attendanceModel.getIdCard()!=null){
+
+            if (attendanceModel.getIdCard() != null){
                 List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
                 sqlQueryParams.add(new SqlQueryParam("idCard", attendanceModel.getIdCard(), "eq"));
                 List<PersonModel> personModels = personService.list(sqlQueryParams) ;
-                if (personModels.size()!=0){
+                if (personModels.size() != 0){
                     String personGuid = personModels.get(0).getGuid();
                     attendanceModel.setPersonGuid(personGuid);
+                    if (attendanceModel.getSign() == null) {
+                        attendanceModel.setSign(0);
+                    } else {
+                        attendanceModel.setSign(1);
+                    }
+
                     if (new BigDecimal(attendanceModel.getTemperature()).compareTo(new BigDecimal("37.3")) == 1){ // 大于37.3
                         attendanceModel.setStatus(1);
-                    } else{
+                    } else {
                         attendanceModel.setStatus(0);
                     }
                     save(attendanceModel);
@@ -66,9 +67,6 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                 }
             }
             return 1;
-        }catch (Exception e){
-            return 1;
-        }
 
     }
 

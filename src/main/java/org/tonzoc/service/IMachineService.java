@@ -22,7 +22,7 @@ public interface IMachineService extends IBaseService<MachineModel> {
     List<ReturnModel> machineMainSurvey(String tenderGuid);
 
     // 重点机械
-    List<ReturnMachineModel> importantMachine(String tenderGuid);
+    List<ReturnMachineModel> importantMachine();
 
     // 全标段的重点机械
     List<TenderModel> allImportantMachine();

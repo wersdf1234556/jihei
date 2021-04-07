@@ -327,4 +327,5 @@ public class PersonModel extends BaseModel{
     public void setCertificatePicName(String certificatePicName) {
         this.certificatePicName = certificatePicName;
     }
+
 }

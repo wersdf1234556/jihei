@@ -81,9 +81,9 @@ public class MachineController extends BaseController {
 
     // 重点机械
     @GetMapping(value = "importantMachine")
-    public List<ReturnMachineModel> importantMachine (String tenderGuid) {
+    public List<ReturnMachineModel> importantMachine () {
 
-        return machineService.importantMachine(tenderGuid);
+        return machineService.importantMachine();
     }
 
     // 全标段的重点机械

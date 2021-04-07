@@ -34,23 +34,6 @@ public class MachineProvider {
         return stringBuilder.toString();
     }
 
-    // 查询重点机械数量
-    public String selectMachineTypeNumber(@Param(value = "tenderGuid") String tenderGuid) {
-
-        StringBuilder stringBuilder = new StringBuilder("select machineTypes.name, machineTypes.guid proportion, count(machines.guid) number, sum(tenderMachineTypes.defaultNum) numberTotal from machineTypes" +
-                " LEFT JOIN tenderMachineTypes on machineTypes.guid = tenderMachineTypes.machineTypeGuid ");
-        if ("".equals(tenderGuid) || tenderGuid == null) {
-            stringBuilder.append(" LEFT JOIN machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
-        }else {
-            stringBuilder.append(" LEFT JOIN (select machines.guid, machines.tenderMachineTypeGuid from machines" +
-                    " where machines.tenderGuid = '" + tenderGuid + "') machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid");
-        }
-
-        stringBuilder.append(" where machineTypes.highlight != 0 GROUP BY machineTypes.name, machineTypes.guid");
-
-        return stringBuilder.toString();
-    }
-
     // 查询全部机械
     public String allImportantMachine(@Param(value = "tenderGuid") String tenderGuid) {
 

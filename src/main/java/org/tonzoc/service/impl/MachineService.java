@@ -85,9 +85,9 @@ public class MachineService extends BaseService<MachineModel> implements IMachin
 
     // 重点机械
     @Override
-    public List<ReturnMachineModel> importantMachine(String tenderGuid) {
+    public List<ReturnMachineModel> importantMachine() {
 
-        return machineMapper.selectMachineTypeNumber(tenderGuid);
+        return machineMapper.selectMachineTypeNumber();
     }
 
     // 全标段的重点机械

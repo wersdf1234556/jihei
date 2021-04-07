@@ -68,15 +68,15 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
     List<AttendanceModel> warningInformation();
 
     // 测温情况
-    @Select("select name,sum(rencount) as rencount,sum(cewenrencount) as cewenrencount from (" +
-            " select tenders.name,count(*) as rencount,0 as cewenrencount from persons" +
+    @Select("select name, sortId, sum(rencount) as rencount,sum(cewenrencount) as cewenrencount from (" +
+            " select tenders.name, tenders.sortId, count(*) as rencount,0 as cewenrencount from persons" +
             " inner join tenders on persons.tenderguid=tenders.guid" +
-            " group by  tenders.name" +
+            " group by tenders.sortId, tenders.name" +
             " union all" +
-            " select tenders.name,0 as rencount,count(*) as cewenrencount from persons" +
+            " select tenders.name, tenders.sortId, 0 as rencount,count(*) as cewenrencount from persons" +
             " inner join tenders on persons.tenderguid = tenders.guid" +
             " inner join (select personGuid from attendances where CONVERT(varchar(10), attTime, 23) =CONVERT(varchar(100), GETDATE(), 23) group by personGuid) attendances on attendances.personGuid=persons.guid" +
-            " group by  tenders.name) persons group by name")
+            " group by tenders.sortId, tenders.name) persons group by name, sortId order by sortId")
     List<ReturnPersonModel> temperature();
 
     // 统计超温的测温人数
