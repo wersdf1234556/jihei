@@ -28,6 +28,13 @@ public interface ProjectMapper extends BaseMapper<ProjectModel> {
     Integer hundredIndustryCountAndStart(@Param(value = "industryCategoryGuid") String industryCategoryGuid);
 
     // 项目数量
+    @SelectProvider(type = ProjectProvider.class, method = "countTotal")
+    Integer countTotal (@Param("industryCategoryGuid") String industryCategoryGuid,
+                   @Param("managementPowerGuid") String managementPowerGuid,
+                   @Param("buildLevelGuid") String buildLevelGuid,
+                   @Param("isImportant") Integer isImportant);
+
+    // 项目数量
     @SelectProvider(type = ProjectProvider.class, method = "count")
     Integer count (@Param("industryCategoryGuid") String industryCategoryGuid,
                    @Param("managementPowerGuid") String managementPowerGuid,

@@ -4,6 +4,33 @@ import org.apache.ibatis.annotations.Param;
 
 public class ProjectProvider {
 
+    // 获取所有项目数量
+    public String countTotal(@Param(value = "industryCategoryGuid") String industryCategoryGuid,
+                        @Param(value = "managementPowerGuid") String managementPowerGuid,
+                        @Param(value = "buildLevelGuid") String buildLevelGuid,
+                        @Param(value = "isImportant") Integer isImportant) {
+
+        StringBuilder stringBuilder = new StringBuilder("select count(guid) from projects where 1 = 1");
+        if (isImportant != null && isImportant == 1) {
+            stringBuilder.append(" and isImportant = " + isImportant + " and isImportantCount = 0");
+        }
+
+        if ((industryCategoryGuid == null && managementPowerGuid == null && buildLevelGuid == null) || ("".equals(industryCategoryGuid) && "".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+        } else if ((managementPowerGuid == null && buildLevelGuid == null) || ("".equals(managementPowerGuid) && "".equals(buildLevelGuid))) {
+
+            stringBuilder.append(" and industryCategoryGuid = '" + industryCategoryGuid + "'");
+        } else if (buildLevelGuid == null || "".equals(buildLevelGuid)) {
+
+            stringBuilder.append(" and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "'");
+        } else {
+
+            stringBuilder.append(" and industryCategoryGuid = '" + industryCategoryGuid + "' and managementPowerGuid = '" + managementPowerGuid + "' and buildLevelGuid = '" + buildLevelGuid + "'");
+        }
+
+        return stringBuilder.toString();
+    }
+
     // 项目数量
     public String count(@Param(value = "industryCategoryGuid") String industryCategoryGuid,
                         @Param(value = "managementPowerGuid") String managementPowerGuid,

@@ -270,7 +270,7 @@ public class ProjectService extends BaseService<ProjectModel> implements IProjec
         List<ReturnProjectModel> list = new ArrayList<>();
         ReturnProjectModel returnProjectModel = new ReturnProjectModel();
         returnProjectModel.setName("项目总数");
-        returnProjectModel.setProportion(projectMapper.count("", "", "", isImportant) + "");
+        returnProjectModel.setProportion(projectMapper.countTotal("", "", "", isImportant) + "");
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         List<ProjectModel> list1 = this.list(sqlQueryParams);
