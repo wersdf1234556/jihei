@@ -76,7 +76,7 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " select tenders.name, tenders.sortId, 0 as rencount,count(*) as cewenrencount from persons" +
             " inner join tenders on persons.tenderguid = tenders.guid" +
             " inner join (select personGuid from attendances where CONVERT(varchar(10), attTime, 23) =CONVERT(varchar(100), GETDATE(), 23) group by personGuid) attendances on attendances.personGuid=persons.guid" +
-            " group by tenders.sortId, tenders.name) persons group by name, sortId order by sortId")
+            " group by tenders.sortId, tenders.name) persons group by name, sortId order by sortId desc")
     List<ReturnPersonModel> temperature();
 
     // 统计超温的测温人数
