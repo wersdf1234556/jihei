@@ -32,7 +32,15 @@ public interface MachineMapper extends BaseMapper<MachineModel>{
     List<ReturnMachineModel> selectMachineTypeNumber();
 
     // 全标段的重点机械
-    @SelectProvider(type = MachineProvider.class, method = "allImportantMachine")
+    @Select("select * from (select tenderMachineTypes.formattedName name, sum(tenderMachineTypes.defaultNum) numberTotal from" +
+            " (select * from tenderMachineTypes where tenderGuid = #{tenderGuid}) tenderMachineTypes" +
+            " GROUP BY tenderMachineTypes.formattedName) tenderMachineTypes" +
+            " LEFT JOIN" +
+            " (select tenderMachineTypes.formattedName name, count(machines.guid) number from" +
+            " (select * from tenderMachineTypes where tenderGuid = #{tenderGuid}) tenderMachineTypes" +
+            " LEFT JOIN (select machines.guid, machines.tenderMachineTypeGuid from machines" +
+            " where machines.tenderGuid = #{tenderGuid}) machines on tenderMachineTypes.guid = machines.tenderMachineTypeGuid" +
+            " GROUP BY tenderMachineTypes.formattedName) machines on tenderMachineTypes.name = machines.name")
     List<ReturnMachineModel> allImportantMachine(@Param(value = "tenderGuid") String tenderGuid);
 
     // 按照机械类别查询机械类型
