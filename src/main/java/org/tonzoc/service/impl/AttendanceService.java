@@ -171,7 +171,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                     .stream()
                     .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(PersonModel::getIdCard))), ArrayList::new));
             AttendanceStatModel statModel = new AttendanceStatModel();
-            statModel.setTypeName(personType.getName());
+            statModel.setTypeName(personType.getFormattedName());
             statModel.setTotal(String.valueOf(total));
             statModel.setEnterNum(String.valueOf(enterNum.size()));
             List<AttendanceModel> attNum = attendanceMapper.listAttByType(personType.getGuid(),date);
@@ -404,7 +404,7 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         BigDecimal percent=new BigDecimal(0.00).setScale(2,BigDecimal.ROUND_HALF_UP);
         for (PersonTypeModel typeModel:personTypeModels){
             AttendanceStatModel attendanceStatModel = new AttendanceStatModel();
-            attendanceStatModel.setTypeName(typeModel.getName());
+            attendanceStatModel.setTypeName(typeModel.getFormattedName());
             List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
             sqlQueryParams1.add(new SqlQueryParam("personTypeGuid",typeModel.getGuid(),"eq"));
             List<PersonModel> personModels = personService.list(sqlQueryParams1);
