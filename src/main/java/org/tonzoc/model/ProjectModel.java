@@ -69,6 +69,10 @@ public class ProjectModel extends BaseModel {
     private BigDecimal currentYearPlanAmount;
     @Column(value = "currentYearStatAmount")
     private BigDecimal currentYearStatAmount;
+    @Column(value = "isRecover")
+    private String isRecover;
+    @Column(value = "isBatch")
+    private Integer isBatch;
 
     @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "industryCategoryGuid", rightColumn = "guid")
     private String industryCategoryName; //行业类别名称
@@ -344,6 +348,22 @@ public class ProjectModel extends BaseModel {
 
     public void setCurrentYearStatAmount(BigDecimal currentYearStatAmount) {
         this.currentYearStatAmount = currentYearStatAmount;
+    }
+
+    public String getIsRecover() {
+        return isRecover;
+    }
+
+    public void setIsRecover(String isRecover) {
+        this.isRecover = isRecover;
+    }
+
+    public Integer getIsBatch() {
+        return isBatch;
+    }
+
+    public void setIsBatch(Integer isBatch) {
+        this.isBatch = isBatch;
     }
 
     @Override
