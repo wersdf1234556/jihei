@@ -58,6 +58,9 @@ public class MachineController extends BaseController {
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid MachineModel mechanicsModel) {
+
+        tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid());
+        mechanicsModel.setMachineCategoryGuid(tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineCategoryGuid());
         this.machineService.update(mechanicsModel);
     }
 

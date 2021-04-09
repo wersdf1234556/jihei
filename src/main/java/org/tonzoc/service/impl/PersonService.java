@@ -130,6 +130,8 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
         //不修改密码
         personModel.setPassword(null);
+        System.out.println("personModel" + personModel);
+        System.out.println(personModel.getPersonTypeGuid() + "a");
         personModel.setCategoryGuid(personTypeService.get(personModel.getPersonTypeGuid()).getCategoryGuid());
         update(personModel);
     }

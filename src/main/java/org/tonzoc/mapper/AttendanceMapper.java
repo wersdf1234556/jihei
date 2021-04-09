@@ -83,4 +83,11 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
     @Select("select distinct personGuid from attendances where attTime like '%${attTime}%' and status = 1")
     List<String> temperatureNumber(@Param(value = "attTime") String attTime);
 
+    // 打卡人数
+    @Select("select count(DISTINCT personGuid) from attendances " +
+            " LEFT JOIN persons on attendances.personGuid = persons.guid " +
+            " where persons.personTypeGuid = #{personGuid} and attTime like '%${attTime}%'")
+    Integer arrivePerson(@Param(value = "personGuid") String personGuid,
+                         @Param(value = "attTime") String attTime);
+
 }
