@@ -78,4 +78,11 @@ public class PersonController extends BaseController {
 
        return personService.addPerson(file);
     }
+
+    @PatchMapping(value = "password")
+    public void password(String personGuid, String oldPassword, String newPassword) {
+        PersonModel personModel = this.personService.get(personGuid);
+        personModel.setPassword(newPassword);
+        this.personService.update(personModel);
+    }
 }
