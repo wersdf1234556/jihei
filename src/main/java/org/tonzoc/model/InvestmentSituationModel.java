@@ -14,8 +14,6 @@ public class InvestmentSituationModel extends BaseModel{
     private String guid;
     @Column(value = "investmentCostGuid")
     private String investmentCostGuid; // 投资项目
-    @JoinColumn(value = "name", type = InvestmentCostModel.class, leftColumn = "investmentCostGuid", rightColumn = "guid")
-    private String investmentCostName; //投资项目名称
     @Column(value = "balance")
     private BigDecimal balance;
     @Column(value = "date")
@@ -23,6 +21,9 @@ public class InvestmentSituationModel extends BaseModel{
     @Column(value = "createdAt")
     @NotInsertColumn
     private Date createdAt;
+
+    @JoinColumn(value = "name", type = InvestmentCostModel.class, leftColumn = "investmentCostGuid", rightColumn = "guid")
+    private String investmentCostName; //投资项目名称
 
     public String getGuid() {
         return guid;

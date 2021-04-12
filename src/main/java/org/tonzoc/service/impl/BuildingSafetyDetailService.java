@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service("BuildingSafetyDetailService")
 public class BuildingSafetyDetailService extends BaseService<BuildingSafetyDetailModel> implements IBuildingSafetyDetailService {
+
     public List<BuildingSafetyDetailModel> listByLtDate(String date,String safetyGuid){
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         //小于指定日期

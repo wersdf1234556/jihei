@@ -94,13 +94,13 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("idCard", personModel.getIdCard(), "eq"));
         List<PersonModel> list = this.list(sqlQueryParams);
-        if (list.size()>0){
+        if (list.size() > 0){
             throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
         }
         List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
         sqlQueryParams2.add(new SqlQueryParam("mobile", personModel.getMobile(), "eq"));
-        List<PersonModel> list2 = this.list(sqlQueryParams);
-        if (list2.size()>0){
+        List<PersonModel> list2 = this.list(sqlQueryParams2);
+        if (list2.size() > 0){
             throw new NotOneResultFoundException("该人员已存在，请检查手机号是否正确");
         }
         personModel.setPassword("123456");
@@ -109,7 +109,7 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
     }
 
     public void updateStack(PersonModel personModel) throws Exception {
-        if (personModel.getIdCard() != null || !"".equals(personModel)){
+        if (personModel.getIdCard() != null && !"".equals(personModel.getIdCard())){
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
             sqlQueryParams.add(new SqlQueryParam("idCard", personModel.getIdCard(), "eq"));
             sqlQueryParams.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
@@ -118,7 +118,7 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
                 throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
             }
         }
-        if (personModel.getPhoto() != null || !"".equals(personModel)) {
+        if (personModel.getPhoto() != null && !"".equals(personModel.getIdCard())) {
             List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
             sqlQueryParams2.add(new SqlQueryParam("mobile", personModel.getMobile(), "eq"));
             sqlQueryParams2.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));

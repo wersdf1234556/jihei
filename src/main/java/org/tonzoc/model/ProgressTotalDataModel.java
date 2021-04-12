@@ -4,6 +4,7 @@ import org.tonzoc.annotation.*;
 
 import java.math.BigDecimal;
 
+// 形象进度统计表
 @Table(value = "progressTotalDatas")
 public class ProgressTotalDataModel extends BaseModel{
     @PrimaryKey
@@ -21,7 +22,7 @@ public class ProgressTotalDataModel extends BaseModel{
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
     @Column(value = "flag")
-    private Integer flag;//0：总计划    1：年计划   2：月计划
+    private Integer flag; //0：总计划    1：年计划   2：月计划
 
     public String getGuid() {
         return guid;

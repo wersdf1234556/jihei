@@ -70,8 +70,9 @@ public class ProgressDetailController extends BaseController {
     }
 
     @GetMapping(value = "statCurrentMonth")
-    public List<ProgressStatModel> statCurrentMonth(String tender,String date,Integer flag){
-        return progressDetailService.statCurrentMonth(tender,date,flag);
+    public List<ProgressStatModel> statCurrentMonth(String tender, String date, Integer flag){
+
+        return progressDetailService.statCurrentMonth(tender, date, flag);
     }
 
     //提交
@@ -79,6 +80,7 @@ public class ProgressDetailController extends BaseController {
     public void submit(String progressGuid){
         progressDetailService.submit(progressGuid);
     }
+
     //审批
     @PostMapping(value = "approval")
     public void approval(String progressGuid,Integer flag) throws Exception {

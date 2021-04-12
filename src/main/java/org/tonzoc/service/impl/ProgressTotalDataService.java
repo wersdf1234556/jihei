@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service("progressTotalDataService")
 public class ProgressTotalDataService extends BaseService<ProgressTotalDataModel> implements IProgressTotalDataService {
+
     @Autowired
     private ProgressTotalDataMapper progressTotalDataMapper;
 

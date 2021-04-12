@@ -42,18 +42,20 @@ public class SecurityController extends BaseController {
     private TenderScoreMapper tenderScoreMapper;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams, String accounType)
+    public PageResponse list(PageQueryParams pageQueryParams, SecurityQueryParams securityQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<SecurityModel> page = parsePage(pageQueryParams);
 
         // 监理
-        if (accounType != null) {
-            if ("1".equals(accounType) || "2".equals(accounType) || "3".equals(accounType) || "4".equals(accounType)){
+        if (securityQueryParams.getAccounType() != null) {
+            if ("1".equals(securityQueryParams.getAccounType()) || "2".equals(securityQueryParams.getAccounType()) || "3".equals(securityQueryParams.getAccounType()) || "4".equals(securityQueryParams.getAccounType())){
                 securityQueryParams.setStatus("unSubmit,submitted,unFinish,finish");
+                securityQueryParams.setAccounType("");
 
-            } else if ("0".equals(accounType)){
+            } else if ("0".equals(securityQueryParams.getAccounType())){
                 securityQueryParams.setStatus("submitted,unFinish,finish");
+                securityQueryParams.setAccounType("");
             }
         }
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(securityQueryParams);
@@ -80,7 +82,9 @@ public class SecurityController extends BaseController {
 
         this.securityService.removeStack(guid);
         String tenderScoreGuid = tenderScoreMapper.guid(guid);
-        tenderScoreService.remove(tenderScoreGuid);
+        if (tenderScoreGuid != null && !"".equals(tenderScoreGuid)) {
+            tenderScoreService.remove(tenderScoreGuid);
+        }
     }
 
     // 上传安全文件

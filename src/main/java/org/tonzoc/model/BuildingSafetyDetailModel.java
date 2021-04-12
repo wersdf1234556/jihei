@@ -14,9 +14,9 @@ public class BuildingSafetyDetailModel extends BaseModel{
     @Column(value = "guid")
     private String guid;
     @Column(value = "safetyGuid")
-    private String safetyGuid; // 名称
+    private String safetyGuid;
     @JoinColumn(value = "name", type = BuildingSafetyModel.class, leftColumn = "safetyGuid", rightColumn = "guid")
-    private String safetyName; //标段
+    private String safetyName; // 名称
     @Column(value = "tenderGuid")
     private String tenderGuid;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")

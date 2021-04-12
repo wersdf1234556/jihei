@@ -1,12 +1,10 @@
 package org.tonzoc.model;
 
-import org.apache.commons.lang.StringUtils;
 import org.tonzoc.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
+// 形象进度管理表
 @Table(value = "progressDetails")
 public class ProgressDetailModel extends BaseModel{
     @PrimaryKey

@@ -80,9 +80,8 @@ public class InvestmentCostController extends BaseController{
 
     //左下角建安费分项统计
     @GetMapping(value = "statByBuildSafety")
-    public List<BuildSafetyStatModel> statByBuildSafety(Integer flag){
-        System.out.println(investmentCostService.statByBuildSafety(flag));
-        return investmentCostService.statByBuildSafety(flag);
+    public List<BuildSafetyStatModel> statByBuildSafety(Integer flag, String date){
+        return investmentCostService.statByBuildSafety(flag, date);
     }
     //右侧按标段统计总产值和累计产值
     @GetMapping(value = "statByTender")

@@ -5,7 +5,7 @@ import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
-
+// 形象进度名称
 @Table(value = "progressNames")
 public class ProgressNameModel extends BaseModel{
     @PrimaryKey

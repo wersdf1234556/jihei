@@ -1,10 +1,12 @@
 package org.tonzoc.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.BuildingSafetyDetailModel;
 import org.tonzoc.model.support.CostByTpeModel;
 
+import javax.validation.Valid;
 import java.util.List;
 @Component
 public interface BuildingSafetyDetailMapper extends BaseMapper<BuildingSafetyDetailModel>  {
@@ -19,4 +21,12 @@ public interface BuildingSafetyDetailMapper extends BaseMapper<BuildingSafetyDet
             "GROUP By t.sortId,t.guid,t.name " +
             ") a ORDER BY a.sortId")
     List<CostByTpeModel> statByTender();
+
+    @Select("SELECT pn.name as safetyName, mainTable.balance from buildingSafetyDetails mainTable" +
+            " LEFT JOIN buildingSafety pn on mainTable.safetyGuid = pn.guid" +
+            " where mainTable.[date] like '%${year}%' and mainTable.[date] < #{month}" +
+            " and pn.guid = #{buildingSafetyGuid}")
+    List<BuildingSafetyDetailModel> statByYearMonthSituation(@Param(value = "year") String year,
+                                                             @Param(value = "month") String month,
+                                                             @Param(value = "buildingSafetyGuid") String buildingSafetyGuid);
 }

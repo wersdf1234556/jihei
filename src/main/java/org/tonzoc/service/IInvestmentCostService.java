@@ -9,9 +9,14 @@ import org.tonzoc.model.support.TypeModel;
 import java.util.List;
 
 public interface IInvestmentCostService extends IBaseService<InvestmentCostModel> {
+
     CostModel statCost();
+
     List<TypeModel> statByEachItem();
+
     List<CostByTpeModel> statBySituation();
-    List<BuildSafetyStatModel> statByBuildSafety(Integer flag);
+
+    List<BuildSafetyStatModel> statByBuildSafety(Integer flag, String date);
+
     List<CostByTpeModel> statByTender();
 }
