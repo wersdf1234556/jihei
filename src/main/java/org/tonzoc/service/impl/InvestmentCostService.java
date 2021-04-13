@@ -125,10 +125,9 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             date = formatter.format(new Date());
         }
-        System.out.println("date =" + date);
         String year = date.substring(0, 4);
         String month = date.substring(0, 7);
-        System.out.println("年" + year + ",月" + month);
+        System.out.println("年" + year + ",月" + month + ",日" + date);
         List<BuildSafetyStatModel> list = new ArrayList<>();
 
         BigDecimal totalBalance = BigDecimal.ZERO;
