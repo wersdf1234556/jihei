@@ -70,6 +70,7 @@ public class PersonModel extends BaseModel{
     @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "photo", rightColumn = "guid")
     private String photoName; //人员照片名称
     @JoinColumn(value = "name", type = AttachmentModel.class, leftColumn = "certificatePic", rightColumn = "guid")
+
     private String certificatePicName; //证书照片名称
 
     public String getGuid() {

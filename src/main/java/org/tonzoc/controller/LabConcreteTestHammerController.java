@@ -56,4 +56,14 @@ public class LabConcreteTestHammerController extends BaseController {
         this.labConcretTestHammerService.update(labConcreteTestHammerModel);
         return labConcreteTestHammerModel;
     }
+
+    @PostMapping(value = "batchUpdateStatus")
+    public void batchUpdateStatus (String guids, Integer flag) {
+        String[] guidArray = guids.split(",");
+        for (String guid : guidArray) {
+            LabConcreteTestHammerModel model = this.labConcretTestHammerService.get(guid);
+            model.setFlag(flag);
+            this.labConcretTestHammerService.update(model);
+        }
+    }
 }

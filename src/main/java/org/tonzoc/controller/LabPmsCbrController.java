@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsCbrModel;
 import org.tonzoc.model.support.LabStatModel;
@@ -56,5 +57,15 @@ public class LabPmsCbrController extends BaseController {
         model.setFlag(flag);
         this.labPmsCbrService.update(model);
         return model;
+    }
+
+    @PostMapping(value = "batchUpdateStatus")
+    public void batchUpdateStatus (String guids, Integer flag) {
+        String[] guidArray = guids.split(",");
+        for (String guid : guidArray) {
+            LabPmsCbrModel model = this.labPmsCbrService.get(guid);
+            model.setFlag(flag);
+            this.labPmsCbrService.update(model);
+        }
     }
 }

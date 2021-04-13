@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabHumitureModel;
 import org.tonzoc.model.support.LabStatModel;
@@ -57,5 +58,15 @@ public class LabHumitureController extends BaseController {
         model.setFlag(flag);
         this.labHumitureService.update(model);
         return model;
+    }
+
+    @PostMapping(value = "batchUpdateStatus")
+    public void batchUpdateStatus (String guids, Integer flag) {
+        String[] guidArray = guids.split(",");
+        for (String guid : guidArray) {
+            LabHumitureModel model = this.labHumitureService.get(guid);
+            model.setFlag(flag);
+            this.labHumitureService.update(model);
+        }
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface PersonMapper  extends BaseMapper<PersonModel>  {
 
-    @Select("SELECT * from persons p LEFT JOIN tenders t on p.tenderGuid=t.guid " +
+    @Select("SELECT p.* from persons p LEFT JOIN tenders t on p.tenderGuid=t.guid " +
             "where t.name like '${tenderName}%'")
     List<PersonModel> listByTenderName(@Param(value = "tenderName") String tenderName);
 

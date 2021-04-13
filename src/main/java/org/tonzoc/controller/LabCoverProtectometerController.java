@@ -57,4 +57,14 @@ public class LabCoverProtectometerController extends BaseController {
         this.labCoverProtectometerService.update(model);
         return model;
     }
+
+    @PostMapping(value = "batchUpdateStatus")
+    public void batchUpdateStatus (String guids, Integer flag) {
+        String[] guidArray = guids.split(",");
+        for (String guid : guidArray) {
+            LabCoverProtectometerModel model = this.labCoverProtectometerService.get(guid);
+            model.setFlag(flag);
+            this.labCoverProtectometerService.update(model);
+        }
+    }
 }
