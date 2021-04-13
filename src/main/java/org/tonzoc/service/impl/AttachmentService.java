@@ -92,7 +92,7 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
 
         AttachmentModel attachmentsModel = this.get(attachmentId);
         String url = attachmentsModel.getUrl();
-        fileHelper.getVideo(request,response, url);
+        fileHelper.getVideo(request, response, url);
     }
 
     // 预览PDF

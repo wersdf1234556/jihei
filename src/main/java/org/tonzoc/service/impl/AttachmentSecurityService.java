@@ -8,6 +8,8 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.AttachmentSecurityModel;
 import org.tonzoc.service.IAttachmentSecurityService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,14 @@ public class AttachmentSecurityService extends BaseService<AttachmentSecurityMod
         AttachmentSecurityModel attachmentSecurityModel = get(attachmentSecurityGuid);
         String url = attachmentSecurityModel.getUrl();
         return fileHelper.getImage(url);
+    }
+
+    // 预览视频
+    public void getVideo(HttpServletRequest request, HttpServletResponse response, String attachmentSecurityGuid){
+
+        AttachmentSecurityModel attachmentSecurityModel = this.get(attachmentSecurityGuid);
+        String url = attachmentSecurityModel.getUrl();
+        fileHelper.getVideo(request, response, url);
     }
 
     // 删除物理文件

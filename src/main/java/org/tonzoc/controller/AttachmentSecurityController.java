@@ -11,6 +11,8 @@ import org.tonzoc.model.AttachmentSecurityModel;
 import org.tonzoc.service.IAttachmentSecurityService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -64,5 +66,12 @@ public class AttachmentSecurityController extends BaseController {
     public byte[] getImage(@PathVariable(value = "guid") String guid) throws IOException {
 
         return attachmentSecurityService.getImage(guid);
+    }
+
+    // 预览视频
+    @GetMapping(value = "video/{guid}")
+    public void getVideo(HttpServletRequest request, HttpServletResponse response, String attachmentSecurityGuid){
+
+        attachmentSecurityService.getVideo(request, response, attachmentSecurityGuid);
     }
 }
