@@ -19,6 +19,17 @@ public class LabStressMachineQueryParams {
     @Operator(value = "eq", field = "equipmentType")
     private String equipmentType;
 
+    @Operator(value = "eq", field = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     public LabStressMachineQueryParams() {
 
     }

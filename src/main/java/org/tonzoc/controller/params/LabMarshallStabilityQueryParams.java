@@ -16,6 +16,17 @@ public class LabMarshallStabilityQueryParams {
     @Operator(value = "eq", field = "sectionId")
     private String sectionId;
 
+    @Operator(value = "eq", field = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     public String getSectionId() {
         return sectionId;
     }
