@@ -57,16 +57,20 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                         attendanceModel.setSign(1);
                     }
 
-                    if (attendanceModel.getSign() == 0) {
-                        List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
-                        sqlQueryParams1.add(new SqlQueryParam("name", attendanceModel.getAddress(), "eq"));
-                        List<TenderModel> tenderModels = this.tenderService.list(sqlQueryParams1);
-                        if (tenderModels.size() == 1) {
-                            TenderModel tenderModel = tenderModels.get(0);
-                            attendanceModel.setLng(tenderModel.getLng());
-                            attendanceModel.setLat(tenderModel.getLat());
-                        }
-                    }
+                    TenderModel tenderModel = tenderService.get(personModel.getTenderGuid());
+                    attendanceModel.setLng(tenderModel.getLng());
+                    attendanceModel.setLat(tenderModel.getLat());
+
+//                    if (attendanceModel.getSign() == 0) {
+//                        List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
+//                        sqlQueryParams1.add(new SqlQueryParam("name", attendanceModel.getAddress(), "eq"));
+//                        List<TenderModel> tenderModels = this.tenderService.list(sqlQueryParams1);
+//                        if (tenderModels.size() == 1) {
+//                            TenderModel tenderModel = tenderModels.get(0);
+//                            attendanceModel.setLng(tenderModel.getLng());
+//                            attendanceModel.setLat(tenderModel.getLat());
+//                        }
+//                    }
 
                     if (new BigDecimal(attendanceModel.getTemperature()).compareTo(new BigDecimal("37.3")) > 0){ // 大于37.3
                         attendanceModel.setStatus(1);
