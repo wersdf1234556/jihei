@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsTesterModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsTesterService;
@@ -47,6 +48,14 @@ public class LabPmsTesterController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labPmsTesterService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabPmsTesterModel updateStatus (String guid, Integer flag) {
+        LabPmsTesterModel model = this.labPmsTesterService.get(guid);
+        model.setFlag(flag);
+        this.labPmsTesterService.update(model);
+        return model;
     }
 
 }

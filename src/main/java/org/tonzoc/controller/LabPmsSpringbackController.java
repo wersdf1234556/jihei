@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsSpringbackModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsSpringbackService;
@@ -47,6 +48,14 @@ public class LabPmsSpringbackController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labPmsSpringbackService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabPmsSpringbackModel updateStatus (String guid, Integer flag) {
+        LabPmsSpringbackModel model = this.labPmsSpringbackService.get(guid);
+        model.setFlag(flag);
+        this.labPmsSpringbackService.update(model);
+        return model;
     }
 
 }

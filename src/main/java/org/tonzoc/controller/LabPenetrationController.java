@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPenetrationModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPenetrationService;
@@ -47,5 +48,13 @@ public class LabPenetrationController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labPenetrationService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabPenetrationModel updateStatus (String guid, Integer flag) {
+        LabPenetrationModel model = this.labPenetrationService.get(guid);
+        model.setFlag(flag);
+        this.labPenetrationService.update(model);
+        return model;
     }
 }

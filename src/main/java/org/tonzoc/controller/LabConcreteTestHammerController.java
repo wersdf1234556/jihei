@@ -49,4 +49,11 @@ public class LabConcreteTestHammerController extends BaseController {
         return labConcretTestHammerService.listStatistics();
     }
 
+    @PostMapping(value = "updateStatus")
+    public LabConcreteTestHammerModel updateStatus (String guid, Integer flag) {
+        LabConcreteTestHammerModel labConcreteTestHammerModel = this.labConcretTestHammerService.get(guid);
+        labConcreteTestHammerModel.setFlag(flag);
+        this.labConcretTestHammerService.update(labConcreteTestHammerModel);
+        return labConcreteTestHammerModel;
+    }
 }

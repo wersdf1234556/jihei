@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabStressMachineModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabStressMachineService;
@@ -51,6 +52,14 @@ public class LabStressMachineController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics(String equipmentType) {
         return labStressMachineService.listStatistics(equipmentType);
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabStressMachineModel updateStatus (String guid, Integer flag) {
+        LabStressMachineModel model = this.labStressMachineService.get(guid);
+        model.setFlag(flag);
+        this.labStressMachineService.update(model);
+        return model;
     }
 
 }

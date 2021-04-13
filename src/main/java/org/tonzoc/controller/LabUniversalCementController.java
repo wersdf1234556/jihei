@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabUniversalCementModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabUniversalCementService;
@@ -47,5 +48,13 @@ public class LabUniversalCementController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labUniversalCementService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabUniversalCementModel updateStatus (String guid, Integer flag) {
+        LabUniversalCementModel model = this.labUniversalCementService.get(guid);
+        model.setFlag(flag);
+        this.labUniversalCementService.update(model);
+        return model;
     }
 }

@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabHumitureModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabHumitureService;
@@ -48,5 +49,13 @@ public class LabHumitureController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labHumitureService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabHumitureModel updateStatus (String guid, Integer flag) {
+        LabHumitureModel model = this.labHumitureService.get(guid);
+        model.setFlag(flag);
+        this.labHumitureService.update(model);
+        return model;
     }
 }

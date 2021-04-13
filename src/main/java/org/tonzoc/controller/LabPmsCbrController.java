@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.exception.response.ExceptionResponse;
+import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsCbrModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsCbrService;
@@ -47,5 +48,13 @@ public class LabPmsCbrController extends BaseController {
     @GetMapping(value = "statistics")
     public List<LabStatModel> listStatistics() {
         return labPmsCbrService.listStatistics();
+    }
+
+    @PostMapping(value = "updateStatus")
+    public LabPmsCbrModel updateStatus (String guid, Integer flag) {
+        LabPmsCbrModel model = this.labPmsCbrService.get(guid);
+        model.setFlag(flag);
+        this.labPmsCbrService.update(model);
+        return model;
     }
 }
