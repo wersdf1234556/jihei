@@ -24,11 +24,27 @@ public interface ProgressDetailMapper extends BaseMapper<ProgressDetailModel> {
             " LEFT JOIN progressNames pn on mainTable.progressNameGuid = pn.guid" +
             " LEFT JOIN tenders t ON mainTable.tenderGuid = t.guid" +
             " where t.name LIKE '%${tenderName}%' and mainTable.[date] < #{date}" +
+            " and mainTable.[date] not like '%${neqDate}%'" +
             " and mainTable.progressNameGuid = #{progressNameGuid}" +
             " and mainTable.status = 'finish'")
     List<ProgressDetailModel> listByProgressNameLtDate(@Param(value = "tenderName") String tenderName,
                                                        @Param(value = "date") String date,
+                                                       @Param(value = "neqDate") String neqDate,
                                                        @Param(value = "progressNameGuid") String progressNameGuid);
+
+    @Select("SELECT mainTable.progressNameGuid,pn.name as progressName, mainTable.num, mainTable.[date] from progressDetails mainTable" +
+            " LEFT JOIN progressNames pn on mainTable.progressNameGuid = pn.guid" +
+            " LEFT JOIN tenders t ON mainTable.tenderGuid = t.guid" +
+            " where t.name LIKE '%${tenderName}%' and mainTable.[date] like '${date}%' " +
+            " and mainTable.[date] < #{date}" +
+            " and mainTable.[date] not like '%${neqDate}%'" +
+            " and mainTable.progressNameGuid = #{progressNameGuid}" +
+            " and mainTable.status = 'finish'")
+    List<ProgressDetailModel> listByProgressNameLikeLtDate(@Param(value = "tenderName") String tenderName,
+                                                           @Param(value = "likeDate") String likeDate,
+                                                           @Param(value = "date") String date,
+                                                           @Param(value = "neqDate") String neqDate,
+                                                           @Param(value = "progressNameGuid") String progressNameGuid);
 
 //    @Select("SELECT mainTable.progressNameGuid,pn.name as progressName,mainTable.num,mainTable.[date] from progressDetails mainTable " +
 //            "LEFT JOIN progressNames pn on mainTable.progressNameGuid=pn.guid " +

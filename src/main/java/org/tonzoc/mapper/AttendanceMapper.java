@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.AttendanceModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.*;
 
 import java.util.List;
@@ -49,12 +50,11 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
     List<AttendanceModel> listAttByCategory(@Param(value = "categoryGuid") String categoryGuid,@Param(value = "createdAt") String createdAt);
 
     //获取人员类型当日打卡数
-    @Select("select temp.* " +
-            "from (SELECT a.*,Row_Number() OVER (partition by a.personGuid ORDER BY a.createdAt desc) as rank " +
-            "FROM attendances a LEFT JOIN persons p on a.personGuid = p.guid " +
-            "where p.personTypeGuid=#{personTypeGuid} and Convert(VARCHAR,a.createdAt,120)  LIKE  '%${createdAt}%' ) temp " +
-            "where rank = 1")
-    List<AttendanceModel> listAttByType(@Param(value = "personTypeGuid") String personTypeGuid,@Param(value = "createdAt") String createdAt);
+    @Select("select * from (select DISTINCT attendances.personGuid from attendances where attTime like '%${attTime}%') attendances" +
+            " LEFT JOIN persons on attendances.personGuid = persons.guid" +
+            " where personTypeGuid = #{personTypeGuid}")
+    List<AttendanceModel> listAttByType(@Param(value = "personTypeGuid") String personTypeGuid,
+                                        @Param(value = "attTime") String attTime);
 
 
     // 预警信息
@@ -89,5 +89,13 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " where persons.personTypeGuid = #{personGuid} and attTime like '%${attTime}%'")
     Integer arrivePerson(@Param(value = "personGuid") String personGuid,
                          @Param(value = "attTime") String attTime);
+
+    // 按照人员类别查询当天打卡人数
+    @Select("select personCategory.name, personCategory.guid proportion, count(DISTINCT attendances.personGuid) number from personCategory" +
+            " LEFT JOIN personTypes on personCategory.guid = personTypes.categoryGuid" +
+            " LEFT JOIN persons on persons.personTypeGuid = personTypes.guid" +
+            " LEFT JOIN (select * from attendances where attTime like '%${attTime}%') attendances on persons.guid = attendances.personGuid" +
+            " GROUP BY personCategory.name, personCategory.guid")
+    List<ReturnModel> listByAttTime(@Param(value = "attTime") String attTime);
 
 }

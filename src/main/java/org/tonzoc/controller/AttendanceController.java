@@ -10,6 +10,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.*;
 import org.tonzoc.service.IAttendanceService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -141,5 +142,12 @@ public class AttendanceController extends BaseController {
     public List<PersonModel> temperaturePerson(){
 
         return attendanceService.temperaturePerson();
+    }
+
+    // 按照人员类别查询当天打卡人数
+    @GetMapping(value = "listByAttTime")
+    public List<ReturnModel> listByAttTime(){
+
+        return attendanceService.listByAttTime();
     }
 }

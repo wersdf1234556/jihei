@@ -24,9 +24,9 @@ public interface BuildingSafetyDetailMapper extends BaseMapper<BuildingSafetyDet
 
     @Select("SELECT pn.name as safetyName, mainTable.balance from buildingSafetyDetails mainTable" +
             " LEFT JOIN buildingSafety pn on mainTable.safetyGuid = pn.guid" +
-            " where mainTable.[date] like '%${year}%' and mainTable.[date] < #{month}" +
+            " where mainTable.[date] like '%${likeDate}%' and mainTable.[date] < #{ltDate}" +
             " and pn.guid = #{buildingSafetyGuid}")
-    List<BuildingSafetyDetailModel> statByYearMonthSituation(@Param(value = "year") String year,
-                                                             @Param(value = "month") String month,
+    List<BuildingSafetyDetailModel> statByYearMonthSituation(@Param(value = "likeDate") String likeDate,
+                                                             @Param(value = "ltDate") String ltDate,
                                                              @Param(value = "buildingSafetyGuid") String buildingSafetyGuid);
 }
