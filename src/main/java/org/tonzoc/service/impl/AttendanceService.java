@@ -155,9 +155,9 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
     //人员左下角按人员类别统计打卡
     public List<AttendanceStatModel> statByPersonCategory(String categoryGuid,String date){
         List<AttendanceStatModel> list = new ArrayList<>();
-        if (date==null||date.isEmpty()){
+        if (date == null || date.isEmpty()){
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date= formatter.format( new Date());
+            date = formatter.format(new Date());
         }
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("categoryGuid",categoryGuid,"eq"));
@@ -174,11 +174,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
             statModel.setTypeName(personType.getFormattedName());
             statModel.setTotal(String.valueOf(total));
             statModel.setEnterNum(String.valueOf(enterNum.size()));
-            List<AttendanceModel> attNum = attendanceMapper.listAttByType(personType.getGuid(),date);
+            List<AttendanceModel> attNum = attendanceMapper.listAttByType(personType.getGuid(), date);
             statModel.setAttNum(String.valueOf(attNum.size()));
             BigDecimal percent = BigDecimal.valueOf(0.00).setScale(2,BigDecimal.ROUND_HALF_UP);
-            if (total!=0){
-                percent=new BigDecimal((float)(attNum.size())/total*100).setScale(2,BigDecimal.ROUND_HALF_UP);
+            if (total != 0){
+                percent = new BigDecimal((float)(attNum.size()) / total * 100).setScale(2, BigDecimal.ROUND_HALF_UP);
             }
             statModel.setPercent(String.valueOf(percent));
 
@@ -462,5 +462,14 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
         }
 
         return list1;
+    }
+
+    // 按照人员类别查询当天打卡人数
+    public List<ReturnModel> listByAttTime(){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String date = formatter.format(new Date());
+
+        return attendanceMapper.listByAttTime(date);
     }
 }

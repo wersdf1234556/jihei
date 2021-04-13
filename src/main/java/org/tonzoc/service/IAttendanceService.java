@@ -2,6 +2,7 @@ package org.tonzoc.service;
 
 import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.*;
 
 import java.util.List;
@@ -41,4 +42,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
     // 超温的人员
     List<PersonModel> temperaturePerson();
+
+    // 按照人员类别查询当天打卡人数
+    List<ReturnModel> listByAttTime();
 }

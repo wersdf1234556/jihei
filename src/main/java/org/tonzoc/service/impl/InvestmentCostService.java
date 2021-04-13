@@ -129,7 +129,6 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
         String year = date.substring(0, 4);
         String month = date.substring(0, 7);
         System.out.println("年" + year + ",月" + month);
-        String pastDate = year + "-01-01";
         List<BuildSafetyStatModel> list = new ArrayList<>();
 
         BigDecimal totalBalance = BigDecimal.ZERO;
@@ -141,7 +140,7 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
             buildSafetyStatModel.setName(buildingSafetyModel.getFormattedName());
             if (flag == 0) {
                 // 往年
-                totalBalance = buildingSafetyDetailService.listByLtDate(pastDate, buildingSafetyModel.getGuid()).stream()
+                totalBalance = buildingSafetyDetailService.listByLtDate(year + "-01-01", buildingSafetyModel.getGuid()).stream()
                         .map(BuildingSafetyDetailModel::getBalance)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 // 本年
@@ -191,8 +190,6 @@ public class InvestmentCostService extends BaseService<InvestmentCostModel> impl
             list.add(buildSafetyStatModel);
         }
         return list;
-
-
     }
 
     //右侧按标段统计总产值和累计产值
