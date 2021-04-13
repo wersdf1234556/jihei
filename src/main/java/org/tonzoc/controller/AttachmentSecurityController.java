@@ -70,8 +70,8 @@ public class AttachmentSecurityController extends BaseController {
 
     // 预览视频
     @GetMapping(value = "video/{guid}")
-    public void getVideo(HttpServletRequest request, HttpServletResponse response, String attachmentSecurityGuid){
+    public void getVideo(HttpServletRequest request, HttpServletResponse response,@PathVariable(value = "guid") String guid){
 
-        attachmentSecurityService.getVideo(request, response, attachmentSecurityGuid);
+        attachmentSecurityService.getVideo(request, response, guid);
     }
 }
