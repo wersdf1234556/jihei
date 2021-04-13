@@ -28,6 +28,8 @@ public class TenderModel extends BaseModel {
     private Integer scale;
     @Column(value = "organization")
     private String organization; // 单位名称
+    @Column(value = "labGuid")
+    private String labGuid;
 
     private List<ReturnModel> list; // 质量使用
     private List<ReturnMachineModel> listMachine; //机械返回值用
@@ -107,6 +109,14 @@ public class TenderModel extends BaseModel {
         this.list = list;
     }
 
+    public String getLabGuid() {
+        return labGuid;
+    }
+
+    public void setLabGuid(String labGuid) {
+        this.labGuid = labGuid;
+    }
+
     @Override
     public String toString() {
         return "TenderModel{" +
@@ -117,6 +127,7 @@ public class TenderModel extends BaseModel {
                 ", lat='" + lat + '\'' +
                 ", scale=" + scale +
                 ", organization='" + organization + '\'' +
+                ", labGuid='" + labGuid + '\'' +
                 ", list=" + list +
                 ", listMachine=" + listMachine +
                 '}';

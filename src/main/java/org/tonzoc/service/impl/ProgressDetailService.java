@@ -88,7 +88,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本年
-                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, year, month, progressNameModel.getGuid());
+                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, year, progressNameModel.getGuid());
                 currentMonthNum = progressDetailModelList
                         .stream()
 //                        .filter((ProgressDetailModel p)->!dates.contains(p.getDate()))
@@ -96,13 +96,14 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }else if (flag == 1) {
                 //本年往月
+                System.out.println(year + "," + date + "," + month);
                 progressDetailModelList = progressDetailMapper.listByProgressNameLikeLtDate(tender, year, date, month, progressNameModel.getGuid());
                 cumulantNum = progressDetailModelList
                         .stream()
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本月
-                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, month,"", progressNameModel.getGuid());
+                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, month, progressNameModel.getGuid());
 //                dates.clear();
 //                dates.add(date);
                 currentMonthNum = progressDetailModelList
@@ -110,7 +111,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
             }else if (flag == 2) {
-                progressDetailModelList=progressDetailMapper.listByProgressNameLikeLtDate(tender, month, date, date, progressNameModel.getGuid());
+                progressDetailModelList = progressDetailMapper.listByProgressNameLikeLtDate(tender, month, date, date, progressNameModel.getGuid());
 
                 //本月往日
                 cumulantNum = progressDetailModelList
@@ -118,7 +119,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                         .map(ProgressDetailModel::getNum)
                         .reduce(BigDecimal.ZERO, BigDecimal::add);
                 //本日
-                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, date," ", progressNameModel.getGuid());
+                progressDetailModelList = progressDetailMapper.listByProgressNameLikeDate(tender, date, progressNameModel.getGuid());
                 currentMonthNum = progressDetailModelList
                         .stream()
                         .map(ProgressDetailModel::getNum)
@@ -139,7 +140,7 @@ public class ProgressDetailService extends BaseService<ProgressDetailModel> impl
                 }
             }
             if (cumulantNum.compareTo(BigDecimal.ZERO) == 0){
-                cumulantPercent=BigDecimal.ZERO;
+                cumulantPercent = BigDecimal.ZERO;
             }else {
                 if (totalNum.compareTo(BigDecimal.ZERO) != 0){
                     cumulantPercent = cumulantNum.multiply(BigDecimal.valueOf(100)).divide(totalNum, 2, BigDecimal.ROUND_HALF_UP);

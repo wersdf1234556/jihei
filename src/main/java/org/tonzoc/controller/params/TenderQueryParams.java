@@ -19,6 +19,9 @@ public class TenderQueryParams {
     @Operator(value = "or", field = "guid")
     private String tenderManage;
 
+    @Operator(value = "eq", field = "labGuid")
+    private String labGuid;
+
     public String getName() {
         return name;
     }
@@ -57,5 +60,13 @@ public class TenderQueryParams {
 
     public void setTenderManage(String tenderManage) {
         this.tenderManage = tenderManage;
+    }
+
+    public String getLabGuid() {
+        return labGuid;
+    }
+
+    public void setLabGuid(String labGuid) {
+        this.labGuid = labGuid;
     }
 }
