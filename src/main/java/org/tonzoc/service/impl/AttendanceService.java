@@ -57,9 +57,11 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
                         attendanceModel.setSign(1);
                     }
 
-                    TenderModel tenderModel = tenderService.get(personModel.getTenderGuid());
-                    attendanceModel.setLng(tenderModel.getLng());
-                    attendanceModel.setLat(tenderModel.getLat());
+                    if (attendanceModel.getSign() == 0) {
+                        TenderModel tenderModel = tenderService.get(personModel.getTenderGuid());
+                        attendanceModel.setLng(tenderModel.getLng());
+                        attendanceModel.setLat(tenderModel.getLat());
+                    }
 
 //                    if (attendanceModel.getSign() == 0) {
 //                        List<SqlQueryParam> sqlQueryParams1 = new ArrayList<>();
