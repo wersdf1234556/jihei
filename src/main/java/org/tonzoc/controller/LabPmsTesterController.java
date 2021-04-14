@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsTesterModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsTesterService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabPmsTesterController extends BaseController {
 
     @Autowired
     private ILabPmsTesterService labPmsTesterService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabPmsTesterQueryParams labPmsTesterQueryParams)
@@ -40,7 +43,7 @@ public class LabPmsTesterController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsTesterModel labPmsTesterModel) {
-        System.out.println(labPmsTesterModel);
+        labPmsTesterModel.setTenderGuid(labTenderService.getBySectionId(labPmsTesterModel.getSectionId()));
         labPmsTesterService.save(labPmsTesterModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsTesterService.save(labPmsTesterModel);

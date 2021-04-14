@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabHumitureModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabHumitureService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabHumitureController extends BaseController {
 
     @Autowired
     private ILabHumitureService labHumitureService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabHumitureQueryParams labHumitureQueryParams)
@@ -40,7 +43,7 @@ public class LabHumitureController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabHumitureModel labHumitureModel) {
-        System.out.println(labHumitureModel);
+        labHumitureModel.setTenderGuid(labTenderService.getBySectionId(labHumitureModel.getSectionId()));
         labHumitureService.save(labHumitureModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labHumitureService.save(labHumitureModel);

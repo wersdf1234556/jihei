@@ -11,6 +11,7 @@ import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabConcreteTestHammerService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +23,8 @@ public class LabConcreteTestHammerController extends BaseController {
 
     @Autowired
     private ILabConcreteTestHammerService labConcretTestHammerService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabConcreteTestHammerQueryParams labConcretTestHammerQueryParams)
@@ -38,7 +41,7 @@ public class LabConcreteTestHammerController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabConcreteTestHammerModel labConcretTestHammerModel) {
-        System.out.println(labConcretTestHammerModel);
+        labConcretTestHammerModel.setTenderGuid(labTenderService.getBySectionId(labConcretTestHammerModel.getSectionId()));
         labConcretTestHammerService.save(labConcretTestHammerModel);
         return new ExceptionResponse(200, "success", "成功！");
 //        this.labConcretTestHammerService.save(labConcretTestHammerModel);

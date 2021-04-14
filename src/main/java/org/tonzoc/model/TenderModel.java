@@ -1,9 +1,6 @@
 package org.tonzoc.model;
 
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 import org.tonzoc.model.support.ReturnMachineModel;
 
 import java.math.BigDecimal;
@@ -30,6 +27,8 @@ public class TenderModel extends BaseModel {
     private String organization; // 单位名称
     @Column(value = "labGuid")
     private String labGuid;
+    @JoinColumn(value = "mappingTenderGuid", type = LabTenderModel.class, leftColumn = "guid", rightColumn = "tenderGuid")
+    private String sectionId;
 
     private List<ReturnModel> list; // 质量使用
     private List<ReturnMachineModel> listMachine; //机械返回值用
@@ -115,6 +114,14 @@ public class TenderModel extends BaseModel {
 
     public void setLabGuid(String labGuid) {
         this.labGuid = labGuid;
+    }
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
     }
 
     @Override

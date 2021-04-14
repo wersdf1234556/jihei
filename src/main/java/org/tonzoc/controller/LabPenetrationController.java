@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPenetrationModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPenetrationService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabPenetrationController extends BaseController {
 
     @Autowired
     private ILabPenetrationService labPenetrationService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabPenetrationQueryParams labPenetrationQueryParams)
@@ -40,7 +43,7 @@ public class LabPenetrationController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPenetrationModel labPenetrationModel) {
-        System.out.println(labPenetrationModel);
+        labPenetrationModel.setTenderGuid(labTenderService.getBySectionId(labPenetrationModel.getSectionId()));
         labPenetrationService.save(labPenetrationModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPenetrationService.save(labPenetrationModel);

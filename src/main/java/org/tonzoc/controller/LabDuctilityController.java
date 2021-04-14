@@ -13,6 +13,7 @@ import org.tonzoc.model.LabCoverProtectometerModel;
 import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabDuctilityService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabDuctilityController extends BaseController {
 
     @Autowired
     private ILabDuctilityService labDuctilityService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabDuctilityQueryParams labDuctilityQueryParams)
@@ -40,7 +43,7 @@ public class LabDuctilityController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabDuctilityModel labDuctilityModel) {
-        System.out.println(labDuctilityModel);
+        labDuctilityModel.setTenderGuid(labTenderService.getBySectionId(labDuctilityModel.getSectionId()));
         labDuctilityService.save(labDuctilityModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labDuctilityService.save(labDuctilityModel);

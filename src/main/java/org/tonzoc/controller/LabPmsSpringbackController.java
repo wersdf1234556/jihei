@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsSpringbackModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsSpringbackService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabPmsSpringbackController extends BaseController {
 
     @Autowired
     private ILabPmsSpringbackService labPmsSpringbackService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabPmsSpringbackQueryParams labPmsSpringbackQueryParams)
@@ -40,7 +43,7 @@ public class LabPmsSpringbackController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsSpringbackModel labPmsSpringbackModel) {
-        System.out.println(labPmsSpringbackModel);
+        labPmsSpringbackModel.setTenderGuid(labTenderService.getBySectionId(labPmsSpringbackModel.getSectionId()));
         labPmsSpringbackService.save(labPmsSpringbackModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsSpringbackService.save(labPmsSpringbackModel);

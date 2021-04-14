@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabPmsCbrModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabPmsCbrService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabPmsCbrController extends BaseController {
 
     @Autowired
     private ILabPmsCbrService labPmsCbrService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabPmsCbrQueryParams labPmsCbrQueryParams)
@@ -40,7 +43,7 @@ public class LabPmsCbrController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsCbrModel labPmsCbrModel) {
-        System.out.println(labPmsCbrModel);
+        labPmsCbrModel.setTenderGuid(labTenderService.getBySectionId(labPmsCbrModel.getSectionId()));
         labPmsCbrService.save(labPmsCbrModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsCbrService.save(labPmsCbrModel);

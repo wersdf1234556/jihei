@@ -12,6 +12,7 @@ import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.LabCoverProtectometerModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabCoverProtectometerService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,6 +24,8 @@ public class LabCoverProtectometerController extends BaseController {
 
     @Autowired
     private ILabCoverProtectometerService labCoverProtectometerService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabCoverProtectometerQueryParams labCoverProtectometerQueryParams)
@@ -39,7 +42,7 @@ public class LabCoverProtectometerController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabCoverProtectometerModel labCoverProtectometerModel) {
-        System.out.println(labCoverProtectometerModel);
+        labCoverProtectometerModel.setTenderGuid(labTenderService.getBySectionId(labCoverProtectometerModel.getSectionId()));
         labCoverProtectometerService.save(labCoverProtectometerModel);
         return new ExceptionResponse(200, "success", "成功！");
 //        this.labCoverProtectometerService.save(labCoverProtectometerModel);

@@ -20,8 +20,12 @@ public class ProgressWeatherModel extends BaseModel {
     private String nightTemp;
     @Column(value = "warningType")
     private Integer warningType;
+    @Column(value = "windPower")
+    private String windPower;
+    @Column(value = "averageTemp")
+    private String averageTemp;
 
-    public ProgressWeatherModel(String guid, String date, String weather, String balance, String dayTemp, String nightTemp, Integer warningType) {
+    public ProgressWeatherModel(String guid, String date, String weather, String balance, String dayTemp, String nightTemp, Integer warningType, String windPower, String averageTemp) {
         this.guid = guid;
         this.date = date;
         this.weather = weather;
@@ -29,6 +33,8 @@ public class ProgressWeatherModel extends BaseModel {
         this.dayTemp = dayTemp;
         this.nightTemp = nightTemp;
         this.warningType = warningType;
+        this.windPower = windPower;
+        this.averageTemp = averageTemp;
     }
 
     public String getGuid() {
@@ -87,6 +93,22 @@ public class ProgressWeatherModel extends BaseModel {
         this.warningType = warningType;
     }
 
+    public String getWindPower() {
+        return windPower;
+    }
+
+    public void setWindPower(String windPower) {
+        this.windPower = windPower;
+    }
+
+    public String getAverageTemp() {
+        return averageTemp;
+    }
+
+    public void setAverageTemp(String averageTemp) {
+        this.averageTemp = averageTemp;
+    }
+
     @Override
     public String toString() {
         return "ProgressWeatherModel{" +
@@ -97,6 +119,8 @@ public class ProgressWeatherModel extends BaseModel {
                 ", dayTemp='" + dayTemp + '\'' +
                 ", nightTemp='" + nightTemp + '\'' +
                 ", warningType=" + warningType +
+                ", windPower='" + windPower + '\'' +
+                ", averageTemp='" + averageTemp + '\'' +
                 '}';
     }
 }

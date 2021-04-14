@@ -12,6 +12,7 @@ import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabUniversalCementModel;
 import org.tonzoc.model.support.LabStatModel;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.service.ILabUniversalCementService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -24,6 +25,8 @@ public class LabUniversalCementController extends BaseController {
 
     @Autowired
     private ILabUniversalCementService labUniversalCementService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabUniversalCementQueryParams labUniversalCementQueryParams)
@@ -40,7 +43,7 @@ public class LabUniversalCementController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabUniversalCementModel labUniversalCementModel) {
-        System.out.println(labUniversalCementModel);
+        labUniversalCementModel.setTenderGuid(labTenderService.getBySectionId(labUniversalCementModel.getSectionId()));
         labUniversalCementService.save(labUniversalCementModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labUniversalCementService.save(labUniversalCementModel);

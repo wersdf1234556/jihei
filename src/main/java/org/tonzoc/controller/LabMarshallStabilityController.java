@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabMarshallStabilityModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabMarshallStabilityService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabMarshallStabilityController extends BaseController {
 
     @Autowired
     private ILabMarshallStabilityService labMarshallStabilityService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabMarshallStabilityQueryParams labMarshallStabilityQueryParams)
@@ -40,7 +43,7 @@ public class LabMarshallStabilityController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabMarshallStabilityModel labMarshallStabilityModel) {
-        System.out.println(labMarshallStabilityModel);
+        labMarshallStabilityModel.setTenderGuid(labTenderService.getBySectionId(labMarshallStabilityModel.getSectionId()));
         labMarshallStabilityService.save(labMarshallStabilityModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labMarshallStabilityService.save(labMarshallStabilityModel);

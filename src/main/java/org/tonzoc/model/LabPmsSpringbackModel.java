@@ -79,6 +79,16 @@ public class LabPmsSpringbackModel extends BaseModel {
     private String result;
     @Column(value = "flag")
     private Integer flag;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
 
     public Integer getFlag() {
         return flag;

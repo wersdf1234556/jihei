@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabStressMachineModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabStressMachineService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,9 @@ public class LabStressMachineController extends BaseController {
 
     @Autowired
     private ILabStressMachineService labStressMachineService;
+
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabStressMachineQueryParams labStressMachineQueryParams)
@@ -44,6 +48,7 @@ public class LabStressMachineController extends BaseController {
     public ExceptionResponse add(@RequestBody LabStressMachineModel labStressMachineModel) {
 
 //        System.out.println(labStressMachineModel);
+        labStressMachineModel.setTenderGuid(labTenderService.getBySectionId(labStressMachineModel.getSectionId()));
         labStressMachineService.save(labStressMachineModel);
 
         return new ExceptionResponse(200, "success", "成功！");

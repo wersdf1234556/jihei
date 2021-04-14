@@ -13,6 +13,7 @@ import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabSofteningPointModel;
 import org.tonzoc.model.support.LabStatModel;
 import org.tonzoc.service.ILabSofteningPointService;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,8 @@ public class LabSofteningPointController extends BaseController {
 
     @Autowired
     private ILabSofteningPointService labSofteningPointService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabSofteningPointQueryParams labSofteningPointQueryParams)
@@ -40,7 +43,7 @@ public class LabSofteningPointController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabSofteningPointModel labSofteningPointModel) {
-        System.out.println(labSofteningPointModel);
+        labSofteningPointModel.setTenderGuid(labTenderService.getBySectionId(labSofteningPointModel.getSectionId()));
         labSofteningPointService.save(labSofteningPointModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labSofteningPointService.save(labSofteningPointModel);

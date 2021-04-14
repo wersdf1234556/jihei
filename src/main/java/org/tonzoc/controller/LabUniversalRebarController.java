@@ -12,6 +12,7 @@ import org.tonzoc.model.LabConcreteTestHammerModel;
 import org.tonzoc.model.LabDuctilityModel;
 import org.tonzoc.model.LabUniversalRebarModel;
 import org.tonzoc.model.support.LabStatModel;
+import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.service.ILabUniversalRebarService;
 import org.tonzoc.support.param.SqlQueryParam;
 
@@ -24,6 +25,8 @@ public class LabUniversalRebarController extends BaseController {
 
     @Autowired
     private ILabUniversalRebarService labUniversalRebarService;
+    @Autowired
+    private ILabTenderService labTenderService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, LabUniversalRebarQueryParams labUniversalRebarQueryParams)
@@ -40,7 +43,7 @@ public class LabUniversalRebarController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabUniversalRebarModel labUniversalRebarModel) {
-        System.out.println(labUniversalRebarModel);
+        labUniversalRebarModel.setTenderGuid(labTenderService.getBySectionId(labUniversalRebarModel.getSectionId()));
         labUniversalRebarService.save(labUniversalRebarModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labUniversalRebarService.save(labUniversalRebarModel);

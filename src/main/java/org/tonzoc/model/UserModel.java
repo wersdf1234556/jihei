@@ -47,6 +47,18 @@ public class UserModel extends BaseModel {
     private String industryCategoryName; //标段
     @JoinColumn(value = "name", type = ManagementPowerModel.class, leftColumn = "managementPowerGuid", rightColumn = "guid")
     private String managementPowerName; //标段
+
+    @JoinColumn(value = "mappingTenderGuid", type = LabTenderModel.class, leftColumn = "tenderGuid", rightColumn = "tenderGuid")
+    private String sectionId;
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
     public UserModel() {
     }
 
