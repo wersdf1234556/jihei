@@ -7,6 +7,7 @@ import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
 import javax.validation.constraints.NotEmpty;
+import java.math.BigDecimal;
 
 @Table(value = "labStressMachines")
 public class LabStressMachineModel extends BaseModel {
@@ -190,7 +191,12 @@ public class LabStressMachineModel extends BaseModel {
     }
 
     public String getRepresentativeStrength() {
-        return representativeStrength;
+        try {
+            BigDecimal val = new BigDecimal(representativeStrength);
+            return val.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+        } catch (Exception e) {
+            return representativeStrength;
+        }
     }
 
     public String getDesignStrength() {
