@@ -44,6 +44,7 @@ public class LabPmsSpringbackController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsSpringbackModel labPmsSpringbackModel) {
         labPmsSpringbackModel.setTenderGuid(labTenderService.getBySectionId(labPmsSpringbackModel.getSectionId()));
+        labPmsSpringbackModel.setFlag(1);
         labPmsSpringbackService.save(labPmsSpringbackModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsSpringbackService.save(labPmsSpringbackModel);

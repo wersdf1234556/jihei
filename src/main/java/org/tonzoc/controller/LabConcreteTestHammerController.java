@@ -42,6 +42,7 @@ public class LabConcreteTestHammerController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabConcreteTestHammerModel labConcretTestHammerModel) {
         labConcretTestHammerModel.setTenderGuid(labTenderService.getBySectionId(labConcretTestHammerModel.getSectionId()));
+        labConcretTestHammerModel.setFlag(1);
         labConcretTestHammerService.save(labConcretTestHammerModel);
         return new ExceptionResponse(200, "success", "成功！");
 //        this.labConcretTestHammerService.save(labConcretTestHammerModel);

@@ -44,6 +44,7 @@ public class LabMarshallStabilityController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabMarshallStabilityModel labMarshallStabilityModel) {
         labMarshallStabilityModel.setTenderGuid(labTenderService.getBySectionId(labMarshallStabilityModel.getSectionId()));
+        labMarshallStabilityModel.setFlag(1);
         labMarshallStabilityService.save(labMarshallStabilityModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labMarshallStabilityService.save(labMarshallStabilityModel);

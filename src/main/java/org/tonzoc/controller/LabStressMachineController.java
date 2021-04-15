@@ -49,6 +49,7 @@ public class LabStressMachineController extends BaseController {
 
 //        System.out.println(labStressMachineModel);
         labStressMachineModel.setTenderGuid(labTenderService.getBySectionId(labStressMachineModel.getSectionId()));
+        labStressMachineModel.setFlag(1);
         labStressMachineService.save(labStressMachineModel);
 
         return new ExceptionResponse(200, "success", "成功！");

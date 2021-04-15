@@ -44,6 +44,7 @@ public class LabPmsCbrController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsCbrModel labPmsCbrModel) {
         labPmsCbrModel.setTenderGuid(labTenderService.getBySectionId(labPmsCbrModel.getSectionId()));
+        labPmsCbrModel.setFlag(1);
         labPmsCbrService.save(labPmsCbrModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsCbrService.save(labPmsCbrModel);

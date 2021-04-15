@@ -3,6 +3,7 @@ package org.tonzoc.model;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.Column;
+import org.tonzoc.annotation.JoinColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
@@ -70,6 +71,16 @@ public class LabUniversalRebarModel extends BaseModel {
     private Integer flag;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
 
     public String getTenderGuid() {
         return tenderGuid;

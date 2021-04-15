@@ -44,6 +44,7 @@ public class LabSofteningPointController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabSofteningPointModel labSofteningPointModel) {
         labSofteningPointModel.setTenderGuid(labTenderService.getBySectionId(labSofteningPointModel.getSectionId()));
+        labSofteningPointModel.setFlag(1);
         labSofteningPointService.save(labSofteningPointModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labSofteningPointService.save(labSofteningPointModel);

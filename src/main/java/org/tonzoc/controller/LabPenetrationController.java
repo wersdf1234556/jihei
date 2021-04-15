@@ -44,6 +44,7 @@ public class LabPenetrationController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPenetrationModel labPenetrationModel) {
         labPenetrationModel.setTenderGuid(labTenderService.getBySectionId(labPenetrationModel.getSectionId()));
+        labPenetrationModel.setFlag(1);
         labPenetrationService.save(labPenetrationModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPenetrationService.save(labPenetrationModel);

@@ -44,6 +44,7 @@ public class LabUniversalCementController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabUniversalCementModel labUniversalCementModel) {
         labUniversalCementModel.setTenderGuid(labTenderService.getBySectionId(labUniversalCementModel.getSectionId()));
+        labUniversalCementModel.setFlag(1);
         labUniversalCementService.save(labUniversalCementModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labUniversalCementService.save(labUniversalCementModel);

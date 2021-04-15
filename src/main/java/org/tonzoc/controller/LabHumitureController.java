@@ -44,6 +44,7 @@ public class LabHumitureController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabHumitureModel labHumitureModel) {
         labHumitureModel.setTenderGuid(labTenderService.getBySectionId(labHumitureModel.getSectionId()));
+        labHumitureModel.setFlag(1);
         labHumitureService.save(labHumitureModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labHumitureService.save(labHumitureModel);

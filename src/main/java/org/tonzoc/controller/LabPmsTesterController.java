@@ -44,6 +44,7 @@ public class LabPmsTesterController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabPmsTesterModel labPmsTesterModel) {
         labPmsTesterModel.setTenderGuid(labTenderService.getBySectionId(labPmsTesterModel.getSectionId()));
+        labPmsTesterModel.setFlag(1);
         labPmsTesterService.save(labPmsTesterModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labPmsTesterService.save(labPmsTesterModel);

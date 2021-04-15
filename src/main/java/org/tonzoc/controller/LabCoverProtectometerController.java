@@ -43,6 +43,7 @@ public class LabCoverProtectometerController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabCoverProtectometerModel labCoverProtectometerModel) {
         labCoverProtectometerModel.setTenderGuid(labTenderService.getBySectionId(labCoverProtectometerModel.getSectionId()));
+        labCoverProtectometerModel.setFlag(1);
         labCoverProtectometerService.save(labCoverProtectometerModel);
         return new ExceptionResponse(200, "success", "成功！");
 //        this.labCoverProtectometerService.save(labCoverProtectometerModel);

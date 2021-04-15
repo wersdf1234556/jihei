@@ -44,6 +44,7 @@ public class LabUniversalRebarController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabUniversalRebarModel labUniversalRebarModel) {
         labUniversalRebarModel.setTenderGuid(labTenderService.getBySectionId(labUniversalRebarModel.getSectionId()));
+        labUniversalRebarModel.setFlag(1);
         labUniversalRebarService.save(labUniversalRebarModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labUniversalRebarService.save(labUniversalRebarModel);

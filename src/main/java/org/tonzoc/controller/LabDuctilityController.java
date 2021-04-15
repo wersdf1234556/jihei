@@ -44,6 +44,7 @@ public class LabDuctilityController extends BaseController {
     @PostMapping
     public ExceptionResponse add(@RequestBody LabDuctilityModel labDuctilityModel) {
         labDuctilityModel.setTenderGuid(labTenderService.getBySectionId(labDuctilityModel.getSectionId()));
+        labDuctilityModel.setFlag(1);
         labDuctilityService.save(labDuctilityModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labDuctilityService.save(labDuctilityModel);
