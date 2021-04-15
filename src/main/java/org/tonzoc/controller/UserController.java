@@ -55,7 +55,7 @@ public class UserController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid UserModel userModel) {
-        if (userModel.getFlag()==null){
+        if (userModel.getFlag() == null){
             userModel.setFlag(0);
         }
 

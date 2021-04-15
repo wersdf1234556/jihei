@@ -59,4 +59,11 @@ public class PersonTypeController extends BaseController {
         personTypeService.removeMany(guids);
     }
 
+    // 按照类型查询数量
+    @GetMapping(value = "selectByCategory")
+    public List<PersonTypeModel> selectByCategory(String personCategoryGuid, String tenderGuid) {
+
+       return personTypeService.selectByCategory(personCategoryGuid, tenderGuid);
+    }
+
 }

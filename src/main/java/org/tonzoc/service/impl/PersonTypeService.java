@@ -1,22 +1,24 @@
 package org.tonzoc.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.tonzoc.exception.NotFoundException;
-import org.tonzoc.exception.NotOneResultFoundException;
-import org.tonzoc.model.AuthorityModel;
-import org.tonzoc.model.PersonModel;
+import org.tonzoc.mapper.PersonTypeMapper;
+import org.tonzoc.model.PersonCategoryModel;
 import org.tonzoc.model.PersonTypeModel;
+import org.tonzoc.service.IPersonCategoryService;
 import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service("personTypeService")
 public class PersonTypeService extends BaseService<PersonTypeModel> implements IPersonTypeService {
+
+    @Autowired
+    private PersonTypeMapper personTypeMapper;
+
+    @Autowired
+    private IPersonCategoryService personCategoryService;
 
     public List<PersonTypeModel> listByFlag(Integer flag) {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
@@ -37,6 +39,10 @@ public class PersonTypeService extends BaseService<PersonTypeModel> implements I
         return list;
     }
 
+    // 按照类型查询数量
+    public List<PersonTypeModel> selectByCategory(String PersonCategoryGuid, String tenderGuid) {
 
+        return  personTypeMapper.selectByCategory(PersonCategoryGuid, tenderGuid);
+    }
 
 }

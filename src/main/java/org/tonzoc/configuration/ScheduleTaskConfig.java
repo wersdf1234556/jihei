@@ -5,7 +5,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
-
 @Configuration
 @EnableScheduling
 public class ScheduleTaskConfig {
