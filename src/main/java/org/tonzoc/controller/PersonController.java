@@ -87,8 +87,12 @@ public class PersonController extends BaseController {
     }
 
     @GetMapping(value = "attendanceCount")
-    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile){
+    public PageResponse attendanceCount(PageQueryParams pageQueryParams, String tenderGuid, String name, String idCard, String mobile) throws PageException {
 
-        return personService.attendanceCount(tenderGuid, name, idCard, mobile);
+        Page<PersonModel> page = parsePage(pageQueryParams);
+
+        List<PersonModel> list = personService.attendanceCount(tenderGuid, name, idCard, mobile);
+
+        return new PageResponse(page.getTotal(), list);
     }
 }
