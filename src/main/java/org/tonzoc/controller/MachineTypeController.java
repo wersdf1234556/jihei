@@ -7,12 +7,18 @@ import org.tonzoc.controller.params.MachineTypeQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.MachineTypeModel;
+import org.tonzoc.model.PersonModel;
+import org.tonzoc.model.TenderMachineTypeModel;
+import org.tonzoc.service.IMachineService;
 import org.tonzoc.service.IMachineTypeService;
+import org.tonzoc.service.ITenderMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +27,12 @@ public class MachineTypeController extends BaseController {
 
     @Autowired
     private IMachineTypeService machineTypeService;
+
+    @Autowired
+    private ITenderMachineTypeService tenderMachineTypeService;
+
+    @Autowired
+    private IMachineService machineService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, MachineTypeQueryParams machineTypeQueryParams)
@@ -35,13 +47,25 @@ public class MachineTypeController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid MachineTypeModel mechanicsTypeModel) {
-        this.machineTypeService.save(mechanicsTypeModel);
+    public void add(@RequestBody @Valid MachineTypeModel mechanicTypeModel) {
+        this.machineTypeService.save(mechanicTypeModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid MachineTypeModel mechanicsTypeModel) {
-        this.machineTypeService.update(mechanicsTypeModel);
+    public void update(@RequestBody @Valid MachineTypeModel mechanicTypeModel) {
+        if (mechanicTypeModel.getMachineCategoryGuid() != null && !"".equals(mechanicTypeModel.getMachineCategoryGuid())) {
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("mechanicTypeGuid", mechanicTypeModel.getGuid(), "eq"));
+            List<TenderMachineTypeModel> list = tenderMachineTypeService.list(sqlQueryParams);
+
+            for (TenderMachineTypeModel li : list) {
+                li.setMachineCategoryGuid(mechanicTypeModel.getMachineCategoryGuid());
+                tenderMachineTypeService.update(li);
+
+            }
+        }
+
+        this.machineTypeService.update(mechanicTypeModel);
     }
 
     @DeleteMapping(value = "{guid}")

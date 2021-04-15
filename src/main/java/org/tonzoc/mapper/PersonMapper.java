@@ -2,8 +2,11 @@ package org.tonzoc.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.PersonModel;
+import org.tonzoc.provider.MachineProvider;
+import org.tonzoc.provider.PersonProvider;
 
 import java.util.List;
 @Component
@@ -19,5 +22,12 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
 
     @Select("select count(guid) from persons where idCard = #{idCard}")
     Integer countByIdCard(@Param(value = "idCard") String idCard);
+
+    // 查询打卡次数
+    @SelectProvider(type = PersonProvider.class, method = "attendanceCount")
+    List<PersonModel> attendanceCount(@Param(value = "tenderGuid") String tenderGuid,
+                                      @Param(value = "name") String name,
+                                      @Param(value = "idCard") String idCard,
+                                      @Param(value = "mobile") String mobile);
 
 }

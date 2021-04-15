@@ -85,4 +85,10 @@ public class PersonController extends BaseController {
         personModel.setPassword(newPassword);
         this.personService.update(personModel);
     }
+
+    @GetMapping(value = "attendanceCount")
+    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile){
+
+        return personService.attendanceCount(tenderGuid, name, idCard, mobile);
+    }
 }

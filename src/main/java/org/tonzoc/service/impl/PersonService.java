@@ -180,4 +180,11 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
        return excelPersonHelper.excel(file);
     }
 
+    // 人员打卡次数
+    @Override
+    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile){
+
+        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile);
+    }
+
 }

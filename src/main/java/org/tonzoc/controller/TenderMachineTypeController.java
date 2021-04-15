@@ -7,15 +7,18 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.params.TenderMachineTypeQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
+import org.tonzoc.model.MachineModel;
 import org.tonzoc.model.MachineTypeModel;
 import org.tonzoc.model.TenderMachineTypeModel;
 import org.tonzoc.service.IMachineCategoryService;
+import org.tonzoc.service.IMachineService;
 import org.tonzoc.service.IMachineTypeService;
 import org.tonzoc.service.ITenderMachineTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,7 +32,7 @@ public class TenderMachineTypeController extends BaseController {
     private IMachineTypeService machineTypeService;
 
     @Autowired
-    private IMachineCategoryService machineCategoryService;
+    private IMachineService machineService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, TenderMachineTypeQueryParams tenderMachineTypeQueryParams)
@@ -55,6 +58,11 @@ public class TenderMachineTypeController extends BaseController {
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid TenderMachineTypeModel tenderMachineTypeModel) {
+
+        MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
+        tenderMachineTypeModel.setName(machineTypeModel.getName());
+        tenderMachineTypeModel.setFormattedName(machineTypeModel.getFormattedName());
+
         this.tenderMachineTypeService.update(tenderMachineTypeModel);
     }
 

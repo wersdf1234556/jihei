@@ -18,4 +18,7 @@ public interface IPersonService extends IBaseService<PersonModel> {
 
     // 模板导入
     List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception;
+
+    // 人员打卡次数
+    List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile);
 }
