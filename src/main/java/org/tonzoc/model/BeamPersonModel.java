@@ -30,6 +30,8 @@ public class BeamPersonModel extends BaseModel{
     private String tenderName;
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName;
+    @JoinColumn(value = "idCard", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String personIdCard;
     @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
     private String personTypeName;
 
@@ -58,6 +60,14 @@ public class BeamPersonModel extends BaseModel{
 
     public void setPersonGuid(String personGuid) {
         this.personGuid = personGuid;
+    }
+
+    public String getPersonIdCard() {
+        return personIdCard;
+    }
+
+    public void setPersonIdCard(String personIdCard) {
+        this.personIdCard = personIdCard;
     }
 
     public String getPersonTypeGuid() {
