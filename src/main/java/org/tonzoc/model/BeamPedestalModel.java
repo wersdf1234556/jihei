@@ -16,6 +16,8 @@ public class BeamPedestalModel extends BaseModel{
     private String pedestalNum;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "modelNum")
+    private String modelNum;
     @Column(value = "attTime")
     private String attTime;
     @Column(value = "operator")
@@ -91,5 +93,13 @@ public class BeamPedestalModel extends BaseModel{
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getModelNum() {
+        return modelNum;
+    }
+
+    public void setModelNum(String modelNum) {
+        this.modelNum = modelNum;
     }
 }

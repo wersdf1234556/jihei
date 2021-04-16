@@ -36,19 +36,19 @@ public class BeamSecurityController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamSecurityModel beamSecurityModel) {
 
-        this.beamSecurityService.save(beamSecurityModel);
+        beamSecurityService.save(beamSecurityModel);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid BeamSecurityModel beamSecurityModel) {
 
-        this.beamSecurityService.update(beamSecurityModel);
+        beamSecurityService.update(beamSecurityModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        this.beamSecurityService.remove(guid);
+        beamSecurityService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")

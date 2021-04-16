@@ -10,17 +10,24 @@ public class BeamPersonModel extends BaseModel{
     @NotInsertColumn
     @Column(value = "guid")
     private String guid;
-    @Column(value = "beamOrderGuid")
-    private String beamOrderGuid;
+    @Column(value = "beamGuid")
+    private String beamGuid;
     @Column(value = "personGuid")
     private String personGuid;
     @Column(value = "personTypeGuid")
     private String personTypeGuid;
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "attTime")
+    private String attTime;
+    @Column(value = "operator")
+    private String operator;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
 
-    @JoinColumn(value = "orders", type = BeamOrderModel.class, leftColumn = "beamOrderGuid", rightColumn = "guid")
-    private String orders;
+    // @JoinColumn(value = "", type = BeamModel.class, leftColumn = "personModel", rightColumn = "guid")
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
     @JoinColumn(value = "name", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personName;
     @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
@@ -37,12 +44,12 @@ public class BeamPersonModel extends BaseModel{
         this.guid = guid;
     }
 
-    public String getBeamOrderGuid() {
-        return beamOrderGuid;
+    public String getBeamGuid() {
+        return beamGuid;
     }
 
-    public void setBeamOrderGuid(String beamOrderGuid) {
-        this.beamOrderGuid = beamOrderGuid;
+    public void setBeamGuid(String beamGuid) {
+        this.beamGuid = beamGuid;
     }
 
     public String getPersonGuid() {
@@ -83,5 +90,37 @@ public class BeamPersonModel extends BaseModel{
 
     public void setPersonTypeName(String personTypeName) {
         this.personTypeName = personTypeName;
+    }
+
+    public String getAttTime() {
+        return attTime;
+    }
+
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 }

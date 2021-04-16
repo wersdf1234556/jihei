@@ -6,8 +6,8 @@ public class BeamPersonQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "beamOrderGuid")
-    private String beamOrderGuid;
+    @Operator(value = "eq", field = "beamGuid")
+    private String beamGuid;
     @Operator(value = "eq", field = "personGuid")
     private String personGuid;
     @Operator(value = "eq", field = "personTypeGuid")
@@ -27,12 +27,12 @@ public class BeamPersonQueryParams {
         this.guid = guid;
     }
 
-    public String getBeamOrderGuid() {
-        return beamOrderGuid;
+    public String getBeamGuid() {
+        return beamGuid;
     }
 
-    public void setBeamOrderGuid(String beamOrderGuid) {
-        this.beamOrderGuid = beamOrderGuid;
+    public void setBeamGuid(String beamGuid) {
+        this.beamGuid = beamGuid;
     }
 
     public String getPersonGuid() {

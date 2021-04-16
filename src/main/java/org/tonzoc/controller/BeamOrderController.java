@@ -36,19 +36,19 @@ public class BeamOrderController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamOrderModel beamOrderModel) {
 
-        this.beamOrderService.save(beamOrderModel);
+        beamOrderService.save(beamOrderModel);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid BeamOrderModel beamOrderModel) {
 
-        this.beamOrderService.update(beamOrderModel);
+        beamOrderService.update(beamOrderModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        this.beamOrderService.remove(guid);
+        beamOrderService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")

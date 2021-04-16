@@ -14,6 +14,10 @@ public class BeamPedestalQueryParams {
     private String attTime;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "eq", field = "modelNum")
+    private String modelNum;
+    @Operator(value = "eq", field = "pedestalNum")
+    private String pedestalNum;
 
     public String getGuid() {
         return guid;
@@ -53,5 +57,21 @@ public class BeamPedestalQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getModelNum() {
+        return modelNum;
+    }
+
+    public void setModelNum(String modelNum) {
+        this.modelNum = modelNum;
+    }
+
+    public String getPedestalNum() {
+        return pedestalNum;
+    }
+
+    public void setPedestalNum(String pedestalNum) {
+        this.pedestalNum = pedestalNum;
     }
 }

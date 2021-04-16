@@ -8,7 +8,9 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamPersonModel;
+import org.tonzoc.model.PersonModel;
 import org.tonzoc.service.IBeamPersonService;
+import org.tonzoc.service.IPersonService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +22,9 @@ public class BeamPersonController extends BaseController{
 
     @Autowired
     private IBeamPersonService beamPersonService;
+
+    @Autowired
+    private IPersonService personService;
 
     @GetMapping
     public PageResponse list(PageQueryParams pageQueryParams, BeamPersonQueryParams beamPersonQueryParams)
@@ -36,19 +41,21 @@ public class BeamPersonController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamPersonModel beamPersonModel) {
 
-        this.beamPersonService.save(beamPersonModel);
+        PersonModel personModel = personService.get(beamPersonModel.getPersonGuid());
+        beamPersonModel.setPersonTypeGuid(personModel.getPersonTypeGuid());
+        beamPersonService.save(beamPersonModel);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid BeamPersonModel beamPersonModel) {
 
-        this.beamPersonService.update(beamPersonModel);
+        beamPersonService.update(beamPersonModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        this.beamPersonService.remove(guid);
+        beamPersonService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")

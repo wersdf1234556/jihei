@@ -36,19 +36,19 @@ public class BeamPrefabricationController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamPrefabricationModel beamPrefabricationModel) {
 
-        this.beamPrefabricationService.save(beamPrefabricationModel);
+        beamPrefabricationService.save(beamPrefabricationModel);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid BeamPrefabricationModel beamPrefabricationModel) {
 
-        this.beamPrefabricationService.update(beamPrefabricationModel);
+        beamPrefabricationService.update(beamPrefabricationModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        this.beamPrefabricationService.remove(guid);
+        beamPrefabricationService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")

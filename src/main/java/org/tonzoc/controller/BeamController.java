@@ -36,19 +36,19 @@ public class BeamController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamModel beamModel) {
 
-        this.beamService.save(beamModel);
+        beamService.save(beamModel);
     }
 
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid BeamModel beamModel) {
 
-        this.beamService.update(beamModel);
+        beamService.update(beamModel);
     }
 
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        this.beamService.remove(guid);
+        beamService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")
