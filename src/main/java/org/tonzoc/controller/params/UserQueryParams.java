@@ -21,7 +21,16 @@ public class UserQueryParams {
     private String industryCategoryGuid;
     @Operator(value = "eq", field = "managementPowerGuid")
     private String managementPowerGuid;
+    @Operator(value = "eq", field = "mobile")
+    private String mobile;
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public UserQueryParams() {
 
