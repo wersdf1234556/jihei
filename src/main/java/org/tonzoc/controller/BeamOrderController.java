@@ -34,13 +34,13 @@ public class BeamOrderController extends BaseController{
     }
 
     @PostMapping
-    public void add(BeamOrderModel beamOrderModel) {
+    public void add(@RequestBody @Valid BeamOrderModel beamOrderModel) {
 
         this.beamOrderService.save(beamOrderModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update( BeamOrderModel beamOrderModel) {
+    public void update(@RequestBody @Valid BeamOrderModel beamOrderModel) {
 
         this.beamOrderService.update(beamOrderModel);
     }

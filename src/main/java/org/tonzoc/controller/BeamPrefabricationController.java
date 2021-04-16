@@ -34,13 +34,13 @@ public class BeamPrefabricationController extends BaseController{
     }
 
     @PostMapping
-    public void add( BeamPrefabricationModel beamPrefabricationModel) {
+    public void add(@RequestBody @Valid BeamPrefabricationModel beamPrefabricationModel) {
 
         this.beamPrefabricationService.save(beamPrefabricationModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(BeamPrefabricationModel beamPrefabricationModel) {
+    public void update(@RequestBody @Valid BeamPrefabricationModel beamPrefabricationModel) {
 
         this.beamPrefabricationService.update(beamPrefabricationModel);
     }
