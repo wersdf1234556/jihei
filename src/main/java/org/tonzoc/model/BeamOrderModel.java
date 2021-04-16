@@ -11,15 +11,20 @@ public class BeamOrderModel extends BaseModel{
     @Column(value = "guid")
     private String guid;
     @Column(value = "beamGuid")
-    private String beamGuid;
+    private String beamGuid; // 基础表
     @Column(value = "orders")
     private String orders; // 工序
-    @Column(value = "dates")
-    private String dates; // 施工日期
+    @Column(value = "attTime")
+    private String attTime; // 施工日期
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "operator")
+    private String operator; // 操作人
+    @Column(value = "tenderGuid")
+    private String tenderGuid; // 标段
 
-    // @JoinColumn(value = "", type = BeamModel.class, leftColumn = "beamGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
 
     public BeamOrderModel() {
     }
@@ -48,12 +53,12 @@ public class BeamOrderModel extends BaseModel{
         this.orders = orders;
     }
 
-    public String getDates() {
-        return dates;
+    public String getAttTime() {
+        return attTime;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
     }
 
     public Integer getSortId() {
@@ -62,5 +67,29 @@ public class BeamOrderModel extends BaseModel{
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 }

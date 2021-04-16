@@ -1,5 +1,6 @@
 package org.tonzoc.controller.params;
 
+import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.Operator;
 
 public class BeamOrderQueryParams {
@@ -10,10 +11,13 @@ public class BeamOrderQueryParams {
     private String beamGuid;
     @Operator(value = "like", field = "orders")
     private String orders; // 工序
-    @Operator(value = "eq", field = "dates")
-    private String dates; // 施工日期
+    @Operator(value = "like", field = "attTime")
+    private String attTime; // 施工日期
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+
 
     public String getGuid() {
         return guid;
@@ -39,12 +43,12 @@ public class BeamOrderQueryParams {
         this.orders = orders;
     }
 
-    public String getDates() {
-        return dates;
+    public String getAttTime() {
+        return attTime;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
     }
 
     public Integer getSortId() {
@@ -53,5 +57,13 @@ public class BeamOrderQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }

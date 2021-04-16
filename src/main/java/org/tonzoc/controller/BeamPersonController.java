@@ -34,13 +34,13 @@ public class BeamPersonController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid BeamPersonModel beamPersonModel) {
+    public void add( BeamPersonModel beamPersonModel) {
 
         this.beamPersonService.save(beamPersonModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid BeamPersonModel beamPersonModel) {
+    public void update( BeamPersonModel beamPersonModel) {
 
         this.beamPersonService.update(beamPersonModel);
     }

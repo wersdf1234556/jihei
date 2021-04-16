@@ -10,10 +10,14 @@ public class BeamPrefabricationQueryParams {
     private String name;
     @Operator(value = "like", field = "leftAndRight")
     private String leftAndRight; // 左右幅
-    @Operator(value = "like", field = "cross")
-    private String cross; // 跨
+    @Operator(value = "like", field = "span")
+    private String span; // 跨
     @Operator(value = "eq", field = "guid")
     private Integer sortId;
+    @Operator(value = "like", field = "attTime")
+    private String attTime;
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
 
     public String getGuid() {
         return guid;
@@ -39,12 +43,12 @@ public class BeamPrefabricationQueryParams {
         this.leftAndRight = leftAndRight;
     }
 
-    public String getCross() {
-        return cross;
+    public String getSpan() {
+        return span;
     }
 
-    public void setCross(String cross) {
-        this.cross = cross;
+    public void setSpan(String span) {
+        this.span = span;
     }
 
     public Integer getSortId() {
@@ -53,5 +57,21 @@ public class BeamPrefabricationQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getAttTime() {
+        return attTime;
+    }
+
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }

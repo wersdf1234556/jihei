@@ -12,6 +12,10 @@ public class BeamQueryParams {
     private String beamPrefabricationGuid;
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
+    @Operator(value = "like", field = "attTime")
+    private String attTime;
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
 
     public String getGuid() {
         return guid;
@@ -43,5 +47,21 @@ public class BeamQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
+    }
+
+    public String getAttTime() {
+        return attTime;
+    }
+
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }

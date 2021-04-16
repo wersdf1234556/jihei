@@ -34,13 +34,13 @@ public class BeamPedestalController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid BeamPedestalModel beamPedestalModel) {
+    public void add( BeamPedestalModel beamPedestalModel) {
 
         this.beamPedestalService.save(beamPedestalModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid BeamPedestalModel beamPedestalModel) {
+    public void update( BeamPedestalModel beamPedestalModel) {
 
         this.beamPedestalService.update(beamPedestalModel);
     }

@@ -34,13 +34,13 @@ public class BeamSecurityController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid BeamSecurityModel beamSecurityModel) {
+    public void add( BeamSecurityModel beamSecurityModel) {
 
         this.beamSecurityService.save(beamSecurityModel);
     }
 
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid BeamSecurityModel beamSecurityModel) {
+    public void update( BeamSecurityModel beamSecurityModel) {
 
         this.beamSecurityService.update(beamSecurityModel);
     }
