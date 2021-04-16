@@ -22,7 +22,17 @@ public class BeamModel extends BaseModel{
     private Integer concreteStrengthThree; // 混凝土强度3
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "remarks")
+    private String remarks;
+    @Column(value = "attTime")
+    private String attTime;
+    @Column(value = "operator")
+    private String operator;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
 
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
     @JoinColumn(value = "name", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
     private String beamPedestalName;
     @JoinColumn(value = "name", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
@@ -103,18 +113,43 @@ public class BeamModel extends BaseModel{
         this.beamPrefabricationName = beamPrefabricationName;
     }
 
-    @Override
-    public String toString() {
-        return "BeamModel{" +
-                "guid='" + guid + '\'' +
-                ", beamPedestalGuid='" + beamPedestalGuid + '\'' +
-                ", beamPrefabricationGuid='" + beamPrefabricationGuid + '\'' +
-                ", concreteStrengthOne=" + concreteStrengthOne +
-                ", concreteStrengthTwo=" + concreteStrengthTwo +
-                ", concreteStrengthThree=" + concreteStrengthThree +
-                ", sortId=" + sortId +
-                ", beamPedestalName='" + beamPedestalName + '\'' +
-                ", beamPrefabricationName='" + beamPrefabricationName + '\'' +
-                '}';
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getAttTime() {
+        return attTime;
+    }
+
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
     }
 }

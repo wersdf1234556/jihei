@@ -18,8 +18,10 @@ public class BeamSecurityModel extends BaseModel{
     private String type; // 类型
     @Column(value = "number")
     private Integer number; // 人数
-    @Column(value = "dates")
-    private String dates; // 日期
+    @Column(value = "attTime")
+    private String attTime; // 日期
+    @Column(value = "operator")
+    private String operator;
     @Column(value = "attImgGuid")
     private String attImgGuid;
     @Column(value = "sortId")
@@ -75,12 +77,44 @@ public class BeamSecurityModel extends BaseModel{
         this.number = number;
     }
 
-    public String getDates() {
-        return dates;
+    public String getAttTime() {
+        return attTime;
     }
 
-    public void setDates(String dates) {
-        this.dates = dates;
+    public void setAttTime(String attTime) {
+        this.attTime = attTime;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
+
+    public String getAttImgName() {
+        return attImgName;
+    }
+
+    public void setAttImgName(String attImgName) {
+        this.attImgName = attImgName;
+    }
+
+    public String getAttImgUrl() {
+        return attImgUrl;
+    }
+
+    public void setAttImgUrl(String attImgUrl) {
+        this.attImgUrl = attImgUrl;
     }
 
     public String getAttImgGuid() {
