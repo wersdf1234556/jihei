@@ -18,6 +18,8 @@ public class BeamPrefabricationQueryParams {
     private String attTime;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "eq", field = "status")
+    private String status;
 
     public String getGuid() {
         return guid;
@@ -73,5 +75,13 @@ public class BeamPrefabricationQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

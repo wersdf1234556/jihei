@@ -12,8 +12,10 @@ public class BeamOrderModel extends BaseModel{
     private String guid;
     @Column(value = "beamGuid")
     private String beamGuid; // 基础表
-    @Column(value = "orders")
-    private String orders; // 工序
+    @Column(value = "status")
+    private String status; // 工序状态
+    @Column(value = "color")
+    private String color; // 颜色
     @Column(value = "attTime")
     private String attTime; // 施工日期
     @Column(value = "sortId")
@@ -45,12 +47,12 @@ public class BeamOrderModel extends BaseModel{
         this.beamGuid = beamGuid;
     }
 
-    public String getOrders() {
-        return orders;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrders(String orders) {
-        this.orders = orders;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAttTime() {
@@ -91,5 +93,13 @@ public class BeamOrderModel extends BaseModel{
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

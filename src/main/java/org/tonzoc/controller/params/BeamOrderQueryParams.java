@@ -9,8 +9,8 @@ public class BeamOrderQueryParams {
     private String guid;
     @Operator(value = "eq", field = "beamGuid")
     private String beamGuid;
-    @Operator(value = "like", field = "orders")
-    private String orders; // 工序
+    @Operator(value = "eq", field = "status")
+    private String status; // 工序
     @Operator(value = "like", field = "attTime")
     private String attTime; // 施工日期
     @Operator(value = "eq", field = "sortId")
@@ -35,12 +35,12 @@ public class BeamOrderQueryParams {
         this.beamGuid = beamGuid;
     }
 
-    public String getOrders() {
-        return orders;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrders(String orders) {
-        this.orders = orders;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAttTime() {

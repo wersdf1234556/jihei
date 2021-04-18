@@ -8,6 +8,8 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamModel;
+import org.tonzoc.model.BeamPedestalModel;
+import org.tonzoc.service.IBeamPedestalService;
 import org.tonzoc.service.IBeamService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
@@ -34,26 +36,41 @@ public class BeamController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid BeamModel beamModel) {
+    public void add( BeamModel beamModel) throws Exception {
 
-        beamService.save(beamModel);
+        beamService.add(beamModel);
     }
 
+    // 修改台座等信息
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid BeamModel beamModel) {
+    public void update( BeamModel beamModel) throws Exception {
 
         beamService.update(beamModel);
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        beamService.remove(guid);
+        beamService.delete(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        beamService.removeMany(guids);
+        beamService.deletes(guids);
+    }
+
+    // 更新信息
+    @PutMapping(value = "modify")
+    public void modify( BeamModel beamModel, String remarks) throws Exception {
+
+        beamService.modify(beamModel, remarks);
+    }
+
+    // 按照编号查询历史记录
+    @GetMapping(value = "listHistory")
+    public List<BeamModel> listHistory(String name) {
+
+        return beamService.listHistory(name);
     }
 }

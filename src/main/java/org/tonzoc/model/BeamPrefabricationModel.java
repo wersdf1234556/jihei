@@ -24,6 +24,18 @@ public class BeamPrefabricationModel extends BaseModel{
     private String operator;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "concreteStrengthOne")
+    private Integer concreteStrengthOne; // 混凝土强度1
+    @Column(value = "concreteStrengthTwo")
+    private Integer concreteStrengthTwo; // 混凝土强度2
+    @Column(value = "concreteStrengthThree")
+    private Integer concreteStrengthThree; // 混凝土强度3
+    @Column(value = "remarks")
+    private String remarks; // 备注
+    @Column(value = "status")
+    private String status;
+    @Column(value = "color")
+    private String color; // 颜色
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
@@ -101,5 +113,53 @@ public class BeamPrefabricationModel extends BaseModel{
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public Integer getConcreteStrengthOne() {
+        return concreteStrengthOne;
+    }
+
+    public void setConcreteStrengthOne(Integer concreteStrengthOne) {
+        this.concreteStrengthOne = concreteStrengthOne;
+    }
+
+    public Integer getConcreteStrengthTwo() {
+        return concreteStrengthTwo;
+    }
+
+    public void setConcreteStrengthTwo(Integer concreteStrengthTwo) {
+        this.concreteStrengthTwo = concreteStrengthTwo;
+    }
+
+    public Integer getConcreteStrengthThree() {
+        return concreteStrengthThree;
+    }
+
+    public void setConcreteStrengthThree(Integer concreteStrengthThree) {
+        this.concreteStrengthThree = concreteStrengthThree;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

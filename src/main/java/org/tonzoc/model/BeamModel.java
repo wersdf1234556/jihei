@@ -14,27 +14,24 @@ public class BeamModel extends BaseModel{
     private String beamPedestalGuid;
     @Column(value = "beamPrefabricationGuid")
     private String beamPrefabricationGuid;
-    @Column(value = "concreteStrengthOne")
-    private Integer concreteStrengthOne; // 混凝土强度1
-    @Column(value = "concreteStrengthTwo")
-    private Integer concreteStrengthTwo; // 混凝土强度2
-    @Column(value = "concreteStrengthThree")
-    private Integer concreteStrengthThree; // 混凝土强度3
     @Column(value = "sortId")
     private Integer sortId;
-    @Column(value = "remarks")
-    private String remarks;
     @Column(value = "attTime")
     private String attTime;
     @Column(value = "operator")
     private String operator;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    private String status; // 状态
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
+    @JoinColumn(value = "status", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
+    private String beamPedestalStatus;
     @JoinColumn(value = "name", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
     private String beamPedestalName;
+    @JoinColumn(value = "status", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String beamPrefabricationStatus;
     @JoinColumn(value = "name", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
     private String beamPrefabricationName;
 
@@ -65,30 +62,6 @@ public class BeamModel extends BaseModel{
         this.beamPrefabricationGuid = beamPrefabricationGuid;
     }
 
-    public Integer getConcreteStrengthOne() {
-        return concreteStrengthOne;
-    }
-
-    public void setConcreteStrengthOne(Integer concreteStrengthOne) {
-        this.concreteStrengthOne = concreteStrengthOne;
-    }
-
-    public Integer getConcreteStrengthTwo() {
-        return concreteStrengthTwo;
-    }
-
-    public void setConcreteStrengthTwo(Integer concreteStrengthTwo) {
-        this.concreteStrengthTwo = concreteStrengthTwo;
-    }
-
-    public Integer getConcreteStrengthThree() {
-        return concreteStrengthThree;
-    }
-
-    public void setConcreteStrengthThree(Integer concreteStrengthThree) {
-        this.concreteStrengthThree = concreteStrengthThree;
-    }
-
     public Integer getSortId() {
         return sortId;
     }
@@ -111,14 +84,6 @@ public class BeamModel extends BaseModel{
 
     public void setBeamPrefabricationName(String beamPrefabricationName) {
         this.beamPrefabricationName = beamPrefabricationName;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
     }
 
     public String getAttTime() {
@@ -151,5 +116,29 @@ public class BeamModel extends BaseModel{
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBeamPedestalStatus() {
+        return beamPedestalStatus;
+    }
+
+    public void setBeamPedestalStatus(String beamPedestalStatus) {
+        this.beamPedestalStatus = beamPedestalStatus;
+    }
+
+    public String getBeamPrefabricationStatus() {
+        return beamPrefabricationStatus;
+    }
+
+    public void setBeamPrefabricationStatus(String beamPrefabricationStatus) {
+        this.beamPrefabricationStatus = beamPrefabricationStatus;
     }
 }

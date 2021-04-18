@@ -8,15 +8,17 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamPrefabricationModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.service.IBeamPrefabricationService;
 import org.tonzoc.support.param.SqlQueryParam;
+
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "beamPrefabrication")
-public class BeamPrefabricationController extends BaseController{
+public class BeamPrefabricationController extends BaseController {
 
     @Autowired
     private IBeamPrefabricationService beamPrefabricationService;
@@ -55,5 +57,12 @@ public class BeamPrefabricationController extends BaseController{
     public void removeMany(String guids) throws Exception {
 
         beamPrefabricationService.removeMany(guids);
+    }
+
+    // 梁的数量信息
+    @GetMapping(value = "selectPrefabrication")
+    public List<ReturnModel> selectPrefabrication() {
+
+        return beamPrefabricationService.selectPrefabrication();
     }
 }

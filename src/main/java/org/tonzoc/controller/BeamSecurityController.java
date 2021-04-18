@@ -3,6 +3,7 @@ package org.tonzoc.controller;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.controller.params.BeamSecurityQueryParams;
 import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
@@ -55,5 +56,19 @@ public class BeamSecurityController extends BaseController{
     public void removeMany(String guids) throws Exception {
 
         beamSecurityService.removeMany(guids);
+    }
+
+    // 上传多个质量追溯文件
+    @PostMapping(value = "upFiles")
+    public void upFiles(MultipartFile[] file, String fileType){
+
+        beamSecurityService.upFiles(file, fileType);
+    }
+
+    // 上传质量追溯文件
+    @PostMapping(value = "upFile")
+    public void upFile(MultipartFile file, String fileType){
+
+        beamSecurityService.upFile(file, fileType);
     }
 }

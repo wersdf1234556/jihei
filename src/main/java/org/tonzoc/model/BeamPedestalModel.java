@@ -24,6 +24,10 @@ public class BeamPedestalModel extends BaseModel{
     private String operator;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "status")
+    private String status; // 状态
+    @Column(value = "color")
+    private String color; // 颜色
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
@@ -101,5 +105,21 @@ public class BeamPedestalModel extends BaseModel{
 
     public void setModelNum(String modelNum) {
         this.modelNum = modelNum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
