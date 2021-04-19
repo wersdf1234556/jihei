@@ -57,8 +57,7 @@ public class NewsService extends BaseService<NewsModel> implements INewsService 
             if (!oldNews.getAttachmentGuid().isEmpty()){
                 AttachmentModel oldAttachment = attachmentService.get(oldNews.getAttachmentGuid());
                 if (oldAttachment!=null){
-                    String returnData = attachmentService.deleteFile(oldNews.getAttachmentGuid());
-                    System.out.println(returnData);
+                    attachmentService.deleteFile(oldNews.getAttachmentGuid());
                     attachmentService.remove(oldNews.getAttachmentGuid());
                 }
             }
