@@ -36,14 +36,14 @@ public class BeamController extends BaseController{
     }
 
     @PostMapping
-    public void add( BeamModel beamModel) throws Exception {
+    public void add(@RequestBody @Valid BeamModel beamModel) throws Exception {
 
         beamService.add(beamModel);
     }
 
     // 修改台座等信息
     @PutMapping(value = "{guid}")
-    public void update( BeamModel beamModel) throws Exception {
+    public void update(@RequestBody @Valid BeamModel beamModel) throws Exception {
 
         beamService.update(beamModel);
     }
