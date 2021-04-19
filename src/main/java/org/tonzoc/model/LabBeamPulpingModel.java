@@ -76,6 +76,16 @@ public class LabBeamPulpingModel extends BaseModel {
     private String pulpingMode;
     @Column(value = "measureType")
     private String measureType;
+    @Column(value = "modelNum")
+    private String modelNum;
+
+    public String getModelNum() {
+        return modelNum;
+    }
+
+    public void setModelNum(String modelNum) {
+        this.modelNum = modelNum;
+    }
 
     public LabBeamPulpingModel(String guid, String equipmentNumber, String engineeringName, String engineeringSite, String componentId, String componentParts, String beamType, String concreteStrength, String elasticModulus, String steelBeamNo, String steelStrand, String pulpingOrientation, String pulpingOrder, String flowVelocity, String fluidity, String mixProportion, String waterBinderRatio, String stirringTime, String startDate, String endDate, String pulpingVolume, String standardVolume, String pulpingPressureIn, String pulpingPressureOut, String loadHoldingTime, String volumeCurve, String pressureInCurve, String pressureOutCurve, String result, String userId, String otherInformation, String holeType, String birthTime, String pulpingMode, String measureType) {
         this.guid = guid;

@@ -98,6 +98,16 @@ public class LabBeamTensionModel extends BaseModel {
     private String anchorThickness;
     @Column(value = "tensionMode")
     private String tensionMode;
+    @Column(value = "modelNum")
+    private String modelNum;
+
+    public String getModelNum() {
+        return modelNum;
+    }
+
+    public void setModelNum(String modelNum) {
+        this.modelNum = modelNum;
+    }
 
     public LabBeamTensionModel(String guid, String equipmentNumber, String engineeringName, String engineeringSite, String componentId, String componentParts, String beamType, String concreteStrength, String elasticModulus, String steelBeamNo, String steelStrand, String tensioningSection, String tensioningDate, String tensioningForce0, String tensioningForce1, String tensioningForce2, String tensioningForce3, String tensioningForce4, String elongation0, String elongation1, String elongation2, String elongation3, String elongation4, String oilPressure0, String oilPressure1, String oilPressure2, String oilPressure3, String oilPressure4, String tensionControl, String totalElongation, String theoreticalElongation, String extendError, String forceCurve, String elongationCurve, String oilPressureCurve, String result, String userId, String otherInformation, String forceError, String loadHoldingTime, String retraction, String anchorWidth, String birthTime, String anchorThickness, String tensionMode) {
         this.guid = guid;
