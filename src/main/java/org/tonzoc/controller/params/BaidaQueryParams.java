@@ -3,7 +3,6 @@ package org.tonzoc.controller.params;
 import org.tonzoc.annotation.Operator;
 
 public class BaidaQueryParams {
-
     @Operator(value = "eq", field = "categoryGuid")
     private String categoryGuid;
 
