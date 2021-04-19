@@ -80,6 +80,16 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         fileHelper.downLoad(response, attachmentsModel.getName(), attachmentsModel.getUrl());
     }
 
+    // 下载多个文件
+    public void downLoadFiles(HttpServletResponse response, String guids) throws UnsupportedEncodingException {
+
+        String[] str = guids.split(",");
+        for (String s: str) {
+
+            this.deleteFile(s);
+        }
+    }
+
     // 预览图片
     public byte[] getImage(String attachmentId) throws IOException {
         AttachmentModel attachmentsModel = get(attachmentId);

@@ -84,6 +84,13 @@ public class AttachmentController extends BaseController {
         attachmentService.downLoadFile(response, guid);
     }
 
+    // 多个文件下载
+    @GetMapping(value = "/downLoadFiles")
+    public void downLoadFiles(HttpServletResponse response, String guids) throws UnsupportedEncodingException {
+
+        attachmentService.downLoadFiles(response, guids);
+    }
+
     // 预览图片
     @GetMapping(value = "image/{guid}")
     @ResponseBody

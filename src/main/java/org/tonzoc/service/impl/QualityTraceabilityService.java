@@ -70,8 +70,8 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
         String guid = fileHelper.newGUID();
         qualityTraceabilityModel.setGuid(guid);
-        Map<String, String> map = this.qrcode(guid);
-        qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
+        // Map<String, String> map = this.qrcode(guid);
+        // qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
@@ -132,8 +132,22 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         HttpServletRequest request = attributes.getRequest();
         String address = request.getLocalPort() + ""; // 获取端口号
 
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("eq", qualityTraceabilityGuid, qualityTraceabilityGuid));
+        List<AttachmentModel> list = attachmentService.list(sqlQueryParams);
+
+        StringBuffer stringBuffer = new StringBuffer();
+        for (AttachmentModel li: list) {
+            if (stringBuffer.length() > 0) {
+                stringBuffer.append(",");
+
+            }
+
+            stringBuffer.append(li.getGuid());
+        }
+
         // String payUrl = intelliSiteProperties.getIp() + address + "/attachment?guid =" + qualityTraceabilityGuid; // 二维码存的内容
-        String payUrl = "http://jihei.ljkjkf.com" + "/attachment?guid =" + qualityTraceabilityGuid; // 二维码存的内容
+        String payUrl = "http://jihei.ljkjkf.com" + "/attachment/downLoadFiles?guids=" + stringBuffer.toString(); // 二维码存的内容
         String guid = fileHelper.newGUID(); // 二维码名称
 
         try {

@@ -20,6 +20,8 @@ public class BeamPedestalQueryParams {
     private String pedestalNum;
     @Operator(value = "eq", field = "status")
     private String status;
+    @Operator(value = "eq", field = "textNum")
+    private String textNum;
 
     public String getGuid() {
         return guid;
@@ -83,5 +85,13 @@ public class BeamPedestalQueryParams {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTextNum() {
+        return textNum;
+    }
+
+    public void setTextNum(String textNum) {
+        this.textNum = textNum;
     }
 }

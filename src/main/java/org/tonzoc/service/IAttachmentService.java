@@ -19,6 +19,9 @@ public interface IAttachmentService extends IBaseService<AttachmentModel> {
     // 文件下载
     void downLoadFile(HttpServletResponse response, String guid) throws UnsupportedEncodingException;
 
+    // 多个文件下载
+    void downLoadFiles(HttpServletResponse response, String guids) throws UnsupportedEncodingException;
+
     // 图片预览
     byte[] getImage(String attachmentId) throws IOException;
 
