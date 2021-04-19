@@ -31,7 +31,13 @@ public interface IAttachmentService extends IBaseService<AttachmentModel> {
     // PDF在线预览
     void PdfPreview(HttpServletResponse response, String guid) throws IOException;
 
-    // 删除物理文件
-    String deleteFile(String guid);
+    // 删除一个物理文件
+    void deleteFile(String guid);
+
+    // 删除多个物理文件
+    void deleteFiles(String guids) throws Exception;
+
+    // 获取当前文件下的所有guid
+    String selectAllGuid(String qualityTraceabilityGuid);
 
 }

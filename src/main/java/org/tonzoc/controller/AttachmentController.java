@@ -53,14 +53,12 @@ public class AttachmentController extends BaseController {
     public void remove(@PathVariable(value = "guid") String guid) {
 
         attachmentService.deleteFile(guid);
-        this.attachmentService.remove(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        attachmentService.deleteFile(guids);
-        attachmentService.removeMany(guids);
+        attachmentService.deleteFiles(guids);
     }
 
     // 单文件上传

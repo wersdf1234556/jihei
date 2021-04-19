@@ -65,6 +65,8 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private UserMapper userMapper;
 
+    private String payUrl = "http://jihei.ljkjkf.com/attachment/downLoadFiles?guids=";
+
     // 添加
     @Override
     public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
@@ -126,32 +128,18 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 生成二维码
     @Override
-    public Map<String, String> qrcode(String qualityTraceabilityGuid) {
+    public Map<String, String> qrcode(String attachmentGuids) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String address = request.getLocalPort() + ""; // 获取端口号
 
-        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("eq", qualityTraceabilityGuid, qualityTraceabilityGuid));
-        List<AttachmentModel> list = attachmentService.list(sqlQueryParams);
-
-        StringBuffer stringBuffer = new StringBuffer();
-        for (AttachmentModel li: list) {
-            if (stringBuffer.length() > 0) {
-                stringBuffer.append(",");
-
-            }
-
-            stringBuffer.append(li.getGuid());
-        }
-
         // String payUrl = intelliSiteProperties.getIp() + address + "/attachment?guid =" + qualityTraceabilityGuid; // 二维码存的内容
-        String payUrl = "http://jihei.ljkjkf.com" + "/attachment/downLoadFiles?guids=" + stringBuffer.toString(); // 二维码存的内容
+        String Url = this.payUrl + attachmentGuids; // 二维码存的内容
         String guid = fileHelper.newGUID(); // 二维码名称
 
         try {
-            fileHelper.generateQRCodeImage(payUrl, 380, 380, guid + ".png");
+            fileHelper.generateQRCodeImage(Url, 380, 380, guid + ".png");
         } catch (WriterException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -192,6 +180,20 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         intelliSiteProperties.setFileUrl("/质量追溯/");
         attachmentService.upFile(file, qualityTraceabilityGuid, fileType);
         intelliSiteProperties.setFileUrl("/");
+
+        QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
+        if (qualityTraceabilityModel.getQrcodeGuid() != null && !"".equals(qualityTraceabilityModel.getQrcodeGuid())) {
+
+            attachmentService.deleteFile(qualityTraceabilityModel.getQrcodeGuid());
+        }
+
+        String guids =  attachmentService.selectAllGuid(qualityTraceabilityGuid);
+        Map<String, String> map = this.qrcode(guids);
+        QualityTraceabilityModel qualityTraceabilityModel1 = new QualityTraceabilityModel();
+        qualityTraceabilityModel1.setGuid(qualityTraceabilityGuid);
+        qualityTraceabilityModel1.setQrcodeGuid(map.get("attachmentGuid"));
+
+        this.update(qualityTraceabilityModel1);
     }
 
     // 按照名称模糊查询的功能

@@ -10,6 +10,7 @@ import org.tonzoc.model.AttachmentModel;
 import org.tonzoc.model.QualityTraceabilityModel;
 import org.tonzoc.service.IAttachmentService;
 import org.tonzoc.service.IQualityTraceabilityService;
+import org.tonzoc.support.param.SqlQueryParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -112,9 +113,9 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
         fileHelper.PdfPreview(response, attachmentsModel.getUrl());
     }
 
-    // 删除物理文件
+    // 删除一个物理文件
     @Override
-    public String deleteFile(String guid) {
+    public void deleteFile(String guid) {
         List<String> list = new ArrayList<>();
         if (guid.contains(",")) {
             String str[] = guid.split(",");
@@ -125,6 +126,43 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
             list.add(this.get(guid).getUrl());
         }
 
-      return fileHelper.deleteFile(list);
+        this.remove(guid);
+        fileHelper.deleteFile(list);
+    }
+
+    // 删除多个物理文件
+    @Override
+    public void deleteFiles(String guids) throws Exception {
+        List<String> list = new ArrayList<>();
+        if (guids.contains(",")) {
+            String str[] = guids.split(",");
+            for (String s:str) {
+                list.add(this.get(s).getUrl());
+            }
+        }else{
+            list.add(this.get(guids).getUrl());
+        }
+
+        this.removeMany(guids);
+        fileHelper.deleteFile(list);
+    }
+
+    // 获取当前文件下的所有guid
+    @Override
+    public String selectAllGuid(String qualityTraceabilityGuid) {
+
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("eq", qualityTraceabilityGuid, qualityTraceabilityGuid));
+        List<AttachmentModel> list = this.list(sqlQueryParams);
+        StringBuffer stringBuffer = new StringBuffer();
+        for (AttachmentModel li: list) {
+            if (stringBuffer.length() > 0) {
+                stringBuffer.append(",");
+
+            }
+            stringBuffer.append(li.getGuid());
+        }
+
+        return stringBuffer.toString();
     }
 }
