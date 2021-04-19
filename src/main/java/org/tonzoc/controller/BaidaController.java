@@ -27,12 +27,12 @@ public class BaidaController extends BaseController {
     private IBaidaService baidaService;
 
     @GetMapping
-    public PageResponse list(PageQueryParams pageQueryParams, BaidaQueryParams baidasQueryParams)
+    public PageResponse list(PageQueryParams pageQueryParams, BaidaQueryParams baidaQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
-        Page<BeamModel> page = parsePage(pageQueryParams);
+        Page<BaidaModel> page = parsePage(pageQueryParams);
 
-        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(pageQueryParams);
+        List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(baidaQueryParams);
         List list = baidaService.list(sqlQueryParams);
 
         return new PageResponse(page.getTotal(), list);

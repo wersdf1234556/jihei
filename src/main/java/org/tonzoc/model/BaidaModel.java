@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class BaidaModel extends BaseModel {
     @PrimaryKey
     @NotInsertColumn
-    @Column(value = "bGuid")
+    @Column(value = "guid")
     private String guid;
     @Column(value = "categoryGuid")
     private String categoryGuid;
@@ -19,37 +19,37 @@ public class BaidaModel extends BaseModel {
     private String constructionContent;
     @Column(value = "projectTypeGuid")
     private String projectTypeGuid;
-    @Column(value = "plannedStartTime")
+    @Column(value = "planStartTime")
     private Timestamp planStartTime;
-    @Column(value = "plannedCompletionTme")
+    @Column(value = "planCompleteTime")
     private Timestamp planCompleteTime;
     @Column(value = "totalInvestment")
     private BigDecimal totalInvestment;
-    @Column(value = "yearPlan")
+    @Column(value = "currentYearPlan")
     private BigDecimal currentYearPlan;
-    @Column(value = "threeComplete")
+    @Column(value = "complete3")
     private BigDecimal complete3;
-    @Column(value = "fourComplete")
+    @Column(value = "complete4")
     private BigDecimal complete4;
-    @Column(value = "mayComplete")
+    @Column(value = "complete5")
     private BigDecimal complete5;
-    @Column(value = "juneComplete")
+    @Column(value = "complete6")
     private BigDecimal complete6;
-    @Column(value = "sevenComplete")
+    @Column(value = "complete7")
     private BigDecimal complete7;
-    @Column(value = "eightComplete")
+    @Column(value = "complete8")
     private BigDecimal complete8;
-    @Column(value = "nineComplete")
+    @Column(value = "complete9")
     private BigDecimal complete9;
-    @Column(value = "tenComplete")
+    @Column(value = "complete10")
     private BigDecimal complete10;
-    @Column(value = "elevenComplete")
+    @Column(value = "complete11")
     private BigDecimal complete11;
-    @Column(value = "twelveComplete")
+    @Column(value = "complete12")
     private BigDecimal complete12;
-    @Column(value = "yearsComplete")
+    @Column(value = "currentYearComplete")
     private BigDecimal currentYearComplete;
-    @Column(value = "completeInvestment")
+    @Column(value = "totalCompleteInvestment")
     private BigDecimal totalCompleteInvestment;
     @Column(value = "projectProgress")
     private String projectProgress;
@@ -57,7 +57,7 @@ public class BaidaModel extends BaseModel {
     private String question;
     @Column(value = "address")
     private String address;
-    @Column(value = "operatorGuid")
+    @Column(value = "userGuid")
     private String userGuid;
 
     public BaidaModel() {
