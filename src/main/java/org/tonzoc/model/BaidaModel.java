@@ -59,6 +59,10 @@ public class BaidaModel extends BaseModel {
     private String address;
     @Column(value = "userGuid")
     private String userGuid;
+    @JoinColumn(value = "name", type = IndustryCategoryModel.class, leftColumn = "categoryGuid", rightColumn = "guid")
+    private String categoryName;
+    @JoinColumn(value = "name", type = ProjectStateModel.class, leftColumn = "projectTypeGuid", rightColumn = "guid")
+    private String projectTypeName;
 
     public BaidaModel() {
     }
@@ -261,5 +265,52 @@ public class BaidaModel extends BaseModel {
 
     public void setUserGuid(String userGuid) {
         this.userGuid = userGuid;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getProjectTypeName() {
+        return projectTypeName;
+    }
+
+    public void setProjectTypeName(String projectTypeName) {
+        this.projectTypeName = projectTypeName;
+    }
+
+    @Override
+    public String toString() {
+        return "BaidaModel{" +
+                "guid='" + guid + '\'' +
+                ", categoryGuid='" + categoryGuid + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", constructionContent='" + constructionContent + '\'' +
+                ", projectTypeGuid='" + projectTypeGuid + '\'' +
+                ", planStartTime='" + planStartTime + '\'' +
+                ", planCompleteTime='" + planCompleteTime + '\'' +
+                ", totalInvestment=" + totalInvestment +
+                ", currentYearPlan=" + currentYearPlan +
+                ", complete3=" + complete3 +
+                ", complete4=" + complete4 +
+                ", complete5=" + complete5 +
+                ", complete6=" + complete6 +
+                ", complete7=" + complete7 +
+                ", complete8=" + complete8 +
+                ", complete9=" + complete9 +
+                ", complete10=" + complete10 +
+                ", complete11=" + complete11 +
+                ", complete12=" + complete12 +
+                ", currentYearComplete=" + currentYearComplete +
+                ", totalCompleteInvestment=" + totalCompleteInvestment +
+                ", projectProgress='" + projectProgress + '\'' +
+                ", question='" + question + '\'' +
+                ", address='" + address + '\'' +
+                ", userGuid='" + userGuid + '\'' +
+                '}';
     }
 }

@@ -9,6 +9,8 @@ public class BaidaProvider {
                         @Param(value = "projectTypeGuid") String projectTypeGuid) {
 
         StringBuilder stringBuilder = new StringBuilder("select categoryGuid,\n" +
+                "       industryCategorys.name                           as categoryName,\n" +
+                "       ''                           as projectTypeName,\n" +
                 "       ''                           as ProjectName,\n" +
                 "       ''                           as ConstructionContent,\n" +
                 "       ''                           as ProjectTypeGuid,\n" +
@@ -45,7 +47,7 @@ public class BaidaProvider {
         if (projectTypeGuid != null && !"".equals(projectTypeGuid)) {
             stringBuilder.append(" and projectTypeGuid = '").append(projectTypeGuid).append("'\n");
         }
-        stringBuilder.append(" group by CategoryGuid, industryCategorys.sortId  order by industryCategorys.sortId");
+        stringBuilder.append(" group by CategoryGuid, industryCategorys.name, industryCategorys.sortId  order by industryCategorys.sortId");
 
         return stringBuilder.toString();
     }
