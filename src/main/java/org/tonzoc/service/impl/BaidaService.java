@@ -18,7 +18,7 @@ public class BaidaService extends BaseService<BaidaModel> implements IBaidaServi
     private BaidaMapper baidaMapper;
 
     @Override
-    public List<BaidaModel> getStat() {
-        return baidaMapper.getStat();
+    public List<BaidaModel> getStat(String categoryGuid, String projectTypeGuid) {
+        return baidaMapper.getStat(categoryGuid, projectTypeGuid);
     }
 }

@@ -64,8 +64,8 @@ public class BaidaController extends BaseController {
     }
 
     @GetMapping(value = "getStat")
-    public List<BaidaModel> getStat() {
-        return this.baidaService.getStat();
+    public List<BaidaModel> getStat(String categoryGuid, String projectTypeGuid) {
+        return this.baidaService.getStat(categoryGuid, projectTypeGuid);
     }
 
 }

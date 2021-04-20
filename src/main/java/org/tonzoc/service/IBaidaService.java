@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IBaidaService extends IBaseService<BaidaModel> {
 
-    List<BaidaModel> getStat();
+    List<BaidaModel> getStat(String categoryGuid, String projectTypeGuid);
 }
