@@ -19,5 +19,8 @@ public interface IBeamService extends IBaseService<BeamModel> {
     void deletes(String guids) throws Exception;
 
     // 按照编号查询历史记录
-    List<BeamModel> listHistory(String name);
+    List<BeamModel> listHistory(String name, String num);
+
+    // 查询一条或多条
+    List selectOneOrAll(String tenderGuid, String num) throws Exception;
 }

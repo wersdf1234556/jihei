@@ -18,6 +18,8 @@ public class BeamPrefabricationModel extends BaseModel{
     private String span; // 跨
     @Column(value = "sortId")
     private Integer sortId;
+    @Column(value = "prefabricationNum")
+    private String prefabricationNum;
     @Column(value = "attTime")
     private String attTime;
     @Column(value = "operator")
@@ -137,6 +139,14 @@ public class BeamPrefabricationModel extends BaseModel{
 
     public void setConcreteStrengthThree(Integer concreteStrengthThree) {
         this.concreteStrengthThree = concreteStrengthThree;
+    }
+
+    public String getPrefabricationNum() {
+        return prefabricationNum;
+    }
+
+    public void setPrefabricationNum(String prefabricationNum) {
+        this.prefabricationNum = prefabricationNum;
     }
 
     public String getRemarks() {
