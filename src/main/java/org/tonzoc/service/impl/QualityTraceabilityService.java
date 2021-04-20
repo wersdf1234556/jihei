@@ -65,15 +65,15 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private UserMapper userMapper;
 
-    private String payUrl = "http://jihei.ljkjkf.com/attachment/downLoadFiles?guids=";
+    private String payUrl = "http://jihei.ljkjkf.com/attachment?guid=";
 
     // 添加
     @Override
     public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
         String guid = fileHelper.newGUID();
         qualityTraceabilityModel.setGuid(guid);
-        // Map<String, String> map = this.qrcode(guid);
-        // qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
+         Map<String, String> map = this.qrcode(guid);
+         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
@@ -84,16 +84,16 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             qualityTraceabilityModel.setStatus("unSubmit");
             qualityTraceabilityModel.setCurrentTenderGuid(qualityTraceabilityModel.getTenderGuid());
 
-        }else if ("2".equals(accounType)) {
+        } else if ("2".equals(accounType)) {
 
             qualityTraceabilityModel.setStatus("submitted");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "2"));
 
-        }else if ("5".equals(accounType)) {
+        } else if ("5".equals(accounType)) {
 
             qualityTraceabilityModel.setStatus("submitted");
             qualityTraceabilityModel.setCurrentTenderGuid(approvalHelper.getNextSupervisor(qualityTraceabilityModel.getTenderGuid(), "5"));
-        }else {
+        } else {
 
             throw new Exception("不能添加");
         }
@@ -128,14 +128,14 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 生成二维码
     @Override
-    public Map<String, String> qrcode(String attachmentGuids) {
+    public Map<String, String> qrcode(String qualityTraceabilityGuid) {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String address = request.getLocalPort() + ""; // 获取端口号
 
         // String payUrl = intelliSiteProperties.getIp() + address + "/attachment?guid =" + qualityTraceabilityGuid; // 二维码存的内容
-        String Url = this.payUrl + attachmentGuids; // 二维码存的内容
+        String Url = this.payUrl + qualityTraceabilityGuid; // 二维码存的内容
         String guid = fileHelper.newGUID(); // 二维码名称
 
         try {
@@ -180,24 +180,10 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         intelliSiteProperties.setFileUrl("/质量追溯/");
         attachmentService.upFile(file, qualityTraceabilityGuid, fileType);
         intelliSiteProperties.setFileUrl("/");
-
-        QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
-        if (qualityTraceabilityModel.getQrcodeGuid() != null && !"".equals(qualityTraceabilityModel.getQrcodeGuid())) {
-
-            attachmentService.deleteFile(qualityTraceabilityModel.getQrcodeGuid());
-        }
-
-        String guids = attachmentService.selectAllGuid(qualityTraceabilityGuid);
-        Map<String, String> map = this.qrcode(guids);
-        QualityTraceabilityModel qualityTraceabilityModel1 = new QualityTraceabilityModel();
-        qualityTraceabilityModel1.setGuid(qualityTraceabilityGuid);
-        qualityTraceabilityModel1.setQrcodeGuid(map.get("attachmentGuid"));
-
-        this.update(qualityTraceabilityModel1);
     }
 
     // 按照名称模糊查询的功能
-    public List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid){
+    public List<AttachmentModel> selectLikeName(String name, String qualityTraceabilityGuid) {
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
         sqlQueryParams.add(new SqlQueryParam("qualityTraceabilityGuid", qualityTraceabilityGuid, "eq"));
@@ -209,30 +195,30 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     }
 
     // 将质量表中的sortId同步
-    public void updateSortId(){
+    public void updateSortId() {
 
         List<SubTypeModel> list = subTypeService.list(new ArrayList<>());
-        for (SubTypeModel li: list) {
+        for (SubTypeModel li : list) {
 
             qualityTraceabilityMapper.updateSortId(li.getGuid());
         }
     }
 
     // 追溯统计
-    public List<ReturnModel> traceabilityCount(){
+    public List<ReturnModel> traceabilityCount() {
 
         Integer count = qualityTraceabilityMapper.count();
         List<ReturnModel> list = qualityTraceabilityMapper.traceabilityCount();
 
-        return machineService.machinePublic(count,list);
+        return machineService.machinePublic(count, list);
     }
 
     // 标段统计
-    public List<TenderModel> tenderCount(){
+    public List<TenderModel> tenderCount() {
 
         List<TenderModel> list1 = tenderMapper.list();
 
-        for (TenderModel li: list1) {
+        for (TenderModel li : list1) {
 
             List<ReturnModel> list2 = qualityTraceabilityMapper.tenderCount(li.getGuid());
             li.setList(list2);
@@ -263,11 +249,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 提交
     @Override
-    public void submit(String qualityTraceabilityGuid){
+    public void submit(String qualityTraceabilityGuid) {
         QualityTraceabilityModel qualityTraceabilityModel = this.get(qualityTraceabilityGuid);
         String nextTenderGuids = approvalHelper.getNextSupervisor(qualityTraceabilityModel.getCurrentTenderGuid(), "2");
         String approvalTime = "";
-        if (qualityTraceabilityModel.getStatus().equals("unSubmit")){
+        if (qualityTraceabilityModel.getStatus().equals("unSubmit")) {
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
             approvalTime = df.format(new Date());
@@ -283,10 +269,10 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         QualityTraceabilityModel qualityTraceabilityModel = get(qualityTraceabilityGuid);
 
         String status = "";
-        if (flag == 1){
+        if (flag == 1) {
             //修改该条状态为已结束
             status = "finish";
-        }else if (flag == 2){
+        } else if (flag == 2) {
 
             status = "submitted";
         }
@@ -304,11 +290,11 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Override
     public void batchApproval(String qualityTraceabilityModels, Integer flag, String currentTenderGuid) {
         String[] split = qualityTraceabilityModels.split(",");//以逗号分割
-        for (String primaryKey:split){
-            if (flag == 0){ // 提交
+        for (String primaryKey : split) {
+            if (flag == 0) { // 提交
 
                 this.submit(primaryKey);
-            }else if (flag == 1 || flag == 2){
+            } else if (flag == 1 || flag == 2) {
 
                 this.approval(primaryKey, flag, currentTenderGuid);
             }
@@ -323,13 +309,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         //且管理员可随时能改；
         //施工方提交后，施工方、监理都可改
         //结束审批后，施工方、监理都不可改
-        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
+        if (!userModel.getTenderManage().equals("*")) { // 不是管理员
 
-            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
+            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")) {
 
                 throw new NotMatchException("该数据未被提交，无法修改");
             }
-            if(qualityTraceabilityModel1.getStatus().equals("finish")){
+            if (qualityTraceabilityModel1.getStatus().equals("finish")) {
 
                 throw new NotMatchException("该数据已结束审批，无法修改");
             }
@@ -338,25 +324,29 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 删除一条
     @Override
-    public void removeStack(String guid, UserModel userModel) throws Exception{
+    public void removeStack(String guid, UserModel userModel) throws Exception {
         QualityTraceabilityModel qualityTraceabilityModel1 = this.get(guid);
-        if (!userModel.getTenderManage().equals("*")){ // 不是管理员
+        if (!userModel.getTenderManage().equals("*")) { // 不是管理员
 
-            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")){
+            if (!userModel.getTenderGuid().equals(qualityTraceabilityModel1.getTenderGuid()) && qualityTraceabilityModel1.getStatus().equals("unSubmit")) {
 
                 throw new NotMatchException("该数据未被提交，无法删除");
             }
-            if(qualityTraceabilityModel1.getStatus().equals("finish")){
+            if (qualityTraceabilityModel1.getStatus().equals("finish")) {
 
                 throw new NotMatchException("该数据已结束审批，无法删除");
             }
         }
         this.remove(guid);
+        if (qualityTraceabilityModel1.getQrcodeGuid() != null && !"".equals(qualityTraceabilityModel1.getQrcodeGuid())) {
+            attachmentService.deleteFile(qualityTraceabilityModel1.getQrcodeGuid());
+
+        }
         List<SqlQueryParam> list = new ArrayList<>();
         list.add(new SqlQueryParam("qualityTraceabilityGuid", guid, "eq"));
         List<AttachmentModel> list1 = attachmentService.list(list);
         if (list != null) {
-            for (AttachmentModel li :list1) {
+            for (AttachmentModel li : list1) {
                 attachmentService.deleteFile(li.getGuid());
             }
         }
@@ -364,13 +354,13 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 循环删除
     @Override
-    public void batchRemoveStack(String guids, UserModel userModel) throws Exception{
-        if (guids == null){
+    public void batchRemoveStack(String guids, UserModel userModel) throws Exception {
+        if (guids == null) {
 
             throw new NotFoundException("未删除");
         }
         String[] split = guids.split(",");//以逗号分割
-        for (String primaryKey:split){
+        for (String primaryKey : split) {
 
             this.removeStack(primaryKey, userModel);
         }
@@ -378,18 +368,18 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // 标段和类型数量
     @Override
-    public List<ReturnModel> tenderAndNumber(Integer typeId){
+    public List<ReturnModel> tenderAndNumber(Integer typeId) {
 
         return qualityTraceabilityMapper.tenderAndNumber(typeId);
     }
 
     // 标段和文件数量的另一种格式
     @Override
-    public List<ReturnQtbModel> tenderAndNumbers(String tenderName){
+    public List<ReturnQtbModel> tenderAndNumbers(String tenderName) {
         List<ReturnQtbModel> list = new LinkedList<>();
         List<TenderModel> list1 = tenderMapper.listLikeTender(tenderName);
 
-        for (TenderModel li: list1) {
+        for (TenderModel li : list1) {
 
             ReturnQtbModel returnQtbModel = new ReturnQtbModel();
             returnQtbModel.setName(li.getName());
@@ -407,12 +397,12 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
 
     // Z S标段和文件数量的另一种格式
     @Override
-    public List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName){
+    public List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName) {
 
         List<ReturnQtbModel> list = new LinkedList<>();
         List<TenderModel> list1 = tenderMapper.listLikeTender(currentTenderName);
 
-        for (TenderModel li: list1) {
+        for (TenderModel li : list1) {
 
             ReturnQtbModel returnQtbModel = new ReturnQtbModel();
             returnQtbModel.setName(li.getName());
