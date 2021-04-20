@@ -187,7 +187,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
             attachmentService.deleteFile(qualityTraceabilityModel.getQrcodeGuid());
         }
 
-        String guids =  attachmentService.selectAllGuid(qualityTraceabilityGuid);
+        String guids = attachmentService.selectAllGuid(qualityTraceabilityGuid);
         Map<String, String> map = this.qrcode(guids);
         QualityTraceabilityModel qualityTraceabilityModel1 = new QualityTraceabilityModel();
         qualityTraceabilityModel1.setGuid(qualityTraceabilityGuid);
