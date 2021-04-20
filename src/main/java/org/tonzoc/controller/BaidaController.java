@@ -63,4 +63,9 @@ public class BaidaController extends BaseController {
         baidaService.removeMany(guids);
     }
 
+    @GetMapping(value = "getStat")
+    public List<BaidaModel> getStat() {
+        return this.baidaService.getStat();
+    }
+
 }

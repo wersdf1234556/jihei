@@ -20,9 +20,9 @@ public class BaidaModel extends BaseModel {
     @Column(value = "projectTypeGuid")
     private String projectTypeGuid;
     @Column(value = "planStartTime")
-    private Timestamp planStartTime;
+    private String planStartTime;
     @Column(value = "planCompleteTime")
-    private Timestamp planCompleteTime;
+    private String planCompleteTime;
     @Column(value = "totalInvestment")
     private BigDecimal totalInvestment;
     @Column(value = "currentYearPlan")
@@ -103,19 +103,19 @@ public class BaidaModel extends BaseModel {
         this.projectTypeGuid = projectTypeGuid;
     }
 
-    public Timestamp getPlanStartTime() {
+    public String getPlanStartTime() {
         return planStartTime;
     }
 
-    public void setPlanStartTime(Timestamp planStartTime) {
+    public void setPlanStartTime(String planStartTime) {
         this.planStartTime = planStartTime;
     }
 
-    public Timestamp getPlanCompleteTime() {
+    public String getPlanCompleteTime() {
         return planCompleteTime;
     }
 
-    public void setPlanCompleteTime(Timestamp planCompleteTime) {
+    public void setPlanCompleteTime(String planCompleteTime) {
         this.planCompleteTime = planCompleteTime;
     }
 
