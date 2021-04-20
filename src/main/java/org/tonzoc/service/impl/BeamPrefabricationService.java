@@ -31,7 +31,12 @@ public class BeamPrefabricationService extends BaseService<BeamPrefabricationMod
 
         ReturnModel returnModel2 = new ReturnModel();
         returnModel2.setName("比例");
-        returnModel2.setProportion(new BigDecimal(returnModel1.getNumber()).divide(new BigDecimal(returnModel1.getNumber()), 4, BigDecimal.ROUND_HALF_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        if (returnModel.getNumber() == 0 || returnModel1.getNumber() == 0) {
+            returnModel2.setProportion("0");
+        } else {
+            returnModel2.setProportion(new BigDecimal(returnModel1.getNumber()).divide(new BigDecimal(returnModel.getNumber()), 4, BigDecimal.ROUND_HALF_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+
+        }
 
         list.add(returnModel);
         list.add(returnModel1);
