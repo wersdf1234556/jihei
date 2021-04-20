@@ -143,9 +143,37 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
     }
 
     // 按照编号查询历史记录
-    public List<BeamModel> listHistory(String name) {
+    public List<BeamModel> listHistory(String name, String num) {
 
-        BeamPedestalModel beamPedestalModel = beamPedestalMapper.selectByName(name);
-        return beamMapper.listByPedestal(beamPedestalModel.getGuid());
+        BeamPedestalModel beamPedestalModel = beamPedestalMapper.selectByNum(name, num);
+        return beamMapper.listHistory(beamPedestalModel.getGuid());
+    }
+
+    // 查询一条或多条
+    public List selectOneOrAll(String tenderGuid, String num) throws Exception {
+
+        Integer countTender = beamMapper.countByTender(tenderGuid);
+        if (countTender == 0) {
+            throw new Exception("请先添加台座");
+
+        }
+
+        List<BeamPedestalModel> list = beamMapper.numberByTender(tenderGuid, num);
+        for (BeamPedestalModel li: list) {
+            if ("1".equals(li.getPedestalNum())) {
+                return this.listHistory("pedestalNum", num);
+
+            }
+            if ("1".equals(li.getModelNum())) {
+                return beamMapper.selectByNum(num);
+
+            }
+            if ("1".equals(li.getTextNum())) {
+                return this.listHistory("textNum", num);
+
+            }
+        }
+
+        throw new Exception("点击位置不对，请重试");
     }
 }

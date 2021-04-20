@@ -69,8 +69,15 @@ public class BeamController extends BaseController{
 
     // 按照编号查询历史记录
     @GetMapping(value = "listHistory")
-    public List<BeamModel> listHistory(String name) {
+    public List<BeamModel> listHistory(String name, String num) {
 
-        return beamService.listHistory(name);
+        return beamService.listHistory(name, num);
+    }
+
+    // 查询一条或多条
+    @GetMapping(value = "selectOneOrAll")
+    public List selectOneOrAll(String tenderGuid, String num) throws Exception {
+
+        return beamService.selectOneOrAll(tenderGuid, num);
     }
 }

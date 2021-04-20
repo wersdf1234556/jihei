@@ -152,17 +152,17 @@ public class AttachmentService extends BaseService<AttachmentModel> implements I
     public String selectAllGuid(String qualityTraceabilityGuid) {
 
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
-        sqlQueryParams.add(new SqlQueryParam("eq", qualityTraceabilityGuid, qualityTraceabilityGuid));
+        sqlQueryParams.add(new SqlQueryParam("qualityTraceabilityGuid", qualityTraceabilityGuid, "eq"));
         List<AttachmentModel> list = this.list(sqlQueryParams);
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         for (AttachmentModel li: list) {
-            if (stringBuffer.length() > 0) {
-                stringBuffer.append(",");
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(",");
 
             }
-            stringBuffer.append(li.getGuid());
+            stringBuilder.append(li.getGuid());
         }
 
-        return stringBuffer.toString();
+        return stringBuilder.toString();
     }
 }

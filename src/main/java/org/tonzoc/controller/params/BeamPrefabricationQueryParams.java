@@ -16,6 +16,8 @@ public class BeamPrefabricationQueryParams {
     private Integer sortId;
     @Operator(value = "like", field = "attTime")
     private String attTime;
+    @Operator(value = "eq", field = "prefabricationNum")
+    private String prefabricationNum;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
     @Operator(value = "eq", field = "status")
@@ -83,5 +85,13 @@ public class BeamPrefabricationQueryParams {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPrefabricationNum() {
+        return prefabricationNum;
+    }
+
+    public void setPrefabricationNum(String prefabricationNum) {
+        this.prefabricationNum = prefabricationNum;
     }
 }

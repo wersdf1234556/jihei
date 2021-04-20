@@ -8,7 +8,9 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamPedestalModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.ReturnListModel;
+import org.tonzoc.model.support.ReturnQtbModel;
 import org.tonzoc.service.IBeamPedestalService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
@@ -58,9 +60,9 @@ public class BeamPedestalController extends BaseController{
         beamPedestalService.removeMany(guids);
     }
 
-    // 按类别统计台座数量
+    // 按类别统计台座数量和梁的数量
     @GetMapping(value = "listByStatus")
-    public List<ReturnListModel> listByStatus(){
+    public List<ReturnQtbModel> listByStatus(){
 
         return beamPedestalService.listByStatus();
     }
