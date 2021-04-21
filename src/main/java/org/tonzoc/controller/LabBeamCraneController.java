@@ -40,6 +40,7 @@ public class LabBeamCraneController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabBeamCraneModel labBeamCraneModel) {
+        labBeamCraneModel.setTenderGuid(labTenderService.getBySectionId(labBeamCraneModel.getSectionId()));
         labBeamCraneService.save(labBeamCraneModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labBeamCraneService.save(labBeamCraneModel);

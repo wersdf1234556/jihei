@@ -40,6 +40,7 @@ public class LabBeamPulpingController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabBeamPulpingModel labBeamPulpingModel) {
+        labBeamPulpingModel.setTenderGuid(labTenderService.getBySectionId(labBeamPulpingModel.getSectionId()));
         labBeamPulpingService.save(labBeamPulpingModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labBeamPulpingService.save(labBeamPulpingModel);

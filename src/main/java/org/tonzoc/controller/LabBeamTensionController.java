@@ -41,6 +41,7 @@ public class LabBeamTensionController extends BaseController {
 
     @PostMapping
     public ExceptionResponse add(@RequestBody LabBeamTensionModel labBeamTensionModel) {
+        labBeamTensionModel.setTenderGuid(labTenderService.getBySectionId(labBeamTensionModel.getSectionId()));
         labBeamTensionService.save(labBeamTensionModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labBeamTensionService.save(labBeamTensionModel);
