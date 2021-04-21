@@ -3,12 +3,16 @@ package org.tonzoc.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.models.auth.In;
 import org.tonzoc.annotation.Column;
+import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
+
+import java.math.BigDecimal;
 
 @Table(value = "labBeamCranes")
 public class LabBeamCraneModel extends BaseModel {
     @PrimaryKey
+    @NotInsertColumn
     @Column(value = "guid")
     private String guid;
     @Column(value = "id")
@@ -16,69 +20,69 @@ public class LabBeamCraneModel extends BaseModel {
     @Column(value = "timestamp")
     private Integer timestamp;
     @Column(value = "windSpeed")
-    private Integer windSpeed;
+    private BigDecimal windSpeed;
     @Column(value = "windLevel")
-    private Integer windLevel;
+    private BigDecimal windLevel;
     @Column(value = "windState")
     private Integer windState;
     @Column(value = "mainhookCycCnt")
-    private Integer mainhookCycCnt;
+    private BigDecimal mainhookCycCnt;
     @Column(value = "auxhookCycCnt")
-    private Integer auxhookCycCnt;
+    private BigDecimal auxhookCycCnt;
     @Column(value = "mainOverloadCnt")
-    private Integer mainOverloadCnt;
+    private BigDecimal mainOverloadCnt;
     @Column(value = "auxOverloadCnt")
-    private Integer auxOverloadCnt;
+    private BigDecimal auxOverloadCnt;
     @Column(value = "lastWorkedTime")
     private Integer lastWorkedTime;
     @Column(value = "nowWorkedTime")
     private Integer nowWorkedTime;
     @Column(value = "mainWeight")
-    private Integer mainWeight;
+    private BigDecimal mainWeight;
     @Column(value = "mainWeightState")
     private Integer mainWeightState;
     @Column(value = "auxWeight")
-    private Integer auxWeight;
+    private BigDecimal auxWeight;
     @Column(value = "auxWeightState")
     private Integer auxWeightState;
     @Column(value = "mainDistance")
-    private Integer mainDistance;
+    private BigDecimal mainDistance;
     @Column(value = "mainDistanceState")
-    private Integer mainDistanceState;
+    private BigDecimal mainDistanceState;
     @Column(value = "auxDistance")
-    private Integer auxDistance;
+    private BigDecimal auxDistance;
     @Column(value = "auxDistanceState")
     private Integer auxDistanceState;
     @Column(value = "mainHeight")
-    private Integer mainHeight;
+    private BigDecimal mainHeight;
     @Column(value = "mainHeightState")
     private Integer mainHeightState;
     @Column(value = "mainSpeed")
-    private Integer mainSpeed;
+    private BigDecimal mainSpeed;
     @Column(value = "mainSpeedState")
     private Integer mainSpeedState;
     @Column(value = "auxHeight")
-    private Integer auxHeight;
+    private BigDecimal auxHeight;
     @Column(value = "auxHeightState")
     private Integer auxHeightState;
     @Column(value = "auxSpeed")
-    private Integer auxSpeed;
+    private BigDecimal auxSpeed;
     @Column(value = "auxSpeedState")
     private Integer auxSpeedState;
     @Column(value = "txValue")
-    private Integer txValue;
+    private BigDecimal txValue;
     @Column(value = "tyValue")
-    private Integer tyValue;
+    private BigDecimal tyValue;
     @Column(value = "tzValue")
-    private Integer tzValue;
-    @Column(value = "txYstate")
-    private Integer txYstate;
+    private BigDecimal tzValue;
+    @Column(value = "txyState")
+    private Integer txyState;
     @Column(value = "tzState")
     private Integer tzState;
     @Column(value = "mainSign0")
-    private Integer mainSign0;
+    private BigDecimal mainSign0;
     @Column(value = "mainSign1")
-    private Integer mainSign1;
+    private BigDecimal mainSign1;
     @Column(value = "manId")
     private Integer manId;
     @Column(value = "uploadTime")
@@ -86,15 +90,15 @@ public class LabBeamCraneModel extends BaseModel {
     @Column(value = "onlineState")
     private Integer onlineState;
     @Column(value = "mainCartSpeed")
-    private Integer mainCartSpeed;
+    private BigDecimal mainCartSpeed;
     @Column(value = "auxCartSpeed")
-    private Integer auxCartSpeed;
+    private BigDecimal auxCartSpeed;
     @Column(value = "girderAngle")
-    private Integer girderAngle;
+    private BigDecimal girderAngle;
     @Column(value = "anteriorRamusAngle")
-    private Integer anteriorRamusAngle;
+    private BigDecimal anteriorRamusAngle;
     @Column(value = "middleBranchAngle")
-    private Integer middleBranchAngle;
+    private BigDecimal middleBranchAngle;
 
     public LabBeamCraneModel() {
     }
@@ -111,11 +115,11 @@ public class LabBeamCraneModel extends BaseModel {
         return timestamp;
     }
 
-    public Integer getWindSpeed() {
+    public BigDecimal getWindSpeed() {
         return windSpeed;
     }
 
-    public Integer getWindLevel() {
+    public BigDecimal getWindLevel() {
         return windLevel;
     }
 
@@ -123,19 +127,19 @@ public class LabBeamCraneModel extends BaseModel {
         return windState;
     }
 
-    public Integer getMainhookCycCnt() {
+    public BigDecimal getMainhookCycCnt() {
         return mainhookCycCnt;
     }
 
-    public Integer getAuxhookCycCnt() {
+    public BigDecimal getAuxhookCycCnt() {
         return auxhookCycCnt;
     }
 
-    public Integer getMainOverloadCnt() {
+    public BigDecimal getMainOverloadCnt() {
         return mainOverloadCnt;
     }
 
-    public Integer getAuxOverloadCnt() {
+    public BigDecimal getAuxOverloadCnt() {
         return auxOverloadCnt;
     }
 
@@ -147,7 +151,7 @@ public class LabBeamCraneModel extends BaseModel {
         return nowWorkedTime;
     }
 
-    public Integer getMainWeight() {
+    public BigDecimal getMainWeight() {
         return mainWeight;
     }
 
@@ -155,7 +159,7 @@ public class LabBeamCraneModel extends BaseModel {
         return mainWeightState;
     }
 
-    public Integer getAuxWeight() {
+    public BigDecimal getAuxWeight() {
         return auxWeight;
     }
 
@@ -163,15 +167,15 @@ public class LabBeamCraneModel extends BaseModel {
         return auxWeightState;
     }
 
-    public Integer getMainDistance() {
+    public BigDecimal getMainDistance() {
         return mainDistance;
     }
 
-    public Integer getMainDistanceState() {
+    public BigDecimal getMainDistanceState() {
         return mainDistanceState;
     }
 
-    public Integer getAuxDistance() {
+    public BigDecimal getAuxDistance() {
         return auxDistance;
     }
 
@@ -179,7 +183,7 @@ public class LabBeamCraneModel extends BaseModel {
         return auxDistanceState;
     }
 
-    public Integer getMainHeight() {
+    public BigDecimal getMainHeight() {
         return mainHeight;
     }
 
@@ -187,7 +191,7 @@ public class LabBeamCraneModel extends BaseModel {
         return mainHeightState;
     }
 
-    public Integer getMainSpeed() {
+    public BigDecimal getMainSpeed() {
         return mainSpeed;
     }
 
@@ -195,7 +199,7 @@ public class LabBeamCraneModel extends BaseModel {
         return mainSpeedState;
     }
 
-    public Integer getAuxHeight() {
+    public BigDecimal getAuxHeight() {
         return auxHeight;
     }
 
@@ -203,7 +207,7 @@ public class LabBeamCraneModel extends BaseModel {
         return auxHeightState;
     }
 
-    public Integer getAuxSpeed() {
+    public BigDecimal getAuxSpeed() {
         return auxSpeed;
     }
 
@@ -211,31 +215,31 @@ public class LabBeamCraneModel extends BaseModel {
         return auxSpeedState;
     }
 
-    public Integer getTxValue() {
+    public BigDecimal getTxValue() {
         return txValue;
     }
 
-    public Integer getTyValue() {
+    public BigDecimal getTyValue() {
         return tyValue;
     }
 
-    public Integer getTzValue() {
+    public BigDecimal getTzValue() {
         return tzValue;
     }
 
     public Integer getTxYstate() {
-        return txYstate;
+        return txyState;
     }
 
     public Integer getTzState() {
         return tzState;
     }
 
-    public Integer getMainSign0() {
+    public BigDecimal getMainSign0() {
         return mainSign0;
     }
 
-    public Integer getMainSign1() {
+    public BigDecimal getMainSign1() {
         return mainSign1;
     }
 
@@ -251,23 +255,23 @@ public class LabBeamCraneModel extends BaseModel {
         return onlineState;
     }
 
-    public Integer getMainCartSpeed() {
+    public BigDecimal getMainCartSpeed() {
         return mainCartSpeed;
     }
 
-    public Integer getAuxCartSpeed() {
+    public BigDecimal getAuxCartSpeed() {
         return auxCartSpeed;
     }
 
-    public Integer getGirderAngle() {
+    public BigDecimal getGirderAngle() {
         return girderAngle;
     }
 
-    public Integer getAnteriorRamusAngle() {
+    public BigDecimal getAnteriorRamusAngle() {
         return anteriorRamusAngle;
     }
 
-    public Integer getMiddleBranchAngle() {
+    public BigDecimal getMiddleBranchAngle() {
         return middleBranchAngle;
     }
 
@@ -285,12 +289,12 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "wind_speed")
-    public void setWindSpeed(Integer windSpeed) {
+    public void setWindSpeed(BigDecimal windSpeed) {
         this.windSpeed = windSpeed;
     }
 
     @JsonProperty(value = "wind_level")
-    public void setWindLevel(Integer windLevel) {
+    public void setWindLevel(BigDecimal windLevel) {
         this.windLevel = windLevel;
     }
 
@@ -300,22 +304,22 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "mainhook_cyc_cnt")
-    public void setMainhookCycCnt(Integer mainhookCycCnt) {
+    public void setMainhookCycCnt(BigDecimal mainhookCycCnt) {
         this.mainhookCycCnt = mainhookCycCnt;
     }
 
     @JsonProperty(value = "auxhook_cyc_cnt")
-    public void setAuxhookCycCnt(Integer auxhookCycCnt) {
+    public void setAuxhookCycCnt(BigDecimal auxhookCycCnt) {
         this.auxhookCycCnt = auxhookCycCnt;
     }
 
     @JsonProperty(value = "main_overload_cnt")
-    public void setMainOverloadCnt(Integer mainOverloadCnt) {
+    public void setMainOverloadCnt(BigDecimal mainOverloadCnt) {
         this.mainOverloadCnt = mainOverloadCnt;
     }
 
     @JsonProperty(value = "aux_overload_cnt")
-    public void setAuxOverloadCnt(Integer auxOverloadCnt) {
+    public void setAuxOverloadCnt(BigDecimal auxOverloadCnt) {
         this.auxOverloadCnt = auxOverloadCnt;
     }
 
@@ -330,7 +334,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_weight")
-    public void setMainWeight(Integer mainWeight) {
+    public void setMainWeight(BigDecimal mainWeight) {
         this.mainWeight = mainWeight;
     }
 
@@ -340,7 +344,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "aux_weight")
-    public void setAuxWeight(Integer auxWeight) {
+    public void setAuxWeight(BigDecimal auxWeight) {
         this.auxWeight = auxWeight;
     }
 
@@ -350,17 +354,17 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_distance")
-    public void setMainDistance(Integer mainDistance) {
+    public void setMainDistance(BigDecimal mainDistance) {
         this.mainDistance = mainDistance;
     }
 
     @JsonProperty(value = "main_distance_state")
-    public void setMainDistanceState(Integer mainDistanceState) {
+    public void setMainDistanceState(BigDecimal mainDistanceState) {
         this.mainDistanceState = mainDistanceState;
     }
 
     @JsonProperty(value = "aux_distance")
-    public void setAuxDistance(Integer auxDistance) {
+    public void setAuxDistance(BigDecimal auxDistance) {
         this.auxDistance = auxDistance;
     }
 
@@ -370,7 +374,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_height")
-    public void setMainHeight(Integer mainHeight) {
+    public void setMainHeight(BigDecimal mainHeight) {
         this.mainHeight = mainHeight;
     }
 
@@ -380,7 +384,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_speed")
-    public void setMainSpeed(Integer mainSpeed) {
+    public void setMainSpeed(BigDecimal mainSpeed) {
         this.mainSpeed = mainSpeed;
     }
 
@@ -390,7 +394,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "aux_height")
-    public void setAuxHeight(Integer auxHeight) {
+    public void setAuxHeight(BigDecimal auxHeight) {
         this.auxHeight = auxHeight;
     }
 
@@ -400,7 +404,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "aux_speed")
-    public void setAuxSpeed(Integer auxSpeed) {
+    public void setAuxSpeed(BigDecimal auxSpeed) {
         this.auxSpeed = auxSpeed;
     }
 
@@ -410,23 +414,23 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "tx_value")
-    public void setTxValue(Integer txValue) {
+    public void setTxValue(BigDecimal txValue) {
         this.txValue = txValue;
     }
 
     @JsonProperty(value = "ty_value")
-    public void setTyValue(Integer tyValue) {
+    public void setTyValue(BigDecimal tyValue) {
         this.tyValue = tyValue;
     }
 
     @JsonProperty(value = "tz_value")
-    public void setTzValue(Integer tzValue) {
+    public void setTzValue(BigDecimal tzValue) {
         this.tzValue = tzValue;
     }
 
-    @JsonProperty(value = "tx_ystate")
-    public void setTxYstate(Integer txYstate) {
-        this.txYstate = txYstate;
+    @JsonProperty(value = "txy_state")
+    public void setTxYstate(Integer txyState) {
+        this.txyState = txyState;
     }
 
     @JsonProperty(value = "tz_state")
@@ -435,12 +439,12 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_sign0")
-    public void setMainSign0(Integer mainSign0) {
+    public void setMainSign0(BigDecimal mainSign0) {
         this.mainSign0 = mainSign0;
     }
 
     @JsonProperty(value = "main_sign1")
-    public void setMainSign1(Integer mainSign1) {
+    public void setMainSign1(BigDecimal mainSign1) {
         this.mainSign1 = mainSign1;
     }
 
@@ -460,27 +464,27 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "main_cart_speed")
-    public void setMainCartSpeed(Integer mainCartSpeed) {
+    public void setMainCartSpeed(BigDecimal mainCartSpeed) {
         this.mainCartSpeed = mainCartSpeed;
     }
 
     @JsonProperty(value = "aux_cart_speed")
-    public void setAuxCartSpeed(Integer auxCartSpeed) {
+    public void setAuxCartSpeed(BigDecimal auxCartSpeed) {
         this.auxCartSpeed = auxCartSpeed;
     }
 
     @JsonProperty(value = "girder_angle")
-    public void setGirderAngle(Integer girderAngle) {
+    public void setGirderAngle(BigDecimal girderAngle) {
         this.girderAngle = girderAngle;
     }
 
     @JsonProperty(value = "anterior_ramus_angle")
-    public void setAnteriorRamusAngle(Integer anteriorRamusAngle) {
+    public void setAnteriorRamusAngle(BigDecimal anteriorRamusAngle) {
         this.anteriorRamusAngle = anteriorRamusAngle;
     }
 
     @JsonProperty(value = "middle_branch_angle")
-    public void setMiddleBranchAngle(Integer middleBranchAngle) {
+    public void setMiddleBranchAngle(BigDecimal middleBranchAngle) {
         this.middleBranchAngle = middleBranchAngle;
     }
 }
