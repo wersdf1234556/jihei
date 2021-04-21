@@ -78,6 +78,37 @@ public class LabBeamPulpingModel extends BaseModel {
     private String measureType;
     @Column(value = "modelNum")
     private String modelNum;
+    @Column(value = "sectionId")
+    private String sectionId;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
 
     public String getModelNum() {
         return modelNum;

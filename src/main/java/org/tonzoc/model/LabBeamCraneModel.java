@@ -2,10 +2,7 @@ package org.tonzoc.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.models.auth.In;
-import org.tonzoc.annotation.Column;
-import org.tonzoc.annotation.NotInsertColumn;
-import org.tonzoc.annotation.PrimaryKey;
-import org.tonzoc.annotation.Table;
+import org.tonzoc.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -99,6 +96,36 @@ public class LabBeamCraneModel extends BaseModel {
     private BigDecimal anteriorRamusAngle;
     @Column(value = "middleBranchAngle")
     private BigDecimal middleBranchAngle;
+    private String sectionId;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
 
     public LabBeamCraneModel() {
     }

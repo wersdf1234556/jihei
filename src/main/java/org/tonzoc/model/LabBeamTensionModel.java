@@ -2,6 +2,7 @@ package org.tonzoc.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.Column;
+import org.tonzoc.annotation.JoinColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
@@ -100,6 +101,36 @@ public class LabBeamTensionModel extends BaseModel {
     private String tensionMode;
     @Column(value = "modelNum")
     private String modelNum;
+    private String sectionId;
+    @Column(value = "tenderGuid")
+    private String tenderGuid;
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
+    private String tenderName;
+
+    public String getSectionId() {
+        return sectionId;
+    }
+
+    @JsonProperty(value = "section_id")
+    public void setSectionId(String sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
+    public String getTenderName() {
+        return tenderName;
+    }
+
+    public void setTenderName(String tenderName) {
+        this.tenderName = tenderName;
+    }
 
     public String getModelNum() {
         return modelNum;
