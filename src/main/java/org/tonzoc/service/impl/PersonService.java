@@ -182,9 +182,9 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
     // 人员打卡次数
     @Override
-    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile){
+    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid){
 
-        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile);
+        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile, personTypeGuid);
     }
 
 }
