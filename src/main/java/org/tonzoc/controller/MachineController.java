@@ -49,8 +49,7 @@ public class MachineController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid MachineModel mechanicsModel) {
-        String machineTypeGuid = tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineTypeGuid();
-        String machineCategoryGuid = machineTypeService.get(machineTypeGuid).getMachineCategoryGuid();
+        String machineCategoryGuid = tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineCategoryGuid();
         mechanicsModel.setMachineCategoryGuid(machineCategoryGuid);
 
         this.machineService.save(mechanicsModel);
@@ -59,8 +58,11 @@ public class MachineController extends BaseController {
     @PutMapping(value = "{guid}")
     public void update(@RequestBody @Valid MachineModel mechanicsModel) {
 
-        tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid());
-        mechanicsModel.setMachineCategoryGuid(tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineCategoryGuid());
+        if (mechanicsModel.getTenderMachineTypeGuid() != "" && !"".equals(mechanicsModel.getTenderMachineTypeGuid())) {
+            mechanicsModel.setMachineCategoryGuid(tenderMachineTypeService.get(mechanicsModel.getTenderMachineTypeGuid()).getMachineCategoryGuid());
+
+        }
+
         this.machineService.update(mechanicsModel);
     }
 
