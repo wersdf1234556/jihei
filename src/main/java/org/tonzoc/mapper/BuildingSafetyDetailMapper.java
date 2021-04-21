@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.BuildingSafetyDetailModel;
+import org.tonzoc.model.ReturnBuildingModel;
+import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.CostByTpeModel;
 
 import javax.validation.Valid;
@@ -29,4 +31,11 @@ public interface BuildingSafetyDetailMapper extends BaseMapper<BuildingSafetyDet
     List<BuildingSafetyDetailModel> statByYearMonthSituation(@Param(value = "likeDate") String likeDate,
                                                              @Param(value = "ltDate") String ltDate,
                                                              @Param(value = "buildingSafetyGuid") String buildingSafetyGuid);
+
+
+    // 工作量
+    @Select("select tenders.name, tenders.balance totalBalance, ISNULL(Round(sum(buildingSafetyDetails.balance)/100000000, 2), 0) countBalance from tenders LEFT JOIN buildingSafetyDetails on tenders.guid = buildingSafetyDetails.tenderGuid" +
+            " where tenders.name like '%A%' or tenders.name like '%B%'" +
+            " GROUP BY tenders.name, tenders.sortId, tenders.balance  ORDER BY tenders.sortId")
+    List<ReturnBuildingModel> workload();
 }

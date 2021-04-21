@@ -10,6 +10,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BuildingSafetyDetailModel;
 import org.tonzoc.model.BuildingSafetyModel;
+import org.tonzoc.model.ReturnBuildingModel;
 import org.tonzoc.service.IBuildingSafetyDetailService;
 import org.tonzoc.service.IBuildingSafetyService;
 import org.tonzoc.support.param.SqlQueryParam;
@@ -58,5 +59,12 @@ public class BuildingSafetyDetailController extends BaseController{
     public void removeMany(String guids) throws Exception {
 
         buildingSafetyDetailService.removeMany(guids);
+    }
+
+    // 工作量
+    @GetMapping(value = "workload")
+    public List<ReturnBuildingModel> workload() {
+
+        return buildingSafetyDetailService.workload();
     }
 }

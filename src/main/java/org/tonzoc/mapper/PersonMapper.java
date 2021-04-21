@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Component;
+import org.tonzoc.annotation.Operator;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.provider.MachineProvider;
 import org.tonzoc.provider.PersonProvider;
@@ -28,6 +29,7 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
     List<PersonModel> attendanceCount(@Param(value = "tenderGuid") String tenderGuid,
                                       @Param(value = "name") String name,
                                       @Param(value = "idCard") String idCard,
-                                      @Param(value = "mobile") String mobile);
+                                      @Param(value = "mobile") String mobile,
+                                      @Param(value = "personTypeGuid") String personTypeGuid);
 
 }
