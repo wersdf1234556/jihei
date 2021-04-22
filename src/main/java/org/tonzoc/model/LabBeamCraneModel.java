@@ -101,6 +101,17 @@ public class LabBeamCraneModel extends BaseModel {
     private String tenderGuid;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
+    @Column(value = "equipmentName")
+    private String equipmentName;
+
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    @JsonProperty(value = "equipment_name")
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
+    }
 
     public String getSectionId() {
         return sectionId;
@@ -254,7 +265,7 @@ public class LabBeamCraneModel extends BaseModel {
         return tzValue;
     }
 
-    public Integer getTxYstate() {
+    public Integer getTxyState() {
         return txyState;
     }
 
@@ -456,7 +467,7 @@ public class LabBeamCraneModel extends BaseModel {
     }
 
     @JsonProperty(value = "txy_state")
-    public void setTxYstate(Integer txyState) {
+    public void setTxyState(Integer txyState) {
         this.txyState = txyState;
     }
 
