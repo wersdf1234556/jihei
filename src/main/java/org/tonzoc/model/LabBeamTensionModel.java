@@ -107,6 +107,18 @@ public class LabBeamTensionModel extends BaseModel {
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
 
+    @Column(value = "equipmentName")
+    private String equipmentName;
+
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    @JsonProperty(value = "equipment_name")
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
+    }
+
     public String getSectionId() {
         return sectionId;
     }
