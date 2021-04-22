@@ -184,4 +184,10 @@ public class QualityTraceabilityController extends BaseController {
 
         return qualityTraceabilityService.currentTenderAndNumbers(currentTenderName);
     }
+
+    @PostMapping("replaceCode")
+    public void replaceCode() {
+
+        qualityTraceabilityService.replaceCode();
+    }
 }

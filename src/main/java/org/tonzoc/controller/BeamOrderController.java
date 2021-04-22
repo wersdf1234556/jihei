@@ -48,7 +48,7 @@ public class BeamOrderController extends BaseController{
     @DeleteMapping(value = "{guid}")
     public void remove(@PathVariable(value = "guid") String guid) {
 
-        beamOrderService.remove(guid);
+        beamOrderService.delete(guid);
     }
 
     @PostMapping(value = "removeMany")

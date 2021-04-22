@@ -16,6 +16,12 @@ public class BeamQueryParams {
     private String attTime;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "gte", field = "attTime")
+    private String startTime;
+    @Operator(value = "lte", field = "attTime")
+    private String endTime;
+    @Operator(value = "eq", field = "beamPedestalsStatusbeamPedestalStatusTable.status")
+    private String beamPrefabricationStatus;
 
     public String getGuid() {
         return guid;
@@ -63,5 +69,29 @@ public class BeamQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getBeamPrefabricationStatus() {
+        return beamPrefabricationStatus;
+    }
+
+    public void setBeamPrefabricationStatus(String beamPrefabricationStatus) {
+        this.beamPrefabricationStatus = beamPrefabricationStatus;
     }
 }

@@ -7,7 +7,6 @@ import org.tonzoc.annotation.*;
 public class BeamModel extends BaseModel{
 
     @PrimaryKey
-    @NotInsertColumn
     @Column(value = "guid")
     private String guid;
     @Column(value = "beamPedestalGuid")
@@ -36,6 +35,12 @@ public class BeamModel extends BaseModel{
     private String beamPrefabricationName;
     @JoinColumn(value = "status", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
     private String beamPrefabricationStatus;
+    @JoinColumn(value = "leftAndRight", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String leftAndRight;
+    @JoinColumn(value = "span", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String span;
+    @JoinColumn(value = "prefabricationNum", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String prefabricationNum;
     @JoinColumn(value = "concreteStrengthOne", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
     private String concreteStrengthOne;
     @JoinColumn(value = "concreteStrengthTwo", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
@@ -182,5 +187,29 @@ public class BeamModel extends BaseModel{
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getLeftAndRight() {
+        return leftAndRight;
+    }
+
+    public void setLeftAndRight(String leftAndRight) {
+        this.leftAndRight = leftAndRight;
+    }
+
+    public String getSpan() {
+        return span;
+    }
+
+    public void setSpan(String span) {
+        this.span = span;
+    }
+
+    public String getPrefabricationNum() {
+        return prefabricationNum;
+    }
+
+    public void setPrefabricationNum(String prefabricationNum) {
+        this.prefabricationNum = prefabricationNum;
     }
 }

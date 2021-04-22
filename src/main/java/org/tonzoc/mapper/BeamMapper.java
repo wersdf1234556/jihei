@@ -17,7 +17,7 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
             " where beamPedestalGuid = #{beamPedestalGuid}")
     List<BeamModel> listHistory(@Param(value = "beamPedestalGuid") String beamPedestalGuid);
 
-    // 台座空闲是0 不空闲是1
+    // 新加台座同时状态是空闲的话1 不空闲是0
     @Select("select count(beams.guid) from beams" +
             " LEFT JOIN beamPedestals on beams.beamPedestalGuid = beamPedestals.guid" +
             " LEFT JOIN beamPrefabrications on beams.beamPrefabricationGuid = beamPrefabrications.guid" +

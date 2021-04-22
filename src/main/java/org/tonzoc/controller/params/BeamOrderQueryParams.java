@@ -1,6 +1,5 @@
 package org.tonzoc.controller.params;
 
-import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.Operator;
 
 public class BeamOrderQueryParams {

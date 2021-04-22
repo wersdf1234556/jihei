@@ -8,8 +8,6 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamModel;
-import org.tonzoc.model.BeamPedestalModel;
-import org.tonzoc.service.IBeamPedestalService;
 import org.tonzoc.service.IBeamService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;

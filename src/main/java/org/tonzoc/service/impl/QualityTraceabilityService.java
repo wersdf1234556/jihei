@@ -72,8 +72,8 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
         String guid = fileHelper.newGUID();
         qualityTraceabilityModel.setGuid(guid);
-         Map<String, String> map = this.qrcode(guid);
-         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
+        Map<String, String> map = this.qrcode(guid);
+        qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
 
         if (!"".equals(qualityTraceabilityModel.getCurrentDate()) && qualityTraceabilityModel.getCurrentDate() != null) {
             qualityTraceabilityModel.setCurrentTime(TimeHelper.stringToDate(qualityTraceabilityModel.getCurrentDate()));
@@ -412,5 +412,22 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }
 
         return list;
+    }
+
+    // 替换二维码内容
+    @Override
+    public void replaceCode() {
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        List<QualityTraceabilityModel> list = this.list(sqlQueryParams);
+        for (QualityTraceabilityModel li : list) {
+
+            attachmentService.deleteFile(li.getQrcodeGuid());
+            Map<String, String> map = this.qrcode(li.getGuid());
+            QualityTraceabilityModel qualityTraceabilityModel = new QualityTraceabilityModel();
+            qualityTraceabilityModel.setGuid(li.getGuid());
+            qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
+
+            this.update(qualityTraceabilityModel);
+        }
     }
 }

@@ -73,4 +73,7 @@ public interface IQualityTraceabilityService extends IBaseService<QualityTraceab
 
     // Z S标段和文件数量的另一种格式
     List<ReturnQtbModel> currentTenderAndNumbers(String currentTenderName);
+
+    // 替换二维码内容
+    void replaceCode();
 }

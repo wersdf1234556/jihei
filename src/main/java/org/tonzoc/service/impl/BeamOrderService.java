@@ -11,8 +11,11 @@ import org.tonzoc.service.IBeamOrderService;
 import org.tonzoc.service.IBeamPedestalService;
 import org.tonzoc.service.IBeamPrefabricationService;
 import org.tonzoc.service.IBeamService;
+import org.tonzoc.support.param.SqlQueryParam;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -42,22 +45,75 @@ public class BeamOrderService extends BaseService<BeamOrderModel> implements IBe
     }
 
     @Override
-    public void add (BeamOrderModel beamOrderModel) {
+    public void add(BeamOrderModel beamOrderModel) {
+        beamOrderModel.setColor(map.get(beamOrderModel.getStatus()));
 
         BeamModel beamModel = beamService.get(beamOrderModel.getBeamGuid());
 
         BeamPedestalModel beamPedestalModel = new BeamPedestalModel();
         beamPedestalModel.setGuid(beamModel.getBeamPedestalGuid());
-        beamPedestalModel.setStatus(beamOrderModel.getStatus());
-        beamPedestalModel.setColor(map.get(beamModel.getStatus()));
+        if ("finish".equals(beamOrderModel.getStatus())) {
+            beamPedestalModel.setStatus("unSubmit");
+            beamPedestalModel.setColor(map.get("unSubmit"));
+
+        } else {
+            beamPedestalModel.setStatus(beamOrderModel.getStatus());
+            beamPedestalModel.setColor(map.get(beamOrderModel.getStatus()));
+
+        }
         beamPedestalService.update(beamPedestalModel);
 
         BeamPrefabricationModel beamPrefabricationModel = new BeamPrefabricationModel();
         beamPrefabricationModel.setGuid(beamModel.getBeamPrefabricationGuid());
-        beamPrefabricationModel.setStatus(beamModel.getStatus());
-        beamPrefabricationModel.setColor(map.get(beamModel.getStatus()));
+        beamPrefabricationModel.setStatus(beamOrderModel.getStatus());
+        beamPrefabricationModel.setColor(map.get(beamOrderModel.getStatus()));
         beamPrefabricationService.update(beamPrefabricationModel);
 
         this.save(beamOrderModel);
+    }
+
+    @Override
+    public void delete(String guid) {
+
+        BeamOrderModel beamOrderModel = this.get(guid);
+        BeamModel beamModel = beamService.get(beamOrderModel.getBeamGuid());
+
+        List<SqlQueryParam> sqlQueryParam = new ArrayList<>();
+        new SqlQueryParam("beamGuid", beamOrderModel.getBeamGuid(), "eq");
+        List<BeamOrderModel> list = list(sqlQueryParam);
+
+        BeamOrderModel beamOrderModel1 = beamOrderMapper.selectByTimeDesc(beamOrderModel.getAttTime());
+        BeamPedestalModel beamPedestalModel = new BeamPedestalModel();
+        beamPedestalModel.setGuid(beamModel.getBeamPedestalGuid());
+
+        BeamPrefabricationModel beamPrefabricationModel = new BeamPrefabricationModel();
+        beamPrefabricationModel.setGuid(beamModel.getBeamPrefabricationGuid());
+        System.out.println("list.size" + list.size());
+        if (list.size() > 1) {
+
+            beamPedestalModel.setStatus(beamOrderModel1.getStatus());
+            beamPedestalModel.setColor(beamOrderModel1.getColor());
+
+            beamPrefabricationModel.setStatus(beamOrderModel1.getStatus());
+            beamPrefabricationModel.setColor(beamOrderModel1.getColor());
+
+        } else {
+
+            beamPedestalModel.setStatus("unSubmit");
+            beamPedestalModel.setColor(map.get("unSubmit"));
+
+            beamPrefabricationModel.setStatus("unSubmit");
+            beamPrefabricationModel.setConcreteStrengthOne("");
+            beamPrefabricationModel.setConcreteStrengthTwo("");
+            beamPrefabricationModel.setConcreteStrengthThree("");
+            beamPrefabricationModel.setRemarks("");
+            beamPrefabricationModel.setColor(map.get("unSubmit"));
+
+            beamService.remove(beamModel.getGuid());
+        }
+
+        beamPedestalService.update(beamPedestalModel);
+        beamPrefabricationService.update(beamPrefabricationModel);
+        this.remove(guid);
     }
 }

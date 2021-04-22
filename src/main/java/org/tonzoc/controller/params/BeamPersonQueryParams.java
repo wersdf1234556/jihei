@@ -18,6 +18,8 @@ public class BeamPersonQueryParams {
     private String attTime;
     @Operator(value = "eq", field = "tenderGuid")
     private String tenderGuid;
+    @Operator(value = "like", field = "personsNamepersonNameTable.name")
+    private String personName;
 
     public String getGuid() {
         return guid;
@@ -73,5 +75,13 @@ public class BeamPersonQueryParams {
 
     public void setTenderGuid(String tenderGuid) {
         this.tenderGuid = tenderGuid;
+    }
+
+    public String getPersonName() {
+        return personName;
+    }
+
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 }
