@@ -12,6 +12,16 @@ public class PersonTypeQueryParams {
     @Operator(value = "eq", field = "categoryGuid")
     private String categoryGuid;
 
+    @Operator(value = "eq", field = "flag")
+    private Integer flag;
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
 
     public String getGuid() {
         return guid;
