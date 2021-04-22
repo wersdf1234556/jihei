@@ -7,10 +7,10 @@ import java.util.List;
 public interface IBeamService extends IBaseService<BeamModel> {
 
     // 添加信息
-    void add(BeamModel beamModel) throws Exception;
+    void add(BeamModel beamModel, String concreteStrengthOne, String concreteStrengthTwo, String concreteStrengthThree, String remarks) throws Exception;
 
     // 修改信息
-    void modify(BeamModel beamModel, String remarks) throws Exception;
+    void modify(BeamModel beamModel, String concreteStrengthOne, String concreteStrengthTwo, String concreteStrengthThree, String remarks) throws Exception;
 
     // 删除
     void delete(String guid) throws Exception;
