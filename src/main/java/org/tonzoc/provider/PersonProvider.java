@@ -29,7 +29,7 @@ public class PersonProvider {
             stringBuilder.append(" and mobile = '" + mobile + "'");
 
         }
-        if (personTypeGuid != null && !"".equals("personTypeGuid")) {
+        if (personTypeGuid != null && !"".equals(personTypeGuid)) {
             stringBuilder.append(" and personTypeGuid = '" + personTypeGuid + "'");
 
         }

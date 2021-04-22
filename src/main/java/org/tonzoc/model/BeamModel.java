@@ -26,14 +26,24 @@ public class BeamModel extends BaseModel{
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
-    @JoinColumn(value = "status", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
-    private String beamPedestalStatus;
+
     @JoinColumn(value = "name", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
     private String beamPedestalName;
-    @JoinColumn(value = "status", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
-    private String beamPrefabricationStatus;
+    @JoinColumn(value = "status", type = BeamPedestalModel.class, leftColumn = "beamPedestalGuid", rightColumn = "guid")
+    private String beamPedestalStatus;
+
     @JoinColumn(value = "name", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
     private String beamPrefabricationName;
+    @JoinColumn(value = "status", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String beamPrefabricationStatus;
+    @JoinColumn(value = "concreteStrengthOne", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String concreteStrengthOne;
+    @JoinColumn(value = "concreteStrengthTwo", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String concreteStrengthTwo;
+    @JoinColumn(value = "concreteStrengthThree", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String concreteStrengthThree;
+    @JoinColumn(value = "remarks", type = BeamPrefabricationModel.class, leftColumn = "beamPrefabricationGuid", rightColumn = "guid")
+    private String remarks;
 
     public BeamModel() {
     }
@@ -140,5 +150,37 @@ public class BeamModel extends BaseModel{
 
     public void setBeamPrefabricationStatus(String beamPrefabricationStatus) {
         this.beamPrefabricationStatus = beamPrefabricationStatus;
+    }
+
+    public String getConcreteStrengthOne() {
+        return concreteStrengthOne;
+    }
+
+    public void setConcreteStrengthOne(String concreteStrengthOne) {
+        this.concreteStrengthOne = concreteStrengthOne;
+    }
+
+    public String getConcreteStrengthTwo() {
+        return concreteStrengthTwo;
+    }
+
+    public void setConcreteStrengthTwo(String concreteStrengthTwo) {
+        this.concreteStrengthTwo = concreteStrengthTwo;
+    }
+
+    public String getConcreteStrengthThree() {
+        return concreteStrengthThree;
+    }
+
+    public void setConcreteStrengthThree(String concreteStrengthThree) {
+        this.concreteStrengthThree = concreteStrengthThree;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

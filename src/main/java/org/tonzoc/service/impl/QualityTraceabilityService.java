@@ -65,7 +65,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Autowired
     private UserMapper userMapper;
 
-    private String payUrl = "http://jihei.ljkjkf.com/attachment?guid=";
+    private String payUrl = "http://jihei.ljkjkf.com/qrcodeResult?guid=";
 
     // 添加
     @Override

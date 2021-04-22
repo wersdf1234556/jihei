@@ -36,7 +36,7 @@ public class BeamOrderController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamOrderModel beamOrderModel) {
 
-        beamOrderService.save(beamOrderModel);
+        beamOrderService.add(beamOrderModel);
     }
 
     @PutMapping(value = "{guid}")

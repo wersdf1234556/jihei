@@ -36,16 +36,18 @@ public class BeamController extends BaseController{
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid BeamModel beamModel) throws Exception {
+    public void add(@RequestBody @Valid BeamModel beamModel,
+                    String concreteStrengthOne, String concreteStrengthTwo, String concreteStrengthThree, String remarks) throws Exception {
 
-        beamService.add(beamModel);
+        beamService.add(beamModel, concreteStrengthOne, concreteStrengthTwo, concreteStrengthThree, remarks);
     }
 
     // 修改台座等信息
     @PutMapping(value = "{guid}")
-    public void update(@RequestBody @Valid BeamModel beamModel) throws Exception {
+    public void update(@RequestBody @Valid BeamModel beamModel,
+                       String concreteStrengthOne, String concreteStrengthTwo, String concreteStrengthThree, String remarks) throws Exception {
 
-        beamService.update(beamModel);
+        beamService.modify(beamModel, concreteStrengthOne, concreteStrengthTwo, concreteStrengthThree, remarks);
     }
 
     @DeleteMapping(value = "{guid}")
@@ -64,7 +66,7 @@ public class BeamController extends BaseController{
     @PutMapping(value = "modify")
     public void modify( BeamModel beamModel, String remarks) throws Exception {
 
-        beamService.modify(beamModel, remarks);
+//        beamService.modify(beamModel, remarks);
     }
 
     // 按照编号查询历史记录

@@ -27,11 +27,11 @@ public class BeamPrefabricationModel extends BaseModel{
     @Column(value = "tenderGuid")
     private String tenderGuid;
     @Column(value = "concreteStrengthOne")
-    private Integer concreteStrengthOne; // 混凝土强度1
+    private String concreteStrengthOne; // 混凝土强度1
     @Column(value = "concreteStrengthTwo")
-    private Integer concreteStrengthTwo; // 混凝土强度2
+    private String concreteStrengthTwo; // 混凝土强度2
     @Column(value = "concreteStrengthThree")
-    private Integer concreteStrengthThree; // 混凝土强度3
+    private String concreteStrengthThree; // 混凝土强度3
     @Column(value = "remarks")
     private String remarks; // 备注
     @Column(value = "status")
@@ -117,27 +117,27 @@ public class BeamPrefabricationModel extends BaseModel{
         this.tenderName = tenderName;
     }
 
-    public Integer getConcreteStrengthOne() {
+    public String getConcreteStrengthOne() {
         return concreteStrengthOne;
     }
 
-    public void setConcreteStrengthOne(Integer concreteStrengthOne) {
+    public void setConcreteStrengthOne(String concreteStrengthOne) {
         this.concreteStrengthOne = concreteStrengthOne;
     }
 
-    public Integer getConcreteStrengthTwo() {
+    public String getConcreteStrengthTwo() {
         return concreteStrengthTwo;
     }
 
-    public void setConcreteStrengthTwo(Integer concreteStrengthTwo) {
+    public void setConcreteStrengthTwo(String concreteStrengthTwo) {
         this.concreteStrengthTwo = concreteStrengthTwo;
     }
 
-    public Integer getConcreteStrengthThree() {
+    public String getConcreteStrengthThree() {
         return concreteStrengthThree;
     }
 
-    public void setConcreteStrengthThree(Integer concreteStrengthThree) {
+    public void setConcreteStrengthThree(String concreteStrengthThree) {
         this.concreteStrengthThree = concreteStrengthThree;
     }
 
