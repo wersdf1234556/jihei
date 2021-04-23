@@ -4,7 +4,7 @@ import org.tonzoc.annotation.*;
 
 // 梁场摄像头
 @Table("BeamCameras")
-public class BeamCameraModel extends BaseModel{
+public class BeamCameraModel extends BaseModel {
 
     @NotInsertColumn
     @PrimaryKey
@@ -22,6 +22,8 @@ public class BeamCameraModel extends BaseModel{
     private Integer sortId;
     @Column(value = "typeGuid")
     private String typeGuid;
+    @Column(value = "beamType")
+    private String beamType; // 摄像头是谁的
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "typeGuid", rightColumn = "guid")
     private String tenderName;
@@ -92,4 +94,14 @@ public class BeamCameraModel extends BaseModel{
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
     }
+
+    public String getBeamType() {
+        return beamType;
+    }
+
+    public void setBeamType(String beamType) {
+        this.beamType = beamType;
+    }
 }
+
+

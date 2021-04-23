@@ -18,6 +18,8 @@ public class BeamCameraQueryParams {
     private Integer sortId;
     @Operator(value = "eq", field = "typeGuid")
     private String typeGuid;
+    @Operator(value = "eq", field = "beamType")
+    private String beamType;
 
     public String getGuid() {
         return guid;
@@ -73,5 +75,13 @@ public class BeamCameraQueryParams {
 
     public void setTypeGuid(String typeGuid) {
         this.typeGuid = typeGuid;
+    }
+
+    public String getBeamType() {
+        return beamType;
+    }
+
+    public void setBeamType(String beamType) {
+        this.beamType = beamType;
     }
 }
