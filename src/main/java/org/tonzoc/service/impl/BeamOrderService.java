@@ -72,6 +72,7 @@ public class BeamOrderService extends BaseService<BeamOrderModel> implements IBe
         this.save(beamOrderModel);
     }
 
+
     @Override
     public void delete(String guid) {
 
