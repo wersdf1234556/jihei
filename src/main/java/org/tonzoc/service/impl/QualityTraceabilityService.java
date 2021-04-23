@@ -71,6 +71,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
     @Override
     public void add(QualityTraceabilityModel qualityTraceabilityModel, String accounType) throws Exception {
         String guid = fileHelper.newGUID();
+
         qualityTraceabilityModel.setGuid(guid);
         Map<String, String> map = this.qrcode(guid);
         qualityTraceabilityModel.setQrcodeGuid(map.get("attachmentGuid"));
@@ -99,6 +100,7 @@ public class QualityTraceabilityService extends BaseService<QualityTraceabilityM
         }
 
         this.save(qualityTraceabilityModel);
+        qualityTraceabilityMapper.updateGuid(guid, qualityTraceabilityModel.getGuid());
     }
 
     // 查询字符串转时间

@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPedestalModel;
+import org.tonzoc.model.BeamPrefabricationModel;
 import org.tonzoc.model.support.ReturnBeamModel;
 
 import java.util.List;
@@ -50,5 +51,15 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
             " left join beamPrefabrications as c on c.guid = b.beamPrefabricationGuid " +
             " where b.beamPedestalGuid = (select guid from beamPedestals where modelNum = #{num})")
     List<ReturnBeamModel> selectByNum(@Param(value = "num") String num);
+
+    @Select("select name + leftAndRight from beamPrefabrications" +
+            " where tenderGuid = #{tenderGuid}" +
+            " GROUP BY name + leftAndRight ORDER BY name + leftAndRight")
+    List<String> selectNameAndLeftAndRight(@Param(value = "tenderGuid") String tenderGuid);
+
+    @Select("select * from beamPrefabrications" +
+            " where (name + leftAndRight) = #{nameAndLeftAndRight} and tenderGuid = #{tenderGuid} ORDER BY prefabricationNum")
+    List<BeamPrefabricationModel> selectPrefabricationNum(@Param(value = "nameAndLeftAndRight") String nameAndLeftAndRight,
+                                                          @Param(value = "tenderGuid") String tenderGuid);
 
 }

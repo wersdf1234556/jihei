@@ -63,4 +63,9 @@ public interface QualityTraceabilityMapper extends BaseMapper<QualityTraceabilit
     Integer countByCurrentTenderByType(@Param(value = "currentTenderGuid") String currentTenderGuid,
                                        @Param(value = "typeId") Integer typeId);
 
+    // 修改自己的Guid
+    @Update("update qualityTraceabilitys set guid = #{guid} where guid = #{oldGuid}")
+    void updateGuid(@Param(value = "guid") String guid,
+                    @Param(value = "oldGuid") String oldGuid);
+
 }

@@ -309,4 +309,16 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
         throw new Exception("点击位置不对，请重试");
     }
+
+    // 查询名称加左右幅
+    public List<String> selectNameAndLeftAndRight(String tenderGuid) {
+
+        return beamMapper.selectNameAndLeftAndRight(tenderGuid);
+    }
+
+    // 查询梁的编号
+    public List<BeamPrefabricationModel> selectPrefabricationNum(String nameAndLeftAndRight, String tenderGuid) {
+
+        return beamMapper.selectPrefabricationNum(nameAndLeftAndRight, tenderGuid);
+    }
 }
