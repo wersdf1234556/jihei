@@ -56,6 +56,7 @@ public class SecurityResultController extends BaseController {
         String imageData = securityResultModel.getImgData();
         String filePath = intelliSiteProperties.getFilePath() + "/securityResultImages/" + UUID.randomUUID() + ".jpg";
         if (GenerateImage(imageData, filePath)) {
+            System.out.println("in if");
             AttachmentModel attachmentModel = new AttachmentModel();
             attachmentModel.setUrl(filePath);
             this.attachmentService.save(attachmentModel);
