@@ -20,7 +20,7 @@ public class BeamQueryParams {
     private String startTime;
     @Operator(value = "lte", field = "attTime")
     private String endTime;
-    @Operator(value = "eq", field = "beamPedestalsStatusbeamPedestalStatusTable.status")
+    @Operator(value = "eq", field = "beamPrefabricationsStatusbeamPrefabricationStatusTable.status")
     private String beamPrefabricationStatus;
 
     public String getGuid() {

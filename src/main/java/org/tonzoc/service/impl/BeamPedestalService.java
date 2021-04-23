@@ -65,7 +65,7 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
             returnQtbModel1.setShi("0");
 
         } else {
-            returnQtbModel1.setShi(new BigDecimal(returnQtbModel1.getBan()).divide(new BigDecimal(returnQtbModel.getBan()), 4, BigDecimal.ROUND_HALF_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            returnQtbModel1.setShi(new BigDecimal(returnQtbModel1.getBan()).divide(new BigDecimal(returnQtbModel1.getYuan()), 4, BigDecimal.ROUND_HALF_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
 
         }
 

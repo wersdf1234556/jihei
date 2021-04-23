@@ -83,7 +83,7 @@ public class BeamOrderService extends BaseService<BeamOrderModel> implements IBe
         new SqlQueryParam("beamGuid", beamOrderModel.getBeamGuid(), "eq");
         List<BeamOrderModel> list = list(sqlQueryParam);
 
-        BeamOrderModel beamOrderModel1 = beamOrderMapper.selectByTimeDesc(beamOrderModel.getAttTime());
+        BeamOrderModel beamOrderModel1 = beamOrderMapper.selectByTimeDesc(beamOrderModel.getBeamGuid(), beamOrderModel.getAttTime());
         BeamPedestalModel beamPedestalModel = new BeamPedestalModel();
         beamPedestalModel.setGuid(beamModel.getBeamPedestalGuid());
 
