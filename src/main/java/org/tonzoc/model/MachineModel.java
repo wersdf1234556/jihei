@@ -51,6 +51,8 @@ public class MachineModel extends BaseModel {
 
     @JoinColumn(value = "name", type = TenderMachineTypeModel.class, leftColumn = "tenderMachineTypeGuid", rightColumn = "guid")
     private String tenderMachineTypeName;
+//    @JoinColumn(value = "highlight", type = MachineTypeModel.class, leftColumn = "TenderMachineTypesNametenderMachineTypeNameTable.machineTypeGuid", rightColumn = "guid")
+//    private Integer machineHighlight;
     @JoinColumn(value = "name", type = MachineCategoryModel.class, leftColumn = "machineCategoryGuid", rightColumn = "guid")
     private String categoryName;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
@@ -242,6 +244,14 @@ public class MachineModel extends BaseModel {
     public void setLat(String lat) {
         this.lat = lat;
     }
+
+//    public Integer getMachineHighlight() {
+//        return machineHighlight;
+//    }
+//
+//    public void setMachineHighlight(Integer machineHighlight) {
+//        this.machineHighlight = machineHighlight;
+//    }
 
     @Override
     public String toString() {
