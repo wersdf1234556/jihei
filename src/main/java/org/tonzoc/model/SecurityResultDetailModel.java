@@ -21,6 +21,16 @@ public class SecurityResultDetailModel extends BaseModel {
     private Integer bottom;
     @Column(value = "score")
     private Integer score;
+    @Column(value = "securityResultGuid")
+    private String securityResultGuid;
+
+    public String getSecurityResultGuid() {
+        return securityResultGuid;
+    }
+
+    public void setSecurityResultGuid(String securityResultGuid) {
+        this.securityResultGuid = securityResultGuid;
+    }
 
     public SecurityResultDetailModel() {
     }

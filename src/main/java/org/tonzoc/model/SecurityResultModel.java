@@ -1,7 +1,9 @@
 package org.tonzoc.model;
 
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.*;
+
+import java.util.List;
 
 @Table(value = "securityResults")
 public class SecurityResultModel extends BaseModel {
@@ -25,6 +27,16 @@ public class SecurityResultModel extends BaseModel {
     private String remark;
     @Column(value = "imageUrl")
     private String imageUrl;
+
+    private List<SecurityResultDetailModel> data;
+
+    public List<SecurityResultDetailModel> getData() {
+        return data;
+    }
+
+    public void setData(List<SecurityResultDetailModel> data) {
+        this.data = data;
+    }
 
     public SecurityResultModel() {
     }
