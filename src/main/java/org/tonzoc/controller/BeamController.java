@@ -8,6 +8,7 @@ import org.tonzoc.controller.params.PageQueryParams;
 import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamModel;
+import org.tonzoc.model.BeamPrefabricationModel;
 import org.tonzoc.service.IBeamService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
@@ -79,5 +80,20 @@ public class BeamController extends BaseController{
     public List selectOneOrAll(String tenderGuid, String num) throws Exception {
 
         return beamService.selectOneOrAll(tenderGuid, num);
+    }
+
+    // 查询名称加左右幅
+    @GetMapping(value = "selectNameAndLeftAndRight")
+    public List<String> selectNameAndLeftAndRight(String tenderGuid) {
+
+        return beamService.selectNameAndLeftAndRight(tenderGuid);
+    }
+
+    // 查询梁的编号
+    @GetMapping(value = "selectPrefabricationNum")
+    public List<BeamPrefabricationModel> selectPrefabricationNum(String nameAndLeftAndRight, String tenderGuid) {
+
+        nameAndLeftAndRight = nameAndLeftAndRight.replace(" ", "+");
+        return beamService.selectPrefabricationNum(nameAndLeftAndRight, tenderGuid);
     }
 }

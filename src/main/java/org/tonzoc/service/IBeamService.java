@@ -1,6 +1,7 @@
 package org.tonzoc.service;
 
 import org.tonzoc.model.BeamModel;
+import org.tonzoc.model.BeamPrefabricationModel;
 
 import java.util.List;
 
@@ -23,4 +24,10 @@ public interface IBeamService extends IBaseService<BeamModel> {
 
     // 查询一条或多条
     List selectOneOrAll(String tenderGuid, String num) throws Exception;
+
+    // 查询名称加左右幅
+    List<String> selectNameAndLeftAndRight(String tenderGuid);
+
+    // 查询梁的编号
+    List<BeamPrefabricationModel> selectPrefabricationNum(String nameAndLeftAndRight, String tenderGuid);
 }
