@@ -38,6 +38,16 @@ public class BeamPrefabricationModel extends BaseModel{
     private String status;
     @Column(value = "color")
     private String color; // 颜色
+    @Column(value = "length")
+    private String length;
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;

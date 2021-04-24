@@ -46,7 +46,7 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
     List<BeamPedestalModel> numberByTender(@Param(value = "tenderGuid") String tenderGuid,
                                            @Param(value = "number") String number);
 
-    @Select("select c.guid, a.modelNum, a.name pedestalName, c.name, c.prefabricationNum, c.concreteStrengthOne, c.concreteStrengthTwo, c.concreteStrengthThree, c.remarks, c.status from beams as b" +
+    @Select("select c.guid, a.modelNum, a.name pedestalName, c.name, c.prefabricationNum, c.concreteStrengthOne, c.concreteStrengthTwo, c.concreteStrengthThree, c.remarks, c.status, c.leftAndRight, c.length from beams as b" +
             " left join beamPedestals as a on a.guid = b.beamPedestalGuid" +
             " left join beamPrefabrications as c on c.guid = b.beamPrefabricationGuid " +
             " where b.beamPedestalGuid = (select guid from beamPedestals where modelNum = #{num})")
