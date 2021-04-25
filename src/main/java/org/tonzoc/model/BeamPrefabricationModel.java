@@ -41,19 +41,12 @@ public class BeamPrefabricationModel extends BaseModel{
     @Column(value = "length")
     private String length;
 
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
 
     public BeamPrefabricationModel() {
     }
+
 
     public String getGuid() {
         return guid;
