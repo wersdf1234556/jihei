@@ -38,6 +38,8 @@ public class BeamPrefabricationController extends BaseController {
     @PostMapping
     public void add(@RequestBody @Valid BeamPrefabricationModel beamPrefabricationModel) {
 
+        beamPrefabricationModel.setStatus("unSubmit");
+        beamPrefabricationModel.setColor("rgba(255, 255, 255,0)");
         beamPrefabricationService.save(beamPrefabricationModel);
     }
 

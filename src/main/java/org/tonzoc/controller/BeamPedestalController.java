@@ -39,6 +39,8 @@ public class BeamPedestalController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamPedestalModel beamPedestalModel) {
 
+        beamPedestalModel.setStatus("unSubmit");
+        beamPedestalModel.setColor("rgba(255, 255, 255,0)");
         beamPedestalService.save(beamPedestalModel);
     }
 
