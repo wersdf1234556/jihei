@@ -52,7 +52,8 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
         map.put("gjgj", "rgba(255, 168, 0,1)");
         map.put("hnt", "rgba(112, 194, 99,1)");
         map.put("ys", " rgba(93, 179, 251,1)");
-        map.put("zlyj", "rgba(151, 111, 248,1)");
+        map.put("zl", "rgba(151, 111, 248,1)");
+        map.put("yj", "rgba(151, 111, 248,1)");
         map.put("finish", "rgba(255, 255, 255,0)");
     }
 
@@ -96,7 +97,6 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
     public void updateTogether (BeamModel beamModel, String concreteStrengthOne, String concreteStrengthTwo, String concreteStrengthThree, String remarks) throws Exception {
 
-        System.out.println(concreteStrengthOne + " ?值");
         BeamModel lodBeamModel = this.get(beamModel.getGuid());
         BeamPedestalModel beamPedestalModel = beamPedestalService.get(beamModel.getBeamPedestalGuid());
         // Integer countByBeamPedestal = beamMapper.selectByBeamPedestal(beamPedestalModel.getGuid());
@@ -154,8 +154,6 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
             lodBeamPrefabricationModel.setStatus("unSubmit");
             lodBeamPrefabricationModel.setColor(map.get("unSubmit"));
-            System.out.println(lodBeamPrefabricationModel.getConcreteStrengthOne() + "111");
-            System.out.println(beamPrefabricationModel2.getConcreteStrengthOne() + "222");
             beamPrefabricationService.update(lodBeamPrefabricationModel);
             beamPrefabricationService.update(beamPrefabricationModel2);
         }

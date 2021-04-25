@@ -34,7 +34,7 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
 
         List<ReturnQtbModel> list1 = new ArrayList<>();
         ReturnQtbModel returnQtbModel = new ReturnQtbModel();
-        returnQtbModel.setName("台座");
+        returnQtbModel.setName("0");
         returnQtbModel.setYuan("0");
         returnQtbModel.setBan("0");
         returnQtbModel.setShi("0");
@@ -54,9 +54,11 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
             } else if ("ys".equals(li.getName())) {
                 returnQtbModel.setXian(li.getNumber() + "");
 
-            } else if ("zlyj".equals(li.getName())) {
+            } else if ("zl".equals(li.getName())) {
                 returnQtbModel.setYin(li.getNumber() + "");
 
+            } else if ("yj".equals(li.getName())) {
+                returnQtbModel.setName(li.getNumber() + "");
             }
         }
         list1.add(returnQtbModel);
