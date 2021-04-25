@@ -309,14 +309,23 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
     }
 
     // 查询名称加左右幅
+    @Override
     public List<String> selectNameAndLeftAndRight(String tenderGuid) {
 
         return beamMapper.selectNameAndLeftAndRight(tenderGuid);
     }
 
     // 查询梁的编号
+    @Override
     public List<BeamPrefabricationModel> selectPrefabricationNum(String nameAndLeftAndRight, String tenderGuid) {
 
         return beamMapper.selectPrefabricationNum(nameAndLeftAndRight, tenderGuid);
+    }
+
+    // 梁统计查询
+    @Override
+    public List<ReturnBeamCount> selectByTender(String tenderGuid){
+
+        return beamMapper.selectByTender(tenderGuid);
     }
 }

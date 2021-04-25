@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Select;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPedestalModel;
 import org.tonzoc.model.BeamPrefabricationModel;
+import org.tonzoc.model.ReturnBeamCount;
 import org.tonzoc.model.support.ReturnBeamModel;
 
 import java.util.List;
@@ -64,4 +65,14 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
 
     @Select("select * from beams where beamPedestalGuid = #{beamPedestalGuid}")
     List<BeamModel> listByBeamPedestal(String beamPedestalGuid);
+
+
+    @Select("select mainTable.*, tenders.name tenderName from (select a.name, a.leftAndRight, a.tenderGuid, ISNULL(a.count1, 0) total, ISNULL(b.count2, 0) finish, ISNULL(c.count3, 0) unFinish, ISNULL(d.count4, 0) unSubmit from" +
+            " (select tenderGuid, name, leftAndRight, count(guid) count1 from beamPrefabrications GROUP BY tenderGuid, name, leftAndRight ) a LEFT JOIN" +
+            " (select tenderGuid, name, leftAndRight, count(guid) count2 from beamPrefabrications where status = 'finish' GROUP BY tenderGuid, name, leftAndRight ) b on a.name = b.name and a.leftAndRight = b.leftAndRight and a.tenderGuid = b.tenderGuid LEFT JOIN" +
+            " (select tenderGuid, name, leftAndRight, count(guid) count3 from beamPrefabrications where status != 'finish' and status != 'unSubmit' GROUP BY tenderGuid, name, leftAndRight ) c on a.name = c.name and a.leftAndRight = c.leftAndRight and a.tenderGuid = c.tenderGuid LEFT JOIN" +
+            " (select tenderGuid, name, leftAndRight, count(guid) count4 from beamPrefabrications where status = 'unSubmit' GROUP BY tenderGuid, name, leftAndRight ) d on a.name = d.name and a.leftAndRight = d.leftAndRight and a.tenderGuid = d.tenderGuid) MainTable " +
+            " LEFT JOIN tenders on MainTable.tenderGuid = tenders.guid" +
+            " where MainTable.tenderGuid = #{tenderGuid} ")
+    List<ReturnBeamCount> selectByTender(String tenderGuid);
 }

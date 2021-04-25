@@ -9,6 +9,7 @@ import org.tonzoc.controller.response.PageResponse;
 import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPrefabricationModel;
+import org.tonzoc.model.ReturnBeamCount;
 import org.tonzoc.service.IBeamService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
@@ -95,5 +96,14 @@ public class BeamController extends BaseController{
 
         nameAndLeftAndRight = nameAndLeftAndRight.replace(" ", "+");
         return beamService.selectPrefabricationNum(nameAndLeftAndRight, tenderGuid);
+    }
+
+    // 梁统计查询
+    @GetMapping(value = "selectByTender")
+    public PageResponse selectByTender(PageQueryParams pageQueryParams, String tenderGuid) throws PageException {
+
+        Page<BeamModel> page = parsePage(pageQueryParams);
+        List<ReturnBeamCount> list = beamService.selectByTender(tenderGuid);
+        return new PageResponse(page.getTotal(), list);
     }
 }
