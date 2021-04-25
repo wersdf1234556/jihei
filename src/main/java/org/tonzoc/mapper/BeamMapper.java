@@ -62,4 +62,6 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
     List<BeamPrefabricationModel> selectPrefabricationNum(@Param(value = "nameAndLeftAndRight") String nameAndLeftAndRight,
                                                           @Param(value = "tenderGuid") String tenderGuid);
 
+    @Select("select * from beams where beamPedestalGuid = #{beamPedestalGuid}")
+    List<BeamModel> listByBeamPedestal(String beamPedestalGuid);
 }

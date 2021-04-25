@@ -49,15 +49,15 @@ public class BeamPedestalController extends BaseController{
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        beamPedestalService.remove(guid);
+        beamPedestalService.delete(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        beamPedestalService.removeMany(guids);
+        beamPedestalService.deletes(guids);
     }
 
     // 按类别统计台座数量和梁的数量

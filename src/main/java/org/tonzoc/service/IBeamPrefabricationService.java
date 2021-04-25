@@ -10,4 +10,10 @@ public interface IBeamPrefabricationService extends IBaseService<BeamPrefabricat
 
     // 梁的数量信息
     List<ReturnModel> selectPrefabrication();
+
+    // 删除一个梁
+    void delete (String guid) throws Exception;
+
+    // 批量删除梁
+    void deletes (String guids) throws Exception;
 }

@@ -12,4 +12,10 @@ public interface IBeamPedestalService extends IBaseService<BeamPedestalModel>{
     // 按类别统计台座数量和梁的数量
     List<ReturnQtbModel> listByStatus();
 
+    // 删除一个梁
+    void delete (String guid) throws Exception;
+
+    // 批量删除梁
+    void deletes (String guids) throws Exception;
+
 }

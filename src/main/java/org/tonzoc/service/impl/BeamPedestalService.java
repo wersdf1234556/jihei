@@ -2,6 +2,7 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tonzoc.mapper.BeamMapper;
 import org.tonzoc.mapper.BeamPedestalMapper;
 import org.tonzoc.mapper.BeamPrefabricationMapper;
 import org.tonzoc.model.BeamModel;
@@ -24,6 +25,9 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
 
     @Autowired
     private BeamPrefabricationMapper beamPrefabricationMapper;
+
+    @Autowired
+    private BeamMapper beamMapper;
 
     // 按类别统计台座数量和梁的数量
     public List<ReturnQtbModel> listByStatus() {
@@ -72,5 +76,27 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
         list1.add(returnQtbModel1);
 
         return list1;
+    }
+
+    // 删除一个台座
+    @Override
+    public void delete (String guid) throws Exception{
+
+        List<BeamModel> list = beamMapper.listByBeamPedestal(guid);
+        if (list.size() > 0) {
+
+            throw new Exception("该台座被使用过，不能删除");
+        }
+    }
+
+    // 批量删除台座
+    @Override
+    public void deletes (String guids) throws Exception {
+
+        String[] str = guids.split(",");
+        for (String s: str) {
+
+            this.delete(s);
+        }
     }
 }

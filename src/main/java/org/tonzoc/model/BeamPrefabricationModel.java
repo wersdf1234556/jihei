@@ -182,4 +182,12 @@ public class BeamPrefabricationModel extends BaseModel{
     public void setColor(String color) {
         this.color = color;
     }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 }

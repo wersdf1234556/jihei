@@ -2,22 +2,29 @@ package org.tonzoc.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.tonzoc.mapper.BeamPrefabricationMapper;
 import org.tonzoc.model.BeamPrefabricationModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.service.IBeamPrefabricationService;
+import org.tonzoc.service.IBeamService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("BeamPrefabricationService")
+@Transactional
 public class BeamPrefabricationService extends BaseService<BeamPrefabricationModel> implements IBeamPrefabricationService {
 
     @Autowired
     private BeamPrefabricationMapper beamPrefabricationMapper;
 
+    @Autowired
+    private IBeamService beamService;
+
     // 梁的数量信息
+    @Override
     public List<ReturnModel> selectPrefabrication(){
 
         List<ReturnModel> list = new ArrayList<>();
@@ -43,5 +50,30 @@ public class BeamPrefabricationService extends BaseService<BeamPrefabricationMod
         list.add(returnModel2);
 
         return list;
+    }
+
+    // 删除梁
+    @Override
+    public void delete (String guid) throws Exception {
+
+        BeamPrefabricationModel beamPrefabricationModel = this.get(guid);
+        if (!"unSubmit".equals(beamPrefabricationModel.getStatus()) ) {
+
+            throw new Exception("该梁不能删除");
+        } else {
+
+            beamService.remove(guid);
+        }
+    }
+
+    // 批量删除梁
+    @Override
+    public void deletes (String guids) throws Exception {
+
+        String[] str = guids.split(",");
+        for (String s: str) {
+
+            this.delete(s);
+        }
     }
 }

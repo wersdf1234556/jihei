@@ -48,15 +48,15 @@ public class BeamPrefabricationController extends BaseController {
     }
 
     @DeleteMapping(value = "{guid}")
-    public void remove(@PathVariable(value = "guid") String guid) {
+    public void remove(@PathVariable(value = "guid") String guid) throws Exception {
 
-        beamPrefabricationService.remove(guid);
+        beamPrefabricationService.delete(guid);
     }
 
     @PostMapping(value = "removeMany")
     public void removeMany(String guids) throws Exception {
 
-        beamPrefabricationService.removeMany(guids);
+        beamPrefabricationService.deletes(guids);
     }
 
     // 梁的数量信息
