@@ -78,19 +78,19 @@ public class BeamOrderService extends BaseService<BeamOrderModel> implements IBe
     public void delete(String guid) {
 
         BeamOrderModel beamOrderModel = this.get(guid);
+        System.out.println("beamOrderModel" + beamOrderModel.getCreatedAt());
         BeamModel beamModel = beamService.get(beamOrderModel.getBeamGuid());
 
         List<SqlQueryParam> sqlQueryParam = new ArrayList<>();
-        new SqlQueryParam("beamGuid", beamOrderModel.getBeamGuid(), "eq");
+        sqlQueryParam.add(new SqlQueryParam("beamGuid", beamOrderModel.getBeamGuid(), "eq"));
         List<BeamOrderModel> list = list(sqlQueryParam);
 
-        BeamOrderModel beamOrderModel1 = beamOrderMapper.selectByTimeDesc(beamOrderModel.getBeamGuid(), beamOrderModel.getAttTime());
+        BeamOrderModel beamOrderModel1 = beamOrderMapper.selectByTimeDesc(beamOrderModel.getBeamGuid(), beamOrderModel.getCreatedAt());
         BeamPedestalModel beamPedestalModel = new BeamPedestalModel();
         beamPedestalModel.setGuid(beamModel.getBeamPedestalGuid());
 
         BeamPrefabricationModel beamPrefabricationModel = new BeamPrefabricationModel();
         beamPrefabricationModel.setGuid(beamModel.getBeamPrefabricationGuid());
-        System.out.println("list.size" + list.size());
         if (list.size() > 1) {
 
             beamPedestalModel.setStatus(beamOrderModel1.getStatus());

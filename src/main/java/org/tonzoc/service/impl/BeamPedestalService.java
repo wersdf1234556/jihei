@@ -89,6 +89,8 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
 
             throw new Exception("该台座被使用过，不能删除");
         }
+
+        this.remove(guid);
     }
 
     // 批量删除台座

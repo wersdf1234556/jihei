@@ -24,6 +24,9 @@ public class BeamOrderModel extends BaseModel{
     private String operator; // 操作人
     @Column(value = "tenderGuid")
     private String tenderGuid; // 标段
+    @NotInsertColumn
+    @Column(value = "createdAt")
+    private String createdAt;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
@@ -101,5 +104,13 @@ public class BeamOrderModel extends BaseModel{
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

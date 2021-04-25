@@ -57,12 +57,12 @@ public class BeamPrefabricationService extends BaseService<BeamPrefabricationMod
     public void delete (String guid) throws Exception {
 
         BeamPrefabricationModel beamPrefabricationModel = this.get(guid);
-        if (!"unSubmit".equals(beamPrefabricationModel.getStatus()) ) {
+        if (!"unSubmit".equals(beamPrefabricationModel.getStatus())) {
 
             throw new Exception("该梁不能删除");
         } else {
 
-            beamService.remove(guid);
+            this.remove(guid);
         }
     }
 
