@@ -28,6 +28,8 @@ public class PersonQueryParams {
     private String mobile; // 手机号
     @Operator(value = "eq", field = "enterAreaTime")
     private String enterAreaTime;
+    @Operator(value = "eq", field = "isGroup")
+    private Integer isGroup;
 
 
     public String getIsRisk() {
@@ -125,5 +127,13 @@ public class PersonQueryParams {
 
     public void setEnterAreaTime(String enterAreaTime) {
         this.enterAreaTime = enterAreaTime;
+    }
+
+    public Integer getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Integer isGroup) {
+        this.isGroup = isGroup;
     }
 }

@@ -33,5 +33,5 @@ public interface IBeamService extends IBaseService<BeamModel> {
     List<BeamPrefabricationModel> selectPrefabricationNum(String nameAndLeftAndRight, String tenderGuid);
 
     // 梁统计查询
-    List<ReturnBeamCount> selectByTender(String tenderGuid);
+    List<ReturnBeamCount> selectByTender(String tenderGuid, String name, String leftAndRight);
 }

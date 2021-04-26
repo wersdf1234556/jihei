@@ -41,9 +41,7 @@ public class BeamPersonController extends BaseController{
     @PostMapping
     public void add(@RequestBody @Valid BeamPersonModel beamPersonModel) {
 
-        PersonModel personModel = personService.get(beamPersonModel.getPersonGuid());
-        beamPersonModel.setPersonTypeGuid(personModel.getPersonTypeGuid());
-        beamPersonService.save(beamPersonModel);
+        beamPersonService.add(beamPersonModel);
     }
 
     @PutMapping(value = "{guid}")

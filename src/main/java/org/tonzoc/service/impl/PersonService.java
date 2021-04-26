@@ -20,7 +20,9 @@ import org.tonzoc.service.IPersonService;
 import org.tonzoc.service.IPersonTypeService;
 import org.tonzoc.support.param.SqlQueryParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("personService")
@@ -182,9 +184,14 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
     // 人员打卡次数
     @Override
-    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid){
+    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid, String attTime){
 
-        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile, personTypeGuid);
+        if (attTime == null || "".equals(attTime)) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            attTime = formatter.format(new Date());
+        }
+
+        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile, personTypeGuid, attTime);
     }
 
 }

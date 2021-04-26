@@ -494,4 +494,12 @@ public class AttendanceService extends BaseService<AttendanceModel> implements I
 
         return attendanceMapper.listByAttTime(date);
     }
+
+    // 安全人员统计是否打卡
+    public List<PersonModel> securityPerson(String name, String personTypeGuid, String tenderGuid, Integer flag, String categoryGuid) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String date = formatter.format(new Date());
+        return attendanceMapper.securityPerson(date, name, personTypeGuid, tenderGuid, flag, categoryGuid);
+    }
 }

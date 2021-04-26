@@ -20,5 +20,5 @@ public interface IPersonService extends IBaseService<PersonModel> {
     List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception;
 
     // 人员打卡次数
-    List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid);
+    List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid, String attTime);
 }

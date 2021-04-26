@@ -3,10 +3,13 @@ package org.tonzoc.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Component;
 import org.tonzoc.model.AttendanceModel;
+import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.ReturnModel;
 import org.tonzoc.model.support.*;
+import org.tonzoc.provider.AttendanceProvider;
 
 import java.util.List;
 @Component
@@ -97,5 +100,13 @@ public interface AttendanceMapper extends BaseMapper<AttendanceModel> {
             " LEFT JOIN (select * from attendances where attTime like '%${attTime}%') attendances on persons.guid = attendances.personGuid" +
             " GROUP BY personCategory.name, personCategory.guid")
     List<ReturnModel> listByAttTime(@Param(value = "attTime") String attTime);
+
+    @SelectProvider(type = AttendanceProvider.class, method = "securityPerson")
+    List<PersonModel> securityPerson(@Param(value = "attTime") String attTime,
+                                     @Param(value = "name") String name,
+                                     @Param(value = "personTypeGuid") String personTypeGuid,
+                                     @Param(value = "tenderGuid") String tenderGuid,
+                                     @Param(value = "flag") Integer flag,
+                                     @Param(value = "categoryGuid") String categoryGuid);
 
 }

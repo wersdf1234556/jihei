@@ -2,24 +2,18 @@ package org.tonzoc.controller.params;
 
 import org.tonzoc.annotation.Operator;
 
-public class BeamPersonQueryParams {
+public class BeamPersonGroupQueryParams {
 
     @Operator(value = "eq", field = "guid")
     private String guid;
-    @Operator(value = "eq", field = "beamGuid")
-    private String beamGuid;
+    @Operator(value = "like", field = "name")
+    private String name;
     @Operator(value = "eq", field = "personGuid")
     private String personGuid;
     @Operator(value = "eq", field = "personTypeGuid")
     private String personTypeGuid;
     @Operator(value = "eq", field = "sortId")
     private Integer sortId;
-    @Operator(value = "like", field = "attTime")
-    private String attTime;
-    @Operator(value = "eq", field = "tenderGuid")
-    private String tenderGuid;
-    @Operator(value = "like", field = "personsNamepersonNameTable.name")
-    private String personName;
     @Operator(value = "eq", field = "beamGroupGuid")
     private String beamGroupGuid;
 
@@ -31,12 +25,12 @@ public class BeamPersonQueryParams {
         this.guid = guid;
     }
 
-    public String getBeamGuid() {
-        return beamGuid;
+    public String getName() {
+        return name;
     }
 
-    public void setBeamGuid(String beamGuid) {
-        this.beamGuid = beamGuid;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPersonGuid() {
@@ -61,30 +55,6 @@ public class BeamPersonQueryParams {
 
     public void setSortId(Integer sortId) {
         this.sortId = sortId;
-    }
-
-    public String getAttTime() {
-        return attTime;
-    }
-
-    public void setAttTime(String attTime) {
-        this.attTime = attTime;
-    }
-
-    public String getTenderGuid() {
-        return tenderGuid;
-    }
-
-    public void setTenderGuid(String tenderGuid) {
-        this.tenderGuid = tenderGuid;
-    }
-
-    public String getPersonName() {
-        return personName;
-    }
-
-    public void setPersonName(String personName) {
-        this.personName = personName;
     }
 
     public String getBeamGroupGuid() {

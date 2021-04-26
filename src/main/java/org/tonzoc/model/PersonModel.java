@@ -4,6 +4,7 @@ import org.tonzoc.annotation.*;
 
 @Table(value = "persons")
 public class PersonModel extends BaseModel{
+
     @PrimaryKey
     @NotInsertColumn
     @Column(value = "guid")
@@ -60,6 +61,8 @@ public class PersonModel extends BaseModel{
     private String testingOrgan;
     @Column(value = "testingAddress")
     private String testingAddress;
+    @Column(value = "isGroup")
+    private Integer isGroup;
 
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName; //标段
@@ -329,4 +332,11 @@ public class PersonModel extends BaseModel{
         this.certificatePicName = certificatePicName;
     }
 
+    public Integer getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(Integer isGroup) {
+        this.isGroup = isGroup;
+    }
 }

@@ -1,5 +1,6 @@
 package org.tonzoc.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.tonzoc.model.AttendanceModel;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.ReturnModel;
@@ -45,4 +46,7 @@ public interface IAttendanceService extends IBaseService<AttendanceModel> {
 
     // 按照人员类别查询当天打卡人数
     List<ReturnModel> listByAttTime();
+
+    // 安全人员统计是否打卡
+    List<PersonModel> securityPerson(String name, String personTypeGuid, String tenderGuid, Integer flag, String categoryGuid);
 }

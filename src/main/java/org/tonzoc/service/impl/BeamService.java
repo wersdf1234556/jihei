@@ -324,8 +324,8 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
     // 梁统计查询
     @Override
-    public List<ReturnBeamCount> selectByTender(String tenderGuid){
+    public List<ReturnBeamCount> selectByTender(String tenderGuid, String name, String leftAndRight){
 
-        return beamMapper.selectByTender(tenderGuid);
+        return beamMapper.selectByTender(tenderGuid, name, leftAndRight);
     }
 }

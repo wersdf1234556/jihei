@@ -24,6 +24,8 @@ public class BeamPersonModel extends BaseModel{
     private String operator;
     @Column(value = "tenderGuid")
     private String tenderGuid;
+    @Column(value = "beamGroupGuid")
+    private String beamGroupGuid;
 
     // @JoinColumn(value = "", type = BeamModel.class, leftColumn = "personModel", rightColumn = "guid")
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
@@ -32,8 +34,12 @@ public class BeamPersonModel extends BaseModel{
     private String personName;
     @JoinColumn(value = "idCard", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
     private String personIdCard;
+    @JoinColumn(value = "mobile", type = PersonModel.class, leftColumn = "personGuid", rightColumn = "guid")
+    private String personMobile;
     @JoinColumn(value = "name", type = PersonTypeModel.class, leftColumn = "personTypeGuid", rightColumn = "guid")
     private String personTypeName;
+    @JoinColumn(value = "name", type = BeamGroupModel.class, leftColumn = "beamGroupGuid", rightColumn = "guid")
+    private String beamGroupName;
 
     public BeamPersonModel() {
     }
@@ -132,5 +138,29 @@ public class BeamPersonModel extends BaseModel{
 
     public void setTenderName(String tenderName) {
         this.tenderName = tenderName;
+    }
+
+    public String getPersonMobile() {
+        return personMobile;
+    }
+
+    public void setPersonMobile(String personMobile) {
+        this.personMobile = personMobile;
+    }
+
+    public String getBeamGroupGuid() {
+        return beamGroupGuid;
+    }
+
+    public void setBeamGroupGuid(String beamGroupGuid) {
+        this.beamGroupGuid = beamGroupGuid;
+    }
+
+    public String getBeamGroupName() {
+        return beamGroupName;
+    }
+
+    public void setBeamGroupName(String beamGroupName) {
+        this.beamGroupName = beamGroupName;
     }
 }

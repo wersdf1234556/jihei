@@ -30,6 +30,6 @@ public interface PersonMapper  extends BaseMapper<PersonModel>  {
                                       @Param(value = "name") String name,
                                       @Param(value = "idCard") String idCard,
                                       @Param(value = "mobile") String mobile,
-                                      @Param(value = "personTypeGuid") String personTypeGuid);
-
+                                      @Param(value = "personTypeGuid") String personTypeGuid,
+                                      @Param(value = "attTime") String attTime);
 }

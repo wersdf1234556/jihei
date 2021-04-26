@@ -150,4 +150,14 @@ public class AttendanceController extends BaseController {
 
         return attendanceService.listByAttTime();
     }
+
+    // 人员统计是否打卡
+    @GetMapping(value = "securityPerson")
+    public PageResponse securityPerson(PageQueryParams pageQueryParams, String name, String personTypeGuid, String tenderGuid, Integer flag, String categoryGuid) throws PageException {
+
+        Page<AttendanceModel> page = parsePage(pageQueryParams);
+
+        List<PersonModel> list = attendanceService.securityPerson(name, personTypeGuid, tenderGuid, flag, categoryGuid);
+        return new PageResponse(page.getTotal(), list);
+    }
 }

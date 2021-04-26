@@ -100,10 +100,10 @@ public class BeamController extends BaseController{
 
     // 梁统计查询
     @GetMapping(value = "selectByTender")
-    public PageResponse selectByTender(PageQueryParams pageQueryParams, String tenderGuid) throws PageException {
+    public PageResponse selectByTender(PageQueryParams pageQueryParams, String tenderGuid, String name, String leftAndRight) throws PageException {
 
         Page<BeamModel> page = parsePage(pageQueryParams);
-        List<ReturnBeamCount> list = beamService.selectByTender(tenderGuid);
+        List<ReturnBeamCount> list = beamService.selectByTender(tenderGuid, name, leftAndRight);
         return new PageResponse(page.getTotal(), list);
     }
 }
