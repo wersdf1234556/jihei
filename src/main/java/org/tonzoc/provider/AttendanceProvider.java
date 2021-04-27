@@ -39,6 +39,8 @@ public class AttendanceProvider {
             stringBuilder.append(" and persons.tenderGuid = '" + tenderGuid + "'");
         }
 
+        stringBuilder.append(" order by tenders.sortId asc");
+
         return stringBuilder.toString();
     }
 
