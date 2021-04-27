@@ -28,6 +28,8 @@ public class BeamProvider {
             stringBuilder.append(" and leftAndRight = '" + leftAndRight + "'");
         }
 
+        stringBuilder.append(" order by MainTable.name, leftAndRight asc");
+
         return stringBuilder.toString();
     }
 
