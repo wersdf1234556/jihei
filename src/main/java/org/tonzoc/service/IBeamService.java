@@ -3,6 +3,7 @@ package org.tonzoc.service;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPrefabricationModel;
 import org.tonzoc.model.ReturnBeamCount;
+import org.tonzoc.model.support.ReturnBeamModel;
 
 import java.util.List;
 
@@ -34,4 +35,10 @@ public interface IBeamService extends IBaseService<BeamModel> {
 
     // 梁统计查询
     List<ReturnBeamCount> selectByTender(String tenderGuid, String name, String leftAndRight);
+
+    // 筛选
+    String screen(String tenderGuid, String num) throws Exception;
+
+    // 按照编号查询历史记录 带分页
+    List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight);
 }

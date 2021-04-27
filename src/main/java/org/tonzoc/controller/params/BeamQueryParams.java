@@ -22,6 +22,8 @@ public class BeamQueryParams {
     private String endTime;
     @Operator(value = "eq", field = "beamPrefabricationsStatusbeamPrefabricationStatusTable.status")
     private String beamPrefabricationStatus;
+    @Operator(value = "eq", field = "beamPrefabricationsNamebeamPrefabricationNameTable.name")
+    private String beamPrefabricationName;
 
     public String getGuid() {
         return guid;
@@ -93,5 +95,13 @@ public class BeamQueryParams {
 
     public void setBeamPrefabricationStatus(String beamPrefabricationStatus) {
         this.beamPrefabricationStatus = beamPrefabricationStatus;
+    }
+
+    public String getBeamPrefabricationName() {
+        return beamPrefabricationName;
+    }
+
+    public void setBeamPrefabricationName(String beamPrefabricationName) {
+        this.beamPrefabricationName = beamPrefabricationName;
     }
 }

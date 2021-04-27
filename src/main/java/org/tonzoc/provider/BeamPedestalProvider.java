@@ -7,8 +7,7 @@ public class BeamPedestalProvider {
     public String selectByNum(@Param(value = "name") String name,
                               @Param(value = "num") String num) {
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("select * from beamPedestals where " + name + " = " + num);
+        StringBuilder stringBuilder = new StringBuilder("select * from beamPedestals as MainTable where " + name + " = " + num);
 
         return stringBuilder.toString();
     }

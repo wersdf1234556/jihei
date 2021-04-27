@@ -30,4 +30,29 @@ public class BeamProvider {
 
         return stringBuilder.toString();
     }
+
+    public String listHistoryPage(@Param(value = "name") String name,
+                                  @Param(value = "num") String num,
+                                  @Param(value = "beamPrefabricationName") String beamPrefabricationName,
+                                  @Param(value = "leftAndRight") String leftAndRight) {
+
+        StringBuilder stringBuilder = new StringBuilder(" select * from (select beamPedestals.name pedestalName, beamPedestals.modelNum modelNum, beamPedestals.textNum textNum, beamPedestals.pedestalNum pedestalNum, tenders.name tenderName," +
+                        " beamPedestals.name beamPedestalName, beamPrefabrications.name name, beamPrefabrications.leftAndRight leftAndRight, beamPrefabrications.prefabricationNum prefabricationNum, beamPrefabrications.status status from beams" +
+                        " LEFT JOIN beamPedestals on beams.beamPedestalGuid = beamPedestals.guid" +
+                        " LEFT JOIN beamPrefabrications on beams.beamPrefabricationGuid = beamPrefabrications.guid" +
+                        " LEFT JOIN tenders on beams.tenderGuid = tenders.guid) MainTable");
+
+        stringBuilder.append(" where MainTable." + name + "= '" + num + "'");
+
+        if (beamPrefabricationName != null && !"".equals(beamPrefabricationName)) {
+
+            stringBuilder.append(" and MainTable.name like '%" + beamPrefabricationName + "%'");
+        }
+        if (leftAndRight != null && !"".equals(leftAndRight)) {
+
+            stringBuilder.append(" and MainTable.leftAndRight = '" + leftAndRight + "'");
+        }
+
+        return stringBuilder.toString();
+    }
 }
