@@ -6,6 +6,7 @@ public class ReturnBeamModel extends BeamPrefabricationModel {
 
     private String modelNum;
     private String textNum;
+    private String pedestalNum;
     private String pedestalName;
     
     public String getModelNum() {
@@ -22,6 +23,14 @@ public class ReturnBeamModel extends BeamPrefabricationModel {
 
     public void setTextNum(String textNum) {
         this.textNum = textNum;
+    }
+
+    public String getPedestalNum() {
+        return pedestalNum;
+    }
+
+    public void setPedestalNum(String pedestalNum) {
+        this.pedestalNum = pedestalNum;
     }
 
     public String getPedestalName() {

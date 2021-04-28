@@ -10,6 +10,7 @@ import org.tonzoc.exception.PageException;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPrefabricationModel;
 import org.tonzoc.model.ReturnBeamCount;
+import org.tonzoc.model.support.ReturnBeamModel;
 import org.tonzoc.service.IBeamService;
 import org.tonzoc.support.param.SqlQueryParam;
 import javax.validation.Valid;
@@ -62,13 +63,6 @@ public class BeamController extends BaseController{
         beamService.deletes(guids);
     }
 
-    // 更新信息
-    @PutMapping(value = "modify")
-    public void modify( BeamModel beamModel, String remarks) throws Exception {
-
-//        beamService.modify(beamModel, remarks);
-    }
-
     // 按照编号查询历史记录
     @GetMapping(value = "listHistory")
     public List<BeamModel> listHistory(String name, String num) {
@@ -104,6 +98,23 @@ public class BeamController extends BaseController{
 
         Page<BeamModel> page = parsePage(pageQueryParams);
         List<ReturnBeamCount> list = beamService.selectByTender(tenderGuid, name, leftAndRight);
+        return new PageResponse(page.getTotal(), list);
+    }
+
+    // 筛选
+    @GetMapping(value = "screen")
+    public String screen(String tenderGuid, String num) throws Exception {
+
+        return beamService.screen(tenderGuid, num);
+    }
+
+    // 按照编号查询历史记录 带分页
+    @GetMapping(value = "listHistoryPage")
+    public PageResponse listHistoryPage(PageQueryParams pageQueryParams, String name, String num, String beamPrefabricationName, String leftAndRight) throws PageException {
+
+        Page<ReturnBeamModel> page = parsePage(pageQueryParams);
+        List<ReturnBeamModel> list = beamService.listHistoryPage(name, num, beamPrefabricationName, leftAndRight);
+
         return new PageResponse(page.getTotal(), list);
     }
 }

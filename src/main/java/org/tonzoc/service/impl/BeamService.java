@@ -9,6 +9,7 @@ import org.tonzoc.mapper.BeamOrderMapper;
 import org.tonzoc.mapper.BeamPedestalMapper;
 import org.tonzoc.mapper.BeamPersonMapper;
 import org.tonzoc.model.*;
+import org.tonzoc.model.support.ReturnBeamModel;
 import org.tonzoc.service.IBeamOrderService;
 import org.tonzoc.service.IBeamPedestalService;
 import org.tonzoc.service.IBeamPrefabricationService;
@@ -327,5 +328,32 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
     public List<ReturnBeamCount> selectByTender(String tenderGuid, String name, String leftAndRight){
 
         return beamMapper.selectByTender(tenderGuid, name, leftAndRight);
+    }
+
+    // 筛选
+    @Override
+    public String screen(String tenderGuid, String num) throws Exception {
+        List<BeamPedestalModel> list = beamMapper.numberByTender(tenderGuid, num);
+        for (BeamPedestalModel li: list) {
+            if ("1".equals(li.getPedestalNum())) {
+                return "pedestalNum";
+
+            }
+            if ("1".equals(li.getModelNum())) {
+                return "modelNum";
+
+            }
+            if ("1".equals(li.getTextNum())) {
+                return "textNum";
+            }
+        }
+        throw new Exception("点击位置不对，请重试");
+    }
+
+    // 按照编号查询历史记录 带分页
+    @Override
+    public List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight) {
+
+        return beamMapper.listHistoryPage(name, num, beamPrefabricationName, leftAndRight);
     }
 }
