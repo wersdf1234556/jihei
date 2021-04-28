@@ -76,6 +76,28 @@ public class LabCoverProtectometerModel extends BaseModel {
     private String tenderGuid;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
+    @Column(value = "designThickness2")
+    private Integer designThickness2;
+    @Column(value = "structuralPosition")
+    private Integer structuralPosition;
+
+    @JsonProperty(value = "design_thickness2")
+    public void setDesignThickness2(Integer designThickness2) {
+        this.designThickness2 = designThickness2;
+    }
+
+    @JsonProperty(value = "structural_position")
+    public void setStructuralPosition(Integer structuralPosition) {
+        this.structuralPosition = structuralPosition;
+    }
+
+    public Integer getDesignThickness2() {
+        return designThickness2;
+    }
+
+    public Integer getStructuralPosition() {
+        return structuralPosition;
+    }
 
     public String getTenderName() {
         return tenderName;
