@@ -15,6 +15,7 @@ import org.tonzoc.service.ILabTenderService;
 import org.tonzoc.support.param.SqlQueryParam;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -45,5 +46,33 @@ public class LabBeamTensionController extends BaseController {
         labBeamTensionService.save(labBeamTensionModel);
         return new ExceptionResponse(200, "success", "成功！");
         //        this.labBeamTensionService.save(labBeamTensionModel);
+    }
+
+    @GetMapping(value = "groupData")
+    public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate)
+            throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+
+        Page<LabBeamTensionModel> page = parsePage(pageQueryParams);
+
+        List<LabBeamTensionModel> list = labBeamTensionService.getGroupData(componentParts, startDate, endDate);
+
+        for (LabBeamTensionModel labBeamTensionModel : list) {
+            List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+            sqlQueryParams.add(new SqlQueryParam("componentId", labBeamTensionModel.getComponentId(), "eq"));
+            labBeamTensionModel.setChildren(labBeamTensionService.list(sqlQueryParams));
+        }
+
+        return new PageResponse(page.getTotal(), list);
+    }
+
+    @PostMapping(value = "match")
+    public void match(String componentId, String beamPrefabricationGuid) {
+        List<SqlQueryParam> sqlQueryParams = new ArrayList<>();
+        sqlQueryParams.add(new SqlQueryParam("componentId", componentId, "eq"));
+        List<LabBeamTensionModel> list = labBeamTensionService.list(sqlQueryParams);
+        for (LabBeamTensionModel labBeamTensionModel : list) {
+            labBeamTensionModel.setModelNum(beamPrefabricationGuid);
+            this.labBeamTensionService.update(labBeamTensionModel);
+        }
     }
 }

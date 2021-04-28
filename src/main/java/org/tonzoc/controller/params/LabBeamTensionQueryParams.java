@@ -10,6 +10,17 @@ public class LabBeamTensionQueryParams {
     @Operator(value = "eq", field = "guid")
     private String id;
 
+    @Operator(value = "eq", field = "componentId")
+    private String componentId;
+
+    public String getComponentId() {
+        return componentId;
+    }
+
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
+    }
+
     public String getId() {
         return id;
     }

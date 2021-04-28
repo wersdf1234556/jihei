@@ -6,6 +6,8 @@ import org.tonzoc.annotation.JoinColumn;
 import org.tonzoc.annotation.PrimaryKey;
 import org.tonzoc.annotation.Table;
 
+import java.util.List;
+
 @Table(value = "labBeamTensions")
 public class LabBeamTensionModel extends BaseModel {
     @PrimaryKey
@@ -106,9 +108,29 @@ public class LabBeamTensionModel extends BaseModel {
     private String tenderGuid;
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
+    @JoinColumn(value = "name", type = BeamPrefabricationModel.class, leftColumn = "modelNum", rightColumn = "guid")
+    private String beamName;
+
+    public String getBeamName() {
+        return beamName;
+    }
+
+    public void setBeamName(String beamName) {
+        this.beamName = beamName;
+    }
 
     @Column(value = "equipmentName")
     private String equipmentName;
+
+    private List<LabBeamTensionModel> children;
+
+    public List<LabBeamTensionModel> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<LabBeamTensionModel> children) {
+        this.children = children;
+    }
 
     public String getEquipmentName() {
         return equipmentName;

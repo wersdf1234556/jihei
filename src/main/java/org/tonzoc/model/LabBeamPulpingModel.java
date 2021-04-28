@@ -3,6 +3,8 @@ package org.tonzoc.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.*;
 
+import java.util.List;
+
 @Table(value = "labBeamPulpings")
 public class LabBeamPulpingModel extends BaseModel {
     @PrimaryKey
@@ -86,6 +88,26 @@ public class LabBeamPulpingModel extends BaseModel {
     private String tenderName;
     @Column(value = "equipmentName")
     private String equipmentName;
+    @JoinColumn(value = "name", type = BeamPrefabricationModel.class, leftColumn = "modelNum", rightColumn = "guid")
+    private String beamName;
+
+    public String getBeamName() {
+        return beamName;
+    }
+
+    public void setBeamName(String beamName) {
+        this.beamName = beamName;
+    }
+
+    private List<LabBeamPulpingModel> children;
+
+    public List<LabBeamPulpingModel> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<LabBeamPulpingModel> children) {
+        this.children = children;
+    }
 
     public String getEquipmentName() {
         return equipmentName;
