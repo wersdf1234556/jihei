@@ -54,7 +54,7 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
         map.put("hnt", "rgba(112, 194, 99,1)");
         map.put("ys", " rgba(93, 179, 251,1)");
         map.put("zl", "rgba(151, 111, 248,1)");
-        map.put("yj", "rgba(151, 111, 248,1)");
+        map.put("yj", "rgba(255, 255, 0,1)");
         map.put("finish", "rgba(255, 255, 255,0)");
     }
 
