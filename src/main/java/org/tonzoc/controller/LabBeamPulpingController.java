@@ -65,6 +65,11 @@ public class LabBeamPulpingController extends BaseController {
         return new PageResponse(page.getTotal(), list);
     }
 
+    @DeleteMapping(value = "{guid}")
+    public void remove(@PathVariable(value = "guid") String guid) {
+        this.labBeamPulpingService.remove(guid);
+    }
+
     @PostMapping(value = "match")
     public void match(String componentId, String beamPrefabricationGuid) {
         List<SqlQueryParam> sqlQueryParams = new ArrayList<>();

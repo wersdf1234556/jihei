@@ -48,6 +48,11 @@ public class LabBeamTensionController extends BaseController {
         //        this.labBeamTensionService.save(labBeamTensionModel);
     }
 
+    @DeleteMapping(value = "{guid}")
+    public void remove(@PathVariable(value = "guid") String guid) {
+        this.labBeamTensionService.remove(guid);
+    }
+
     @GetMapping(value = "groupData")
     public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
