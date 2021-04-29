@@ -43,10 +43,10 @@ public class MachineGpsRecordService extends BaseService<MachineGpsRecordModel> 
             machineGpsRecordModel.setHSpeed(li.getHSpeed());
             machineGpsRecordModel.setHDate(li.getHDate());
             machineGpsRecordModel.setIsParsed(li.getIsParsed());
-            machineGpsRecordModel.setRefinedLng("");
-            machineGpsRecordModel.setRefinedLat("");
-            machineGpsRecordModel.setBaiduLng("");
-            machineGpsRecordModel.setBaiduLat("");
+            machineGpsRecordModel.setRefinedLng(li.getRefinedLng());
+            machineGpsRecordModel.setRefinedLat(li.getRefinedLat());
+            machineGpsRecordModel.setBaiduLng(li.getBaiduLng());
+            machineGpsRecordModel.setBaiduLat(li.getBaiduLat());
 
             if (list1.size() == 1000) {
 

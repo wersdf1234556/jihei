@@ -48,8 +48,10 @@ public class TenderMachineTypeController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid TenderMachineTypeModel tenderMachineTypeModel) {
+
         MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
         tenderMachineTypeModel.setName(machineTypeModel.getName());
+        tenderMachineTypeModel.setFormattedName(machineTypeModel.getFormattedName());
         tenderMachineTypeModel.setSortId(machineTypeModel.getSortId());
         tenderMachineTypeModel.setMachineCategoryGuid(machineTypeModel.getMachineCategoryGuid());
 
@@ -62,6 +64,8 @@ public class TenderMachineTypeController extends BaseController {
         MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
         tenderMachineTypeModel.setName(machineTypeModel.getName());
         tenderMachineTypeModel.setFormattedName(machineTypeModel.getFormattedName());
+        tenderMachineTypeModel.setSortId(machineTypeModel.getSortId());
+        tenderMachineTypeModel.setMachineCategoryGuid(machineTypeModel.getMachineCategoryGuid());
 
         this.tenderMachineTypeService.update(tenderMachineTypeModel);
     }

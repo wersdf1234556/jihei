@@ -28,6 +28,11 @@ public class BeamController extends BaseController{
     public PageResponse list(PageQueryParams pageQueryParams, BeamQueryParams beamQueryParams)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
+        if (pageQueryParams.getOrder() == null || "".equals(pageQueryParams.getOrder())) {
+
+            pageQueryParams.setOrder("attTime desc, beamPrefabricationName, leftAndRight, prefabricationNum, beamPedestalName, beamPedestalStatus");
+            pageQueryParams.setSort("asc");
+        }
         Page<BeamModel> page = parsePage(pageQueryParams);
 
         List<SqlQueryParam> sqlQueryParams = parseSqlQueryParams(beamQueryParams);
