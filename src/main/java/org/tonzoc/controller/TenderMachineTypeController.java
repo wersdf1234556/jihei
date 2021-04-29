@@ -62,9 +62,11 @@ public class TenderMachineTypeController extends BaseController {
     public void update(@RequestBody @Valid TenderMachineTypeModel tenderMachineTypeModel) {
 
         MachineTypeModel machineTypeModel = machineTypeService.get(tenderMachineTypeModel.getMachineTypeGuid());
-        tenderMachineTypeModel.setName(machineTypeModel.getName());
-        tenderMachineTypeModel.setFormattedName(machineTypeModel.getFormattedName());
-        tenderMachineTypeModel.setSortId(machineTypeModel.getSortId());
+        if (tenderMachineTypeModel.getName() != null && !"".equals(tenderMachineTypeModel.getName())) {
+
+            tenderMachineTypeModel.setName(machineTypeModel.getName());
+            tenderMachineTypeModel.setFormattedName(machineTypeModel.getFormattedName());
+        }
         tenderMachineTypeModel.setMachineCategoryGuid(machineTypeModel.getMachineCategoryGuid());
 
         this.tenderMachineTypeService.update(tenderMachineTypeModel);
