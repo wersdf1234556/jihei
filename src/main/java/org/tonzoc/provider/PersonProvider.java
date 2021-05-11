@@ -27,7 +27,7 @@ public class PersonProvider {
 
         }
         if (name != null && !"".equals(name)) {
-            stringBuilder.append(" and name like '%" + name + "%'");
+            stringBuilder.append(" and persons.name like '%" + name + "%'");
 
         }
         if (idCard != null && !"".equals(idCard)) {

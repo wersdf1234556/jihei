@@ -63,8 +63,8 @@ public class BeamPrefabricationController extends BaseController {
 
     // 梁的数量信息
     @GetMapping(value = "selectPrefabrication")
-    public List<ReturnModel> selectPrefabrication() {
+    public List<ReturnModel> selectPrefabrication(String tenderGuid) {
 
-        return beamPrefabricationService.selectPrefabrication();
+        return beamPrefabricationService.selectPrefabrication(tenderGuid);
     }
 }

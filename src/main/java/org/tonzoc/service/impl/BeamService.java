@@ -275,9 +275,9 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
     // 按照编号查询历史记录
     @Override
-    public List<BeamModel> listHistory(String name, String num) {
+    public List<BeamModel> listHistory(String name, String num, String tenderGuid) {
 
-        BeamPedestalModel beamPedestalModel = beamPedestalMapper.selectByNum(name, num);
+        BeamPedestalModel beamPedestalModel = beamPedestalMapper.selectByNum(name, num, tenderGuid);
         return beamMapper.listHistory(beamPedestalModel.getGuid());
     }
 
@@ -293,15 +293,15 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
         List<BeamPedestalModel> list = beamMapper.numberByTender(tenderGuid, num);
         for (BeamPedestalModel li: list) {
             if ("1".equals(li.getPedestalNum())) {
-                return this.listHistory("pedestalNum", num);
+                return this.listHistory("pedestalNum", num, tenderGuid);
 
             }
             if ("1".equals(li.getModelNum())) {
-                return beamMapper.selectByNum(num);
+                return beamMapper.selectByNum(num, tenderGuid);
 
             }
             if ("1".equals(li.getTextNum())) {
-                return this.listHistory("textNum", num);
+                return this.listHistory("textNum", num, tenderGuid);
 
             }
         }
@@ -352,8 +352,8 @@ public class BeamService extends BaseService<BeamModel> implements IBeamService 
 
     // 按照编号查询历史记录 带分页
     @Override
-    public List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight) {
+    public List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight, String tenderGuid) {
 
-        return beamMapper.listHistoryPage(name, num, beamPrefabricationName, leftAndRight);
+        return beamMapper.listHistoryPage(name, num, beamPrefabricationName, leftAndRight, tenderGuid);
     }
 }

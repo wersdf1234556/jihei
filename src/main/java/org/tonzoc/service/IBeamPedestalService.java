@@ -10,7 +10,7 @@ import java.util.List;
 public interface IBeamPedestalService extends IBaseService<BeamPedestalModel>{
 
     // 按类别统计台座数量和梁的数量
-    List<ReturnQtbModel> listByStatus();
+    List<ReturnQtbModel> listByStatus(String tenderGuid);
 
     // 删除一个梁
     void delete (String guid) throws Exception;

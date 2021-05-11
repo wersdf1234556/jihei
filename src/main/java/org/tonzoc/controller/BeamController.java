@@ -70,9 +70,9 @@ public class BeamController extends BaseController{
 
     // 按照编号查询历史记录
     @GetMapping(value = "listHistory")
-    public List<BeamModel> listHistory(String name, String num) {
+    public List<BeamModel> listHistory(String name, String num, String tenderGuid) {
 
-        return beamService.listHistory(name, num);
+        return beamService.listHistory(name, num, tenderGuid);
     }
 
     // 查询一条或多条
@@ -115,10 +115,10 @@ public class BeamController extends BaseController{
 
     // 按照编号查询历史记录 带分页
     @GetMapping(value = "listHistoryPage")
-    public PageResponse listHistoryPage(PageQueryParams pageQueryParams, String name, String num, String beamPrefabricationName, String leftAndRight) throws PageException {
+    public PageResponse listHistoryPage(PageQueryParams pageQueryParams, String name, String num, String beamPrefabricationName, String leftAndRight, String tenderGuid) throws PageException {
 
         Page<ReturnBeamModel> page = parsePage(pageQueryParams);
-        List<ReturnBeamModel> list = beamService.listHistoryPage(name, num, beamPrefabricationName, leftAndRight);
+        List<ReturnBeamModel> list = beamService.listHistoryPage(name, num, beamPrefabricationName, leftAndRight, tenderGuid);
 
         return new PageResponse(page.getTotal(), list);
     }

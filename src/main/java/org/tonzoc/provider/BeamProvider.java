@@ -36,7 +36,8 @@ public class BeamProvider {
     public String listHistoryPage(@Param(value = "name") String name,
                                   @Param(value = "num") String num,
                                   @Param(value = "beamPrefabricationName") String beamPrefabricationName,
-                                  @Param(value = "leftAndRight") String leftAndRight) {
+                                  @Param(value = "leftAndRight") String leftAndRight,
+                                  @Param(value = "tenderGuid") String tenderGuid) {
 
         StringBuilder stringBuilder = new StringBuilder(" select * from (select beamPedestals.name pedestalName, beamPedestals.modelNum modelNum, beamPedestals.textNum textNum, beamPedestals.pedestalNum pedestalNum, tenders.name tenderName," +
                         " beamPedestals.name beamPedestalName, beamPrefabrications.name name, beamPrefabrications.leftAndRight leftAndRight, beamPrefabrications.prefabricationNum prefabricationNum, beamPrefabrications.status status from beams" +
@@ -44,7 +45,7 @@ public class BeamProvider {
                         " LEFT JOIN beamPrefabrications on beams.beamPrefabricationGuid = beamPrefabrications.guid" +
                         " LEFT JOIN tenders on beams.tenderGuid = tenders.guid) MainTable");
 
-        stringBuilder.append(" where MainTable." + name + "= '" + num + "'");
+        stringBuilder.append(" where MainTable." + name + " = '" + num + "'");
 
         if (beamPrefabricationName != null && !"".equals(beamPrefabricationName)) {
 

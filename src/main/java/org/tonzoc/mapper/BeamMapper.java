@@ -53,8 +53,9 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
     @Select("select * from (select c.guid, a.modelNum, a.name pedestalName, c.name, c.prefabricationNum, c.concreteStrengthOne, c.concreteStrengthTwo, c.concreteStrengthThree, c.remarks, c.status, c.leftAndRight, c.length from beams as b" +
             " left join beamPedestals as a on a.guid = b.beamPedestalGuid" +
             " left join beamPrefabrications as c on c.guid = b.beamPrefabricationGuid " +
-            " where b.beamPedestalGuid = (select guid from beamPedestals where modelNum = #{num})) MainTable")
-    List<ReturnBeamModel> selectByNum(@Param(value = "num") String num);
+            " where b.beamPedestalGuid = (select guid from beamPedestals where modelNum = #{num} and tenderGuid = #{tenderGuid})) MainTable")
+    List<ReturnBeamModel> selectByNum(@Param(value = "num") String num,
+                                      @Param(value = "tenderGuid") String tenderGuid);
 
     @Select("select name + leftAndRight from beamPrefabrications" +
             " where tenderGuid = #{tenderGuid}" +
@@ -79,5 +80,6 @@ public interface BeamMapper extends BaseMapper<BeamModel> {
     List<ReturnBeamModel> listHistoryPage(@Param(value = "name") String name,
                                           @Param(value = "num") String num,
                                           @Param(value = "beamPrefabricationName") String beamPrefabricationName,
-                                          @Param(value = "leftAndRight") String leftAndRight);
+                                          @Param(value = "leftAndRight") String leftAndRight,
+                                          @Param(value = "tenderGuid") String tenderGuid);
 }

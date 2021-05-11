@@ -25,16 +25,16 @@ public class BeamPrefabricationService extends BaseService<BeamPrefabricationMod
 
     // 梁的数量信息
     @Override
-    public List<ReturnModel> selectPrefabrication(){
+    public List<ReturnModel> selectPrefabrication(String tenderGuid){
 
         List<ReturnModel> list = new ArrayList<>();
         ReturnModel returnModel = new ReturnModel();
         returnModel.setName("梁总数量");
-        returnModel.setNumber(beamPrefabricationMapper.count());
+        returnModel.setNumber(beamPrefabricationMapper.count(tenderGuid));
 
         ReturnModel returnModel1 = new ReturnModel();
         returnModel1.setName("已完成数");
-        returnModel1.setNumber(beamPrefabricationMapper.selectByStatus("finish"));
+        returnModel1.setNumber(beamPrefabricationMapper.selectByStatus("finish", tenderGuid));
 
         ReturnModel returnModel2 = new ReturnModel();
         returnModel2.setName("比例");

@@ -22,7 +22,7 @@ public interface IBeamService extends IBaseService<BeamModel> {
     void deletes(String guids) throws Exception;
 
     // 按照编号查询历史记录
-    List<BeamModel> listHistory(String name, String num);
+    List<BeamModel> listHistory(String name, String num, String tenderGuid);
 
     // 查询一条或多条
     List selectOneOrAll(String tenderGuid, String num) throws Exception;
@@ -40,5 +40,5 @@ public interface IBeamService extends IBaseService<BeamModel> {
     String screen(String tenderGuid, String num) throws Exception;
 
     // 按照编号查询历史记录 带分页
-    List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight);
+    List<ReturnBeamModel> listHistoryPage(String name, String num, String beamPrefabricationName, String leftAndRight, String tenderGuid);
 }

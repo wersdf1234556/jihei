@@ -64,8 +64,8 @@ public class BeamPedestalController extends BaseController{
 
     // 按类别统计台座数量和梁的数量
     @GetMapping(value = "listByStatus")
-    public List<ReturnQtbModel> listByStatus(){
+    public List<ReturnQtbModel> listByStatus(String tenderGuid){
 
-        return beamPedestalService.listByStatus();
+        return beamPedestalService.listByStatus(tenderGuid);
     }
 }

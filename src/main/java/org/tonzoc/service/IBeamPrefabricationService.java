@@ -9,7 +9,7 @@ import java.util.List;
 public interface IBeamPrefabricationService extends IBaseService<BeamPrefabricationModel>{
 
     // 梁的数量信息
-    List<ReturnModel> selectPrefabrication();
+    List<ReturnModel> selectPrefabrication(String tenderGuid);
 
     // 删除一个梁
     void delete (String guid) throws Exception;
