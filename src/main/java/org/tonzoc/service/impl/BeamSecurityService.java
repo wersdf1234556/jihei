@@ -21,7 +21,7 @@ public class BeamSecurityService extends BaseService<BeamSecurityModel> implemen
     @Autowired
     private IAttachmentService attachmentService;
 
-    // 上传多个质量追溯文件
+    // 上传多个智慧梁场文件
     @Override
     public void upFiles(MultipartFile[] file, String fileType) {
 
@@ -30,7 +30,7 @@ public class BeamSecurityService extends BaseService<BeamSecurityModel> implemen
         intelliSiteProperties.setFileUrl("/");
     }
 
-    // 上传质量追溯文件
+    // 上传智慧梁场文件
     @Override
     public void upFile(MultipartFile file, String fileType) {
 

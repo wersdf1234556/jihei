@@ -36,15 +36,16 @@ public class BeamProvider {
     public String listHistoryPage(@Param(value = "name") String name,
                                   @Param(value = "num") String num,
                                   @Param(value = "beamPrefabricationName") String beamPrefabricationName,
-                                  @Param(value = "leftAndRight") String leftAndRight) {
+                                  @Param(value = "leftAndRight") String leftAndRight,
+                                  @Param(value = "tenderGuid") String tenderGuid) {
 
-        StringBuilder stringBuilder = new StringBuilder(" select * from (select beamPedestals.name pedestalName, beamPedestals.modelNum modelNum, beamPedestals.textNum textNum, beamPedestals.pedestalNum pedestalNum, tenders.name tenderName," +
+        StringBuilder stringBuilder = new StringBuilder(" select * from (select beamPedestals.name pedestalName, beamPedestals.modelNum modelNum, beamPedestals.textNum textNum, beamPedestals.pedestalNum pedestalNum, beamPedestals.tenderGuid, tenders.name tenderName," +
                         " beamPedestals.name beamPedestalName, beamPrefabrications.name name, beamPrefabrications.leftAndRight leftAndRight, beamPrefabrications.prefabricationNum prefabricationNum, beamPrefabrications.status status from beams" +
                         " LEFT JOIN beamPedestals on beams.beamPedestalGuid = beamPedestals.guid" +
                         " LEFT JOIN beamPrefabrications on beams.beamPrefabricationGuid = beamPrefabrications.guid" +
                         " LEFT JOIN tenders on beams.tenderGuid = tenders.guid) MainTable");
 
-        stringBuilder.append(" where MainTable." + name + "= '" + num + "'");
+        stringBuilder.append(" where MainTable." + name + " = '" + num + "'");
 
         if (beamPrefabricationName != null && !"".equals(beamPrefabricationName)) {
 
@@ -53,6 +54,10 @@ public class BeamProvider {
         if (leftAndRight != null && !"".equals(leftAndRight)) {
 
             stringBuilder.append(" and MainTable.leftAndRight = '" + leftAndRight + "'");
+        }
+        if (tenderGuid != null && !"".equals(tenderGuid)) {
+
+            stringBuilder.append(" and MainTable.tenderGuid = '" + tenderGuid + "'");
         }
 
         return stringBuilder.toString();

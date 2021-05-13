@@ -9,9 +9,10 @@ import javax.validation.Valid;
 
 public interface BeamPrefabricationMapper extends BaseMapper<BeamPrefabricationModel>{
 
-    @Select("select count(guid) from beamPrefabrications where status = #{status}")
-    Integer selectByStatus(@Param(value = "status") String status);
+    @Select("select count(guid) from beamPrefabrications where status = #{status} and tenderGuid = #{tenderGuid}")
+    Integer selectByStatus(@Param(value = "status") String status,
+                           @Param(value = "tenderGuid") String tenderGuid);
 
-    @Select("select count(guid) from beamPrefabrications")
-    Integer count();
+    @Select("select count(guid) from beamPrefabrications where tenderGuid = #{tenderGuid}")
+    Integer count(@Param(value = "tenderGuid") String tenderGuid);
 }

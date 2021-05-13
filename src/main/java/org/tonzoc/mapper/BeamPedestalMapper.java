@@ -13,12 +13,13 @@ import java.util.List;
 
 public interface BeamPedestalMapper extends BaseMapper<BeamPedestalModel>{
 
-    @Select("select status name, count(guid) number from beamPedestals" +
+    @Select("select status name, count(guid) number from beamPedestals where tenderGuid = #{tenderGuid}" +
             " GROUP BY beamPedestals.status")
-    List<ReturnModel> listByStatus();
+    List<ReturnModel> listByStatus(String tenderGuid);
 
     @SelectProvider(type = BeamPedestalProvider.class, method = "selectByNum")
     BeamPedestalModel selectByNum(@Param(value = "name") String name,
-                                  @Param(value = "num") String num);
+                                  @Param(value = "num") String num,
+                                  @Param(value = "tenderGuid") String tenderGuid);
 
 }

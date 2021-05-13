@@ -8,10 +8,8 @@ import org.tonzoc.mapper.BeamPrefabricationMapper;
 import org.tonzoc.model.BeamModel;
 import org.tonzoc.model.BeamPedestalModel;
 import org.tonzoc.model.ReturnModel;
-import org.tonzoc.model.support.ReturnListModel;
 import org.tonzoc.model.support.ReturnQtbModel;
 import org.tonzoc.service.IBeamPedestalService;
-import org.tonzoc.service.IBeamPrefabricationService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
     private BeamMapper beamMapper;
 
     // 按类别统计台座数量和梁的数量
-    public List<ReturnQtbModel> listByStatus() {
+    public List<ReturnQtbModel> listByStatus(String tenderGuid) {
 
         List<ReturnQtbModel> list1 = new ArrayList<>();
         ReturnQtbModel returnQtbModel = new ReturnQtbModel();
@@ -40,7 +38,7 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
         returnQtbModel.setShi("0");
         returnQtbModel.setXian("0");
         returnQtbModel.setYin("0");
-        List<ReturnModel> list = beamPedestalMapper.listByStatus();
+        List<ReturnModel> list = beamPedestalMapper.listByStatus(tenderGuid);
         for (ReturnModel li : list) {
             if ("unSubmit".equals(li.getName())) {
                 returnQtbModel.setYuan(li.getNumber() + "");
@@ -65,8 +63,8 @@ public class BeamPedestalService extends BaseService<BeamPedestalModel> implemen
 
         ReturnQtbModel returnQtbModel1 = new ReturnQtbModel();
         returnQtbModel1.setName("梁");
-        returnQtbModel1.setYuan(beamPrefabricationMapper.count() + "");
-        returnQtbModel1.setBan(beamPrefabricationMapper.selectByStatus("finish") + "");
+        returnQtbModel1.setYuan(beamPrefabricationMapper.count(tenderGuid) + "");
+        returnQtbModel1.setBan(beamPrefabricationMapper.selectByStatus("finish", tenderGuid) + "");
         if ("0".equals(returnQtbModel1.getYuan()) || "0".equals(returnQtbModel1.getBan())) {
             returnQtbModel1.setShi("0");
 

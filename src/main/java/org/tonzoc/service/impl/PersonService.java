@@ -120,7 +120,7 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
                 throw new NotOneResultFoundException("该人员已存在，请检查身份证号是否正确");
             }
         }
-        if (personModel.getPhoto() != null && !"".equals(personModel.getIdCard())) {
+        if (personModel.getMobile() != null && !"".equals(personModel.getMobile())) {
             List<SqlQueryParam> sqlQueryParams2 = new ArrayList<>();
             sqlQueryParams2.add(new SqlQueryParam("mobile", personModel.getMobile(), "eq"));
             sqlQueryParams2.add(new SqlQueryParam("guid", personModel.getGuid(), "neq"));
