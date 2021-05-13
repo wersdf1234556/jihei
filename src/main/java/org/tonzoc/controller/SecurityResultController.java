@@ -52,7 +52,19 @@ public class SecurityResultController extends BaseController {
 
     @PostMapping
     public void add(@RequestBody @Valid SecurityResultModel securityResultModel) {
+        System.out.println("------------------------------------------------------");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
         System.out.println(securityResultModel);
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("\n");
+        System.out.println("------------------------------------------------------");
         String imageData = securityResultModel.getImgData();
         String filePath = intelliSiteProperties.getFilePath() + "/securityResultImages/" + UUID.randomUUID() + ".jpg";
         if (GenerateImage(imageData, filePath)) {

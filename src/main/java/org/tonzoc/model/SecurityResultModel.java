@@ -133,6 +133,7 @@ public class SecurityResultModel extends BaseModel {
                 ", algType=" + algType +
                 ", remark='" + remark + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", data=" + data +
                 '}';
     }
 }

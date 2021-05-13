@@ -1,5 +1,6 @@
 package org.tonzoc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.tonzoc.annotation.Column;
 import org.tonzoc.annotation.NotInsertColumn;
 import org.tonzoc.annotation.PrimaryKey;
@@ -11,14 +12,14 @@ public class SecurityResultDetailModel extends BaseModel {
     @NotInsertColumn
     @Column(value = "guid")
     private String guid;
-    @Column(value = "left")
-    private Integer left;
-    @Column(value = "top")
-    private Integer top;
-    @Column(value = "right")
-    private Integer right;
-    @Column(value = "bottom")
-    private Integer bottom;
+    @Column(value = "posLeft")
+    private Integer posLeft;
+    @Column(value = "posTop")
+    private Integer posTop;
+    @Column(value = "posRight")
+    private Integer posRight;
+    @Column(value = "posBottom")
+    private Integer posBottom;
     @Column(value = "score")
     private Integer score;
     @Column(value = "securityResultGuid")
@@ -39,44 +40,48 @@ public class SecurityResultDetailModel extends BaseModel {
         return guid;
     }
 
-    public void setGuid(String guid) {
-        this.guid = guid;
+    public Integer getPosLeft() {
+        return posLeft;
     }
 
-    public Integer getLeft() {
-        return left;
+    public Integer getPosTop() {
+        return posTop;
     }
 
-    public void setLeft(Integer left) {
-        this.left = left;
+    public Integer getPosRight() {
+        return posRight;
     }
 
-    public Integer getTop() {
-        return top;
-    }
-
-    public void setTop(Integer top) {
-        this.top = top;
-    }
-
-    public Integer getRight() {
-        return right;
-    }
-
-    public void setRight(Integer right) {
-        this.right = right;
-    }
-
-    public Integer getBottom() {
-        return bottom;
-    }
-
-    public void setBottom(Integer bottom) {
-        this.bottom = bottom;
+    public Integer getPosBottom() {
+        return posBottom;
     }
 
     public Integer getScore() {
         return score;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
+    @JsonProperty(value = "left")
+    public void setPosLeft(Integer posLeft) {
+        this.posLeft = posLeft;
+    }
+
+    @JsonProperty(value = "top")
+    public void setPosTop(Integer posTop) {
+        this.posTop = posTop;
+    }
+
+    @JsonProperty(value = "right")
+    public void setPosRight(Integer posRight) {
+        this.posRight = posRight;
+    }
+
+    @JsonProperty(value = "bottom")
+    public void setPosBottom(Integer posBottom) {
+        this.posBottom = posBottom;
     }
 
     public void setScore(Integer score) {
@@ -87,11 +92,12 @@ public class SecurityResultDetailModel extends BaseModel {
     public String toString() {
         return "SecurityResultDetailModel{" +
                 "guid='" + guid + '\'' +
-                ", left=" + left +
-                ", top=" + top +
-                ", right=" + right +
-                ", bottom=" + bottom +
+                ", posLeft=" + posLeft +
+                ", posTop=" + posTop +
+                ", posRight=" + posRight +
+                ", posBottom=" + posBottom +
                 ", score=" + score +
+                ", securityResultGuid='" + securityResultGuid + '\'' +
                 '}';
     }
 }
