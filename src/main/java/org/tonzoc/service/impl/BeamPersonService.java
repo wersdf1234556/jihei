@@ -38,22 +38,20 @@ public class BeamPersonService extends BaseService<BeamPersonModel> implements I
 
         for (BeamPersonGroupModel li : list) {
 
-            if (!listPerson.contains(li.getPersonGuid())) {
-                PersonModel personModel = personService.get(li.getPersonGuid());
+            PersonModel personModel = personService.get(li.getPersonGuid());
 
-                BeamPersonModel beamPersonModel1 = new BeamPersonModel();
-                beamPersonModel1.setBeamGroupGuid(beamPersonModel.getBeamGroupGuid());
-                beamPersonModel1.setPersonTypeGuid(personModel.getPersonTypeGuid());
-                beamPersonModel1.setPersonMobile(personModel.getMobile());
-                beamPersonModel1.setPersonGuid(personModel.getGuid());
-                beamPersonModel1.setTenderGuid(personModel.getTenderGuid());
-                beamPersonModel1.setBeamGuid(beamPersonModel.getBeamGuid());
-                beamPersonModel1.setOperator(beamPersonModel.getOperator());
-                beamPersonModel1.setAttTime(beamPersonModel.getAttTime());
-                beamPersonModel1.setSortId(beamPersonModel.getSortId());
+            BeamPersonModel beamPersonModel1 = new BeamPersonModel();
+            beamPersonModel1.setBeamGroupGuid(beamPersonModel.getBeamGroupGuid());
+            beamPersonModel1.setPersonTypeGuid(personModel.getPersonTypeGuid());
+            beamPersonModel1.setPersonMobile(personModel.getMobile());
+            beamPersonModel1.setPersonGuid(personModel.getGuid());
+            beamPersonModel1.setTenderGuid(personModel.getTenderGuid());
+            beamPersonModel1.setBeamGuid(beamPersonModel.getBeamGuid());
+            beamPersonModel1.setOperator(beamPersonModel.getOperator());
+            beamPersonModel1.setAttTime(beamPersonModel.getAttTime());
+            beamPersonModel1.setSortId(beamPersonModel.getSortId());
 
-                this.save(beamPersonModel1);
-            }
+            this.save(beamPersonModel1);
         }
     }
 }
