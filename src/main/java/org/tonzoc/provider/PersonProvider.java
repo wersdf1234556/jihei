@@ -13,7 +13,7 @@ public class PersonProvider {
                                   @Param(value = "attTime") String attTime,
                                   @Param(value = "count") String count) {
 
-        StringBuilder stringBuilder = new StringBuilder("select tenders.guid tenderGuid, tenders.name tenderName, persons.guid guid, persons.name name, persons.idCard idCard," +
+        StringBuilder stringBuilder = new StringBuilder("select * from (select tenders.guid tenderGuid, tenders.name tenderName, persons.guid guid, persons.name name, persons.idCard idCard," +
                 " persons.mobile mobile, personTypes.guid personTypeGuid, personTypes.name typeName, case when attendances.pcount is null then 0 else attendances.pcount end as trainNumber," +
                 "'" + attTime + "' enterAreaTime from persons left join");
 
@@ -21,7 +21,7 @@ public class PersonProvider {
                     " group by personGuid) attendances on persons.guid = attendances.personGuid");
 
         stringBuilder.append(" left join tenders on persons.tenderguid = tenders.guid" +
-                " left join personTypes on persons.personTypeGuid = personTypes.guid where 1 = 1");
+                " left join personTypes on persons.personTypeGuid = personTypes.guid) MainTable where 1 = 1");
 
         if (tenderGuid != null && !"".equals(tenderGuid)) {
             stringBuilder.append(" and tenderGuid = '" + tenderGuid + "'");
