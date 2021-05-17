@@ -38,7 +38,9 @@ public class PersonController extends BaseController {
     }
 
     @PostMapping
-    public void add(@RequestBody @Valid PersonModel personModel ) throws Exception {
+    public void add(@RequestBody @Valid PersonModel personModel) throws Exception {
+
+        personModel.setIsGroup(0);
         this.personService.insertStack(personModel);
     }
 
