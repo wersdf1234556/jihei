@@ -184,14 +184,14 @@ public class PersonService extends BaseService<PersonModel> implements IPersonSe
 
     // 人员打卡次数
     @Override
-    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid, String attTime){
+    public List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid, String attTime, String count){
 
         if (attTime == null || "".equals(attTime)) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             attTime = formatter.format(new Date());
         }
 
-        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile, personTypeGuid, attTime);
+        return personMapper.attendanceCount(tenderGuid, name, idCard, mobile, personTypeGuid, attTime, count);
     }
 
 }

@@ -10,7 +10,8 @@ public class PersonProvider {
                                   @Param(value = "idCard") String idCard,
                                   @Param(value = "mobile") String mobile,
                                   @Param(value = "personTypeGuid") String personTypeGuid,
-                                  @Param(value = "attTime") String attTime) {
+                                  @Param(value = "attTime") String attTime,
+                                  @Param(value = "count") String count) {
 
         StringBuilder stringBuilder = new StringBuilder("select tenders.guid tenderGuid, tenders.name tenderName, persons.guid guid, persons.name name, persons.idCard idCard," +
                 " persons.mobile mobile, personTypes.guid personTypeGuid, personTypes.name typeName, case when attendances.pcount is null then 0 else attendances.pcount end as trainNumber," +
@@ -40,6 +41,17 @@ public class PersonProvider {
         }
         if (personTypeGuid != null && !"".equals(personTypeGuid)) {
             stringBuilder.append(" and personTypeGuid = '" + personTypeGuid + "'");
+
+        }
+        if (count != null && !"".equals(count)) { // 0没打卡, 1打卡
+            if ("0".equals(count)) {
+                stringBuilder.append(" and trainNumber = '" + count + "'");
+
+            }
+            if ("1".equals(count)) {
+                stringBuilder.append(" and trainNumber != '0'");
+
+            }
 
         }
 

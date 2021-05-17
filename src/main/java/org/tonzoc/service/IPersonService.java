@@ -1,5 +1,6 @@
 package org.tonzoc.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 import org.tonzoc.model.PersonModel;
 import org.tonzoc.model.support.ReturnPersonModel;
@@ -20,5 +21,11 @@ public interface IPersonService extends IBaseService<PersonModel> {
     List<ReturnPersonModel> addPerson(MultipartFile file) throws Exception;
 
     // 人员打卡次数
-    List<PersonModel> attendanceCount(String tenderGuid, String name, String idCard, String mobile, String personTypeGuid, String attTime);
+    List<PersonModel> attendanceCount(String tenderGuid,
+                                      String name,
+                                      String idCard,
+                                      String mobile,
+                                      String personTypeGuid,
+                                      String attTime,
+                                      String count);
 }
