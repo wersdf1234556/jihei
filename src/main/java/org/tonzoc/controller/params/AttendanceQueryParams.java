@@ -13,7 +13,7 @@ public class AttendanceQueryParams {
     private String sign; //0：闸机 1：手机端
     @Operator(value = "eq", field = "status")
     private String status;//体温是否异常 0：正常1：异常  37.3℃上为异常
-    @Operator(value = "eq", field = "personsTenderGuidtenderGuidTable.personName")
+    @Operator(value = "eq", field = "personsNamepersonNameTable.name")
     private String personName; //人员姓名
     @Operator(value = "eq", field = "personsTenderGuidtenderGuidTable.idCard")
     private String idCard;//身份证号

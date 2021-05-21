@@ -25,7 +25,7 @@ public class BeamCameraModel extends BaseModel {
     @Column(value = "beamType")
     private String beamType; // 摄像头是谁的
 
-    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "typeGuid", rightColumn = "guid")
+    @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
 
     public BeamCameraModel() {
