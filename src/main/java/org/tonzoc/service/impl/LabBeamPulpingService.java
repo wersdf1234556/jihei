@@ -14,7 +14,7 @@ public class LabBeamPulpingService extends BaseService<LabBeamPulpingModel> impl
     private LabBeamPulpingMapper labBeamPulpingMapper;
 
     @Override
-    public List<LabBeamPulpingModel> getGroupData(String componentParts, String startDate, String endDate) {
-        return labBeamPulpingMapper.getGroupData(componentParts, startDate, endDate);
+    public List<LabBeamPulpingModel> getGroupData(String componentParts, String startDate, String endDate, String tenderGuid) {
+        return labBeamPulpingMapper.getGroupData(componentParts, startDate, endDate, tenderGuid);
     }
 }

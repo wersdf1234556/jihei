@@ -13,5 +13,5 @@ import java.util.List;
 @Component
 public interface LabBeamPulpingMapper extends BaseMapper<LabBeamPulpingModel> {
     @SelectProvider(type = LabBeamPulpingProvider.class, method = "getGroupData")
-    List<LabBeamPulpingModel> getGroupData(@Param("componentParts") String componentParts, @Param("startDate") String startDate, @Param("endDate") String endDate);
+    List<LabBeamPulpingModel> getGroupData(@Param("componentParts") String componentParts, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("tenderGuid") String tenderGuid);
 }

@@ -75,6 +75,169 @@ public class LabPmsCbrModel extends BaseModel {
     @JoinColumn(value = "name", type = TenderModel.class, leftColumn = "tenderGuid", rightColumn = "guid")
     private String tenderName;
 
+    @Column(value = "cbr75")
+    private String cbr75;
+    @Column(value = "cbr100")
+    private String cbr100;
+    @Column(value = "cbr125")
+    private String cbr125;
+    @Column(value = "cbr25Load")
+    private String cbr25Load;
+    @Column(value = "cbr50Load")
+    private String cbr50Load;
+    @Column(value = "cbr75Load")
+    private String cbr75Load;
+    @Column(value = "cbr100Load")
+    private String cbr100Load;
+    @Column(value = "cbr125Load")
+    private String cbr125Load;
+    @Column(value = "cbr25Strength")
+    private String cbr25Strength;
+    @Column(value = "cbr50Strength")
+    private String cbr50Strength;
+    @Column(value = "cbr75Strength")
+    private String cbr75Strength;
+    @Column(value = "cbr100Strength")
+    private String cbr100Strength;
+    @Column(value = "cbr125Strength")
+    private String cbr125Strength;
+    @Column(value = "concreteAge")
+    private String concreteAge;
+    @Column(value = "serialNumber")
+    private String serialNumber;
+
+    public String getCbr75() {
+        return cbr75;
+    }
+
+    public String getCbr100() {
+        return cbr100;
+    }
+
+    public String getCbr125() {
+        return cbr125;
+    }
+
+    public String getCbr25Load() {
+        return cbr25Load;
+    }
+
+    public String getCbr50Load() {
+        return cbr50Load;
+    }
+
+    public String getCbr75Load() {
+        return cbr75Load;
+    }
+
+    public String getCbr100Load() {
+        return cbr100Load;
+    }
+
+    public String getCbr125Load() {
+        return cbr125Load;
+    }
+
+    public String getCbr25Strength() {
+        return cbr25Strength;
+    }
+
+    public String getCbr50Strength() {
+        return cbr50Strength;
+    }
+
+    public String getCbr75Strength() {
+        return cbr75Strength;
+    }
+
+    public String getCbr100Strength() {
+        return cbr100Strength;
+    }
+
+    public String getCbr125Strength() {
+        return cbr125Strength;
+    }
+
+    public String getConcreteAge() {
+        return concreteAge;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setCbr75(String cbr75) {
+        this.cbr75 = cbr75;
+    }
+
+    public void setCbr100(String cbr100) {
+        this.cbr100 = cbr100;
+    }
+
+    public void setCbr125(String cbr125) {
+        this.cbr125 = cbr125;
+    }
+
+    @JsonProperty(value = "cbr25_load")
+    public void setCbr25Load(String cbr25Load) {
+        this.cbr25Load = cbr25Load;
+    }
+
+    @JsonProperty(value = "cbr50_load")
+    public void setCbr50Load(String cbr50Load) {
+        this.cbr50Load = cbr50Load;
+    }
+
+    @JsonProperty(value = "cbr75_load")
+    public void setCbr75Load(String cbr75Load) {
+        this.cbr75Load = cbr75Load;
+    }
+
+    @JsonProperty(value = "cbr100_load")
+    public void setCbr100Load(String cbr100Load) {
+        this.cbr100Load = cbr100Load;
+    }
+
+    @JsonProperty(value = "cbr125_load")
+    public void setCbr125Load(String cbr125Load) {
+        this.cbr125Load = cbr125Load;
+    }
+
+    @JsonProperty(value = "cbr25_strength")
+    public void setCbr25Strength(String cbr25Strength) {
+        this.cbr25Strength = cbr25Strength;
+    }
+
+    @JsonProperty(value = "cbr50_strength")
+    public void setCbr50Strength(String cbr50Strength) {
+        this.cbr50Strength = cbr50Strength;
+    }
+
+    @JsonProperty(value = "cbr75_strength")
+    public void setCbr75Strength(String cbr75Strength) {
+        this.cbr75Strength = cbr75Strength;
+    }
+
+    @JsonProperty(value = "cbr100_strength")
+    public void setCbr100Strength(String cbr100Strength) {
+        this.cbr100Strength = cbr100Strength;
+    }
+
+    @JsonProperty(value = "cbr125_strength")
+    public void setCbr125Strength(String cbr125Strength) {
+        this.cbr125Strength = cbr125Strength;
+    }
+
+    @JsonProperty(value = "concrete_age")
+    public void setConcreteAge(String concreteAge) {
+        this.concreteAge = concreteAge;
+    }
+
+    @JsonProperty(value = "serial_number")
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
     public String getTenderName() {
         return tenderName;
     }

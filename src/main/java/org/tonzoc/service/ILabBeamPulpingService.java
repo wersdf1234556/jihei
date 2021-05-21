@@ -6,5 +6,5 @@ import org.tonzoc.model.LabBeamTensionModel;
 import java.util.List;
 
 public interface ILabBeamPulpingService extends IBaseService<LabBeamPulpingModel> {
-    List<LabBeamPulpingModel> getGroupData(String componentParts, String startDate, String endDate);
+    List<LabBeamPulpingModel> getGroupData(String componentParts, String startDate, String endDate, String tenderGuid);
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ILabBeamTensionService extends IBaseService<LabBeamTensionModel> {
 
-    List<LabBeamTensionModel> getGroupData(String componentParts, String startDate, String endDate);
+    List<LabBeamTensionModel> getGroupData(String componentParts, String startDate, String endDate, String tenderGuid);
 }

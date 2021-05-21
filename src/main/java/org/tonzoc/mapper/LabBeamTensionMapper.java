@@ -12,5 +12,5 @@ import java.util.List;
 public interface LabBeamTensionMapper extends BaseMapper<LabBeamTensionModel> {
 
     @SelectProvider(type = LabBeamTensionProvider.class, method = "getGroupData")
-    List<LabBeamTensionModel> getGroupData(@Param("componentParts") String componentParts, @Param("startDate") String startDate, @Param("endDate") String endDate);
+    List<LabBeamTensionModel> getGroupData(@Param("componentParts") String componentParts, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("tenderGuid") String tenderGuid);
 }

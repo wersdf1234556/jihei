@@ -54,12 +54,12 @@ public class LabBeamTensionController extends BaseController {
     }
 
     @GetMapping(value = "groupData")
-    public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate)
+    public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate, String tenderGuid)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<LabBeamTensionModel> page = parsePage(pageQueryParams);
 
-        List<LabBeamTensionModel> list = labBeamTensionService.getGroupData(componentParts, startDate, endDate);
+        List<LabBeamTensionModel> list = labBeamTensionService.getGroupData(componentParts, startDate, endDate, tenderGuid);
 
         for (LabBeamTensionModel labBeamTensionModel : list) {
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();

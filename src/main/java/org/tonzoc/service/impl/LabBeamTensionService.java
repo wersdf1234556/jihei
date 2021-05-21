@@ -18,7 +18,7 @@ public class LabBeamTensionService extends BaseService<LabBeamTensionModel> impl
     private LabBeamTensionMapper labBeamTensionMapper;
 
     @Override
-    public List<LabBeamTensionModel> getGroupData(String componentParts, String startDate, String endDate) {
-        return labBeamTensionMapper.getGroupData(componentParts, startDate, endDate);
+    public List<LabBeamTensionModel> getGroupData(String componentParts, String startDate, String endDate, String tenderGuid) {
+        return labBeamTensionMapper.getGroupData(componentParts, startDate, endDate, tenderGuid);
     }
 }

@@ -13,6 +13,9 @@ public class LabBeamTensionQueryParams {
     @Operator(value = "eq", field = "componentId")
     private String componentId;
 
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+
     public String getComponentId() {
         return componentId;
     }
@@ -35,5 +38,13 @@ public class LabBeamTensionQueryParams {
 
     public void setModelNum(String modelNum) {
         this.modelNum = modelNum;
+    }
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
     }
 }

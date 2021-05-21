@@ -49,12 +49,12 @@ public class LabBeamPulpingController extends BaseController {
     }
 
     @GetMapping(value = "groupData")
-    public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate)
+    public PageResponse getGroupData(PageQueryParams pageQueryParams, String componentParts, String startDate, String endDate, String tenderGuid)
             throws PageException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
         Page<LabBeamTensionModel> page = parsePage(pageQueryParams);
 
-        List<LabBeamPulpingModel> list = labBeamPulpingService.getGroupData(componentParts, startDate, endDate);
+        List<LabBeamPulpingModel> list = labBeamPulpingService.getGroupData(componentParts, startDate, endDate, tenderGuid);
 
         for (LabBeamPulpingModel labBeamPulpingModel : list) {
             List<SqlQueryParam> sqlQueryParams = new ArrayList<>();

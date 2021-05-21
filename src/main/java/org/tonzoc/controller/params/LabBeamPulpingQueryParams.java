@@ -12,6 +12,17 @@ public class LabBeamPulpingQueryParams {
     @Operator(value = "eq", field = "componentId")
     private String componentId;
 
+    @Operator(value = "eq", field = "tenderGuid")
+    private String tenderGuid;
+
+    public String getTenderGuid() {
+        return tenderGuid;
+    }
+
+    public void setTenderGuid(String tenderGuid) {
+        this.tenderGuid = tenderGuid;
+    }
+
     public String getComponentId() {
         return componentId;
     }
