@@ -23,6 +23,8 @@ public class UserQueryParams {
     private String managementPowerGuid;
     @Operator(value = "eq", field = "mobile")
     private String mobile;
+    @Operator(value = "eq", field = "accounType")
+    private String accounType;
 
     public String getMobile() {
         return mobile;
@@ -90,5 +92,13 @@ public class UserQueryParams {
 
     public void setManagementPowerGuid(String managementPowerGuid) {
         this.managementPowerGuid = managementPowerGuid;
+    }
+
+    public String getAccounType() {
+        return accounType;
+    }
+
+    public void setAccounType(String accounType) {
+        this.accounType = accounType;
     }
 }
