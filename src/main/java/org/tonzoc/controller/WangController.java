@@ -1,35 +1,64 @@
 package org.tonzoc.controller;
 
-import org.apache.coyote.Request;
+import com.alibaba.fastjson.JSONObject;
+import io.swagger.models.auth.In;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.tonzoc.exception.response.ExceptionResponse;
 import org.tonzoc.model.AttachmentModel;
-import org.tonzoc.model.LabPmsTesterModel;
 import org.tonzoc.service.IAttachmentService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-
-import static com.google.common.net.HttpHeaders.CONTENT_DISPOSITION;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping(value = "wang")
 public class WangController {
     @Autowired
     private IAttachmentService attachmentService;
+
+    @PostMapping("okhttp")
+    public Callable<Map> testOkHttpAsync() {
+        return () -> {
+            JSONObject json = new JSONObject();
+            json.put("openIds", "oJfYQwPjf4dBX8aW43uEa-7kCMfM");
+            json.put("title", "测试标题");
+            json.put("content", "内容");
+            json.put("date", "2021-05-21");
+            json.put("remark", "备注");
+            json.put("url", "https://www.baidu.com");
+
+            Map<String, Object> result = new ConcurrentHashMap<>();
+            OkHttpClient okHttpClient = new OkHttpClient();
+            RequestBody requestBody = RequestBody.create(json.toJSONString(), MediaType.parse("application/json;charset=utf-8"));
+            Request request = new Request.Builder()
+                    .url("https://mp.ljkjkf.com/api/templateMessage/warning")
+                    .post(requestBody)
+                    .build();
+            try {
+                Response response = okHttpClient.newCall(request).execute();
+                JSONObject resultJson = (JSONObject) JSONObject.parse(response.body().string());
+                result.put("code", resultJson.getInteger("errcode"));
+                result.put("errmsg", resultJson.getString("errmsg"));
+            } catch (IOException e) {
+                result.put("code", 500);
+                result.put("errmsg", "error");
+                e.printStackTrace();
+            }
+
+            return result;
+        };
+    }
 
     @PostMapping("uploadImg")
     public Map<String, Object> updateImg(HttpServletRequest request) throws IOException, ServletException {

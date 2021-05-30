@@ -79,7 +79,18 @@ public class LabCoverProtectometerModel extends BaseModel {
     @Column(value = "designThickness2")
     private Integer designThickness2;
     @Column(value = "structuralPosition")
-    private Integer structuralPosition;
+    private String structuralPosition;
+    @Column(value = "structureName")
+    private String structureName;
+
+    public String getStructureName() {
+        return structureName;
+    }
+
+    @JsonProperty(value = "structure_name")
+    public void setStructureName(String structureName) {
+        this.structureName = structureName;
+    }
 
     @JsonProperty(value = "design_thickness2")
     public void setDesignThickness2(Integer designThickness2) {
@@ -87,7 +98,7 @@ public class LabCoverProtectometerModel extends BaseModel {
     }
 
     @JsonProperty(value = "structural_position")
-    public void setStructuralPosition(Integer structuralPosition) {
+    public void setStructuralPosition(String structuralPosition) {
         this.structuralPosition = structuralPosition;
     }
 
@@ -95,7 +106,7 @@ public class LabCoverProtectometerModel extends BaseModel {
         return designThickness2;
     }
 
-    public Integer getStructuralPosition() {
+    public String getStructuralPosition() {
         return structuralPosition;
     }
 
